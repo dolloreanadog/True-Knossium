@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://dhw2i4apl4wh6"]
+
+[ext_resource type="Script" path="res://resources/components/other/FX/level_up_fx/default_level_up/DefaultLevelUpFX.gd" id="1_qlq2m"]
+[ext_resource type="AudioStream" uid="uid://b08ykl22yorll" path="res://assets/audio/sfx/sfx_levelUp.ogg" id="2_n2w8a"]
+
+[node name="DefaultLevelUpFX" type="Node"]
+script = ExtResource("1_qlq2m")
+audio = ExtResource("2_n2w8a")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]

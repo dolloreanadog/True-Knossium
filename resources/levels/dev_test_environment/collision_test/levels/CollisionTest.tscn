@@ -1,0 +1,49 @@
+[gd_scene load_steps=6 format=3 uid="uid://cwjk2cux5jkrd"]
+
+[ext_resource type="Script" path="res://resources/levels/dev_test_environment/collision_test/levels/TestArea.gd" id="1_cjhpo"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_guquh"]
+size = Vector2(34.5, 31.5)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_yfxa7"]
+size = Vector2(80, 34)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qj0lb"]
+size = Vector2(89, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fmcfv"]
+size = Vector2(127.5, 117)
+
+[node name="CollisionTest" type="Node2D"]
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_right = 1155.0
+offset_bottom = 650.0
+color = Color(0.87451, 0.423529, 0.52549, 1)
+
+[node name="Colliders" type="Node2D" parent="."]
+
+[node name="CharacterCollider" type="CharacterBody2D" parent="Colliders"]
+
+[node name="CharacterCollsion" type="CollisionShape2D" parent="Colliders/CharacterCollider"]
+position = Vector2(768, 525)
+shape = SubResource("RectangleShape2D_guquh")
+
+[node name="StaticCollider" type="StaticBody2D" parent="Colliders"]
+
+[node name="StaticCollision" type="CollisionShape2D" parent="Colliders/StaticCollider"]
+position = Vector2(768, 463)
+shape = SubResource("RectangleShape2D_yfxa7")
+
+[node name="Area2D" type="Area2D" parent="Colliders"]
+
+[node name="AreaCollision" type="CollisionShape2D" parent="Colliders/Area2D"]
+position = Vector2(853, 525)
+shape = SubResource("RectangleShape2D_qj0lb")
+
+[node name="TestArea" type="Area2D" parent="."]
+script = ExtResource("1_cjhpo")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TestArea"]
+position = Vector2(766.25, 498)
+shape = SubResource("RectangleShape2D_fmcfv")

@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=3 uid="uid://bmlkruchpyv1q"]
+
+[ext_resource type="Script" path="res://resources/entities/characters_items/character/dev_character/character_dev_1/DevCharacter.gd" id="1_3yevj"]
+[ext_resource type="Script" path="res://resources/components/other/StatComponent.gd" id="2_uby8u"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ldmio"]
+size = Vector2(48, 48)
+
+[node name="DevCharacter" type="CharacterBody2D"]
+script = ExtResource("1_3yevj")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_left = -24.0
+offset_top = -24.0
+offset_right = 24.0
+offset_bottom = 24.0
+color = Color(0.596078, 0.243137, 0.247059, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_ldmio")
+
+[node name="StatComponent" type="Node" parent="."]
+script = ExtResource("2_uby8u")

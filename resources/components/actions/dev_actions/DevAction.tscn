@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3 uid="uid://cxarfpvivqfj6"]
+
+[ext_resource type="Script" path="res://resources/components/actions/dev_actions/DevAction.gd" id="1_oap4d"]
+[ext_resource type="PackedScene" uid="uid://dyons811sr2ma" path="res://resources/components/actions/dev_actions/DevAction2.tscn" id="2_0j168"]
+
+[node name="DevAction" type="Node"]
+script = ExtResource("1_oap4d")
+AOE = ExtResource("2_0j168")

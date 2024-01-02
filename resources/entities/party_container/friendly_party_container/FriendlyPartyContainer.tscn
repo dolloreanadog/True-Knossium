@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://cm1bg68as3a8x"]
+
+[ext_resource type="Script" path="res://resources/entities/party_container/friendly_party_container/FriendlyPartyContainer.gd" id="1_18w6t"]
+
+[node name="FriendlyPartyContainer" type="Node2D"]
+script = ExtResource("1_18w6t")

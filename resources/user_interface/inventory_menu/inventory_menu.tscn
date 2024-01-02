@@ -1,0 +1,3 @@
+[gd_scene format=3 uid="uid://ci3j4o0qfk5qa"]
+
+[node name="inventory_menu" type="ItemList"]

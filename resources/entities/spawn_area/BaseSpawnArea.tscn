@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://dqrrdoqx6m6nk"]
+
+[ext_resource type="Script" path="res://resources/entities/spawn_area/BaseSpawnArea.gd" id="1_pwi26"]
+
+[node name="BaseSpawnArea" type="ReferenceRect"]
+script = ExtResource("1_pwi26")

@@ -1,0 +1,233 @@
+[gd_scene load_steps=16 format=3 uid="uid://dmviuwgk6nssk"]
+
+[ext_resource type="Script" path="res://resources/levels/ingame/dungeon/Dungeon.gd" id="1_et2wr"]
+[ext_resource type="PackedScene" uid="uid://2067o3jclptt" path="res://resources/user_interface/console/Console.tscn" id="2_1f5g3"]
+[ext_resource type="PackedScene" uid="uid://j6e4b1w1e5u4" path="res://resources/entities/party_container/enemy_party_container/EnemyPartyContainer.tscn" id="2_4hbul"]
+[ext_resource type="Script" path="res://resources/entities/spawn_area/BaseSpawnArea.gd" id="2_uqu12"]
+[ext_resource type="PackedScene" uid="uid://cm1bg68as3a8x" path="res://resources/entities/party_container/friendly_party_container/FriendlyPartyContainer.tscn" id="3_ku5su"]
+[ext_resource type="PackedScene" uid="uid://lhqa1mj5r0xq" path="res://resources/user_interface/debug_info/debug_info.tscn" id="3_mejaj"]
+[ext_resource type="PackedScene" uid="uid://ci3j4o0qfk5qa" path="res://resources/user_interface/inventory_menu/inventory_menu.tscn" id="4_fae0k"]
+[ext_resource type="PackedScene" uid="uid://cmupnt3ig0bql" path="res://resources/user_interface/party_menu/PartyMenu.tscn" id="5_6i2q5"]
+[ext_resource type="PackedScene" uid="uid://dfw1ybwukqwyr" path="res://resources/entities/characters_items/character/dev_character/character_dev_2/DevCharacter2.tscn" id="5_8tee4"]
+[ext_resource type="Script" path="res://resources/entities/turn_system/TurnSystem.gd" id="6_y4pct"]
+[ext_resource type="Script" path="res://resources/entities/AreaAOEDenial/BaseAreaAOEDenial.gd" id="7_7xw1c"]
+[ext_resource type="PackedScene" uid="uid://62s58oxal4l4" path="res://resources/entities/spawn_area/aoe_spawn_Area/AOESpawnArea.tscn" id="8_gfxds"]
+[ext_resource type="Script" path="res://resources/levels/ingame/dungeon/SpawnAOE.gd" id="13_fwow6"]
+[ext_resource type="Script" path="res://resources/levels/ingame/dungeon/EndTurn.gd" id="13_gxjjo"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3ywvn"]
+size = Vector2(256, 320)
+
+[node name="Dungeon" type="Node2D"]
+script = ExtResource("1_et2wr")
+
+[node name="Visuals" type="Node2D" parent="."]
+
+[node name="Node2D" type="Node2D" parent="Visuals"]
+
+[node name="ColorRect" type="ColorRect" parent="Visuals/Node2D"]
+offset_right = 1152.0
+offset_bottom = 648.0
+color = Color(0.34902, 0.423529, 0.196078, 1)
+metadata/_edit_use_anchors_ = true
+
+[node name="TestingButtons" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="FriendlySpawner" type="Control" parent="TestingButtons"]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="EnemySpawner" type="Control" parent="TestingButtons"]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="SpawnEnemy" type="Button" parent="TestingButtons/EnemySpawner"]
+layout_mode = 0
+offset_left = 920.0
+offset_top = 64.0
+offset_right = 1022.0
+offset_bottom = 95.0
+text = "Spawn Tank"
+
+[node name="EndTurn" type="Button" parent="TestingButtons"]
+layout_mode = 0
+offset_left = 1072.0
+offset_right = 1150.0
+offset_bottom = 31.0
+text = "End Turn"
+script = ExtResource("13_gxjjo")
+
+[node name="EndBattle" type="Button" parent="TestingButtons"]
+layout_mode = 0
+offset_left = 1064.0
+offset_top = 32.0
+offset_right = 1152.0
+offset_bottom = 63.0
+text = "End Battle"
+
+[node name="SpawnAOE" type="Button" parent="TestingButtons"]
+layout_mode = 0
+offset_left = 352.0
+offset_top = 32.0
+offset_right = 448.0
+offset_bottom = 63.0
+text = "Spawn AOE"
+script = ExtResource("13_fwow6")
+
+[node name="Notes" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Label" type="Label" parent="Notes"]
+layout_mode = 0
+offset_top = -112.0
+offset_right = 1152.0
+text = "We're doing small resolution for testing, when finalizing switch to higher resolution.
+Once finished we will put everything working into dungeon_finalized, will also remove the testing bloat of this current scene.
+We Should a special kind of area denial outside the viewable area just in case the player is dumb enough to put it there."
+
+[node name="Label2" type="Label" parent="Notes"]
+layout_mode = 0
+offset_left = 512.0
+offset_top = 32.0
+offset_right = 640.0
+offset_bottom = 58.0
+text = "AOE Spawn Area"
+
+[node name="Label3" type="Label" parent="Notes"]
+layout_mode = 0
+offset_left = 176.0
+offset_top = 192.0
+offset_right = 338.0
+offset_bottom = 218.0
+text = "Friendly Spawn Area"
+
+[node name="Label4" type="Label" parent="Notes"]
+layout_mode = 0
+offset_left = 816.0
+offset_top = 216.0
+offset_right = 978.0
+offset_bottom = 242.0
+text = "Enemy Spawn Area"
+
+[node name="BaseAReaAOEDenial" type="Area2D" parent="."]
+script = ExtResource("7_7xw1c")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BaseAReaAOEDenial"]
+position = Vector2(960, 416)
+shape = SubResource("RectangleShape2D_3ywvn")
+
+[node name="BaseAReaAOEDenial2" type="Area2D" parent="."]
+script = ExtResource("7_7xw1c")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BaseAReaAOEDenial2"]
+position = Vector2(192, 416)
+shape = SubResource("RectangleShape2D_3ywvn")
+
+[node name="EnemyPartyContainer" parent="." instance=ExtResource("2_4hbul")]
+
+[node name="FriendlyPartyContainer" parent="." instance=ExtResource("3_ku5su")]
+
+[node name="DevCharacter" parent="FriendlyPartyContainer" instance=ExtResource("5_8tee4")]
+position = Vector2(383.645, 352)
+
+[node name="EnemySpawnArea" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 8.0
+offset_bottom = 8.0
+
+[node name="MeleeSpawnArea" type="ReferenceRect" parent="EnemySpawnArea"]
+layout_mode = 0
+offset_left = 320.0
+offset_top = 256.0
+offset_right = 512.0
+offset_bottom = 576.0
+border_width = 3.0
+script = ExtResource("2_uqu12")
+
+[node name="DPSRangedSpawnArea" type="ReferenceRect" parent="EnemySpawnArea"]
+layout_mode = 0
+offset_left = 192.0
+offset_top = 256.0
+offset_right = 320.0
+offset_bottom = 576.0
+border_width = 3.0
+script = ExtResource("2_uqu12")
+
+[node name="SupportSpawnArea" type="ReferenceRect" parent="EnemySpawnArea"]
+layout_mode = 0
+offset_left = 64.0
+offset_top = 256.0
+offset_right = 192.0
+offset_bottom = 576.0
+border_width = 3.0
+script = ExtResource("2_uqu12")
+
+[node name="FriendlySpawnArea" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="MeleeSpawnArea" type="ReferenceRect" parent="FriendlySpawnArea"]
+layout_mode = 0
+offset_left = 640.0
+offset_top = 256.0
+offset_right = 832.0
+offset_bottom = 576.0
+border_width = 3.0
+script = ExtResource("2_uqu12")
+
+[node name="DPSRangedSpawnArea" type="ReferenceRect" parent="FriendlySpawnArea"]
+layout_mode = 0
+offset_left = 832.0
+offset_top = 256.0
+offset_right = 960.0
+offset_bottom = 576.0
+border_width = 3.0
+script = ExtResource("2_uqu12")
+
+[node name="SupportSpawnArea" type="ReferenceRect" parent="FriendlySpawnArea"]
+layout_mode = 0
+offset_left = 960.0
+offset_top = 256.0
+offset_right = 1088.0
+offset_bottom = 576.0
+border_width = 3.0
+script = ExtResource("2_uqu12")
+
+[node name="AOESpawnArea" parent="." instance=ExtResource("8_gfxds")]
+z_index = 1
+offset_left = 448.0
+offset_top = 64.0
+offset_right = 704.0
+offset_bottom = 192.0
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(576, 324)
+
+[node name="Console" parent="Camera2D" instance=ExtResource("2_1f5g3")]
+visible = false
+
+[node name="debug_info" parent="Camera2D" instance=ExtResource("3_mejaj")]
+visible = false
+
+[node name="inventory_menu" parent="Camera2D" instance=ExtResource("4_fae0k")]
+visible = false
+
+[node name="PartyMenu" parent="Camera2D" instance=ExtResource("5_6i2q5")]
+visible = false
+
+[node name="TurnSystem" type="Node" parent="."]
+script = ExtResource("6_y4pct")
+
+[connection signal="pressed" from="TestingButtons/EndTurn" to="TestingButtons/EndTurn" method="_on_pressed"]

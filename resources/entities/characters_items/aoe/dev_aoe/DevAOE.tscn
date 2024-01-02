@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://vvdgo4v5g1cr"]
+
+[ext_resource type="Script" path="res://resources/entities/characters_items/aoe/dev_aoe/DevAOE.gd" id="1_jrqv8"]
+
+[node name="DevAOE" type="Area2D"]
+script = ExtResource("1_jrqv8")

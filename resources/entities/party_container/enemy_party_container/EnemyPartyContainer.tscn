@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://j6e4b1w1e5u4"]
+
+[ext_resource type="Script" path="res://resources/entities/party_container/enemy_party_container/EnemyPartyContainer.gd" id="1_oi6vy"]
+
+[node name="EnemyPartyContainer" type="Node2D"]
+script = ExtResource("1_oi6vy")

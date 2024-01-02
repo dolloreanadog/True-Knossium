@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://62s58oxal4l4"]
+
+[ext_resource type="Script" path="res://resources/entities/spawn_area/aoe_spawn_Area/AOESpawnArea.gd" id="1_6fu1q"]
+
+[node name="AOESpawnArea" type="ReferenceRect"]
+custom_minimum_size = Vector2(5, 0)
+offset_right = 64.0
+offset_bottom = 16.0
+border_width = 3.0
+script = ExtResource("1_6fu1q")

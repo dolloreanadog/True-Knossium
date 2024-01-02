@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://dyons811sr2ma"]
+
+[ext_resource type="Script" path="res://resources/components/actions/dev_actions/DevAction2.gd" id="1_x2j72"]
+
+[node name="DevAction2" type="Node"]
+script = ExtResource("1_x2j72")

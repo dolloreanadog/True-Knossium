@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://s0uvldgapv1b"]
+
+[ext_resource type="Script" path="res://resources/entities/enemy_aoe_container/EnemyAOEContainer.gd" id="1_3konx"]
+
+[node name="EnemyAOEContainer" type="Node2D"]
+script = ExtResource("1_3konx")

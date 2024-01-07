@@ -1,0 +1,25 @@
+[gd_scene load_steps=3 format=3 uid="uid://u172rb6a25bx"]
+
+[ext_resource type="Script" path="res://resources/entities/characters_items/aoe/BaseAOE.gd" id="1_jqsrw"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hl61g"]
+size = Vector2(64, 144)
+
+[node name="SwingAOE" type="Area2D"]
+script = ExtResource("1_jqsrw")
+isMelee = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_hl61g")
+
+[node name="Button" type="Button" parent="."]
+offset_left = -32.0
+offset_top = -72.0
+offset_right = 32.0
+offset_bottom = 72.0
+text = "Swing 
+AOE"
+
+[connection signal="button_down" from="Button" to="." method="_on_button_button_down"]
+[connection signal="button_up" from="Button" to="." method="_on_button_button_up"]
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

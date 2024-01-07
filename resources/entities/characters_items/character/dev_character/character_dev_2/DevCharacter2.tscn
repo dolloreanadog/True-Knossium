@@ -1,20 +1,18 @@
-[gd_scene load_steps=8 format=3 uid="uid://dfw1ybwukqwyr"]
+[gd_scene load_steps=7 format=3 uid="uid://dfw1ybwukqwyr"]
 
 [ext_resource type="Script" path="res://resources/entities/characters_items/character/dev_character/character_dev_2/DevCharacter2.gd" id="1_14ktj"]
 [ext_resource type="Script" path="res://resources/entities/characters_items/character/dev_character/character_dev_2/StatComponent.gd" id="2_pterd"]
 [ext_resource type="PackedScene" uid="uid://dhw2i4apl4wh6" path="res://resources/components/other/FX/level_up_fx/default_level_up/DefaultLevelUpFX.tscn" id="3_ypi11"]
-[ext_resource type="PackedScene" uid="uid://cxarfpvivqfj6" path="res://resources/components/actions/dev_actions/DevAction.tscn" id="4_xdrxs"]
 [ext_resource type="PackedScene" uid="uid://ce8bgnvegriul" path="res://resources/entities/characters_items/aoe/dev_aoe/DevAOE2.tscn" id="5_hrqd4"]
 [ext_resource type="PackedScene" uid="uid://dyons811sr2ma" path="res://resources/components/actions/dev_actions/DevAction2.tscn" id="6_5eeq6"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ldmio"]
 size = Vector2(48, 48)
 
-[node name="DevCharacter" type="CharacterBody2D" node_paths=PackedStringArray("levelUpFX", "action1", "action2")]
+[node name="DevCharacter" type="CharacterBody2D" node_paths=PackedStringArray("levelUpFX", "action1")]
 script = ExtResource("1_14ktj")
 levelUpFX = NodePath("DefaultLevelUpFX")
-action1 = NodePath("DevAction")
-action2 = NodePath("DevAction2")
+action1 = NodePath("DevAction2")
 
 [node name="ColorRect" type="ColorRect" parent="."]
 offset_left = -24.0
@@ -28,17 +26,16 @@ shape = SubResource("RectangleShape2D_ldmio")
 
 [node name="StatComponent" type="Node" parent="."]
 script = ExtResource("2_pterd")
+health = 20.0
+attack = 1.0
 
 [node name="DefaultLevelUpFX" parent="." instance=ExtResource("3_ypi11")]
-
-[node name="DevAction" parent="." node_paths=PackedStringArray("stats") instance=ExtResource("4_xdrxs")]
-stats = NodePath("../StatComponent")
-AOE = ExtResource("5_hrqd4")
-isOffensive = false
-amount = 0
 
 [node name="DevAction2" parent="." node_paths=PackedStringArray("stats") instance=ExtResource("6_5eeq6")]
 stats = NodePath("../StatComponent")
 AOE = ExtResource("5_hrqd4")
-isOffensive = false
-amount = 5
+amount = 1
+health = 5.0
+defense = 2.0
+attack = 3.0
+morale = 1.0

@@ -7,10 +7,7 @@ size = Vector2(64, 64)
 
 [node name="DevAOE2" type="Area2D"]
 script = ExtResource("1_v7pbs")
-health = 5.0
-defense = 2.0
-attack = 1.0
-morale = 2.0
+accuracy = 3
 isMelee = true
 
 [node name="ColorRect" type="ColorRect" parent="."]

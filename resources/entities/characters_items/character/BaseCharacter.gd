@@ -6,7 +6,9 @@ class_name BaseCharacter
 @export var profilePicture: Texture2D
 @onready var stats: StatComponent = get_node("StatComponent")
 @onready var system: TurnSystem = get_parent().get_parent().get_node("TurnSystem")
+@export var isFriendly: bool = true
 var turns: int
+
 
 #--[ Effects ]--
 # This video https://www.youtube.com/watch?v=vzRZjM9MTGw
@@ -39,8 +41,12 @@ func _ready():
 	system.connect("OnNewTurn", characterNewTurn)
 	system.connect("OnNewBattle", characterNewBattle)
 
-func damageStats(health, defense, attack, morale):
-	print("Body is getting Damaged")
+func damageStats(health, defense, attack, morale): # Print out the stats of getting damage
+	print(str(self) + ": Body is getting Damaged")
+	print(str(self) + ": Health stat being damaged for " + str(health))
+	print(str(self) + ": Defense stat being damaged for " + str(defense))
+	print(str(self) + ": Attack stat being damaged for " + str(attack))
+	print(str(self) + ": Morale stat being damaged for " + str(morale))
 	stats.isDamaged()
 	stats.changeCurrentHealth(health)
 	stats.changeCurrentDefense(defense)
@@ -50,15 +56,16 @@ func damageStats(health, defense, attack, morale):
 func useActions():
 	if action1 != null:
 		action1.removeCastTime()
+		action1.getAttackInfo()
 	if action2 != null:
 		action2.removeCastTime()
+		action1.getAttackInfo()
 	if action3 != null:
 		action3.removeCastTime()
+		action1.getAttackInfo()
 	if action4 != null:
 		action4.removeCastTime()
-	#SpawnAOE Variables
-	#Amount
-	#cast time
+		action1.getAttackInfo()
 
 
 # Make sure these are all called in the Stat Component
@@ -103,8 +110,14 @@ func playMoraleChangedFX():
 
 ## Get a Signal from the turnSystem to do this
 func characterNewTurn():
-	print("Received Signal")
+	print(str(self) + ": Received Signal") # We're receiving the signal Twice?
 	useActions()
 
 func characterNewBattle():
 	stats.resetCurrentStats()
+
+# Idk why we have this, we'll see what this means
+# ^ Determines if to spawn AOE or not
+# Have the party container run a loop to use this function on all children
+func changeFriendliness(boolean: bool):
+	isFriendly = boolean

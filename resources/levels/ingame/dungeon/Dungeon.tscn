@@ -8,12 +8,12 @@
 [ext_resource type="PackedScene" uid="uid://lhqa1mj5r0xq" path="res://resources/user_interface/debug_info/debug_info.tscn" id="3_mejaj"]
 [ext_resource type="PackedScene" uid="uid://ci3j4o0qfk5qa" path="res://resources/user_interface/inventory_menu/inventory_menu.tscn" id="4_fae0k"]
 [ext_resource type="PackedScene" uid="uid://cmupnt3ig0bql" path="res://resources/user_interface/party_menu/PartyMenu.tscn" id="5_6i2q5"]
-[ext_resource type="PackedScene" uid="uid://dfw1ybwukqwyr" path="res://resources/entities/characters_items/character/dev_character/character_dev_2/DevCharacter2.tscn" id="5_8tee4"]
 [ext_resource type="Script" path="res://resources/entities/turn_system/TurnSystem.gd" id="6_y4pct"]
 [ext_resource type="Script" path="res://resources/entities/AreaAOEDenial/BaseAreaAOEDenial.gd" id="7_7xw1c"]
 [ext_resource type="PackedScene" uid="uid://62s58oxal4l4" path="res://resources/entities/spawn_area/aoe_spawn_Area/AOESpawnArea.tscn" id="8_gfxds"]
 [ext_resource type="Script" path="res://resources/levels/ingame/dungeon/SpawnAOE.gd" id="13_fwow6"]
 [ext_resource type="Script" path="res://resources/levels/ingame/dungeon/EndTurn.gd" id="13_gxjjo"]
+[ext_resource type="Script" path="res://resources/entities/enemy_aoe_container/EnemyAOEContainer.gd" id="15_oeev1"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3ywvn"]
 size = Vector2(256, 320)
@@ -42,18 +42,74 @@ anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
+[node name="SpawnFriendlyHealer" type="Button" parent="TestingButtons/FriendlySpawner"]
+layout_mode = 0
+offset_left = 256.0
+offset_top = 160.0
+offset_right = 376.0
+offset_bottom = 192.0
+text = "Spawn Healer"
+
+[node name="SpawnFriendlyTank" type="Button" parent="TestingButtons/FriendlySpawner"]
+layout_mode = 0
+offset_left = 128.0
+offset_top = 128.0
+offset_right = 256.0
+offset_bottom = 160.0
+text = "Spawn Tank"
+
+[node name="SpawnFriendRanged" type="Button" parent="TestingButtons/FriendlySpawner"]
+layout_mode = 0
+offset_left = 128.0
+offset_top = 160.0
+offset_right = 256.0
+offset_bottom = 192.0
+text = "Spawn Ranged"
+
+[node name="SpawnFriendMelee" type="Button" parent="TestingButtons/FriendlySpawner"]
+layout_mode = 0
+offset_left = 256.0
+offset_top = 128.0
+offset_right = 376.0
+offset_bottom = 160.0
+text = "Spawn Melee"
+
 [node name="EnemySpawner" type="Control" parent="TestingButtons"]
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="SpawnEnemy" type="Button" parent="TestingButtons/EnemySpawner"]
+[node name="SpawnEnemyHealer" type="Button" parent="TestingButtons/EnemySpawner"]
 layout_mode = 0
-offset_left = 920.0
-offset_top = 64.0
-offset_right = 1022.0
-offset_bottom = 95.0
+offset_left = 984.0
+offset_top = 160.0
+offset_right = 1086.0
+offset_bottom = 191.0
+text = "Spawn Healer"
+
+[node name="SpawnEnemyTank" type="Button" parent="TestingButtons/EnemySpawner"]
+layout_mode = 0
+offset_left = 832.0
+offset_top = 128.0
+offset_right = 960.0
+offset_bottom = 159.0
 text = "Spawn Tank"
+
+[node name="SpawnEnemyRanged" type="Button" parent="TestingButtons/EnemySpawner"]
+layout_mode = 0
+offset_left = 832.0
+offset_top = 160.0
+offset_right = 960.0
+offset_bottom = 192.0
+text = "Spawn Ranged"
+
+[node name="SpawnEnemyMelee" type="Button" parent="TestingButtons/EnemySpawner"]
+layout_mode = 0
+offset_left = 984.0
+offset_top = 128.0
+offset_right = 1086.0
+offset_bottom = 159.0
+text = "Spawn Melee"
 
 [node name="EndTurn" type="Button" parent="TestingButtons"]
 layout_mode = 0
@@ -92,7 +148,8 @@ offset_top = -112.0
 offset_right = 1152.0
 text = "We're doing small resolution for testing, when finalizing switch to higher resolution.
 Once finished we will put everything working into dungeon_finalized, will also remove the testing bloat of this current scene.
-We Should a special kind of area denial outside the viewable area just in case the player is dumb enough to put it there."
+We Should a special kind of area denial outside the viewable area just in case the player is dumb enough to put it there.
+Put an invisible colorRect on z_index = 2, to block player ability to touch stuff"
 
 [node name="Label2" type="Label" parent="Notes"]
 layout_mode = 0
@@ -118,6 +175,21 @@ offset_right = 978.0
 offset_bottom = 242.0
 text = "Enemy Spawn Area"
 
+[node name="Label5" type="Label" parent="Notes"]
+layout_mode = 0
+offset_left = 768.0
+offset_right = 864.0
+offset_bottom = 26.0
+text = "Turns: x"
+
+[node name="Label6" type="Label" parent="Notes"]
+layout_mode = 0
+offset_left = 768.0
+offset_top = 24.0
+offset_right = 864.0
+offset_bottom = 50.0
+text = "Battles: x"
+
 [node name="BaseAReaAOEDenial" type="Area2D" parent="."]
 script = ExtResource("7_7xw1c")
 
@@ -132,13 +204,6 @@ script = ExtResource("7_7xw1c")
 position = Vector2(192, 416)
 shape = SubResource("RectangleShape2D_3ywvn")
 
-[node name="EnemyPartyContainer" parent="." instance=ExtResource("2_4hbul")]
-
-[node name="FriendlyPartyContainer" parent="." instance=ExtResource("3_ku5su")]
-
-[node name="DevCharacter" parent="FriendlyPartyContainer" instance=ExtResource("5_8tee4")]
-position = Vector2(383.645, 352)
-
 [node name="EnemySpawnArea" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 0
@@ -147,27 +212,27 @@ offset_bottom = 8.0
 
 [node name="MeleeSpawnArea" type="ReferenceRect" parent="EnemySpawnArea"]
 layout_mode = 0
-offset_left = 320.0
+offset_left = 640.0
 offset_top = 256.0
-offset_right = 512.0
+offset_right = 832.0
 offset_bottom = 576.0
 border_width = 3.0
 script = ExtResource("2_uqu12")
 
 [node name="DPSRangedSpawnArea" type="ReferenceRect" parent="EnemySpawnArea"]
 layout_mode = 0
-offset_left = 192.0
+offset_left = 832.0
 offset_top = 256.0
-offset_right = 320.0
+offset_right = 960.0
 offset_bottom = 576.0
 border_width = 3.0
 script = ExtResource("2_uqu12")
 
 [node name="SupportSpawnArea" type="ReferenceRect" parent="EnemySpawnArea"]
 layout_mode = 0
-offset_left = 64.0
+offset_left = 960.0
 offset_top = 256.0
-offset_right = 192.0
+offset_right = 1088.0
 offset_bottom = 576.0
 border_width = 3.0
 script = ExtResource("2_uqu12")
@@ -180,33 +245,56 @@ offset_bottom = 40.0
 
 [node name="MeleeSpawnArea" type="ReferenceRect" parent="FriendlySpawnArea"]
 layout_mode = 0
-offset_left = 640.0
+offset_left = 320.0
 offset_top = 256.0
-offset_right = 832.0
+offset_right = 512.0
 offset_bottom = 576.0
 border_width = 3.0
 script = ExtResource("2_uqu12")
 
 [node name="DPSRangedSpawnArea" type="ReferenceRect" parent="FriendlySpawnArea"]
 layout_mode = 0
-offset_left = 832.0
+offset_left = 192.0
 offset_top = 256.0
-offset_right = 960.0
+offset_right = 320.0
 offset_bottom = 576.0
 border_width = 3.0
 script = ExtResource("2_uqu12")
 
 [node name="SupportSpawnArea" type="ReferenceRect" parent="FriendlySpawnArea"]
 layout_mode = 0
-offset_left = 960.0
+offset_left = 64.0
 offset_top = 256.0
-offset_right = 1088.0
+offset_right = 192.0
 offset_bottom = 576.0
 border_width = 3.0
 script = ExtResource("2_uqu12")
 
+[node name="EnemyPartyContainer" parent="." node_paths=PackedStringArray("system", "otherPartyContainer", "CQCSpawnArea", "DPSRangedSpawnArea", "SupportSpawnArea") instance=ExtResource("2_4hbul")]
+system = NodePath("../TurnSystem")
+otherPartyContainer = NodePath("../FriendlyPartyContainer")
+CQCSpawnArea = NodePath("../EnemySpawnArea/MeleeSpawnArea")
+DPSRangedSpawnArea = NodePath("../EnemySpawnArea/DPSRangedSpawnArea")
+SupportSpawnArea = NodePath("../EnemySpawnArea/SupportSpawnArea")
+
+[node name="FriendlyPartyContainer" parent="." node_paths=PackedStringArray("system", "otherPartyContainer", "CQCSpawnArea", "DPSRangedSpawnArea", "SupportSpawnArea") instance=ExtResource("3_ku5su")]
+system = NodePath("../TurnSystem")
+otherPartyContainer = NodePath("../EnemyPartyContainer")
+CQCSpawnArea = NodePath("../FriendlySpawnArea/MeleeSpawnArea")
+DPSRangedSpawnArea = NodePath("../FriendlySpawnArea/DPSRangedSpawnArea")
+SupportSpawnArea = NodePath("../FriendlySpawnArea/SupportSpawnArea")
+isFriendly = true
+
+[node name="EnemyAOEContainerAttack" type="Node2D" parent="."]
+position = Vector2(960, 0)
+script = ExtResource("15_oeev1")
+
+[node name="EnemyAOEContainerSupport" type="Node2D" parent="."]
+position = Vector2(896, 64)
+script = ExtResource("15_oeev1")
+isAOESupportContainer = true
+
 [node name="AOESpawnArea" parent="." instance=ExtResource("8_gfxds")]
-z_index = 1
 offset_left = 448.0
 offset_top = 64.0
 offset_right = 704.0
@@ -227,7 +315,26 @@ visible = false
 [node name="PartyMenu" parent="Camera2D" instance=ExtResource("5_6i2q5")]
 visible = false
 
-[node name="TurnSystem" type="Node" parent="."]
+[node name="TurnSystem" type="Node" parent="." node_paths=PackedStringArray("FriendlyPartyContainer", "EnemyPartyContainer")]
 script = ExtResource("6_y4pct")
+FriendlyPartyContainer = NodePath("../FriendlyPartyContainer")
+EnemyPartyContainer = NodePath("../EnemyPartyContainer")
 
+[node name="StopControl" type="Control" parent="."]
+editor_description = "Prevents Player From Touching"
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[connection signal="pressed" from="TestingButtons/FriendlySpawner/SpawnFriendlyHealer" to="." method="_on_spawn_friendly_healer_pressed"]
+[connection signal="pressed" from="TestingButtons/FriendlySpawner/SpawnFriendlyTank" to="." method="_on_spawn_friendly_tank_pressed"]
+[connection signal="pressed" from="TestingButtons/FriendlySpawner/SpawnFriendRanged" to="." method="_on_spawn_friend_ranged_pressed"]
+[connection signal="pressed" from="TestingButtons/FriendlySpawner/SpawnFriendMelee" to="." method="_on_spawn_friend_melee_pressed"]
+[connection signal="pressed" from="TestingButtons/EnemySpawner/SpawnEnemyHealer" to="." method="_on_spawn_enemy_healer_pressed"]
+[connection signal="pressed" from="TestingButtons/EnemySpawner/SpawnEnemyTank" to="." method="_on_spawn_enemy_tank_pressed"]
+[connection signal="pressed" from="TestingButtons/EnemySpawner/SpawnEnemyRanged" to="." method="_on_spawn_enemy_ranged_pressed"]
+[connection signal="pressed" from="TestingButtons/EnemySpawner/SpawnEnemyMelee" to="." method="_on_spawn_enemy_melee_pressed"]
 [connection signal="pressed" from="TestingButtons/EndTurn" to="TestingButtons/EndTurn" method="_on_pressed"]
+[connection signal="OnNewTurn" from="TurnSystem" to="." method="_on_turn_system_on_new_turn"]

@@ -1,3 +1,6 @@
-[gd_scene format=3 uid="uid://d08127u52ub5w"]
+[gd_scene load_steps=2 format=3 uid="uid://d08127u52ub5w"]
+
+[ext_resource type="Script" path="res://resources/entities/difficulty_system/DifficultySystem.gd" id="1_qwl3q"]
 
 [node name="DifficultySystem" type="Node"]
+script = ExtResource("1_qwl3q")

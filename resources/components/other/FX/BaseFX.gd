@@ -2,6 +2,10 @@ extends Node
 ## <- Doing this can give info on it
 class_name BaseFX
 
+#--[ Need info from these ]--
+@export var stats: StatComponent
+
+
 ## Either a Sprite2D or AnimatedSprite2D
 @export var sprite: Node2D
 ## Will contain Audio

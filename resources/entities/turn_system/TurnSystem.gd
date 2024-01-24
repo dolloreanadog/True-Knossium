@@ -14,21 +14,22 @@ signal OnPlayerControlActive
 signal OnPlayerControlInactive
 
 func _ready():
-	pass
+	FriendlyPartyContainer.connect("allCharactersDead", newBattle)
+	EnemyPartyContainer.connect("allCharactersDead", newBattle)
 
 func newTurn():
 	turn += 1
+	print(str(self) + ": turns = " + str(turn))
+	emit_signal("OnNewTurn")
 	FriendlyPartyContainer.getCharactersInfo()
 	EnemyPartyContainer.getCharactersInfo()
-	emit_signal("OnNewTurn")
-	
+	#EnemyPartyContainer.onAllCharactersDead()
 	print("---------------[ Turn Changed to " + str(turn) + " ]---------------")
 
 func newBattle():
 	battle += 1
 	print(str(self) + ": battles = " + str(battle))
 	emit_signal("OnNewBattle")
-	
 	print("Battle Changed")
 
 func removeControl():

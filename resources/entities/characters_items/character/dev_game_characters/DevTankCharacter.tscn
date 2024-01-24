@@ -1,0 +1,62 @@
+[gd_scene load_steps=8 format=3 uid="uid://cqsc48ser047f"]
+
+[ext_resource type="Script" path="res://resources/entities/characters_items/character/BaseCharacter.gd" id="1_d7cus"]
+[ext_resource type="Script" path="res://resources/components/actions/BaseAction.gd" id="2_8644t"]
+[ext_resource type="PackedScene" uid="uid://d2hgrnkks06qa" path="res://resources/entities/characters_items/aoe/tank_aoe/fortify_aoe/FortifyAOE.tscn" id="3_44836"]
+[ext_resource type="Script" path="res://resources/components/other/StatComponent.gd" id="4_pgy6x"]
+[ext_resource type="PackedScene" uid="uid://bd1uu7nmu4ict" path="res://resources/components/other/info_label/InfoLabel.tscn" id="5_ybmnc"]
+[ext_resource type="Script" path="res://resources/components/other/info_label/InfoLabel.gd" id="6_p6a3k"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qcsi2"]
+size = Vector2(48, 48)
+
+[node name="DevTankCharacter" type="CharacterBody2D" node_paths=PackedStringArray("action1")]
+script = ExtResource("1_d7cus")
+action1 = NodePath("DevTankAction")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_left = -24.0
+offset_top = -24.0
+offset_right = 24.0
+offset_bottom = 24.0
+color = Color(0.560784, 1, 1, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_qcsi2")
+
+[node name="DevTankAction" type="Node" parent="." node_paths=PackedStringArray("stats")]
+script = ExtResource("2_8644t")
+stats = NodePath("../StatComponent")
+AOE = ExtResource("3_44836")
+castTime = 3
+isOffensive = false
+amount = 1
+health = 2.0
+defense = 3.0
+morale = 5.0
+
+[node name="StatComponent" type="Node" parent="."]
+script = ExtResource("4_pgy6x")
+worthEXP = 10.0
+role = 3
+defense = 12.0
+attack = 2.0
+morale = 25.0
+potentialHealthGain = 2.0
+potentialDefenseGain = 3.0
+potentialAttackGain = 2.0
+potentialMoraleGain = 1.0
+
+[node name="InfoLabel" parent="." instance=ExtResource("5_ybmnc")]
+visible = true
+script = ExtResource("6_p6a3k")
+
+[node name="LevelLabel" type="Label" parent="."]
+editor_description = "This will show level, if the level visibility button is pushed"
+offset_left = -24.0
+offset_top = -24.0
+offset_right = 24.0
+offset_bottom = 24.0
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3

@@ -31,6 +31,14 @@ var currentCastTime: int
 @export var defense: float = 0
 @export var attack: float = 0
 @export var morale: float = 0
+## The higher the accuracy, the more it misses
+@export_range(0, 20, 1) var accuracy: int
+var currentHealth: float
+var CurrentDefense: float
+var CurrentAttack: float
+var CurrentMorale: float
+
+
 
 func _ready():
 	getAttackInfo()
@@ -50,7 +58,7 @@ func removeCastTime():
 
 # Make the number negative
 func turnIntoOffensiveAction(inputNumber):
-	print(str(self) + ": Action is now Offensive")
+	#print(str(self) + ": Action is now Offensive")
 	inputNumber *= -1
 	return inputNumber
 
@@ -63,45 +71,52 @@ func spawnAOE():
 		print(str(self) + ": Amount should be spawned is "+ str(amount))
 		var instance: BaseAOE = AOE.instantiate()
 		if isOffensive:
-			instance.health = turnIntoOffensiveAction(health)
-			instance.defense = turnIntoOffensiveAction(defense)
-			instance.attack = turnIntoOffensiveAction(attack)
-			instance.morale = turnIntoOffensiveAction(morale)
+			instance.health = turnIntoOffensiveAction(currentHealth)
+			instance.defense = turnIntoOffensiveAction(CurrentDefense)
+			instance.attack = turnIntoOffensiveAction(CurrentAttack)
+			instance.morale = turnIntoOffensiveAction(CurrentMorale)
 		else:
-			instance.health = health
-			instance.defense = defense
-			instance.attack = attack
-			instance.morale = morale
+			instance.health = currentHealth
+			instance.defense = CurrentDefense
+			instance.attack = CurrentAttack
+			instance.morale = CurrentMorale
+		
+		instance.accuracy = accuracy
 		if character.isFriendly:
 			spawnArea.add_child(instance, true)
+			instance.set_global_position(spawnArea.randomizeSpawn())
 		elif character.isFriendly == false && isOffensive:
 			EnemyAOEContainerAttack.add_child(instance, true)
 		elif character.isFriendly == false && isOffensive == false:
 			EnemyAOEContainerSupport.add_child(instance, true)
 
 func getAttackInfo():
-	print(str(self) + ": health attack = " + str(health))
-	print(str(self) + ": defense attack = " + str(defense))
-	print(str(self) + ": attack attack = " + str(attack))
-	print(str(self) + ": morale attack = " + str(morale))
+	pass
+	#print(str(self) + ": health attack = " + str(currentHealth))
+	#print(str(self) + ": defense attack = " + str(CurrentDefense))
+	#print(str(self) + ": attack attack = " + str(CurrentAttack))
+	#print(str(self) + ": morale attack = " + str(CurrentMorale))
 
 # This thing is scuffed Pls Fix when coming back
 func updateAttackInfo():
 	print(str(self) + ": Action Stats Updated")
+	print(str(self) + ": Get current stats.attack = " + str(stats.currentAttack))
+	getAttackInfo()
 	var Lhealth: float = health
 	var Ldefense: float = defense
 	var Lattack: float = attack
 	var Lmorale: float = morale
 	
-	Lhealth *= stats.attack * 0.35
-	Ldefense += stats.attack * 0.35
-	Lattack *= stats.attack * 0.35
-	Lmorale *= stats.attack * 0.35
+	# *= because when 0, it stays 0
+	Lhealth *= stats.currentAttack * 0.35
+	Ldefense *= stats.currentAttack * 0.35
+	Lattack *= stats.currentAttack * 0.35
+	Lmorale *= stats.currentAttack * 0.35
 	
-	health = Lhealth
-	defense = Ldefense
-	attack = Lattack
-	morale = Lmorale
+	currentHealth = Lhealth
+	CurrentDefense = Ldefense
+	CurrentAttack = Lattack
+	CurrentMorale = Lmorale
 	getAttackInfo()
 
 #--[ Overridable Functions ]--

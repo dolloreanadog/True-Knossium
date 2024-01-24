@@ -14,23 +14,42 @@ var stats: StatComponent
 @onready var friendlyPartyContainer = $FriendlyPartyContainer
 @onready var enemyPartyContainer = $EnemyPartyContainer
 
+#--[ Get all the AOEs]--
+@onready var friendlyAOE = $AOESpawnArea
+@onready var enemyAttackAOE = $EnemyAOEContainerAttack
+@onready var enemySupportAOE = $EnemyAOEContainerSupport
 
 #--[ Characters that spawn ]--
-@export var healer = preload("res://resources/entities/characters_items/character/support_character/dev_support_character/DevSupportCharacter.tscn")
-@export var tank = preload("res://resources/entities/characters_items/character/tank_character/dev_tank_character/DevTankCharacter.tscn")
-@export var DPSRanged = preload("res://resources/entities/characters_items/character/ranged_character/dev_ranged_character/DevArcherCharacter.tscn")
-@export var DPSMelee = preload("res://resources/entities/characters_items/character/melee_character/dev_melee_character/DevMeleeCharacter.tscn")
+@export var healer = preload("res://resources/entities/characters_items/character/dev_game_characters/DevSupportCharacter.tscn")
+@export var tank = preload("res://resources/entities/characters_items/character/dev_game_characters/DevTankCharacter.tscn")
+@export var DPSRanged = preload("res://resources/entities/characters_items/character/dev_game_characters/DevArcherCharacter.tscn")
+@export var DPSMelee = preload("res://resources/entities/characters_items/character/dev_game_characters/DevMeleeCharacter.tscn")
 
-
+var queuedAOE
 
 func _ready():
-	getTurn()
-	getBattle()
+	system.newTurn()
+	system.newBattle()
+	system.connect("OnNewTurn", getTurn)
+	system.connect("OnNewBattle", getBattle)
+
+#func goThroughQueuedAOEArray():
+#	var queuedAOE: Array = friendlyAOE.get_children() + enemyAttackAOE.get_children() + enemySupportAOE.get_children()
+#	print(str(self) + ": allAOE: " + str(queuedAOE))
+#	
+#	while queuedAOE.size() != 0:
+#		var targetAOE: BaseAOE = queuedAOE.pop_back()
+#		print(str(self) + ": targetAOE: " + str(targetAOE))
+#		targetAOE.InTurn()
+
 
 func getTurn():
+	print(str(self) + ": Turns: " + str(system.battle))
 	turnsLabel.set_text("Turns: " + str(system.turn))
+#	goThroughQueuedAOEArray()
 
 func getBattle():
+	print(str(self) + ": Battles: " + str(system.battle))
 	battlesLabel.set_text("Battles: " + str(system.battle))
 
 func _on_turn_system_on_new_turn():
@@ -68,10 +87,3 @@ func _on_spawn_enemy_ranged_pressed():
 func _on_spawn_enemy_melee_pressed():
 	var instance = DPSMelee.instantiate()
 	enemyPartyContainer.addCharacter(instance)
-
-func CQCCharactersActive():
-	var boolean: bool
-	# Get the container's Melee & Tank Array
-	# If the array.size() is 0 then make area not visible
-	
-	return boolean

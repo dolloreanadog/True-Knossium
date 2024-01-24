@@ -18,7 +18,7 @@ var attack: float
 var morale: float
 # Determine if attack lands or not
 ## The lower the number, the more accurate it is
-@export_range(0, 20, 1) var accuracy: int
+var accuracy: int
 
 #--[ Status ]--
 ## How long an AOE Lingers
@@ -43,16 +43,17 @@ var lastPosition: Vector2
 func _ready():
 	system = get_parent().get_parent().get_node("TurnSystem")
 	system.connect("OnNewTurn", InTurn)
-	print(str(self) + ": health attack for area is " + str(health))
-	print(str(self) + ": defense attack for area is " + str(defense))
-	print(str(self) + ": attack attack for area is " + str(attack))
-	print(str(self) + ": morale attack for area is " + str(morale))
-	print(str(self) + ": accuracy for area is = " + str(accuracy))
-	print(str(self) + ": TurnSystem for Area is: " + str(system))
-	print(str(self) + ": Spawned")
+	system.connect("OnNewBattle", inBattle)
+	#print(str(self) + ": health attack for area is " + str(health))
+	#print(str(self) + ": defense attack for area is " + str(defense))
+	#print(str(self) + ": attack attack for area is " + str(attack))
+	#print(str(self) + ": morale attack for area is " + str(morale))
+	#print(str(self) + ": accuracy for area is = " + str(accuracy))
+	#print(str(self) + ": TurnSystem for Area is: " + str(system))
+	#print(str(self) + ": Spawned")
 	self.z_index = 1
 
-func _process(delta):
+func _process(_delta):
 	if draggable:
 		if dragging:
 			self.global_position = get_global_mouse_position() - currentPosition
@@ -89,7 +90,7 @@ func areaOverlapIsBadArea():
 	if isMelee:
 		for i in overlappingAreaArrayCount:
 			var target = overlappingAreaArray.pop_front()
-			if target is BaseAReaAOEDenial:
+			if target is BaseAreaAOEDenial && target.active == true:
 				print("Returning")
 				returnToLastPosition()
 				draggable = true
@@ -103,7 +104,7 @@ func areaOverlapCharacter(ActiveAttack: bool):
 		if target is BaseCharacter:
 			if ActiveAttack:
 				attackStats(target)
-			draggable = false
+			#draggable = false
 
 func getItemsInside():
 	# We Should make a Temporary Array in here, if we're going to use every turn
@@ -122,12 +123,13 @@ func lastTurn():
 	if activateLastTurn:
 		getItemsInside()
 		areaOverlapCharacter(true)
-	self.queue_free()
 
 # Every time a turn is done something happens
 func InTurn():
 	print(str(self) + ": AOE Turn")
 	TurnsLeft -= 1
+	draggable = false
+	statusActive = true
 	if activateEveryTurn:
 		getItemsInside()
 		areaOverlapCharacter(true)
@@ -137,7 +139,11 @@ func InTurn():
 		activateFirstTurn = false
 	if TurnsLeft <= 0:
 		lastTurn()
+		self.queue_free()
 		
+
+func inBattle():
+	self.queue_free()
 
 # In Case we want something where  it gives a temporary buff, but not add onto it every turn
 # Example: First Turn, give 5 health. Last Turn, remove 5 health
@@ -164,13 +170,6 @@ func attackStats(body: BaseCharacter):
 		body.damageStats(health, defense, attack, morale)
 	else:
 		print(str(self) + ": Target Has Been missed ")
-
-func AccuracyCheck():
-	pass
-
-		
-
-		
 
 #--[ Overridable Functions ]--
 #

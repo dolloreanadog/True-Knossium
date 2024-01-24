@@ -1,15 +1,15 @@
 [gd_scene load_steps=6 format=3 uid="uid://blhjgs42en8v7"]
 
-[ext_resource type="Script" path="res://resources/entities/characters_items/character/BaseCharacter.gd" id="1_dm6w4"]
-[ext_resource type="Script" path="res://resources/components/other/StatComponent.gd" id="2_37tf6"]
-[ext_resource type="Script" path="res://resources/components/actions/BaseAction.gd" id="3_nvfc0"]
-[ext_resource type="PackedScene" uid="uid://jisjad6tdis6" path="res://resources/entities/characters_items/aoe/support_aoe/vitality_aoe/VitalityAOE.tscn" id="4_m1rdv"]
+[ext_resource type="Script" path="res://resources/entities/characters_items/character/BaseCharacter.gd" id="1_vsddx"]
+[ext_resource type="Script" path="res://resources/components/other/StatComponent.gd" id="2_6rlwb"]
+[ext_resource type="Script" path="res://resources/components/actions/BaseAction.gd" id="3_3did2"]
+[ext_resource type="PackedScene" uid="uid://jisjad6tdis6" path="res://resources/entities/characters_items/aoe/support_aoe/vitality_aoe/VitalityAOE.tscn" id="4_82bhb"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4gkwn"]
 size = Vector2(48, 48)
 
 [node name="DevSupportCharacter" type="CharacterBody2D" node_paths=PackedStringArray("action1")]
-script = ExtResource("1_dm6w4")
+script = ExtResource("1_vsddx")
 action1 = NodePath("DevSupportAction")
 
 [node name="ColorRect" type="ColorRect" parent="."]
@@ -23,21 +23,31 @@ color = Color(0.490196, 0.823529, 0, 1)
 shape = SubResource("RectangleShape2D_4gkwn")
 
 [node name="StatComponent" type="Node" parent="."]
-script = ExtResource("2_37tf6")
+script = ExtResource("2_6rlwb")
 id = "SupportStat"
 health = 8.0
-defense = 10.0
+defense = 5.0
 attack = 4.0
 morale = 3.0
 potentialDefenseGain = 2.0
 potentialAttackGain = 2.0
 
 [node name="DevSupportAction" type="Node" parent="." node_paths=PackedStringArray("stats")]
-script = ExtResource("3_nvfc0")
+script = ExtResource("3_3did2")
 stats = NodePath("../StatComponent")
-AOE = ExtResource("4_m1rdv")
+AOE = ExtResource("4_82bhb")
 castTime = 3
 isOffensive = false
 amount = 2
 health = 5.0
 morale = 2.0
+
+[node name="LevelLabel" type="Label" parent="."]
+editor_description = "This will show level, if the level visibility button is pushed"
+offset_left = -24.0
+offset_top = -24.0
+offset_right = 24.0
+offset_bottom = 24.0
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3

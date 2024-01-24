@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://bd1uu7nmu4ict"]
+
+[node name="InfoLabel" type="Label"]
+visible = false
+offset_left = -192.0
+offset_top = 24.0
+offset_right = 192.0
+offset_bottom = 56.0
+text = "h/h d/d a/a m/m"
+horizontal_alignment = 1

@@ -6,8 +6,12 @@ class_name BaseCharacter
 @export var profilePicture: Texture2D
 @onready var stats: StatComponent = get_node("StatComponent")
 @onready var system: TurnSystem = get_parent().get_parent().get_node("TurnSystem")
+@onready var levelLabel: Label = get_node("LevelLabel")
 @export var isFriendly: bool = true
 var turns: int
+
+
+
 
 
 #--[ Effects ]--
@@ -37,6 +41,7 @@ var turns: int
 
 #--[ Base Functions ]--
 func _ready():
+	activateLevelLabel(false)
 	print("TurnSystem: " + str(system))
 	system.connect("OnNewTurn", characterNewTurn)
 	system.connect("OnNewBattle", characterNewBattle)
@@ -47,7 +52,7 @@ func damageStats(health, defense, attack, morale): # Print out the stats of gett
 	print(str(self) + ": Defense stat being damaged for " + str(defense))
 	print(str(self) + ": Attack stat being damaged for " + str(attack))
 	print(str(self) + ": Morale stat being damaged for " + str(morale))
-	stats.isDamaged()
+	#stats.isDamaged()
 	stats.changeCurrentHealth(health)
 	stats.changeCurrentDefense(defense)
 	stats.changeCurrentAttack(attack)
@@ -67,8 +72,19 @@ func useActions():
 		action4.removeCastTime()
 		action1.getAttackInfo()
 
+#--[ Level Label ]--
+
+func activateLevelLabel(boolean: bool):
+	#print(str(self) + ": activated Level Label: " + str(boolean))
+	levelLabel.set_visible(boolean)
+
+func updateLevelLabel():
+	levelLabel.set_text(str(stats.level))
 
 # Make sure these are all called in the Stat Component
+
+#--[ FX ]--
+
 func playLevelUpFX():
 	levelUpFX.playFX()
 
@@ -108,9 +124,34 @@ func playAttackChangedFX():
 func playMoraleChangedFX():
 	moraleChangedFX.playFX()
 
+# We also need someway to doing idle animation & death animation
+# all animation that do the same action
+#We need animated Sprite
+func idleAnimation():
+	match randi_range(1, 3):
+		1:
+			pass
+		2:
+			pass
+		3:
+			pass
+
+func actionAnimation():
+	match randi_range(1, 4):
+		1:
+			pass
+		2:
+			pass
+		3:
+			pass
+		4:
+			pass
+
+#--[ Extra ]--
 ## Get a Signal from the turnSystem to do this
 func characterNewTurn():
 	print(str(self) + ": Received Signal") # We're receiving the signal Twice?
+	actionAnimation()
 	useActions()
 
 func characterNewBattle():

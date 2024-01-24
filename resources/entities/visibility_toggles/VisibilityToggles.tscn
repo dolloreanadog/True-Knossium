@@ -1,0 +1,54 @@
+[gd_scene load_steps=2 format=3 uid="uid://bwmi2u27htu4s"]
+
+[ext_resource type="Script" path="res://resources/entities/visibility_toggles/VisibilityToggles.gd" id="1_2traf"]
+
+[node name="VisibilityToggles" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_2traf")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 0
+offset_right = 402.0
+offset_bottom = 64.0
+
+[node name="ViewNormal" type="Button" parent="HBoxContainer"]
+layout_mode = 2
+text = "View
+Normal"
+
+[node name="ViewHealth" type="Button" parent="HBoxContainer"]
+layout_mode = 2
+text = "View
+Health"
+
+[node name="ViewDefense" type="Button" parent="HBoxContainer"]
+layout_mode = 2
+text = "View
+Defense"
+
+[node name="ViewAttack" type="Button" parent="HBoxContainer"]
+layout_mode = 2
+text = "View
+Attack"
+
+[node name="ViewMorale" type="Button" parent="HBoxContainer"]
+layout_mode = 2
+text = "View
+Morale"
+
+[node name="ViewLevel" type="Button" parent="HBoxContainer"]
+layout_mode = 2
+text = "View
+Level"
+
+[connection signal="pressed" from="HBoxContainer/ViewNormal" to="." method="_on_view_normal_pressed"]
+[connection signal="pressed" from="HBoxContainer/ViewHealth" to="." method="_on_view_health_pressed"]
+[connection signal="pressed" from="HBoxContainer/ViewDefense" to="." method="_on_view_defense_pressed"]
+[connection signal="pressed" from="HBoxContainer/ViewAttack" to="." method="_on_view_attack_pressed"]
+[connection signal="pressed" from="HBoxContainer/ViewMorale" to="." method="_on_view_morale_pressed"]
+[connection signal="pressed" from="HBoxContainer/ViewLevel" to="." method="_on_view_level_pressed"]

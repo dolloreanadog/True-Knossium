@@ -1,23 +1,26 @@
-[gd_scene load_steps=6 format=3 uid="uid://blhjgs42en8v7"]
+[gd_scene load_steps=9 format=3 uid="uid://blhjgs42en8v7"]
 
 [ext_resource type="Script" path="res://resources/entities/characters_items/character/BaseCharacter.gd" id="1_vsddx"]
 [ext_resource type="Script" path="res://resources/components/other/StatComponent.gd" id="2_6rlwb"]
 [ext_resource type="Script" path="res://resources/components/actions/BaseAction.gd" id="3_3did2"]
 [ext_resource type="PackedScene" uid="uid://jisjad6tdis6" path="res://resources/entities/characters_items/aoe/support_aoe/vitality_aoe/VitalityAOE.tscn" id="4_82bhb"]
+[ext_resource type="SpriteFrames" uid="uid://bqxgo1qvvubkw" path="res://assets/sprites/character/dev/DevSupportSprite.tres" id="5_4io5i"]
+[ext_resource type="PackedScene" uid="uid://bi1oe18bs03s5" path="res://resources/components/other/FX/over_max_health_fx/over_max_health_default/DefaultMaxHealthFX.tscn" id="6_tslcc"]
+[ext_resource type="PackedScene" uid="uid://dhw2i4apl4wh6" path="res://resources/components/other/FX/level_up_fx/default_level_up/DefaultLevelUpFX.tscn" id="7_fbj75"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4gkwn"]
 size = Vector2(48, 48)
 
-[node name="DevSupportCharacter" type="CharacterBody2D" node_paths=PackedStringArray("action1")]
+[node name="DevSupportCharacter" type="CharacterBody2D" node_paths=PackedStringArray("levelUpFX", "overHealthFX", "action1")]
 script = ExtResource("1_vsddx")
+levelUpFX = NodePath("DefaultLevelUpFX")
+overHealthFX = NodePath("DefaultMaxHealth")
 action1 = NodePath("DevSupportAction")
 
-[node name="ColorRect" type="ColorRect" parent="."]
-offset_left = -24.0
-offset_top = -24.0
-offset_right = 24.0
-offset_bottom = 24.0
-color = Color(0.490196, 0.823529, 0, 1)
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.12, 0.12)
+sprite_frames = ExtResource("5_4io5i")
+animation = &"idle1"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_4gkwn")
@@ -35,6 +38,7 @@ potentialAttackGain = 2.0
 [node name="DevSupportAction" type="Node" parent="." node_paths=PackedStringArray("stats")]
 script = ExtResource("3_3did2")
 stats = NodePath("../StatComponent")
+animationUsed = "offensive1"
 AOE = ExtResource("4_82bhb")
 castTime = 3
 isOffensive = false
@@ -51,3 +55,8 @@ offset_bottom = 24.0
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 3
+
+[node name="DefaultMaxHealth" parent="." node_paths=PackedStringArray("stats") instance=ExtResource("6_tslcc")]
+stats = NodePath("../StatComponent")
+
+[node name="DefaultLevelUpFX" parent="." instance=ExtResource("7_fbj75")]

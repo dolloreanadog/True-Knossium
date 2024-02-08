@@ -4,9 +4,11 @@ class_name BaseCharacter
 #--[ Some important stuff ]--
 @export var id: String
 @export var profilePicture: Texture2D
+@onready var dungeon: levelDungeon = get_parent().get_parent()
 @onready var stats: StatComponent = get_node("StatComponent")
 @onready var system: TurnSystem = get_parent().get_parent().get_node("TurnSystem")
 @onready var levelLabel: Label = get_node("LevelLabel")
+@onready var characterSprite: AnimatedSprite2D = get_node("AnimatedSprite2D")
 @export var isFriendly: bool = true
 var turns: int
 
@@ -39,12 +41,17 @@ var turns: int
 @export var action3: BaseActionComponent
 @export var action4: BaseActionComponent
 
+#--[ Signal ]--
+signal characterAnimationFinished
+
+
 #--[ Base Functions ]--
 func _ready():
 	activateLevelLabel(false)
 	print("TurnSystem: " + str(system))
-	system.connect("OnNewTurn", characterNewTurn)
+	dungeon.connect("AOEQueueFinished", characterNewTurn) # Instead of this use Dungeon's Queue Signal
 	system.connect("OnNewBattle", characterNewBattle)
+	runAnimation("idle1")
 
 func damageStats(health, defense, attack, morale): # Print out the stats of getting damage
 	print(str(self) + ": Body is getting Damaged")
@@ -64,13 +71,13 @@ func useActions():
 		action1.getAttackInfo()
 	if action2 != null:
 		action2.removeCastTime()
-		action1.getAttackInfo()
+		action2.getAttackInfo()
 	if action3 != null:
 		action3.removeCastTime()
-		action1.getAttackInfo()
+		action3.getAttackInfo()
 	if action4 != null:
 		action4.removeCastTime()
-		action1.getAttackInfo()
+		action4.getAttackInfo()
 
 #--[ Level Label ]--
 
@@ -124,35 +131,64 @@ func playAttackChangedFX():
 func playMoraleChangedFX():
 	moraleChangedFX.playFX()
 
+#--[ Animation ]--
+
 # We also need someway to doing idle animation & death animation
 # all animation that do the same action
 #We need animated Sprite
 func idleAnimation():
-	match randi_range(1, 3):
-		1:
-			pass
-		2:
-			pass
-		3:
-			pass
-
-func actionAnimation():
 	match randi_range(1, 4):
 		1:
-			pass
+			runAnimation("idle1")
 		2:
-			pass
+			runAnimation("idle2")
 		3:
-			pass
-		4:
-			pass
+			runAnimation("idle3")
+
+# The new way to do attack animation
+# When AOE is used it either choose attack animation, special attack animation, buff animation, defense animation
+func runAnimation(animationName: String):
+	print(str(self) + ": (runAnimation) " + getAnimation() + " - " + animationName)
+	match animationName:
+		"idle1":
+			characterSprite.play("idle1")
+		"idle2":
+			characterSprite.play("idle2")
+		"idle3":
+			characterSprite.play("idle3")
+		"offensive1":
+			characterSprite.play("offensive1")
+		"offensive2":
+			characterSprite.play("offensive2")
+		"offensive3":
+			characterSprite.play("offensive3")
+		"offensive4":
+			characterSprite.play("offensive4")
+		"inoffensive1":
+			characterSprite.play("inoffensive1")
+		"inoffensive2":
+			characterSprite.play("inoffensive1")
+		"inoffensive3":
+			characterSprite.play("inoffensive1")
+		"inoffensive4":
+			characterSprite.play("inoffensive1")
+		"death":
+			characterSprite.play("death")
+		"surrender":
+			characterSprite.play("surrender")
+		_:
+			push_warning(animationName + ": There is no sprite animation by that name!")
+	emit_signal("characterAnimationFinished")
+
+func getAnimation():
+	return characterSprite.get_animation()
 
 #--[ Extra ]--
 ## Get a Signal from the turnSystem to do this
 func characterNewTurn():
-	print(str(self) + ": Received Signal") # We're receiving the signal Twice?
-	actionAnimation()
-	useActions()
+	print(str(self) + ": (L) Received Signal") # We're receiving the signal Twice?
+	useActions() # Move this Dungeon's goThroughQueuedAOEArray()
+	# Or use a signal
 
 func characterNewBattle():
 	stats.resetCurrentStats()

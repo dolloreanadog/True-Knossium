@@ -168,6 +168,8 @@ func addCharacter(character: BaseCharacter):
 		character.isFriendly = false
 		add_child(character, true)
 		characterStats.changeEXP(randomizeDifficultyEXP())
+		if character.characterSprite != null:
+			character.characterSprite.flip_h = true
 		match role:
 			characterStats.rolesList.Healer:
 				character.set_position(SupportSpawnArea.randomizeSpawn())

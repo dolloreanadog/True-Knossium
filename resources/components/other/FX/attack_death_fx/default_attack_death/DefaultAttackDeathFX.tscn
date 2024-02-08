@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bacq2pj0ev6au"]
+
+[ext_resource type="Script" path="res://resources/components/other/FX/BaseFX.gd" id="1_mb1em"]
+
+[node name="AttackDeathFX" type="Node"]
+script = ExtResource("1_mb1em")

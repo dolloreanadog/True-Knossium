@@ -18,7 +18,7 @@
 [ext_resource type="Script" path="res://resources/entities/enemy_aoe_container/EnemyAOEContainer.gd" id="15_oeev1"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3ywvn"]
-size = Vector2(128, 256)
+size = Vector2(128, 368)
 
 [node name="Dungeon" type="Node2D"]
 script = ExtResource("1_et2wr")
@@ -46,34 +46,34 @@ offset_bottom = 40.0
 
 [node name="SpawnFriendlyHealer" type="Button" parent="TestingButtons/FriendlySpawner"]
 layout_mode = 0
-offset_left = 216.0
-offset_top = 608.0
-offset_right = 336.0
-offset_bottom = 640.0
+offset_left = 136.0
+offset_top = 584.0
+offset_right = 256.0
+offset_bottom = 616.0
 text = "Spawn Healer"
 
 [node name="SpawnFriendlyTank" type="Button" parent="TestingButtons/FriendlySpawner"]
 layout_mode = 0
-offset_left = 88.0
-offset_top = 576.0
-offset_right = 216.0
-offset_bottom = 608.0
+offset_left = 8.0
+offset_top = 552.0
+offset_right = 136.0
+offset_bottom = 584.0
 text = "Spawn Tank"
 
 [node name="SpawnFriendRanged" type="Button" parent="TestingButtons/FriendlySpawner"]
 layout_mode = 0
-offset_left = 216.0
-offset_top = 576.0
-offset_right = 344.0
-offset_bottom = 608.0
+offset_left = 136.0
+offset_top = 552.0
+offset_right = 264.0
+offset_bottom = 584.0
 text = "Spawn Ranged"
 
 [node name="SpawnFriendMelee" type="Button" parent="TestingButtons/FriendlySpawner"]
 layout_mode = 0
-offset_left = 96.0
-offset_top = 608.0
-offset_right = 216.0
-offset_bottom = 640.0
+offset_left = 16.0
+offset_top = 584.0
+offset_right = 136.0
+offset_bottom = 616.0
 text = "Spawn Melee"
 
 [node name="EnemySpawner" type="Control" parent="TestingButtons"]
@@ -83,34 +83,34 @@ offset_bottom = 40.0
 
 [node name="SpawnEnemyHealer" type="Button" parent="TestingButtons/EnemySpawner"]
 layout_mode = 0
-offset_left = 920.0
-offset_top = 608.0
-offset_right = 1035.0
-offset_bottom = 639.0
+offset_left = 1016.0
+offset_top = 584.0
+offset_right = 1131.0
+offset_bottom = 615.0
 text = "Spawn Healer"
 
 [node name="SpawnEnemyTank" type="Button" parent="TestingButtons/EnemySpawner"]
 layout_mode = 0
-offset_left = 792.0
-offset_top = 576.0
-offset_right = 920.0
-offset_bottom = 608.0
+offset_left = 888.0
+offset_top = 552.0
+offset_right = 1016.0
+offset_bottom = 584.0
 text = "Spawn Tank"
 
 [node name="SpawnEnemyRanged" type="Button" parent="TestingButtons/EnemySpawner"]
 layout_mode = 0
-offset_left = 920.0
-offset_top = 576.0
-offset_right = 1048.0
-offset_bottom = 608.0
+offset_left = 1016.0
+offset_top = 552.0
+offset_right = 1144.0
+offset_bottom = 584.0
 text = "Spawn Ranged"
 
 [node name="SpawnEnemyMelee" type="Button" parent="TestingButtons/EnemySpawner"]
 layout_mode = 0
-offset_left = 808.0
-offset_top = 608.0
-offset_right = 920.0
-offset_bottom = 639.0
+offset_left = 904.0
+offset_top = 584.0
+offset_right = 1016.0
+offset_bottom = 615.0
 text = "Spawn Melee"
 
 [node name="EndTurn" type="Button" parent="TestingButtons"]
@@ -153,18 +153,18 @@ text = "AOE Spawn Area"
 
 [node name="Label3" type="Label" parent="Notes"]
 layout_mode = 0
-offset_left = 352.0
-offset_top = 576.0
-offset_right = 514.0
-offset_bottom = 602.0
+offset_left = 56.0
+offset_top = 616.0
+offset_right = 218.0
+offset_bottom = 642.0
 text = "Friendly Spawn Area"
 
 [node name="Label4" type="Label" parent="Notes"]
 layout_mode = 0
-offset_left = 640.0
-offset_top = 576.0
-offset_right = 792.0
-offset_bottom = 602.0
+offset_left = 944.0
+offset_top = 616.0
+offset_right = 1096.0
+offset_bottom = 642.0
 text = "Enemy Spawn Area"
 
 [node name="Label5" type="Label" parent="Notes"]
@@ -302,14 +302,14 @@ position = Vector2(0, -64)
 script = ExtResource("7_7xw1c")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="EnemyAOEDenialRanged"]
-position = Vector2(896, 384)
+position = Vector2(896, 440)
 shape = SubResource("RectangleShape2D_3ywvn")
 
 [node name="ColorRect" type="ColorRect" parent="EnemyAOEDenialRanged"]
 offset_left = 832.0
 offset_top = 256.0
 offset_right = 960.0
-offset_bottom = 512.0
+offset_bottom = 624.0
 color = Color(0.603922, 1, 1, 0.0627451)
 
 [node name="EnemyAOEDenialSupport" type="Area2D" parent="."]
@@ -317,14 +317,14 @@ position = Vector2(0, -64)
 script = ExtResource("7_7xw1c")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="EnemyAOEDenialSupport"]
-position = Vector2(1024, 384)
+position = Vector2(1024, 440)
 shape = SubResource("RectangleShape2D_3ywvn")
 
 [node name="ColorRect" type="ColorRect" parent="EnemyAOEDenialSupport"]
 offset_left = 960.0
 offset_top = 256.0
 offset_right = 1088.0
-offset_bottom = 512.0
+offset_bottom = 624.0
 color = Color(0.603922, 1, 1, 0.0627451)
 
 [node name="FriendlyAOEDenialRanged" type="Area2D" parent="."]
@@ -332,14 +332,14 @@ position = Vector2(0, -64)
 script = ExtResource("7_7xw1c")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="FriendlyAOEDenialRanged"]
-position = Vector2(256, 384)
+position = Vector2(256, 440)
 shape = SubResource("RectangleShape2D_3ywvn")
 
 [node name="ColorRect" type="ColorRect" parent="FriendlyAOEDenialRanged"]
 offset_left = 192.0
 offset_top = 256.0
 offset_right = 320.0
-offset_bottom = 512.0
+offset_bottom = 624.0
 color = Color(0.603922, 1, 1, 0.0627451)
 
 [node name="FriendlyAOEDenialSupport" type="Area2D" parent="."]
@@ -347,14 +347,14 @@ position = Vector2(0, -64)
 script = ExtResource("7_7xw1c")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="FriendlyAOEDenialSupport"]
-position = Vector2(128, 384)
+position = Vector2(128, 440)
 shape = SubResource("RectangleShape2D_3ywvn")
 
 [node name="ColorRect" type="ColorRect" parent="FriendlyAOEDenialSupport"]
 offset_left = 64.0
 offset_top = 256.0
 offset_right = 192.0
-offset_bottom = 512.0
+offset_bottom = 616.0
 color = Color(0.603922, 1, 1, 0.0627451)
 
 [node name="EnemySpawnArea" type="Control" parent="."]
@@ -492,10 +492,10 @@ enemyPartyContainer = NodePath("../EnemyPartyContainer")
 system = NodePath("../TurnSystem")
 
 [node name="VisibilityToggles" parent="." instance=ExtResource("14_8cna0")]
-offset_left = 352.0
-offset_top = 512.0
-offset_right = 352.0
-offset_bottom = 512.0
+offset_left = 384.0
+offset_top = 568.0
+offset_right = 384.0
+offset_bottom = 568.0
 
 [node name="StopControl" type="Control" parent="."]
 editor_description = "Prevents Player From Touching"

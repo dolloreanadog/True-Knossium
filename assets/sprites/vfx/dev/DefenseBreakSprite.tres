@@ -1,0 +1,51 @@
+[gd_resource type="SpriteFrames" load_steps=7 format=3 uid="uid://be3lmgnrkxitp"]
+
+[ext_resource type="Texture2D" uid="uid://688y5kjw8wwi" path="res://assets/art/vfx/DefenceBreak.png" id="1_b44xe"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2gfpw"]
+atlas = ExtResource("1_b44xe")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nh6jv"]
+atlas = ExtResource("1_b44xe")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q6l3l"]
+atlas = ExtResource("1_b44xe")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dtjal"]
+atlas = ExtResource("1_b44xe")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_52vpo"]
+atlas = ExtResource("1_b44xe")
+region = Rect2(256, 0, 64, 64)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2gfpw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nh6jv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q6l3l")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dtjal")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_52vpo")
+}],
+"loop": false,
+"name": &"active",
+"speed": 24.0
+}, {
+"frames": [],
+"loop": false,
+"name": &"inactive",
+"speed": 24.0
+}]

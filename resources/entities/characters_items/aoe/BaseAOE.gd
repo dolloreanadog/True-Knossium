@@ -5,6 +5,10 @@ class_name BaseAOE
 # This should always be the child
 #
 
+#--[ Owner ]--
+var ownerCharacter: BaseCharacter
+var ownerCharacterAnimation: String
+
 #--[ Turn System ]--
 @onready var system: TurnSystem
 
@@ -27,6 +31,7 @@ var accuracy: int
 @export var activateEveryTurn: bool = true
 @export var activateLastTurn: bool = false
 @export var isMelee: bool
+var isCharacterAnimationDone: bool = true
 var statusActive: bool
 
 #--[ Overlapping ]--
@@ -42,7 +47,7 @@ var lastPosition: Vector2
 #--[ Base Functions ]--
 func _ready():
 	system = get_parent().get_parent().get_node("TurnSystem")
-	system.connect("OnNewTurn", InTurn)
+	#system.connect("OnNewTurn", InTurn)
 	system.connect("OnNewBattle", inBattle)
 	#print(str(self) + ": health attack for area is " + str(health))
 	#print(str(self) + ": defense attack for area is " + str(defense))
@@ -137,6 +142,10 @@ func InTurn():
 	if activateFirstTurn:
 		firstTurn()
 		activateFirstTurn = false
+	if isCharacterAnimationDone:
+		if is_instance_valid(ownerCharacter):
+			ownerCharacter.runAnimation(ownerCharacterAnimation)
+		isCharacterAnimationDone = false
 	if TurnsLeft <= 0:
 		lastTurn()
 		self.queue_free()

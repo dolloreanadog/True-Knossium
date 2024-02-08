@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://p6mxudeee7ur"]
+
+[ext_resource type="Script" path="res://resources/components/other/FX/health_death_fx/default_health_death/DefaultHealthDeathFX.gd" id="1_wgk1x"]
+
+[node name="HealthDeathFX" type="Node"]
+script = ExtResource("1_wgk1x")

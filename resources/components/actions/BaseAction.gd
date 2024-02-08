@@ -7,6 +7,9 @@ class_name BaseActionComponent
 # get_parent() chain here we go
 @export var stats: StatComponent
 @onready var character: BaseCharacter = get_parent()
+
+## What animation to use when casted, Check Animation Naming Convention in Discord.
+@export var animationUsed: String
 @onready var spawnArea: BaseSpawnArea = get_parent().get_parent().get_parent().get_node("AOESpawnArea")
 ## For the AI use
 # This is used to store the attack, the AOEs here should be sent to other Party Container
@@ -24,7 +27,7 @@ var currentCastTime: int
 
 #--[ Stats ]--
 @export var isOffensive: bool = true
-@export var amount: int
+@export var amount: int = 1
 # Need to figure out how to utilize this attack stat
 # Here should be 0-9
 @export var health: float = 0
@@ -82,6 +85,8 @@ func spawnAOE():
 			instance.morale = CurrentMorale
 		
 		instance.accuracy = accuracy
+		instance.ownerCharacter = self.get_owner()
+		instance.ownerCharacterAnimation = animationUsed
 		if character.isFriendly:
 			spawnArea.add_child(instance, true)
 			instance.set_global_position(spawnArea.randomizeSpawn())

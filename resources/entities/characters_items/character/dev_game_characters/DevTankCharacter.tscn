@@ -1,39 +1,58 @@
-[gd_scene load_steps=8 format=3 uid="uid://cqsc48ser047f"]
+[gd_scene load_steps=13 format=3 uid="uid://cqsc48ser047f"]
 
 [ext_resource type="Script" path="res://resources/entities/characters_items/character/BaseCharacter.gd" id="1_d7cus"]
 [ext_resource type="Script" path="res://resources/components/actions/BaseAction.gd" id="2_8644t"]
+[ext_resource type="PackedScene" uid="uid://u172rb6a25bx" path="res://resources/entities/characters_items/aoe/melee_aoe/swing_aoe/SwingAOE.tscn" id="3_6vel4"]
 [ext_resource type="PackedScene" uid="uid://d2hgrnkks06qa" path="res://resources/entities/characters_items/aoe/tank_aoe/fortify_aoe/FortifyAOE.tscn" id="3_44836"]
 [ext_resource type="Script" path="res://resources/components/other/StatComponent.gd" id="4_pgy6x"]
 [ext_resource type="PackedScene" uid="uid://bd1uu7nmu4ict" path="res://resources/components/other/info_label/InfoLabel.tscn" id="5_ybmnc"]
 [ext_resource type="Script" path="res://resources/components/other/info_label/InfoLabel.gd" id="6_p6a3k"]
+[ext_resource type="SpriteFrames" uid="uid://bcr2f7fck2lv3" path="res://assets/sprites/character/dev/DevTankSprite.tres" id="8_rm6ur"]
+[ext_resource type="PackedScene" uid="uid://dhw2i4apl4wh6" path="res://resources/components/other/FX/level_up_fx/default_level_up/DefaultLevelUpFX.tscn" id="9_ejxh4"]
+[ext_resource type="PackedScene" uid="uid://p6mxudeee7ur" path="res://resources/components/other/FX/health_death_fx/default_health_death/DefaultHealthDeathFX.tscn" id="10_7njod"]
+[ext_resource type="PackedScene" uid="uid://bi1oe18bs03s5" path="res://resources/components/other/FX/over_max_health_fx/over_max_health_default/DefaultMaxHealthFX.tscn" id="11_nebxp"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qcsi2"]
 size = Vector2(48, 48)
 
-[node name="DevTankCharacter" type="CharacterBody2D" node_paths=PackedStringArray("action1")]
+[node name="DevTankCharacter" type="CharacterBody2D" node_paths=PackedStringArray("levelUpFX", "healthDeathFX", "overHealthFX", "action1", "action2")]
 script = ExtResource("1_d7cus")
-action1 = NodePath("DevTankAction")
+levelUpFX = NodePath("DefaultLevelUpFX")
+healthDeathFX = NodePath("HealthDeathFX")
+overHealthFX = NodePath("DefaultMaxHealth")
+action1 = NodePath("DevTankActionDefense")
+action2 = NodePath("DevTankActionAttack")
 
-[node name="ColorRect" type="ColorRect" parent="."]
-offset_left = -24.0
-offset_top = -24.0
-offset_right = 24.0
-offset_bottom = 24.0
-color = Color(0.560784, 1, 1, 1)
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.12, 0.12)
+sprite_frames = ExtResource("8_rm6ur")
+animation = &"idle1"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_qcsi2")
 
-[node name="DevTankAction" type="Node" parent="." node_paths=PackedStringArray("stats")]
+[node name="DevTankActionDefense" type="Node" parent="." node_paths=PackedStringArray("stats")]
 script = ExtResource("2_8644t")
 stats = NodePath("../StatComponent")
+animationUsed = "inoffensive1"
 AOE = ExtResource("3_44836")
 castTime = 3
 isOffensive = false
-amount = 1
 health = 2.0
 defense = 3.0
 morale = 5.0
+
+[node name="DevTankActionAttack" type="Node" parent="." node_paths=PackedStringArray("stats")]
+script = ExtResource("2_8644t")
+stats = NodePath("../StatComponent")
+animationUsed = "offensive1"
+AOE = ExtResource("3_6vel4")
+castTime = 1
+health = 2.0
+defense = 5.0
+attack = 1.0
+morale = 1.0
+accuracy = 1
 
 [node name="StatComponent" type="Node" parent="."]
 script = ExtResource("4_pgy6x")
@@ -60,3 +79,10 @@ offset_bottom = 24.0
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 3
+
+[node name="DefaultLevelUpFX" parent="." instance=ExtResource("9_ejxh4")]
+
+[node name="HealthDeathFX" parent="." instance=ExtResource("10_7njod")]
+
+[node name="DefaultMaxHealth" parent="." node_paths=PackedStringArray("stats") instance=ExtResource("11_nebxp")]
+stats = NodePath("../StatComponent")

@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://c1jhuxqcexyqy"]
+
+[ext_resource type="Script" path="res://resources/components/other/FX/defense_death_fx/default_death_fx/DefaultDefenseDeathFX.gd" id="1_4frvk"]
+[ext_resource type="SpriteFrames" uid="uid://be3lmgnrkxitp" path="res://assets/sprites/vfx/dev/DefenseBreakSprite.tres" id="2_g0a3i"]
+
+[node name="DefenseDeathFX" type="Node"]
+script = ExtResource("1_4frvk")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+position = Vector2(-1.43051e-06, -1.43051e-06)
+scale = Vector2(0.75, 0.75)
+sprite_frames = ExtResource("2_g0a3i")
+animation = &"inactive"

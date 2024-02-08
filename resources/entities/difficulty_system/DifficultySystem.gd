@@ -82,7 +82,7 @@ func NormalSpawnBehavior():
 func HordeSpawnBehavior(): # <- For some reason this is the most reliable spawner
 	print(str(self) + ": Horde Spawning Behavior")
 	var total = 0
-	var LdifficultyTotal = difficultyTotal * 2
+	var LdifficultyTotal = difficultyTotal * 1.25
 	print(str(self) + "LdifficultyTotal: " + str(LdifficultyTotal))
 	charityDifficultyEXP *= 0.05
 	print("charityDifficultyEXP: " + str(charityDifficultyEXP))

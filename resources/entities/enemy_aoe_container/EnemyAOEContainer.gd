@@ -2,6 +2,7 @@ extends Node2D
 class_name EnemyAOEContainer
 
 #--[ Important Nodes ]--
+@onready var dungeon: levelDungeon = get_parent()
 @export var system: TurnSystem
 @export var targetPartyContainer: BasePartyContainer
 @export var isAOESupportContainer: bool
@@ -33,10 +34,10 @@ var targetedSupport: Array
 
 
 func _ready():
-	system.connect("OnNewTurn", newTurn)
+	dungeon.connect("AOEQueueFinished", newTurn)
 
 func newTurn():
-	await get_tree().create_timer(0.5).timeout # Have this here so we get everything else loaded
+	await get_tree().create_timer(0.25).timeout # Have this here so we get everything else loaded
 	getCharacters()
 	getAOEInfo()
 	randomChoosePreferredPlan()
@@ -121,134 +122,165 @@ func getCharacters():
 	targetedSupport = targetPartyContainer.getSupportArray()
 	print(str(self) + ": (getCharacters) health unsorted: " + str(targetedCharacters))
 
-#--[ AI usage of AOE Version 1]--
-
-## this function does use all the AOE
-#func useAllAOE():
-#	await get_tree().create_timer(0.25).timeout
-#	print(str(self) + ": (useAllAOE) Using all AOE!")
-#	#var targetCharacterArray: Array
-#	var targetAOE: BaseAOE
-#	var priorityAttack: highAttackIn
-#	#var targetCharacter: BaseCharacter
-#
-#	# Make good comments btw
-#	# How do we get target AOE? Solution is down below
-#	print(str(self) + ": (useAllAOE) AOEListHighHealthAttack!: " + str(AOEListHighHealthAttack.size()))
-#	print(str(self) + ": (useAllAOE) AOEListHighDefenseAttack!: " + str(AOEListHighDefenseAttack.size()))
-#	print(str(self) + ": (useAllAOE) AOEListHighAttackAttack!: " + str(AOEListHighAttackAttack.size()))
-#	print(str(self) + ": (useAllAOE) AOEListHighMoraleAttack!: " + str(AOEListHighMoraleAttack.size()))
-#	# Something wrong here, while statement not activating.
-#	while AOEListHighHealthAttack.size() + AOEListHighDefenseAttack.size() + AOEListHighAttackAttack.size() + AOEListHighMoraleAttack.size() > 0:
-#		print(str(self) + ": (useAllAOE) going through AOE List")
-#
-#		if AOEListHighHealthAttack.size() != 0:
-#			targetAOE = AOEListHighHealthAttack.pop_back()
-#			print(str(self) + ": (useAllAOE) AOE is high health!: " + str(targetAOE))
-#			priorityAttack = highAttackIn.HEALTH
-#			print(str(self) + ": (useAllAOE) priorityAttack!: " + str(priorityAttack))
-#		elif AOEListHighDefenseAttack.size() != 0:
-#			targetAOE = AOEListHighDefenseAttack.pop_back()
-#			print(str(self) + ": (useAllAOE) AOE is high defense!: " + str(targetAOE))
-#			priorityAttack = highAttackIn.DEFENSE
-#			print(str(self) + ": (useAllAOE) priorityAttack!: " + str(priorityAttack))
-#		elif AOEListHighAttackAttack.size() != 0:
-#			targetAOE = AOEListHighAttackAttack.pop_back()
-#			print(str(self) + ": (useAllAOE) AOE is high attack!: " + str(targetAOE))
-#			priorityAttack = highAttackIn.ATTACK
-#			print(str(self) + ": (useAllAOE) priorityAttack!: " + str(priorityAttack))
-#		elif AOEListHighMoraleAttack.size() != 0:
-#			targetAOE = AOEListHighMoraleAttack.pop_back()
-#			print(str(self) + ": (useAllAOE) AOE is high morale!: " + str(targetAOE))
-#			priorityAttack = highAttackIn.MORALE
-#			print(str(self) + ": (useAllAOE) priorityAttack!: " + str(priorityAttack))
-#		else:
-#			push_warning(str(self) + ": (useAllAOE) AOE IS NULL!: ")
-#			continue
-#
-#		if targetAOE != null:
-#			print(str(self) + ": (useAllAOE) AOE is not null!: " + str(targetAOE))
-#			if isAOESupportContainer != true:
-#				print(str(self) + ": (useAllAOE) AOE is in AOE Support Container: " + str(targetAOE))
-#				if targetAOE.isMelee:
-#					print(str(self) + ": (useAllAOE) targetAOE is Melee!")
-#					# This if statement, as because it's melee, should target Front, Middle, then Back
-#					if targetedTanks.size() != 0 or targetedMelee.size() != 0:
-#						var targetCharacterArray: Array = targetedTanks + targetedMelee
-#						print(str(self) + ": (useAllAOE) targetting CQC characters: " + str(targetCharacterArray))
-#						chosenPreferredPlan(priorityAttack, targetCharacterArray, targetAOE)
-#					elif targetedRanged.size() != 0:
-#						var targetCharacterArray: Array = targetedRanged
-#						print(str(self) + ": (useAllAOE) targetting Ranged characters: " + str(targetCharacterArray))
-#						chosenPreferredPlan(priorityAttack, targetCharacterArray, targetAOE)
-#					else:
-#						var targetCharacterArray: Array = targetedSupport
-#						print(str(self) + ": (useAllAOE) targetting Support characters: " + str(targetCharacterArray))
-#						chosenPreferredPlan(priorityAttack, targetCharacterArray, targetAOE)
-#				else: #targetAOE.isMelee == false
-#					var targetCharacterArray: Array = targetedTanks + targetedMelee + targetedRanged + targetedSupport
-#					print(str(self) + ": (useAllAOE) target every character: " + str(targetCharacterArray))
-#					chosenPreferredPlan(priorityAttack, targetCharacterArray, targetAOE)
-#			else: #isAOESupportContainer == true
-#				# Target all Characters
-#				var targetCharacterArray: Array = targetedTanks + targetedMelee + targetedRanged + targetedSupport
-#				print(str(self) + ": (useAllAOE) target AOE is not Melee: " + str(targetCharacterArray))
-#				chosenPreferredPlan(priorityAttack, targetCharacterArray, targetAOE)
-#
-#		else:
-#			push_warning(str(self) + ": (useAllAOE) targetAOE was null ")
-#	print(str(self) + ": (useAllAOE) finished while statement")
-#
-### once we get the preferred plan, put it here. Need to fill out the rest of the prerequisites as well.
-#func chosenPreferredPlan(priorityAttack, targetCharacterArray, targetAOE):
-#	print(str(self) + ": (useAllAOE) (ChosenPreferredPlan)")
-#	print(str(self) + ": (useAllAOE) (ChosenPreferredPlan) priorityAttack: " + str(priorityAttack))
-#	print(str(self) + ": (useAllAOE) (ChosenPreferredPlan) targetCharacterArray: " + str(targetCharacterArray))
-#	print(str(self) + ": (useAllAOE) (ChosenPreferredPlan) targetAOE: " + str(targetAOE))
-#	match preferredPlan:
-#		behaviorPlans.TARGETSINGLE:
-#			print(str(self) + ": (useAllAOE) (ChosenPreferredPlan) targetting single character")
-#			useAOE(priorityAttack, targetCharacterArray, targetAOE, 1)
-#		behaviorPlans.TARGETLIMITED:
-#			# 50% of targetCharacterArray should be targettable
-#			print(str(self) + ": (useAllAOE) (ChosenPreferredPlan) targetting limited characters")
-#			var uses = targetCharacterArray.size() / 2
-#			useAOE(priorityAttack, targetCharacterArray, targetAOE, uses)
-#		behaviorPlans.TARGETMULTIPLE:
-#			# 100% of targetCharacterArray should be targettable
-#			print(str(self) + ": (useAllAOE) (ChosenPreferredPlan) targetting all")
-#			var uses = targetCharacterArray.size()
-#			useAOE(priorityAttack, targetCharacterArray, targetAOE, uses)
-#
-### Finally get to use the AOE
-#func useAOE(priorityAttack: highAttackIn, targetCharacterArray: Array, targetAOE: BaseAOE, timesOfUse: int):
-#	print(str(self) + ": (useAllAOE) (useAOE)")
-#	match priorityAttack:
-#		highAttackIn.HEALTH:
-#			# This does damage, Lowest Health is at the back
-#			targetedCharacters.sort_custom(sortHealth)
-#		highAttackIn.DEFENSE:
-#			targetedCharacters.sort_custom(sortDefense)
-#		highAttackIn.ATTACK:
-#			targetedCharacters.sort_custom(sortAttack)
-#		highAttackIn.MORALE:
-#			targetedCharacters.sort_custom(sortMorale)
-#
-#	targetCharacterArray.reverse()
-#	targetCharacterArray.resize(timesOfUse)
-#	targetedCharacters.shuffle()
-#	var targetCharacter: BaseCharacter = targetCharacterArray.pop_back()
-#	positionAOE(targetAOE, targetCharacter)
-
 #--[ AI usage of AOE Version 2]--
 
+# We get target AOE from the four categorized arrays
+# Do a while statement, keep it going as long as there more than 0 AOE
+# Grab an AOE from the category
+#
 
 
+
+# IT CURRENTLY DOES NOT TAKE INTO ACCOUNT IF IT'S MELEE!!!
+## gets all AOE & uses them
+func useAllAOE():
+	await get_tree().create_timer(0.25).timeout
+	var targetAOE: BaseAOE
+	var attackPriority: highAttackIn
+
+	
+	print(str(self) + ": (useAllAOE) (List) Starting Using AOE For Statement")
+	print(str(self) + ": (useAllAOE) (List) AOEHealthTargets: " + str(AOEListHighHealthAttack))
+	print(str(self) + ": (useAllAOE) (List) AOEDefenseTargets: " + str(AOEListHighDefenseAttack))
+	print(str(self) + ": (useAllAOE) (List) AOEAttackTargets: " + str(AOEListHighAttackAttack))
+	print(str(self) + ": (useAllAOE) (List) AOEMoraleTargets: " + str(AOEListHighMoraleAttack))
+	
+	while AOEListHighAttackAttack.size() + AOEListHighDefenseAttack.size() + AOEListHighHealthAttack.size() + AOEListHighMoraleAttack.size() != 0:
+		var targettedCharactersHealth: Array = []
+		var targettedCharactersDefense: Array = []
+		var targettedCharactersAttack: Array = []
+		var targettedCharactersMorale: Array = []
+		var targetCharacter: BaseCharacter
+		
+		if AOEListHighHealthAttack.size() != 0:
+			print(str(self) + ": (useAllAOE) targetAOE: " + str(targetAOE))
+			print(str(self) + ": (useAllAOE) (List) AOEHealthTargets: " + str(AOEListHighHealthAttack))
+			targetAOE = AOEListHighHealthAttack.pop_back()
+			attackPriority = highAttackIn.HEALTH
+			if is_instance_valid(targetAOE):
+				targettedCharactersHealth += findTarget(attackPriority, targetAOE)
+				targettedCharactersHealth.shuffle()
+				print(str(self) + ": (useAllAOE) (PreferredPlan) CharacterTargetList: " + str(targettedCharactersHealth))
+				targetCharacter = targettedCharactersHealth.pop_back()
+				print(str(self) + ": (useAllAOE) (PreferredPlan) AOEListHighHealthAttack: " + str(targetAOE))
+				print(str(self) + ": (useAllAOE) (PreferredPlan) CharacterTarget: " + str(targetCharacter))
+				positionAOE(targetAOE, targetCharacter)
+			
+		elif AOEListHighDefenseAttack.size() != 0:
+			print(str(self) + ": (useAllAOE) targetAOE: " + str(targetAOE))
+			targetAOE = AOEListHighDefenseAttack.pop_back()
+			attackPriority = highAttackIn.DEFENSE
+			if is_instance_valid(targetAOE):
+				targettedCharactersDefense += findTarget(attackPriority, targetAOE)
+				targettedCharactersDefense.shuffle()
+				print(str(self) + ": (useAllAOE) (PreferredPlan) CharacterTargetList: " + str(targettedCharactersDefense))
+				targetCharacter = targettedCharactersDefense.pop_back()
+				print(str(self) + ": (useAllAOE) (PreferredPlan) AOEListHighDefenseAttack: " + str(targetAOE))
+				print(str(self) + ": (useAllAOE) (PreferredPlan) CharacterTarget: " + str(targetCharacter))
+				positionAOE(targetAOE, targetCharacter)
+			
+		elif AOEListHighAttackAttack.size() != 0:
+			print(str(self) + ": (useAllAOE) targetAOE: " + str(targetAOE))
+			targetAOE = AOEListHighAttackAttack.pop_back()
+			attackPriority = highAttackIn.ATTACK
+			if is_instance_valid(targetAOE):
+				targettedCharactersAttack += findTarget(attackPriority, targetAOE)
+				targettedCharactersAttack.shuffle()
+				print(str(self) + ": (useAllAOE) (PreferredPlan) CharacterTargetList: " + str(targettedCharactersAttack))
+				targetCharacter = targettedCharactersAttack.pop_back()
+				print(str(self) + ": (useAllAOE) (PreferredPlan) AOEListHighAttackAttack: " + str(targetAOE))
+				print(str(self) + ": (useAllAOE) (PreferredPlan) CharacterTarget: " + str(targetCharacter))
+				positionAOE(targetAOE, targetCharacter)
+			
+		elif AOEListHighMoraleAttack.size() != 0:
+			print(str(self) + ": (useAllAOE) targetAOE: " + str(targetAOE))
+			targetAOE = AOEListHighMoraleAttack.pop_back()
+			attackPriority = highAttackIn.MORALE
+			if is_instance_valid(targetAOE):
+				targettedCharactersMorale += findTarget(attackPriority, targetAOE)
+				targettedCharactersMorale.shuffle()
+				print(str(self) + ": (useAllAOE) (PreferredPlan) CharacterTargetList: " + str(targettedCharactersMorale))
+				targetCharacter = targettedCharactersMorale.pop_back()
+				print(str(self) + ": (useAllAOE) (PreferredPlan) AOEListHighMoraleAttack: " + str(targetAOE))
+				print(str(self) + ": (useAllAOE) (PreferredPlan) CharacterTarget: " + str(targetCharacter))
+				positionAOE(targetAOE, targetCharacter)
+	print(str(self) + ": (useAllAOE) (PreferredPlan) Ending Using AOE For Statement")
+	
+
+func findTarget(priority: highAttackIn, targetAOE: BaseAOE):
+	
+	var target: Array
+	var targetArray: Array
+	
+	targetArray.clear()
+	
+	if targetAOE.isMelee:
+		print(str(targetAOE) + "targetAOE isMelee 1 = " + str(targetAOE.isMelee))
+		match checkCurrentSectionAlive():
+			0:
+				print("how are these frontline troops alive? 1")
+				print(str(targetAOE) + ": targetedMeleeArray = " + str(targetedMelee))
+				print(str(targetAOE) + ": targetedTankArray = " + str(targetedTanks))
+				targetArray = targetedMelee + targetedTanks
+				print(str(targetAOE) + ": AOEArray = " + str(targetArray))
+			1:
+				print("CQC Section has been eliminated! 1")
+				targetArray = targetedMelee + targetedTanks + targetedRanged
+			2:
+				print("All that's left is supports! 3")
+				targetArray = targetedMelee + targetedTanks + targetedRanged + targetedSupport
+	else:
+		targetArray = targetedMelee + targetedTanks + targetedRanged + targetedSupport
+		print(str(targetAOE) + "targetAOE isMelee 1 = " + str(targetAOE.isMelee))
+	
+	match priority:
+		highAttackIn.HEALTH:
+			print("sorting health")
+			targetArray.sort_custom(sortHealth)
+		highAttackIn.DEFENSE:
+			print("sorting defense")
+			targetArray.sort_custom(sortDefense)
+		highAttackIn.ATTACK:
+			print("sorting attack")
+			targetArray.sort_custom(sortAttack)
+		highAttackIn.MORALE:
+			print("sorting morale")
+			targetArray.sort_custom(sortMorale)
+	targetArray.reverse()
+	match preferredPlan: # WE EITHER PUT checkCurrentSectionAlive somewhere here!!!
+		behaviorPlans.TARGETSINGLE:
+			print("Targetted Single")
+			targetArray.resize(1)
+		behaviorPlans.TARGETLIMITED:
+			print("Targetted Limited")
+			@warning_ignore("integer_division")
+			targetArray.resize(clampi(targetArray.size() / 2, 1, 999))
+		behaviorPlans.TARGETMULTIPLE:
+			print("Targetted Multiple")
+	if targetAOE.isMelee:
+		print(str(targetAOE) + "targetAOE isMelee 2 = " + str(targetAOE.isMelee))
+		match checkCurrentSectionAlive():
+			0:
+				print("how are these frontline troops alive? 2")
+				targetArray.filter(func(object): return object.get_node("StatComponent").role == 0 or object.get_node("StatComponent").role == 1 )
+			1:
+				print("CQC Section has been eliminated! 2")
+				targetArray.filter(func(object): return object.get_node("StatComponent").role == 2)
+			2:
+				print("All that's left is supports! 2")
+			_:
+				print(str(targetAOE) + "targetAOE isMelee 2 = " + str(targetAOE.isMelee))
+	
+	target = targetArray
+	print(str(targetAOE) + ": targetedArray = " + str(target))
+	return target
 
 func positionAOE(targetAOE: BaseAOE, targetCharacter: BaseCharacter):
 	if targetCharacter != null:
 		targetAOE.set_global_position(targetCharacter.global_position)
+		print(str(self) + ": (positionAOE) targetAOE: " + str(targetAOE))
 		print(str(self) + ": (positionAOE) targetAOE position: " + str(targetAOE.global_position))
+		print(str(self) + ": (positionAOE) targetCharacter: " + str(targetCharacter))
 		print(str(self) + ": (positionAOE) targetCharacter position: " + str(targetCharacter.global_position))
 		targetAOE.draggable = false
 		print("Placed")
@@ -256,7 +288,6 @@ func positionAOE(targetAOE: BaseAOE, targetCharacter: BaseCharacter):
 
 #--[ Sorting ]--
 func sortHealth(a: BaseCharacter, b: BaseCharacter):
-	print("sorting health")
 	if a.stats.currentHealth > b.stats.currentHealth:
 		#print(str(self) + ": (getCharacters) true")
 		return true
@@ -264,7 +295,6 @@ func sortHealth(a: BaseCharacter, b: BaseCharacter):
 	return false
 
 func sortDefense(a, b):
-	print("sorting defense")
 	if a.stats.currentDefense > b.stats.currentDefense:
 		#print(str(self) + ": (getCharacters) true")
 		return true
@@ -272,7 +302,6 @@ func sortDefense(a, b):
 	return false
 
 func sortAttack(a, b):
-	print("sorting attack")
 	if a.stats.currentAttack > b.stats.currentAttack:
 		print(str(self) + ": (getCharacters) true")
 		return true
@@ -280,23 +309,22 @@ func sortAttack(a, b):
 	return false
 
 func sortMorale(a, b):
-	print("sorting morale")
 	if a.stats.currentMorale > b.stats.currentMorale:
 		print(str(self) + ": (getCharacters) true")
 		return true
 	print(str(self) + ": (getCharacters) false")
 	return false
 
+## Returns an integer depending on whether what sections are dead, 0 if CQC is alive, 1 if CQC is dead & Ranged Alive, 2 if both CQC & Ranged Dead
+func checkCurrentSectionAlive(): # We can do -> int, but we'll do that version 2
+	if targetPartyContainer.characterIsTank.size() != 0 or targetPartyContainer.characterIsDPSMelee.size() != 0:
+		print(str(self) + ": (checkCurrentSectionAlive) All CQC characters alive!")
+		return 0
+	elif targetPartyContainer.characterIsDPSRanged.size() != 0:
+		print(str(self) + ": (checkCurrentSectionAlive) All CQC characters dead!")
+		return 1
+	else:
+		print(str(self) + ": (checkCurrentSectionAlive) Supports only left alive!")
+		return 2
+	
 
-# When placing AOE make to take into account the attacks stats
-# Have the AI prioritize attacks that would be most effective
-# example: if the AOE has a high attack, target characters with low or high attack
-
-# CHECK IF AREA ISMELEE
-# We need someway of dealing with AOE that are melee, like not place it into the AOEDenial area if still Active
-# We could do a check if the AOE is still draggable, it could signify that 
-# AOEList pop_front()
-# AOE.set_position(Vector2)
-# if AOE.draggable != true:
-#	Either 1: Go through loop again
-#	Either 2: 

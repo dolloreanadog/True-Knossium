@@ -97,6 +97,7 @@ func resetCurrentStats():
 	emit_signal("statReset")
 
 func getTotalStatPoints():
+	@warning_ignore("narrowing_conversion")
 	totalStatPoints = health + attack + defense + morale
 
 func updateActionAttackInfo():
@@ -206,7 +207,7 @@ func overMaxHealth():
 		if characterBody.overHealthFX != null:
 			characterBody.playOverHealthFX()
 		else:
-			push_warning("There's no health max effect")
+			push_warning("There's no over health max effect")
 	else:
 		boolean = false
 	return boolean
@@ -218,7 +219,7 @@ func overMaxDefense():
 		if characterBody.overDefenseFX != null:
 			characterBody.playOverDefenseFX()
 		else:
-			push_warning("There's no defense max effect")
+			push_warning("There's no over defense max effect")
 	else:
 		boolean = false
 	return boolean
@@ -230,7 +231,7 @@ func overMaxAttack():
 		if characterBody.overAttackFX != null:
 			characterBody.playOverAttackFX()
 		else:
-			push_warning("There's no attack max effect")
+			push_warning("There's no over attack max effect")
 	else:
 		boolean = false
 	return boolean
@@ -242,7 +243,7 @@ func overMaxMorale():
 		if characterBody.overMoraleFX != null:
 			characterBody.playOverMorale()
 		else:
-			push_warning("There's no morale max effect")
+			push_warning("There's no over morale max effect")
 	else:
 		boolean = false
 	return boolean
@@ -284,13 +285,10 @@ func changeMorale(amount: float):
 func changeCurrentHealth(amount: float):
 	amount /= currentDefense
 	currentHealth += amount
-#	characterBody.bodyCurrentHealth = currentHealth
 	if characterBody.healthChangedFX != null:
 		characterBody.playHealthChangedFX()
-	else:
-		push_warning("There's no health changed effect")
-	#print(str(self) + ": current health changed = " + str(amount))
-	#print(str(self) + ": current health = " + str(currentHealth))
+#	else:
+#		push_warning("There's no health changed effect")
 	emit_signal("statChanged")
 	healthDeath()
 	overMaxHealth()
@@ -303,8 +301,8 @@ func changeCurrentDefense(amount: float):
 	#print(str(self) + ": current defense = " + str(currentDefense))
 	if characterBody.defenseChangedFX != null:
 		characterBody.playDefenseChangedFX()
-	else:
-		push_warning("There's no defense changed effect")
+#	else:
+#		push_warning("There's no defense changed effect")
 	emit_signal("statChanged")
 	defenseDeath()
 	overMaxDefense()
@@ -317,8 +315,8 @@ func changeCurrentAttack(amount: float):
 	#print(str(self) + ": current attack = " + str(currentAttack))
 	if characterBody.attackChangedFX != null:
 		characterBody.playAttackChangedFX()
-	else:
-		push_warning("There's no attack changed effect")
+#	else:
+#		push_warning("There's no attack changed effect")
 	emit_signal("statChanged")
 	updateActionAttackInfo()
 	attackDeath()
@@ -332,8 +330,8 @@ func changeCurrentMorale(amount: float):
 	#print(str(self) + ": current moral = " + str(currentMorale))
 	if characterBody.moraleChangedFX != null:
 		characterBody.playMoraleChangedFX()
-	else:
-		push_warning("There's no morale changed effect")
+#	else:
+#		push_warning("There's no morale changed effect")
 	emit_signal("statChanged")
 	moraleDeath()
 	overMaxMorale()

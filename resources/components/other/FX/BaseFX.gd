@@ -11,10 +11,14 @@ class_name BaseFX
 ## Will contain Audio
 @export var audio: AudioStream
 
-@onready var audioStreamPlayer: AudioStreamPlayer2D = get_node("AudioStreamPlayer2D")
+@export var audioStreamPlayer: AudioStreamPlayer2D
+@onready var character: BaseCharacter = get_parent()
+
+# These are not final, should be changed for each character
+# An outline, for the final FX
 
 func _ready():
-	pass
+	character.connect("characterAnimationFinished", animationFinished)
 
 ## Plays both Sound Effect & Visual Effect
 func playFX():
@@ -30,8 +34,11 @@ func playSFX():
 		push_warning("There is no AudioStream!")
 
 func playVFX():
-	if sprite != null:
-		pass
-	else:
-		push_warning("There is no sprite!")
+	pass
+	#if sprite != null:
+	#	pass
+	#else:
+	#	push_warning("There is no sprite!")
 
+func animationFinished():
+	pass

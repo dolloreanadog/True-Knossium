@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bi1oe18bs03s5"]
+
+[ext_resource type="Script" path="res://resources/components/other/FX/over_max_health_fx/over_max_health_default/DefaultMaxHealthFX.gd" id="1_puc6f"]
+
+[node name="DefaultMaxHealth" type="Node"]
+script = ExtResource("1_puc6f")

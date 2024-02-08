@@ -27,7 +27,6 @@ shape = SubResource("RectangleShape2D_4gkwn")
 
 [node name="StatComponent" type="Node" parent="."]
 script = ExtResource("2_6rlwb")
-id = "SupportStat"
 health = 8.0
 defense = 5.0
 attack = 4.0

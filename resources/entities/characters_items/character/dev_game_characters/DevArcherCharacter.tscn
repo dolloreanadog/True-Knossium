@@ -29,12 +29,11 @@ shape = SubResource("RectangleShape2D_m0lon")
 
 [node name="StatComponent" type="Node" parent="."]
 script = ExtResource("2_xg85r")
-id = "ArcherStat"
 role = 1
 attack = 2.0
 potentialHealthGain = 3.0
 potentialDefenseGain = 2.0
-potentialAttackGain = 4.0
+potentialAttackGain = 2.0
 potentialMoraleGain = 3.0
 
 [node name="DevArcherAction" type="Node" parent="." node_paths=PackedStringArray("stats")]

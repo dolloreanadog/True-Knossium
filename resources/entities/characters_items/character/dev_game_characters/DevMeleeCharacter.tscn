@@ -27,11 +27,10 @@ shape = SubResource("RectangleShape2D_k0rgm")
 
 [node name="StatComponent" type="Node" parent="."]
 script = ExtResource("2_j33de")
-id = "MeleeStat"
 role = 2
 attack = 4.0
 potentialDefenseGain = 3.0
-potentialAttackGain = 2.0
+potentialAttackGain = 3.0
 potentialMoraleGain = 3.0
 
 [node name="DevMeleeAction" type="Node" parent="." node_paths=PackedStringArray("stats")]

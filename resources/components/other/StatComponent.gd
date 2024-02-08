@@ -3,8 +3,6 @@ class_name StatComponent
 
 #--[ Identification ]--
 # Move to BaseCharacter the thing this is suppose to be parented to
-@export var id: String
-@export var idNumber: int
 
 #--[ experience ]--
 var level: int = 0

@@ -29,7 +29,7 @@ shape = SubResource("RectangleShape2D_4gkwn")
 script = ExtResource("2_6rlwb")
 health = 8.0
 defense = 5.0
-attack = 4.0
+attack = 2.0
 morale = 3.0
 potentialDefenseGain = 2.0
 potentialAttackGain = 2.0
@@ -42,7 +42,7 @@ AOE = ExtResource("4_82bhb")
 castTime = 3
 isOffensive = false
 amount = 2
-health = 5.0
+health = 1.0
 morale = 2.0
 
 [node name="LevelLabel" type="Label" parent="."]

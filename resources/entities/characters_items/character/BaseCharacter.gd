@@ -9,7 +9,9 @@ class_name BaseCharacter
 @onready var system: TurnSystem = get_parent().get_parent().get_node("TurnSystem")
 @onready var levelLabel: Label = get_node("LevelLabel")
 @onready var characterSprite: AnimatedSprite2D = get_node("AnimatedSprite2D")
-@export var isFriendly: bool = true
+var isFriendly: bool = true
+@export var ResourceNeeded: String # We still don't know how or what variable it's as
+@export var ResourceNeededNumber: int
 var turns: int
 
 
@@ -96,9 +98,11 @@ func playLevelUpFX():
 	levelUpFX.playFX()
 
 func playhealthDeathFX():
+	#print("Should run Health Death playFX")
 	healthDeathFX.playFX()
 
 func playDefenseDeathFX():
+	#print("Should run Defense Death playFX")
 	defenseDeathFX.playFX()
 
 func playAttackDeathFX():
@@ -133,9 +137,7 @@ func playMoraleChangedFX():
 
 #--[ Animation ]--
 
-# We also need someway to doing idle animation & death animation
-# all animation that do the same action
-#We need animated Sprite
+## When spawning choose an idle animation or new Turn happens
 func idleAnimation():
 	match randi_range(1, 4):
 		1:
@@ -184,11 +186,12 @@ func getAnimation():
 	return characterSprite.get_animation()
 
 #--[ Extra ]--
+
 ## Get a Signal from the turnSystem to do this
 func characterNewTurn():
-	print(str(self) + ": (L) Received Signal") # We're receiving the signal Twice?
-	useActions() # Move this Dungeon's goThroughQueuedAOEArray()
-	# Or use a signal
+	#print(str(self) + ": (L) Received Signal") # We're receiving the signal Twice?
+	useActions()
+	runAnimation("idle1")
 
 func characterNewBattle():
 	stats.resetCurrentStats()

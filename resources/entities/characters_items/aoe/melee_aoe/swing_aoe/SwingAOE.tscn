@@ -1,13 +1,26 @@
-[gd_scene load_steps=3 format=3 uid="uid://u172rb6a25bx"]
+[gd_scene load_steps=6 format=3 uid="uid://u172rb6a25bx"]
 
 [ext_resource type="Script" path="res://resources/entities/characters_items/aoe/BaseAOE.gd" id="1_jqsrw"]
+[ext_resource type="Theme" uid="uid://b6csmgk4u4jyg" path="res://resources/theme/AOEButtonTheme.tres" id="2_5o2b4"]
+[ext_resource type="SpriteFrames" uid="uid://dhjtkuc2trmc5" path="res://assets/sprites/aoe_vfx/dev/SwingSprite.tres" id="3_301oe"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_cqwa1"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hl61g"]
 size = Vector2(64, 144)
 
-[node name="SwingAOE" type="Area2D"]
+[node name="SwingAOE" type="Area2D" node_paths=PackedStringArray("spriteAnimations")]
 script = ExtResource("1_jqsrw")
+AOEName = "Swing"
+spriteAnimations = NodePath("AnimatedSprite2D")
+animationActivateOn = 2
 isMelee = true
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="."]
+modulate = Color(1, 0, 0, 0.117647)
+position = Vector2(0, -1.90735e-06)
+scale = Vector2(64, 144)
+mesh = SubResource("BoxMesh_cqwa1")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_hl61g")
@@ -17,9 +30,15 @@ offset_left = -32.0
 offset_top = -72.0
 offset_right = 32.0
 offset_bottom = 72.0
+theme = ExtResource("2_5o2b4")
 theme_override_colors/font_color = Color(1, 0, 0, 1)
-text = "Swing 
-AOE"
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+position = Vector2(0, 3.8147e-06)
+scale = Vector2(1, 1.125)
+sprite_frames = ExtResource("3_301oe")
+animation = &"inactive"
 
 [connection signal="button_down" from="Button" to="." method="_on_button_button_down"]
 [connection signal="button_up" from="Button" to="." method="_on_button_button_up"]

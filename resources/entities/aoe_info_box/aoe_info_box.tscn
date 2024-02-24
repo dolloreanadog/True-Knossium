@@ -1,0 +1,128 @@
+[gd_scene load_steps=3 format=3 uid="uid://b8kerqouxqko2"]
+
+[ext_resource type="Texture2D" uid="uid://dm7h3arv4m30g" path="res://assets/art/character_profile_picture/dev/placeholder.png" id="1_dkcvj"]
+[ext_resource type="Script" path="res://resources/entities/aoe_info_box/aoe_info_box.gd" id="1_ktaw3"]
+
+[node name="AOEInfoBox" type="Control"]
+layout_mode = 3
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -856.0
+offset_top = -144.0
+grow_horizontal = 0
+grow_vertical = 0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+script = ExtResource("1_ktaw3")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 0
+offset_left = 2.0
+offset_right = 856.0
+offset_bottom = 144.0
+color = Color(0.239216, 0.239216, 0.239216, 1)
+
+[node name="characterPFPTexture" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 8.0
+offset_right = 122.0
+offset_bottom = 120.0
+texture = ExtResource("1_dkcvj")
+expand_mode = 1
+
+[node name="AOENameLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 402.0
+offset_right = 858.0
+offset_bottom = 33.0
+theme_override_font_sizes/font_size = 21
+text = "AOE Name"
+
+[node name="AOEHealthDamageLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 122.0
+offset_top = 72.0
+offset_right = 259.0
+offset_bottom = 98.0
+text = "Attack Damage: x"
+
+[node name="AOEDefenseDamageLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 122.0
+offset_top = 48.0
+offset_right = 271.0
+offset_bottom = 74.0
+text = "Defense Damage: x"
+
+[node name="AOEAttackDamageLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 122.0
+offset_top = 24.0
+offset_right = 259.0
+offset_bottom = 50.0
+text = "Health Damage: x"
+
+[node name="AOEMoraleDamageLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 122.0
+offset_top = 96.0
+offset_right = 262.0
+offset_bottom = 122.0
+text = "Morale Damage: x"
+
+[node name="AOEAccuracyLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 322.0
+offset_top = 24.0
+offset_right = 474.0
+offset_bottom = 50.0
+text = "Accuracy: x"
+
+[node name="AOEIsMeleeLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 474.0
+offset_top = 24.0
+offset_right = 706.0
+offset_bottom = 50.0
+text = "IsMelee: x"
+horizontal_alignment = 1
+
+[node name="CharacterNameLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 120.0
+offset_right = 150.0
+offset_bottom = 146.0
+text = "Owner: x"
+vertical_alignment = 1
+
+[node name="IsMovableLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 706.0
+offset_top = 24.0
+offset_right = 850.0
+offset_bottom = 50.0
+text = "Movable: x"
+horizontal_alignment = 2
+
+[node name="Description" type="Label" parent="."]
+layout_mode = 0
+offset_left = 322.0
+offset_top = 48.0
+offset_right = 858.0
+offset_bottom = 144.0
+text = "200 character limit"
+autowrap_mode = 3
+text_overrun_behavior = 1
+
+[node name="StaticAOEInfoLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 130.0
+offset_right = 402.0
+offset_bottom = 33.0
+theme_override_font_sizes/font_size = 21
+text = "Area of Effect Information: "

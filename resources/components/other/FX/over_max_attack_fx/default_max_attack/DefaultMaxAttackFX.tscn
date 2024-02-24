@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://kv1h2jlak6ta"]
+
+[ext_resource type="Script" path="res://resources/components/other/FX/over_max_attack_fx/default_max_attack/DefaultMaxAttackFX.gd" id="1_avmc0"]
+
+[node name="DefaultMaxAttackFX" type="Node"]
+script = ExtResource("1_avmc0")

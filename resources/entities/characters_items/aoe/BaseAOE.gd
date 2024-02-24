@@ -1,21 +1,31 @@
 extends Area2D
 class_name BaseAOE
 # Notes
-# We need to figure out how to activate the turns thing.
 # This should always be the child
-#
+
+@export var AOEName: String
 
 #--[ Owner ]--
 var ownerCharacter: BaseCharacter
+var ownerCharacterName: String # We going to need to print the id of character
+var ownerActionDescription: String
+var ownerCharacterPFP: Texture2D
 var ownerCharacterAnimation: String
 
 #--[ Turn System ]--
 @onready var system: TurnSystem
 
+#--[ Child Nodes ]--
+@export var spriteAnimations: AnimatedSprite2D
+@onready var collisionVisualizer: MeshInstance2D = get_node("MeshInstance2D")
+@onready var button: Button = get_node("Button")
+
+#--[ Other Nodes]--
+@onready var dungeonAOEInfoBox: AOEInfoBox = get_parent().get_parent().get_node("AOEInfoBox")
+
+
 #--[ Stats ]--
-# Need Action to set these AOE
-# The Four variable it should be targetting
-#health, defense, attack, morale
+
 var health: float
 var defense: float
 var attack: float
@@ -24,8 +34,12 @@ var morale: float
 ## The lower the number, the more accurate it is
 var accuracy: int
 
+
 #--[ Status ]--
 ## How long an AOE Lingers
+enum animationActivation {EVERYTURN, FIRSTTURN, LASTTURN}
+@export var animationActivateOn: animationActivation
+
 @export var TurnsLeft: int
 @export var activateFirstTurn: bool = false
 @export var activateEveryTurn: bool = true
@@ -47,15 +61,8 @@ var lastPosition: Vector2
 #--[ Base Functions ]--
 func _ready():
 	system = get_parent().get_parent().get_node("TurnSystem")
-	#system.connect("OnNewTurn", InTurn)
+	#system.connect("OnNewTurn", NewTurnSignaled)
 	system.connect("OnNewBattle", inBattle)
-	#print(str(self) + ": health attack for area is " + str(health))
-	#print(str(self) + ": defense attack for area is " + str(defense))
-	#print(str(self) + ": attack attack for area is " + str(attack))
-	#print(str(self) + ": morale attack for area is " + str(morale))
-	#print(str(self) + ": accuracy for area is = " + str(accuracy))
-	#print(str(self) + ": TurnSystem for Area is: " + str(system))
-	#print(str(self) + ": Spawned")
 	self.z_index = 1
 
 func _process(_delta):
@@ -67,6 +74,19 @@ func _process(_delta):
 # Make sure to connect these functions to the button
 func _on_button_pressed():
 	print(str(self) + ": Pressed")
+	
+	dungeonAOEInfoBox.characterPFP = ownerCharacterPFP
+	dungeonAOEInfoBox.characterName = ownerCharacterName
+	dungeonAOEInfoBox.AOEName = AOEName
+	dungeonAOEInfoBox.description = ownerActionDescription
+	dungeonAOEInfoBox.accuracyValue = accuracy
+	dungeonAOEInfoBox.healthDamageValue = health
+	dungeonAOEInfoBox.defenseDamageValue = defense
+	dungeonAOEInfoBox.attackDamageValue = attack
+	dungeonAOEInfoBox.moraleDamageValue = morale
+	dungeonAOEInfoBox.isMeleeValue = isMelee
+	dungeonAOEInfoBox.isMovableValue = draggable
+	dungeonAOEInfoBox.insertAOEInfo()
 
 
 func _on_button_button_up():
@@ -124,7 +144,6 @@ func getItemsInside():
 # When there are no more turns activate
 func lastTurn():
 	print(str(self) + ": Activate last turn")
-	customLastTurnAction()
 	if activateLastTurn:
 		getItemsInside()
 		areaOverlapCharacter(true)
@@ -138,18 +157,26 @@ func InTurn():
 	if activateEveryTurn:
 		getItemsInside()
 		areaOverlapCharacter(true)
-		customInTurn()
+		if animationActivateOn == animationActivation.EVERYTURN:
+			animationActivate()
 	if activateFirstTurn:
 		firstTurn()
 		activateFirstTurn = false
+		if animationActivateOn == animationActivation.FIRSTTURN:
+			animationActivate()
 	if isCharacterAnimationDone:
 		if is_instance_valid(ownerCharacter):
 			ownerCharacter.runAnimation(ownerCharacterAnimation)
 		isCharacterAnimationDone = false
 	if TurnsLeft <= 0:
 		lastTurn()
+		if animationActivateOn == animationActivation.LASTTURN:
+			animationActivate()
+		while spriteAnimations.is_playing():
+			await get_tree().create_timer(0.01).timeout
 		self.queue_free()
 		
+
 
 func inBattle():
 	self.queue_free()
@@ -159,10 +186,9 @@ func inBattle():
 # Example: First Turn, give 10 morale. Every Turn, remove 2 morale
 func firstTurn():
 	print(str(self) + ": Activate first turn")
-	customFirstTurn()
 
 func attackStats(body: BaseCharacter):
-	var checkArray: Array = [true]
+	var checkArray: Array = [true, true, true]
 	print(str(self) + ": Attacking " + str(body))
 	
 	# Adds as many false into the array
@@ -175,21 +201,18 @@ func attackStats(body: BaseCharacter):
 	
 	if target:
 		print(str(self) + ": Target Has Been hit ")
-		customAttackStats()
 		body.damageStats(health, defense, attack, morale)
 	else:
 		print(str(self) + ": Target Has Been missed ")
 
-#--[ Overridable Functions ]--
-#
-func customLastTurnAction():
-	pass
+func animationActivate():
+	if is_instance_valid(spriteAnimations):
+		spriteAnimations.play("active")
 
-func customInTurn():
-	pass
+func setVisbility(visibility: bool):
+	collisionVisualizer.set_visible(visibility)
+	button.set_visible(visibility)
 
-func customAttackStats():
-	pass
-
-func customFirstTurn():
-	pass
+func getVisibility():
+	print("getting visiblity")
+	return collisionVisualizer.is_visible()

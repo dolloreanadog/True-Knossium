@@ -1,6 +1,12 @@
-[gd_scene load_steps=2 format=3 uid="uid://bacq2pj0ev6au"]
+[gd_scene load_steps=3 format=3 uid="uid://bacq2pj0ev6au"]
 
-[ext_resource type="Script" path="res://resources/components/other/FX/BaseFX.gd" id="1_mb1em"]
+[ext_resource type="Script" path="res://resources/components/other/FX/attack_death_fx/default_attack_death/DefaultAttackDeathFX.gd" id="1_w77a1"]
+[ext_resource type="SpriteFrames" uid="uid://glwpvwxrsbnv" path="res://assets/sprites/vfx/dev/AttackBreakSprite.tres" id="2_2mcoi"]
 
-[node name="AttackDeathFX" type="Node"]
-script = ExtResource("1_mb1em")
+[node name="AttackDeathFX" type="Node" node_paths=PackedStringArray("sprite")]
+script = ExtResource("1_w77a1")
+sprite = NodePath("AnimatedSprite2D")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = ExtResource("2_2mcoi")
+animation = &"inactive"

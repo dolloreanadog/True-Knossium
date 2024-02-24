@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://buvc426adj2om"]
+
+[ext_resource type="Script" path="res://resources/components/other/FX/over_max_defense_fx/default_max_defense/DefaultMaxDefenseFX.gd" id="1_5g0t6"]
+
+[node name="DefaultMaxDefenseFX" type="Node"]
+script = ExtResource("1_5g0t6")

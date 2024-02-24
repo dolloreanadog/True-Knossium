@@ -6,6 +6,6 @@ func _ready():
 
 func randomizeSpawn():
 	var area = self
-	var Lposition = area.position + Vector2(randf() * area.size.x, randf() * area.size.y)
+	var Lposition = area.global_position + Vector2(randf() * area.size.x, randf() * area.size.y)
 	
 	return Lposition

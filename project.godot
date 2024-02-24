@@ -11,9 +11,18 @@ config_version=5
 [application]
 
 config/name="Knossium"
-run/main_scene="res://resources/levels/ingame/dungeon/Dungeon.tscn"
+run/main_scene="res://resources/levels/MainMenu.tscn"
 config/features=PackedStringArray("4.1", "Forward Plus")
 config/icon="res://icon.svg"
+
+[display]
+
+window/size/viewport_width=1366
+window/size/viewport_height=768
+
+[editor]
+
+export/convert_text_resources_to_binary=false
 
 [input]
 

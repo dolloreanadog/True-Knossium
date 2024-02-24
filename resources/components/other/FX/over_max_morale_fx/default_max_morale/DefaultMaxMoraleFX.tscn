@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://dnoftvoyc1f5x"]
+
+[ext_resource type="Script" path="res://resources/components/other/FX/over_max_morale_fx/default_max_morale/DefaultMaxMoraleFX.gd" id="1_qpggd"]
+
+[node name="DefaultMaxMoraleFX" type="Node"]
+script = ExtResource("1_qpggd")

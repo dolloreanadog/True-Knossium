@@ -15,8 +15,6 @@ var allSupport: Array
 
 enum activeList {NORMAL, HEALTH, DEFENSE, ATTACK, MORALE, LEVEL}
 var visibleActive: activeList
-# Make use of modulate to tint the sprites
-# We need sprites
 
 var activeVisibleLevel: bool
 
@@ -85,27 +83,18 @@ func updateModulation():
 #--[ Getting Character ]--
 
 func getPartyContainersInfo():
-	print(str(self) + ": got Party Container Info")
+	#print(str(self) + ": got Party Container Info")
 	allCharacters = FriendlyPartyContainer.characters + EnemyPartyContainer.characters
 	allTanks = FriendlyPartyContainer.characterIsTank + EnemyPartyContainer.characterIsTank
 	allMelee = FriendlyPartyContainer.characterIsDPSMelee + EnemyPartyContainer.characterIsDPSMelee
 	allRanged = FriendlyPartyContainer.characterIsDPSRanged + EnemyPartyContainer.characterIsDPSRanged
 	allSupport = FriendlyPartyContainer.characterIsHealer + EnemyPartyContainer.characterIsHealer
-	#print(str(self) + ": AllCharactersInfo: " + str(allCharacters))
-	#print(str(self) + ": AllTanksInfo: " + str(allTanks))
-	#print(str(self) + ": AllMeleeInfo: " + str(allMelee))
-	#print(str(self) + ": AllRangedInfo: " + str(allRanged))
-	#print(str(self) + ": AllSupportInfo: " + str(allSupport))
 
 #--[ Modulation ]--
 
 func modulateNormalView():
-	#print(str(self) + ": Turning total into Normal:" + str(allCharacters.size()))
-	#print(str(self) + ": Turning total into Normal:" + str(allCharacters))
 	var LallCharacters = allCharacters
 	for i in LallCharacters.size():
-		#var character: BaseCharacter
-		#var characterStats: StatComponent
 		var Lcharacter = LallCharacters.pop_back()
 		if Lcharacter != null:
 			Lcharacter.set_modulate(Color(1, 1, 1))
@@ -116,18 +105,11 @@ func modulateNormalView():
 	getPartyContainersInfo()
 
 func modulateHealthView():
-	
-	#print(str(self) + ": Turning total into Health View:" + str(allCharacters.size()))
-	#print(str(self) + ": Turning total Health View:" + str(allCharacters))
-	
 	var LallCharacters: Array = allCharacters
-	# Go through all
 	for i in LallCharacters.size():
 		var character: BaseCharacter
 		var characterStats: StatComponent
 		var Lcharacter = LallCharacters.pop_back()
-		#print(str(self) + ": Looped Character:" + str(Lcharacter))
-		# There's a Freed object in the character list, This will become an issue. If they Pile up
 		if Lcharacter != null:
 			character = Lcharacter
 			characterStats = character.get_node("StatComponent")
@@ -136,24 +118,16 @@ func modulateHealthView():
 			var Gcoloration = characterStats.currentHealth / characterStats.health
 			
 			character.activateLevelLabel(false)
-			character.modulate = Color(Rcoloration, Gcoloration, 0)
+			character.modulate = Color(clampf(Rcoloration, 0, 1), clampf(Gcoloration, 0, 1), 0)
 		
-	print(str(self) + ": LallCharacters = " + str(LallCharacters))
 	getPartyContainersInfo()
 
 func modulateDefenseView():
-	
-	#print(str(self) + ": Turning total into Defense View:" + str(allCharacters.size()))
-	#print(str(self) + ": Turning total Defense View:" + str(allCharacters))
-	
 	var LallCharacters: Array = allCharacters
-	# Go through all
 	for i in LallCharacters.size():
 		var character: BaseCharacter
 		var characterStats: StatComponent
 		var Lcharacter = LallCharacters.pop_back()
-		#print(str(self) + ": Looped Character:" + str(Lcharacter))
-		# There's a Freed object in the character list, This will become an issue. If they Pile up
 		if Lcharacter != null:
 			character = Lcharacter
 			characterStats = character.get_node("StatComponent")
@@ -162,24 +136,16 @@ func modulateDefenseView():
 			var Bcoloration = characterStats.currentDefense / characterStats.defense
 			
 			character.activateLevelLabel(false)
-			character.modulate = Color(Rcoloration, 0, Bcoloration)
+			character.modulate = Color(clampf(Rcoloration, 0, 1), 0, clampf(Bcoloration, 0, 1))
 		
-	print(str(self) + ": LallCharacters = " + str(LallCharacters))
 	getPartyContainersInfo()
 
 func modulateAttackView():
-	
-	#print(str(self) + ": Turning total into Attack View:" + str(allCharacters.size()))
-	#print(str(self) + ": Turning total Attack View:" + str(allCharacters))
-	
 	var LallCharacters: Array = allCharacters
-	# Go through all
 	for i in LallCharacters.size():
 		var character: BaseCharacter
 		var characterStats: StatComponent
 		var Lcharacter = LallCharacters.pop_back()
-		#print(str(self) + ": Looped Character:" + str(Lcharacter))
-		# There's a Freed object in the character list, This will become an issue. If they Pile up
 		if Lcharacter != null:
 			character = Lcharacter
 			characterStats = character.get_node("StatComponent")
@@ -188,47 +154,33 @@ func modulateAttackView():
 			var Gcoloration = characterStats.currentAttack / characterStats.attack
 			
 			character.activateLevelLabel(false)
-			character.modulate = Color(Rcoloration, Gcoloration, 0)
+			character.modulate = Color(clampf(Rcoloration, 0, 1), clampf(Gcoloration, 0, 1), 0)
 		
 	
-	print(str(self) + ": LallCharacters = " + str(LallCharacters))
 	getPartyContainersInfo()
 
 func modulateMoraleView():
-	
-	#print(str(self) + ": Turning total into Morale View:" + str(allCharacters.size()))
-	#print(str(self) + ": Turning total Morale View:" + str(allCharacters))
-	
 	var LallCharacters: Array = allCharacters
-	# Go through all
 	for i in LallCharacters.size():
 		var character: BaseCharacter
 		var characterStats: StatComponent
 		var Lcharacter = LallCharacters.pop_back()
-		#print(str(self) + ": Looped Character:" + str(Lcharacter))
-		# There's a Freed object in the character list, This will become an issue. If they Pile up
 		if Lcharacter != null:
 			character = Lcharacter
 			characterStats = character.get_node("StatComponent")
 			
-			var Rcoloration = absf((characterStats.currentDefense / characterStats.defense) - 1)
-			var Gcoloration = characterStats.currentDefense / characterStats.defense
+			var Rcoloration = absf((characterStats.currentMorale / characterStats.morale) - 1)
+			var Gcoloration = characterStats.currentMorale / characterStats.morale
 			
 			character.activateLevelLabel(false)
-			character.modulate = Color(Rcoloration, Gcoloration, 0)
+			character.modulate = Color(clampf(Rcoloration, 0, 1), clampf(Gcoloration, 0, 1), 0)
+			
 		
-	print(str(self) + ": LallCharacters = " + str(LallCharacters))
 	getPartyContainersInfo()
 
-# How are we going to show level?
-# Plan 1: Have text appear displaying level
 func modulateLevelView():
-	#print(str(self) + ": Turning total into Level:" + str(allCharacters.size()))
-	#print(str(self) + ": Turning total into Level:" + str(allCharacters))
 	var LallCharacters = allCharacters
 	for i in LallCharacters.size():
-		#var character: BaseCharacter
-		#var characterStats: StatComponent
 		var Lcharacter = LallCharacters.pop_back()
 		if Lcharacter != null:
 			Lcharacter.set_modulate(Color(1, 1, 1))

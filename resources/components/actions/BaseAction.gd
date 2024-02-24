@@ -1,16 +1,15 @@
 extends Node
 class_name BaseActionComponent
-# When Picked Up Show accuracy & damage
-# When Finally placed no longer show aoe
+
 
 ## This is where we'll spawn it & make it a child of
-# get_parent() chain here we go
 @export var stats: StatComponent
 @onready var character: BaseCharacter = get_parent()
 
 ## What animation to use when casted, Check Animation Naming Convention in Discord.
 @export var animationUsed: String
-@onready var spawnArea: BaseSpawnArea = get_parent().get_parent().get_parent().get_node("AOESpawnArea")
+@onready var spawnAreaAttack: BaseSpawnArea = get_parent().get_parent().get_parent().get_node("AOESpawnAreaAttack")
+@onready var spawnAreaSupport: BaseSpawnArea = get_parent().get_parent().get_parent().get_node("AOESpawnAreaSupport")
 ## For the AI use
 # This is used to store the attack, the AOEs here should be sent to other Party Container
 @onready var EnemyAOEContainerAttack: EnemyAOEContainer = get_parent().get_parent().get_parent().get_node("EnemyAOEContainerAttack")
@@ -41,15 +40,18 @@ var CurrentDefense: float
 var CurrentAttack: float
 var CurrentMorale: float
 
+#--[ Other important variables ]-- 
+@export var description: String
+
 
 
 func _ready():
-	getAttackInfo()
+	pass
+	#getAttackInfo()
 
 func onCastTimeMinimum():
 	if currentCastTime <= 0:
 		spawnAOE()
-		customTimeMinimumAction()
 		currentCastTime = castTime
 		print(str(self) + ": AOE has been Casted")
 
@@ -57,21 +59,18 @@ func removeCastTime():
 	currentCastTime -= 1
 	print(str(self) + ": Cast Time Going Down")
 	onCastTimeMinimum()
-	customTimeCastRemovedAction()
 
-# Make the number negative
+## Make the number negative
 func turnIntoOffensiveAction(inputNumber):
-	#print(str(self) + ": Action is now Offensive")
 	inputNumber *= -1
 	return inputNumber
 
 func spawnAOE():
-	print(str(self) + ": Spawn AOE")
-	# This goes from 0 -> 1, That's why it spawns two
-	print(str(self) + ": Amount is: " + str(amount))
+#	print(str(self) + ": Spawn AOE")
+#	print(str(self) + ": Amount is: " + str(amount))
 	for i in range(0, amount):
-		print(str(self) + ": Spawned is "+ str(i))
-		print(str(self) + ": Amount should be spawned is "+ str(amount))
+#		print(str(self) + ": Spawned is "+ str(i))
+#		print(str(self) + ": Amount should be spawned is "+ str(amount))
 		var instance: BaseAOE = AOE.instantiate()
 		if isOffensive:
 			instance.health = turnIntoOffensiveAction(currentHealth)
@@ -84,29 +83,40 @@ func spawnAOE():
 			instance.attack = CurrentAttack
 			instance.morale = CurrentMorale
 		
+		# some essential stuff the AOE needs
 		instance.accuracy = accuracy
 		instance.ownerCharacter = self.get_owner()
 		instance.ownerCharacterAnimation = animationUsed
-		if character.isFriendly:
-			spawnArea.add_child(instance, true)
-			instance.set_global_position(spawnArea.randomizeSpawn())
+		instance.ownerCharacterName = character.id
+		instance.ownerCharacterPFP = character.profilePicture
+		instance.ownerActionDescription = description
+		
+		if character.isFriendly && isOffensive:
+			print(str(character) + " " + str(self) + ": (Surrender) 1")
+			spawnAreaAttack.add_child(instance, true)
+			instance.set_global_position(spawnAreaAttack.randomizeSpawn())
+		elif character.isFriendly && isOffensive == false:
+			print(str(character) + " " + str(self) + ": (Surrender) 2")
+			spawnAreaSupport.add_child(instance, true)
+			instance.set_global_position(spawnAreaSupport.randomizeSpawn())
 		elif character.isFriendly == false && isOffensive:
+			print(str(character) + " " + str(self) + ": (Surrender) 3")
 			EnemyAOEContainerAttack.add_child(instance, true)
 		elif character.isFriendly == false && isOffensive == false:
+			print(str(character) + " " + str(self) + ": (Surrender) 4")
 			EnemyAOEContainerSupport.add_child(instance, true)
+		else:
+			push_error("Action Broke!")
 
 func getAttackInfo():
-	pass
-	#print(str(self) + ": health attack = " + str(currentHealth))
-	#print(str(self) + ": defense attack = " + str(CurrentDefense))
-	#print(str(self) + ": attack attack = " + str(CurrentAttack))
-	#print(str(self) + ": morale attack = " + str(CurrentMorale))
+	print(str(self) + ": health attack = " + str(currentHealth))
+	print(str(self) + ": defense attack = " + str(CurrentDefense))
+	print(str(self) + ": attack attack = " + str(CurrentAttack))
+	print(str(self) + ": morale attack = " + str(CurrentMorale))
 
 # This thing is scuffed Pls Fix when coming back
 func updateAttackInfo():
-	print(str(self) + ": Action Stats Updated")
-	print(str(self) + ": Get current stats.attack = " + str(stats.currentAttack))
-	getAttackInfo()
+#	getAttackInfo()
 	var Lhealth: float = health
 	var Ldefense: float = defense
 	var Lattack: float = attack
@@ -122,11 +132,4 @@ func updateAttackInfo():
 	CurrentDefense = Ldefense
 	CurrentAttack = Lattack
 	CurrentMorale = Lmorale
-	getAttackInfo()
-
-#--[ Overridable Functions ]--
-func customTimeMinimumAction():
-	pass
-
-func customTimeCastRemovedAction():
-	pass
+#	getAttackInfo()

@@ -10,7 +10,6 @@ class_name difficultySystem
 @export var system: TurnSystem
 
 #--[ Variable difficulty ]--
-# if over this stop spawning
 var difficultyTotal: float
 var friend
 var enemyTotalStats: float
@@ -19,12 +18,18 @@ var charityDifficultyEXP: float = 1
 var battleSignalTimes: int = 0
 
 #--[ Variable Paths ]--
+# These are the paths which we use for later functions, when adding a new type, put folder path here
+
+#Template
+#var dir(name) = DirAccess.open("res://resources/entities/characters_items/character/NAME_OF_FOLDER_OF_CHARACTERS")
 var dirDev = DirAccess.open("res://resources/entities/characters_items/character/dev_game_characters")
 var dirSpecial = DirAccess.open("res://resources/entities/characters_items/character/special_game_characters")
 var extension = "tscn"
 
 #--[ character loading ]--
 enum characterType {DEV, DUNGEON, GARDEN, FACTORY, LOBORATORY, BATTLEFIELD, SPECIAL}
+@export var dungeonType: characterType
+
 
 var loadedDevCharactersArray: Array
 var loadedSpecialCharactersArray: Array
@@ -68,17 +73,17 @@ func randomSpawningBehavior():
 		6:
 			EliteSpawnBehavior()
 
+## Normal Spawning Behavior, no exp or difficulty total manipulation
 func NormalSpawnBehavior():
 	print(str(self) + " (NormalSpawnBehavior) " + ": Normal Spawning Behavior")
-	print(str(self) + " (NormalSpawnBehavior) " + "difficultyTotal: " + str(difficultyTotal))
+	#print(str(self) + " (NormalSpawnBehavior) " + "difficultyTotal: " + str(difficultyTotal))
 	getEnemyStats()
 	while enemyTotalStats <= difficultyTotal:
-		spawnCharacter(characterType.DEV)
+		spawnCharacter(dungeonType)
 		getEnemyStats()
-	print(str(self) + " (NormalSpawnBehavior) " + "It's over")
+	#print(str(self) + " (NormalSpawnBehavior) " + "It's over")
 
-# Here up the difficulty by * 1.5
-# But give less experience points
+## Horde Spawning Behavior, difficulty manipulation for higher rates, also lower exp
 func HordeSpawnBehavior(): # <- For some reason this is the most reliable spawner
 	print(str(self) + ": Horde Spawning Behavior")
 	var total = 0
@@ -92,7 +97,7 @@ func HordeSpawnBehavior(): # <- For some reason this is the most reliable spawne
 		total += 1
 		print(str(self) + " (HordeSpawnBehavior) " + ": total total: " + str(total))
 		print(str(self) + " (HordeSpawnBehavior) " + ": enemyTotalStats: " + str(enemyTotalStats))
-		spawnCharacter(characterType.DEV)
+		spawnCharacter(dungeonType)
 		getEnemyStats()
 		print(str(self) + " (HordeSpawnBehavior) " + "enemyPartyContainer totalStatPoins: " + str(enemyTotalStats))
 	
@@ -101,9 +106,7 @@ func HordeSpawnBehavior(): # <- For some reason this is the most reliable spawne
 	print(str(self) + " (HordeSpawnBehavior) " + "It's over")
 	
 
-# Here up the difficulty by * 1.75
-# But give a lot of experience points
-# Don't worry about having hard limit, we already solved that
+## Elite Spawning Behavior, Give enemies higher initial EXP & higher difficulty total
 func EliteSpawnBehavior():
 	print(str(self) + ": Elite Spawning Behavior")
 	var total = 0
@@ -121,7 +124,7 @@ func EliteSpawnBehavior():
 		print(str(self) + " (EliteSpawnBehavior) " + "enemyPartyContainer totalStatPoins: " + str(enemyPartyContainer.totalStatPoints))
 		if randi_range(1, 2) == 1:
 			print(str(self) + " (EliteSpawnBehavior) " + ": Going for dev Type")
-			spawnCharacter(characterType.DEV)
+			spawnCharacter(dungeonType)
 		else:
 			print(str(self) + " (EliteSpawnBehavior) " + ": Going for special Type")
 			spawnCharacter(characterType.SPECIAL)
@@ -129,9 +132,10 @@ func EliteSpawnBehavior():
 		getEnemyStats()
 	print(str(self) + " (EliteSpawnBehavior) " + "It's over")
 
+## Get the array which we'll be using to spawn what we want.
 func spawnCharacter(spawnCharacterArrayType: characterType):
 	var loadedCharactersArray: Array
-	match spawnCharacterArrayType:
+	match spawnCharacterArrayType: # While adding to the enum, put the new ArrayType here
 		characterType.DEV:
 			loadedCharactersArray = loadedDevCharactersArray.duplicate(true)
 		characterType.SPECIAL:
@@ -150,14 +154,33 @@ func spawnCharacter(spawnCharacterArrayType: characterType):
 	
 	var realLoadedCharacter = load(loadedCharacter)
 	var instance = realLoadedCharacter.instantiate()
-	enemyPartyContainer.addCharacter(instance)
+	enemyPartyContainer.addCharacter(instance, 0.0)
 	enemyPartyContainer.getCharactersInfo()
 	print(str(self) + "new loadedCharactersArray: " + str(loadedCharactersArray))
 	print(str(self) + "new loadedCharactersArray size: " + str(loadedCharactersArray.size()))
 
-
+## We'll use this to get all the .tscn of characters to put into array that'll eventually be spawned
 func getCharactersFilePaths():
-	if dirSpecial:
+#	--[ TEMPLATE ]--
+#	This is what it looks like when adding a new character type's folder
+#	Look at variable file paths to see what to put
+#	Everything in (characterType) <- That's where to replace with type
+#
+#	if dir(characterType):
+#		dir(characterType).list_dir_begin()
+#		var file_name = dir(characterType).get_next()
+#		while file_name != "":
+#			if dir(characterType).current_is_dir():
+#				print(dir(characterType).get_current_dir() + "/" + file_name)
+#			else:
+#				var characterPath = dir(characterType).get_current_dir() + "/" + file_name
+#				print(str(self) + str(characterPath))
+#				loaded(characterType)CharactersArray.push_back(characterPath)
+#			file_name = dir(characterType).get_next()
+#	else:
+#		push_error("An error occurred when trying to access the path.")
+	
+	if dirSpecial: # The variable above
 		dirSpecial.list_dir_begin()
 		var file_name = dirSpecial.get_next()
 		while file_name != "":
@@ -169,7 +192,7 @@ func getCharactersFilePaths():
 				loadedSpecialCharactersArray.push_back(characterPath)
 			file_name = dirSpecial.get_next()
 	else:
-		print("An error occurred when trying to access the path.")
+		push_error("An error occurred when trying to access the path.")
 
 	if dirDev:
 		dirDev.list_dir_begin()
@@ -183,7 +206,7 @@ func getCharactersFilePaths():
 				loadedDevCharactersArray.push_back(characterPath)
 			file_name = dirDev.get_next()
 	else:
-		print("An error occurred when trying to access the path.")
+		push_error("An error occurred when trying to access the path.")
 		
 	# When adding any more game type characters, put that function here
 	
@@ -192,11 +215,6 @@ func getCharactersFilePaths():
 
 
 
-	#"res://resources/entities/characters_items/character/game_characters/DevArcherCharacter.tscn"
-	# ^ This is what it normally looks like, well should look like
-	#"res://resources/entities/characters_items/character/game_characters/(x)"
-	# ^ (x) <- This here what we just have to change
-	# Preferably we just grab every single creature
 
 
 

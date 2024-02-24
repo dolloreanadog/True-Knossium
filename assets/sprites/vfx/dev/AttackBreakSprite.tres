@@ -1,0 +1,54 @@
+[gd_resource type="SpriteFrames" load_steps=7 format=3 uid="uid://glwpvwxrsbnv"]
+
+[ext_resource type="Texture2D" uid="uid://cb2iasr05ogkx" path="res://assets/art/vfx/AttackBreak.png" id="1_ethc7"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2uviw"]
+atlas = ExtResource("1_ethc7")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fgkn8"]
+atlas = ExtResource("1_ethc7")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_frcje"]
+atlas = ExtResource("1_ethc7")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_088jw"]
+atlas = ExtResource("1_ethc7")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yopbj"]
+atlas = ExtResource("1_ethc7")
+region = Rect2(256, 0, 64, 64)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2uviw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fgkn8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_frcje")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_088jw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yopbj")
+}],
+"loop": false,
+"name": &"active",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": null
+}],
+"loop": false,
+"name": &"inactive",
+"speed": 8.0
+}]

@@ -1,0 +1,52 @@
+[gd_scene load_steps=2 format=3 uid="uid://dacl7cdqcmb3c"]
+
+[ext_resource type="Script" path="res://resources/entities/button_invisibility/ButtonInvisibilityToggles.gd" id="1_lfe4p"]
+
+[node name="ButtonInvisibilityToggles" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_lfe4p")
+
+[node name="EnemyAOEInvisible" type="CheckBox" parent="."]
+layout_mode = 0
+offset_right = 24.0
+offset_bottom = 24.0
+text = "Enemy AOE Visible"
+
+[node name="FriendlyAOEInvisible" type="CheckBox" parent="."]
+layout_mode = 0
+offset_top = 32.0
+offset_right = 182.0
+offset_bottom = 63.0
+text = "Friendly AOE Visible"
+
+[node name="SupportAOEInvisible" type="CheckBox" parent="."]
+layout_mode = 0
+offset_top = 64.0
+offset_right = 182.0
+offset_bottom = 95.0
+text = "Support AOE Visible"
+
+[node name="OffensiveAOEInvisible" type="CheckBox" parent="."]
+layout_mode = 0
+offset_top = 96.0
+offset_right = 195.0
+offset_bottom = 127.0
+text = "Offensive AOE Visible"
+
+[node name="DraggableAOEInvisible" type="CheckBox" parent="."]
+layout_mode = 0
+offset_top = 128.0
+offset_right = 24.0
+offset_bottom = 152.0
+text = "Draggable AOE Visible"
+
+[connection signal="toggled" from="EnemyAOEInvisible" to="." method="_on_enemy_aoe_invisible_toggled"]
+[connection signal="toggled" from="FriendlyAOEInvisible" to="." method="_on_friendly_aoe_invisible_toggled"]
+[connection signal="toggled" from="SupportAOEInvisible" to="." method="_on_support_aoe_invisible_toggled"]
+[connection signal="toggled" from="OffensiveAOEInvisible" to="." method="_on_offensive_aoe_invisible_toggled"]
+[connection signal="toggled" from="DraggableAOEInvisible" to="." method="_on_draggable_aoe_invisible_toggled"]

@@ -1,12 +1,25 @@
-[gd_scene load_steps=3 format=3 uid="uid://bcxatbqykyd8s"]
+[gd_scene load_steps=6 format=3 uid="uid://bcxatbqykyd8s"]
 
 [ext_resource type="Script" path="res://resources/entities/characters_items/aoe/BaseAOE.gd" id="1_r7cii"]
+[ext_resource type="Theme" uid="uid://b6csmgk4u4jyg" path="res://resources/theme/AOEButtonTheme.tres" id="2_1tj8v"]
+[ext_resource type="SpriteFrames" uid="uid://g6nb2nux7w8y" path="res://assets/sprites/aoe_vfx/dev/ArrowShootSprite.tres" id="3_w0adq"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_lmp76"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hgkm5"]
 size = Vector2(256, 32)
 
-[node name="ArrowAOE" type="Area2D"]
+[node name="ArrowAOE" type="Area2D" node_paths=PackedStringArray("spriteAnimations")]
 script = ExtResource("1_r7cii")
+AOEName = "Arrow Shot"
+spriteAnimations = NodePath("AnimatedSprite2D")
+animationActivateOn = 2
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="."]
+modulate = Color(1, 0, 0, 0.117647)
+position = Vector2(1.14441e-05, 0)
+scale = Vector2(256, 32)
+mesh = SubResource("BoxMesh_lmp76")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_hgkm5")
@@ -16,8 +29,13 @@ offset_left = -128.0
 offset_top = -16.0
 offset_right = 128.0
 offset_bottom = 16.0
+theme = ExtResource("2_1tj8v")
 theme_override_colors/font_color = Color(1, 0, 0, 1)
-text = "Arrow AOE"
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+sprite_frames = ExtResource("3_w0adq")
+animation = &"inactive"
 
 [connection signal="button_down" from="Button" to="." method="_on_button_button_down"]
 [connection signal="button_up" from="Button" to="." method="_on_button_button_up"]

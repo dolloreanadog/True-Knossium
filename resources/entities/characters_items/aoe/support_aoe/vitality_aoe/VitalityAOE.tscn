@@ -1,12 +1,24 @@
-[gd_scene load_steps=3 format=3 uid="uid://jisjad6tdis6"]
+[gd_scene load_steps=6 format=3 uid="uid://jisjad6tdis6"]
 
 [ext_resource type="Script" path="res://resources/entities/characters_items/aoe/BaseAOE.gd" id="1_tcchl"]
+[ext_resource type="Theme" uid="uid://b6csmgk4u4jyg" path="res://resources/theme/AOEButtonTheme.tres" id="2_p2ter"]
+[ext_resource type="SpriteFrames" uid="uid://cnxewbg0i4ubo" path="res://assets/sprites/aoe_vfx/dev/VitalitySprite.tres" id="3_jecf1"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_pilgc"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_acxx8"]
 size = Vector2(64, 64)
 
-[node name="VitalityAOE" type="Area2D"]
+[node name="VitalityAOE" type="Area2D" node_paths=PackedStringArray("spriteAnimations")]
 script = ExtResource("1_tcchl")
+AOEName = "Vitality"
+spriteAnimations = NodePath("AnimatedSprite2D")
+animationActivateOn = 2
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="."]
+modulate = Color(0, 1, 0, 0.117647)
+scale = Vector2(64, 64)
+mesh = SubResource("BoxMesh_pilgc")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_acxx8")
@@ -16,9 +28,13 @@ offset_left = -32.0
 offset_top = -32.0
 offset_right = 32.0
 offset_bottom = 32.0
+theme = ExtResource("2_p2ter")
 theme_override_colors/font_color = Color(0, 1, 0, 1)
-text = "Vitality
-AOE"
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+sprite_frames = ExtResource("3_jecf1")
+animation = &"inactive"
 
 [connection signal="button_down" from="Button" to="." method="_on_button_button_down"]
 [connection signal="button_up" from="Button" to="." method="_on_button_button_up"]

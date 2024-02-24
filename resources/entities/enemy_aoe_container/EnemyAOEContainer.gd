@@ -4,6 +4,7 @@ class_name EnemyAOEContainer
 #--[ Important Nodes ]--
 @onready var dungeon: levelDungeon = get_parent()
 @export var system: TurnSystem
+## Set what Party to target
 @export var targetPartyContainer: BasePartyContainer
 @export var isAOESupportContainer: bool
 
@@ -32,6 +33,7 @@ var targetedMelee: Array
 var targetedRanged: Array
 var targetedSupport: Array
 
+#--[ Functions ]--
 
 func _ready():
 	dungeon.connect("AOEQueueFinished", newTurn)
@@ -41,7 +43,8 @@ func newTurn():
 	getCharacters()
 	getAOEInfo()
 	randomChoosePreferredPlan()
-	call_deferred("useAllAOE")
+	useAllAOE()
+	#call_deferred("useAllAOE")
 
 # Get all AOE Info
 func getAOEInfo():
@@ -59,12 +62,8 @@ func getAOEInfo():
 	
 	# Make sure AOE Array are clear, make sure to do the rest
 	
-	
-	
 	for i in AOEListCount:
 		targetAOE = get_child(i)
-		# Fix <Freed Object> issue
-		# Fix do a check if AOE is active
 		
 		if targetAOE.statusActive != true:
 			if isAOESupportContainer:
@@ -95,10 +94,6 @@ func getAOEInfo():
 					print(str(self) + ": (getAOEInfo) Has high morale attack ")
 	
 	print(str(self) + ": (getAOEInfo) new AOEList: " + str(AOEList))
-	print(str(self) + ": (getAOEInfo) HighHealthAttackArray: " + str(AOEListHighHealthAttack))
-	print(str(self) + ": (getAOEInfo) HighDefenseAttackArray: " + str(AOEListHighDefenseAttack))
-	print(str(self) + ": (getAOEInfo) HighAttackAttackArray: " + str(AOEListHighAttackAttack))
-	print(str(self) + ": (getAOEInfo) HighMoraleAttackArray: " + str(AOEListHighMoraleAttack))
 
 #--[ Placing AOE ]--
 
@@ -124,26 +119,16 @@ func getCharacters():
 
 #--[ AI usage of AOE Version 2]--
 
-# We get target AOE from the four categorized arrays
-# Do a while statement, keep it going as long as there more than 0 AOE
-# Grab an AOE from the category
-#
-
-
-
-# IT CURRENTLY DOES NOT TAKE INTO ACCOUNT IF IT'S MELEE!!!
 ## gets all AOE & uses them
 func useAllAOE():
 	await get_tree().create_timer(0.25).timeout
 	var targetAOE: BaseAOE
 	var attackPriority: highAttackIn
-
 	
-	print(str(self) + ": (useAllAOE) (List) Starting Using AOE For Statement")
-	print(str(self) + ": (useAllAOE) (List) AOEHealthTargets: " + str(AOEListHighHealthAttack))
-	print(str(self) + ": (useAllAOE) (List) AOEDefenseTargets: " + str(AOEListHighDefenseAttack))
-	print(str(self) + ": (useAllAOE) (List) AOEAttackTargets: " + str(AOEListHighAttackAttack))
-	print(str(self) + ": (useAllAOE) (List) AOEMoraleTargets: " + str(AOEListHighMoraleAttack))
+	print(str(self) + ": (getAOEInfo) HighHealthAttackArray: " + str(AOEListHighHealthAttack))
+	print(str(self) + ": (getAOEInfo) HighDefenseAttackArray: " + str(AOEListHighDefenseAttack))
+	print(str(self) + ": (getAOEInfo) HighAttackAttackArray: " + str(AOEListHighAttackAttack))
+	print(str(self) + ": (getAOEInfo) HighMoraleAttackArray: " + str(AOEListHighMoraleAttack))
 	
 	while AOEListHighAttackAttack.size() + AOEListHighDefenseAttack.size() + AOEListHighHealthAttack.size() + AOEListHighMoraleAttack.size() != 0:
 		var targettedCharactersHealth: Array = []
@@ -163,7 +148,6 @@ func useAllAOE():
 				print(str(self) + ": (useAllAOE) (PreferredPlan) CharacterTargetList: " + str(targettedCharactersHealth))
 				targetCharacter = targettedCharactersHealth.pop_back()
 				print(str(self) + ": (useAllAOE) (PreferredPlan) AOEListHighHealthAttack: " + str(targetAOE))
-				print(str(self) + ": (useAllAOE) (PreferredPlan) CharacterTarget: " + str(targetCharacter))
 				positionAOE(targetAOE, targetCharacter)
 			
 		elif AOEListHighDefenseAttack.size() != 0:
@@ -176,7 +160,6 @@ func useAllAOE():
 				print(str(self) + ": (useAllAOE) (PreferredPlan) CharacterTargetList: " + str(targettedCharactersDefense))
 				targetCharacter = targettedCharactersDefense.pop_back()
 				print(str(self) + ": (useAllAOE) (PreferredPlan) AOEListHighDefenseAttack: " + str(targetAOE))
-				print(str(self) + ": (useAllAOE) (PreferredPlan) CharacterTarget: " + str(targetCharacter))
 				positionAOE(targetAOE, targetCharacter)
 			
 		elif AOEListHighAttackAttack.size() != 0:
@@ -189,7 +172,6 @@ func useAllAOE():
 				print(str(self) + ": (useAllAOE) (PreferredPlan) CharacterTargetList: " + str(targettedCharactersAttack))
 				targetCharacter = targettedCharactersAttack.pop_back()
 				print(str(self) + ": (useAllAOE) (PreferredPlan) AOEListHighAttackAttack: " + str(targetAOE))
-				print(str(self) + ": (useAllAOE) (PreferredPlan) CharacterTarget: " + str(targetCharacter))
 				positionAOE(targetAOE, targetCharacter)
 			
 		elif AOEListHighMoraleAttack.size() != 0:
@@ -202,7 +184,6 @@ func useAllAOE():
 				print(str(self) + ": (useAllAOE) (PreferredPlan) CharacterTargetList: " + str(targettedCharactersMorale))
 				targetCharacter = targettedCharactersMorale.pop_back()
 				print(str(self) + ": (useAllAOE) (PreferredPlan) AOEListHighMoraleAttack: " + str(targetAOE))
-				print(str(self) + ": (useAllAOE) (PreferredPlan) CharacterTarget: " + str(targetCharacter))
 				positionAOE(targetAOE, targetCharacter)
 	print(str(self) + ": (useAllAOE) (PreferredPlan) Ending Using AOE For Statement")
 	
@@ -215,23 +196,29 @@ func findTarget(priority: highAttackIn, targetAOE: BaseAOE):
 	targetArray.clear()
 	
 	if targetAOE.isMelee:
-		print(str(targetAOE) + "targetAOE isMelee 1 = " + str(targetAOE.isMelee))
+#		print(str(targetAOE) + "targetAOE isMelee 1 = " + str(targetAOE.isMelee))
 		match checkCurrentSectionAlive():
 			0:
-				print("how are these frontline troops alive? 1")
-				print(str(targetAOE) + ": targetedMeleeArray = " + str(targetedMelee))
-				print(str(targetAOE) + ": targetedTankArray = " + str(targetedTanks))
+#				print("how are these frontline troops alive? 1")
 				targetArray = targetedMelee + targetedTanks
-				print(str(targetAOE) + ": AOEArray = " + str(targetArray))
 			1:
-				print("CQC Section has been eliminated! 1")
+#				print("CQC Section has been eliminated! 1")
 				targetArray = targetedMelee + targetedTanks + targetedRanged
 			2:
-				print("All that's left is supports! 3")
+#				print("All that's left is supports! 3")
 				targetArray = targetedMelee + targetedTanks + targetedRanged + targetedSupport
 	else:
 		targetArray = targetedMelee + targetedTanks + targetedRanged + targetedSupport
-		print(str(targetAOE) + "targetAOE isMelee 1 = " + str(targetAOE.isMelee))
+#		print(str(targetAOE) + "targetAOE isMelee 1 = " + str(targetAOE.isMelee))
+	
+	targetArray.filter(func(object): return is_instance_valid(object))
+	for i in targetArray.size():
+		var AOEChecked = targetArray.pop_back()
+		if is_instance_valid(AOEChecked):
+			targetArray.push_front(AOEChecked)
+		else:
+			pass
+	
 	
 	match priority:
 		highAttackIn.HEALTH:
@@ -258,18 +245,19 @@ func findTarget(priority: highAttackIn, targetAOE: BaseAOE):
 		behaviorPlans.TARGETMULTIPLE:
 			print("Targetted Multiple")
 	if targetAOE.isMelee:
-		print(str(targetAOE) + "targetAOE isMelee 2 = " + str(targetAOE.isMelee))
 		match checkCurrentSectionAlive():
 			0:
-				print("how are these frontline troops alive? 2")
+#				print("how are these frontline troops alive? 2")
 				targetArray.filter(func(object): return object.get_node("StatComponent").role == 0 or object.get_node("StatComponent").role == 1 )
 			1:
-				print("CQC Section has been eliminated! 2")
+#				print("CQC Section has been eliminated! 2")
 				targetArray.filter(func(object): return object.get_node("StatComponent").role == 2)
 			2:
-				print("All that's left is supports! 2")
+				pass
+#				print("All that's left is supports! 2")
 			_:
-				print(str(targetAOE) + "targetAOE isMelee 2 = " + str(targetAOE.isMelee))
+				pass
+#				print(str(targetAOE) + "targetAOE isMelee 2 = " + str(targetAOE.isMelee))
 	
 	target = targetArray
 	print(str(targetAOE) + ": targetedArray = " + str(target))
@@ -278,6 +266,7 @@ func findTarget(priority: highAttackIn, targetAOE: BaseAOE):
 func positionAOE(targetAOE: BaseAOE, targetCharacter: BaseCharacter):
 	if targetCharacter != null:
 		targetAOE.set_global_position(targetCharacter.global_position)
+		targetAOE.spriteAnimations.set_flip_h(true) # AOE looks a bit weird when enemy attacks us
 		print(str(self) + ": (positionAOE) targetAOE: " + str(targetAOE))
 		print(str(self) + ": (positionAOE) targetAOE position: " + str(targetAOE.global_position))
 		print(str(self) + ": (positionAOE) targetCharacter: " + str(targetCharacter))

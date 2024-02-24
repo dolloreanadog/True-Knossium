@@ -1,0 +1,58 @@
+[gd_resource type="SpriteFrames" load_steps=8 format=3 uid="uid://dw7ok4civ15uc"]
+
+[ext_resource type="Texture2D" uid="uid://c8k3vc4ohidan" path="res://assets/art/SurrenderSheet.png" id="1_8umki"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4qocs"]
+atlas = ExtResource("1_8umki")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_shnqa"]
+atlas = ExtResource("1_8umki")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xjua6"]
+atlas = ExtResource("1_8umki")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_smdct"]
+atlas = ExtResource("1_8umki")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2ya2f"]
+atlas = ExtResource("1_8umki")
+region = Rect2(256, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o4igh"]
+atlas = ExtResource("1_8umki")
+region = Rect2(320, 0, 64, 64)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4qocs")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_shnqa")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xjua6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_smdct")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2ya2f")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o4igh")
+}],
+"loop": false,
+"name": &"active",
+"speed": 8.0
+}, {
+"frames": [],
+"loop": false,
+"name": &"inactive",
+"speed": 8.0
+}]

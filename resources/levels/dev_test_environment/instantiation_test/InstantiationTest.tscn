@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://clr3ysnytqpna"]
+
+[ext_resource type="Script" path="res://resources/levels/dev_test_environment/instantiation_test/InstantiationTest.gd" id="1_2y3w7"]
+[ext_resource type="PackedScene" uid="uid://csolfhku1nmqs" path="res://resources/levels/dev_test_environment/instantiation_test/instantiationTestBox.tscn" id="1_oa3sa"]
+
+[node name="InstantiationTest" type="Node2D"]
+script = ExtResource("1_2y3w7")
+
+[node name="ColorRect" parent="." instance=ExtResource("1_oa3sa")]
+offset_left = 952.0
+offset_top = 344.0
+offset_right = 992.0
+offset_bottom = 384.0

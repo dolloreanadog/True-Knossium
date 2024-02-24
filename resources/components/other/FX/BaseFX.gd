@@ -2,12 +2,15 @@ extends Node
 ## <- Doing this can give info on it
 class_name BaseFX
 
+# Note: Make sure to set VFX to inactive
+
+
 #--[ Need info from these ]--
 @export var stats: StatComponent
 
 
 ## Either a Sprite2D or AnimatedSprite2D
-@export var sprite: Node2D
+@export var sprite: AnimatedSprite2D
 ## Will contain Audio
 @export var audio: AudioStream
 
@@ -30,8 +33,8 @@ func playSFX():
 		audioStreamPlayer.set_stream(audio)
 		print(audioStreamPlayer)
 		audioStreamPlayer.play()
-	else:
-		push_warning("There is no AudioStream!")
+#	else:
+#		push_warning("There is no AudioStream!")
 
 func playVFX():
 	pass

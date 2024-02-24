@@ -7,6 +7,7 @@ class_name StatComponent
 #--[ experience ]--
 var level: int = 0
 var experience: float = 0
+var totalExperience: float = 0
 var totalStatPoints: int
 ## When exp reaches this number, increase level
 @export var maxEXP: float = 10
@@ -38,6 +39,8 @@ var currentMorale: float
 
 ## Sometimes it dies more than once
 var alreadyDied: bool = false
+var moraleAlreadyBroken: bool = false
+
 
 #--[ Important Nodes ]--
 @onready var characterBody: BaseCharacter = get_owner()
@@ -74,21 +77,11 @@ func _ready():
 	resetCurrentStats()
 	getTotalStatPoints()
 
-## Only using for deving, delete later
-
 func resetCurrentStats():
 	currentHealth = health
-#	characterBody.bodyCurrentHealth = currentHealth
 	currentDefense = defense
-#	characterBody.bodyCurrentDefense = currentDefense
 	currentAttack = attack
-#	characterBody.bodyCurrentAttack = currentAttack
 	currentMorale = morale
-#	characterBody.bodyCurrentMorale = currentMorale
-	#print(str(self) + ": current health = " + str(currentHealth))
-	#print(str(self) + ": current defense = " + str(currentDefense))
-	#print(str(self) + ": current attack = " + str(currentAttack))
-	#print(str(self) + ": current morale = " + str(currentMorale))
 	print(str(self) + ": Stats have been reset")
 	updateActionAttackInfo()
 	emit_signal("statChanged")
@@ -112,7 +105,7 @@ func updateActionAttackInfo():
 
 func changeEXP(amount: float):
 	experience += amount
-	#print(str(self) + " " + str(characterBody.isFriendly) + ": EXP to Level Up = " + str(experience) + "/" + str(maxEXP))
+	totalExperience += amount
 	while experience >= maxEXP:
 		experience -= maxEXP
 		level += 1
@@ -133,9 +126,6 @@ func changeEXP(amount: float):
 		else:
 			push_warning("There's no level up effect")
 		
-		#print(str(self) + " " + str(characterBody.isFriendly) + ": Leveled Up")
-		#emit_signal("levelUp") # <- This causes a crash?
-	#print(str(self) + ": experience changed = " + str(amount))
 	emit_signal("statChanged")
 	emit_signal("experienceChanged")
 
@@ -145,23 +135,19 @@ func healthDeath():
 	if alreadyDied != true:
 		if currentHealth <= 0:
 			print(str(self) + ": Health is Below Zero")
-			
 			if characterBody.healthDeathFX != null:
 				characterBody.playhealthDeathFX()
 			else:
 				push_warning("There's no health death effect")
 			alreadyDied = false
 			
-			# Hopefully we'll do something in the health Death FX
-			# Like a timer or after finishing animation, so we don't instantly destroy it.
-			emit_signal("death", worthEXP, characterBody)
+			#emit_signal("death", worthEXP, characterBody) # Moving this FX, some issues having it not there
 	else:
 		print(str(self) + ": It already died")
 
 func defenseDeath():
 	var boolean: bool
 	if currentDefense < 1:
-		currentDefense = 1 # Temporary Measure until we get FX to do it
 		print(str(self) + ": current Defense reached 0: " + str(currentDefense))
 		boolean = true
 		if characterBody.defenseDeathFX != null:
@@ -175,7 +161,6 @@ func defenseDeath():
 func attackDeath():
 	var boolean: bool
 	if currentAttack < 0:
-		currentAttack = 0 # Temporary measure until FX get Working
 		boolean = true
 		if characterBody.attackDeathFX != null:
 			characterBody.playAttackDeathFX()
@@ -187,14 +172,19 @@ func attackDeath():
 
 func moraleDeath():
 	var boolean: bool
+	
 	if currentMorale <= 0:
-		boolean = true
-		if characterBody.moraleDeathFX != null:
-			characterBody.playMoraleDeathFX()
-		else:
-			push_warning("There's no morale death effect")
+		if moraleAlreadyBroken != true:
+			boolean = true
+			if characterBody.moraleDeathFX != null:
+				characterBody.playMoraleDeathFX()
+			else:
+				push_warning("There's no morale death effect")
+			moraleAlreadyBroken = true
 	else:
 		boolean = false
+			
+	
 	return boolean
 
 func overMaxHealth():
@@ -246,14 +236,8 @@ func overMaxMorale():
 		boolean = false
 	return boolean
 
-# Don't do anything with this until needed
-#func isDamaged():
-#	var boolean: bool
-#	return boolean
 
 #--[ When changing a variable above ]--
-
-
 
 func changeHealth(amount: float):
 	health += amount
@@ -294,9 +278,6 @@ func changeCurrentHealth(amount: float):
 func changeCurrentDefense(amount: float):
 	amount /= currentDefense
 	currentDefense += amount
-#	characterBody.bodyCurrentDefense = currentDefense
-	#print(str(self) + ": current defense changed = " + str(amount))
-	#print(str(self) + ": current defense = " + str(currentDefense))
 	if characterBody.defenseChangedFX != null:
 		characterBody.playDefenseChangedFX()
 #	else:
@@ -308,9 +289,6 @@ func changeCurrentDefense(amount: float):
 func changeCurrentAttack(amount: float):
 	amount /= currentDefense
 	currentAttack += amount
-#	characterBody.bodyCurrentAttack = currentAttack
-	#print(str(self) + ": current attack changed = " + str(amount))
-	#print(str(self) + ": current attack = " + str(currentAttack))
 	if characterBody.attackChangedFX != null:
 		characterBody.playAttackChangedFX()
 #	else:
@@ -323,9 +301,6 @@ func changeCurrentAttack(amount: float):
 func changeCurrentMorale(amount: float):
 	amount /= currentDefense
 	currentMorale += amount
-#	characterBody.bodyCurrentMorale = currentMorale
-	#print(str(self) + ": current morale changed = " + str(amount))
-	#print(str(self) + ": current moral = " + str(currentMorale))
 	if characterBody.moraleChangedFX != null:
 		characterBody.playMoraleChangedFX()
 #	else:
@@ -333,7 +308,3 @@ func changeCurrentMorale(amount: float):
 	emit_signal("statChanged")
 	moraleDeath()
 	overMaxMorale()
-
-#--[ Overridable ]--
-func customReady():
-	pass

@@ -4,7 +4,7 @@ class_name BaseCharacter
 #--[ Some important stuff ]--
 @export var id: String
 @export var profilePicture: Texture2D
-@onready var dungeon: levelDungeon = get_parent().get_parent()
+@onready var dungeon: BaseLevel = get_parent().get_parent()
 @onready var stats: StatComponent = get_node("StatComponent")
 @onready var system: TurnSystem = get_parent().get_parent().get_node("TurnSystem")
 @onready var levelLabel: Label = get_node("LevelLabel")
@@ -32,10 +32,10 @@ var turns: int
 @export var overDefenseFX: BaseFX
 @export var overAttackFX: BaseFX
 @export var overMoraleFX: BaseFX
-@export var healthChangedFX: BaseFX
-@export var defenseChangedFX: BaseFX
-@export var attackChangedFX: BaseFX
-@export var moraleChangedFX: BaseFX
+@export var healthChangedFX: BaseStatChangedFX
+@export var defenseChangedFX: BaseStatChangedFX
+@export var attackChangedFX: BaseStatChangedFX
+@export var moraleChangedFX: BaseStatChangedFX
 
 #--[ Actions ]--
 @export var action1: BaseActionComponent
@@ -123,22 +123,27 @@ func playOverAttackFX():
 func playOverMorale():
 	overMoraleFX.playFX()
 
-func playHealthChangedFX():
+func playHealthChangedFX(amount: float):
+	healthChangedFX.setAmountChanged(amount)
 	healthChangedFX.playFX()
 
-func playDefenseChangedFX():
+func playDefenseChangedFX(amount: float):
+	defenseChangedFX.setAmountChanged(amount)
 	defenseChangedFX.playFX()
 
-func playAttackChangedFX():
+func playAttackChangedFX(amount: float):
+	attackChangedFX.setAmountChanged(amount)
 	attackChangedFX.playFX()
 
-func playMoraleChangedFX():
+func playMoraleChangedFX(amount: float):
+	moraleChangedFX.setAmountChanged(amount)
 	moraleChangedFX.playFX()
 
 #--[ Animation ]--
 
 ## When spawning choose an idle animation or new Turn happens
 func idleAnimation():
+	await get_tree().create_timer(randf_range(0.1, 0.5)).timeout
 	match randi_range(1, 4):
 		1:
 			runAnimation("idle1")

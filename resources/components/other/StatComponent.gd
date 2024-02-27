@@ -163,6 +163,7 @@ func attackDeath():
 	if currentAttack < 0:
 		boolean = true
 		if characterBody.attackDeathFX != null:
+			print("Attack Died")
 			characterBody.playAttackDeathFX()
 		else:
 			push_warning("There's no attack death effect")
@@ -268,7 +269,7 @@ func changeCurrentHealth(amount: float):
 	amount /= currentDefense
 	currentHealth += amount
 	if characterBody.healthChangedFX != null:
-		characterBody.playHealthChangedFX()
+		characterBody.playHealthChangedFX(amount)
 #	else:
 #		push_warning("There's no health changed effect")
 	emit_signal("statChanged")
@@ -279,7 +280,7 @@ func changeCurrentDefense(amount: float):
 	amount /= currentDefense
 	currentDefense += amount
 	if characterBody.defenseChangedFX != null:
-		characterBody.playDefenseChangedFX()
+		characterBody.playDefenseChangedFX(amount)
 #	else:
 #		push_warning("There's no defense changed effect")
 	emit_signal("statChanged")
@@ -290,7 +291,7 @@ func changeCurrentAttack(amount: float):
 	amount /= currentDefense
 	currentAttack += amount
 	if characterBody.attackChangedFX != null:
-		characterBody.playAttackChangedFX()
+		characterBody.playAttackChangedFX(amount)
 #	else:
 #		push_warning("There's no attack changed effect")
 	emit_signal("statChanged")
@@ -302,7 +303,7 @@ func changeCurrentMorale(amount: float):
 	amount /= currentDefense
 	currentMorale += amount
 	if characterBody.moraleChangedFX != null:
-		characterBody.playMoraleChangedFX()
+		characterBody.playMoraleChangedFX(amount)
 #	else:
 #		push_warning("There's no morale changed effect")
 	emit_signal("statChanged")

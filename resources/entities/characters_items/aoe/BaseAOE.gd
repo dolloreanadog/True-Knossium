@@ -69,11 +69,20 @@ func _process(_delta):
 	if draggable:
 		if dragging:
 			self.global_position = get_global_mouse_position() - currentPosition
+		
+	
 
 #--[ Dragging Functions ]--
 # Make sure to connect these functions to the button
 func _on_button_pressed():
 	print(str(self) + ": Pressed")
+	if is_instance_valid(ownerCharacter.action1):
+		print(str(self) + ": Attack Stat at stat: " + str(ownerCharacter.stats.currentAttack))
+	if is_instance_valid(ownerCharacter.action1):
+		print(str(self) + ": Attack Stat at action1: " + str(ownerCharacter.action1.attack))
+	if is_instance_valid(ownerCharacter.action2):
+		print(str(self) + ": Attack Stat at action2: " + str(ownerCharacter.action2.attack))
+	
 	
 	dungeonAOEInfoBox.characterPFP = ownerCharacterPFP
 	dungeonAOEInfoBox.characterName = ownerCharacterName
@@ -92,15 +101,18 @@ func _on_button_pressed():
 func _on_button_button_up():
 	# When Up should whether its in an area it's not suppose to be in
 	dragging = false
+	await get_tree().create_timer(0.1).timeout
 	getItemsInside()
 	areaOverlapCharacter(false)
 	areaOverlapIsBadArea()
+	
 
 func _on_button_button_down():
 	dragging = true
 	currentPosition = get_global_mouse_position() - self.global_position
 	lastPosition = self.global_position 
 	print(str(self) + ": Global Position:" + str(lastPosition))
+	
 
 # When you place it in an area you're not suppose to
 func returnToLastPosition():
@@ -112,6 +124,7 @@ func areaOverlapIsBadArea():
 	# The plan to remove the area is to set the position somewhere else
 	print(str(self) + ": Start Overlap Area Check")
 	var overlappingAreaArrayCount = overlappingAreaArray.size()
+	print("overlapping Areas: " + str(overlappingAreaArray))
 	if isMelee:
 		for i in overlappingAreaArrayCount:
 			var target = overlappingAreaArray.pop_front()
@@ -204,6 +217,7 @@ func attackStats(body: BaseCharacter):
 		body.damageStats(health, defense, attack, morale)
 	else:
 		print(str(self) + ": Target Has Been missed ")
+		body.damageStats(0, 0, 0, 0)
 
 func animationActivate():
 	if is_instance_valid(spriteAnimations):

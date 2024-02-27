@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://dmviuwgk6nssk"]
+[gd_scene load_steps=26 format=3 uid="uid://dmviuwgk6nssk"]
 
 [ext_resource type="Script" path="res://resources/levels/ingame/dungeon/Dungeon.gd" id="1_et2wr"]
 [ext_resource type="PackedScene" uid="uid://2067o3jclptt" path="res://resources/user_interface/console/Console.tscn" id="2_1f5g3"]
@@ -20,6 +20,7 @@
 [ext_resource type="Script" path="res://resources/entities/difficulty_system/DifficultySystem.gd" id="15_dmc50"]
 [ext_resource type="Script" path="res://resources/entities/enemy_aoe_container/EnemyAOEContainer.gd" id="15_oeev1"]
 [ext_resource type="PackedScene" uid="uid://dacl7cdqcmb3c" path="res://resources/entities/button_invisibility/ButtonInvisibilityToggles.tscn" id="19_vyova"]
+[ext_resource type="PackedScene" uid="uid://b8c08cwk8od7q" path="res://resources/user_interface/ingame_menu/InGameMenu.tscn" id="21_7nwil"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ohrkm"]
 size = Vector2(192, 448)
@@ -559,21 +560,6 @@ mouse_filter = 2
 border_width = 3.0
 script = ExtResource("2_uqu12")
 
-[node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(683, 384)
-
-[node name="Console" parent="Camera2D" instance=ExtResource("2_1f5g3")]
-visible = false
-
-[node name="debug_info" parent="Camera2D" instance=ExtResource("3_mejaj")]
-visible = false
-
-[node name="inventory_menu" parent="Camera2D" instance=ExtResource("4_fae0k")]
-visible = false
-
-[node name="PartyMenu" parent="Camera2D" instance=ExtResource("5_6i2q5")]
-visible = false
-
 [node name="TurnSystem" type="Node" parent="." node_paths=PackedStringArray("FriendlyPartyContainer", "EnemyPartyContainer")]
 script = ExtResource("6_y4pct")
 FriendlyPartyContainer = NodePath("../FriendlyPartyContainer")
@@ -590,6 +576,24 @@ offset_left = 192.0
 offset_top = 8.0
 offset_right = 192.0
 offset_bottom = 8.0
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(683, 384)
+
+[node name="Console" parent="Camera2D" instance=ExtResource("2_1f5g3")]
+visible = false
+
+[node name="debug_info" parent="Camera2D" instance=ExtResource("3_mejaj")]
+visible = false
+
+[node name="inventory_menu" parent="Camera2D" instance=ExtResource("4_fae0k")]
+visible = false
+
+[node name="PartyMenu" parent="Camera2D" instance=ExtResource("5_6i2q5")]
+visible = false
+
+[node name="InGameMenu" parent="Camera2D" instance=ExtResource("21_7nwil")]
+visible = false
 
 [node name="StopControl" type="Control" parent="."]
 editor_description = "Prevents Player From Touching"

@@ -51,7 +51,10 @@ animations = [{
 "name": &"active",
 "speed": 8.0
 }, {
-"frames": [],
+"frames": [{
+"duration": 1.0,
+"texture": null
+}],
 "loop": false,
 "name": &"inactive",
 "speed": 8.0

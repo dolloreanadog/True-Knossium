@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://butll8uw2kt72"]
+
+[ext_resource type="Script" path="res://resources/components/other/FX/attack_changed_fx/default_attack_changed/DefaultAttackChangedFX.gd" id="1_twcos"]
+
+[node name="DefaultAttackChangedFX" type="Node"]
+script = ExtResource("1_twcos")

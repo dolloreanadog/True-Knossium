@@ -6,6 +6,7 @@ class_name BaseFX
 
 
 #--[ Need info from these ]--
+## Try not to use this use (character.stats) instead
 @export var stats: StatComponent
 
 
@@ -21,13 +22,14 @@ class_name BaseFX
 # An outline, for the final FX
 
 func _ready():
-	character.connect("characterAnimationFinished", animationFinished)
+	pass
 
-## Plays both Sound Effect & Visual Effect
+## Plays both Sound Effect & Visual Effect & Handles Stat Calculation
 func playFX():
 	playSFX()
 	playVFX()
 
+## Handles Sound Effects
 func playSFX():
 	if audio != null:
 		audioStreamPlayer.set_stream(audio)
@@ -36,6 +38,7 @@ func playSFX():
 #	else:
 #		push_warning("There is no AudioStream!")
 
+## Handles Visual Effects
 func playVFX():
 	pass
 	#if sprite != null:
@@ -43,5 +46,3 @@ func playVFX():
 	#else:
 	#	push_warning("There is no sprite!")
 
-func animationFinished():
-	pass

@@ -45,10 +45,10 @@ text = "AOE Name"
 [node name="AOEHealthDamageLabel" type="Label" parent="."]
 layout_mode = 0
 offset_left = 122.0
-offset_top = 72.0
+offset_top = 24.0
 offset_right = 259.0
-offset_bottom = 98.0
-text = "Attack Damage: x"
+offset_bottom = 50.0
+text = "Health Damage: x"
 
 [node name="AOEDefenseDamageLabel" type="Label" parent="."]
 layout_mode = 0
@@ -61,10 +61,10 @@ text = "Defense Damage: x"
 [node name="AOEAttackDamageLabel" type="Label" parent="."]
 layout_mode = 0
 offset_left = 122.0
-offset_top = 24.0
+offset_top = 72.0
 offset_right = 259.0
-offset_bottom = 50.0
-text = "Health Damage: x"
+offset_bottom = 98.0
+text = "Attack Damage: x"
 
 [node name="AOEMoraleDamageLabel" type="Label" parent="."]
 layout_mode = 0

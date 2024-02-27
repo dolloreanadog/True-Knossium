@@ -2,7 +2,7 @@ extends Node2D
 class_name EnemyAOEContainer
 
 #--[ Important Nodes ]--
-@onready var dungeon: levelDungeon = get_parent()
+@onready var dungeon: BaseLevel = get_parent()
 @export var system: TurnSystem
 ## Set what Party to target
 @export var targetPartyContainer: BasePartyContainer

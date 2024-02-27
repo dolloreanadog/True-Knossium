@@ -1,39 +1,13 @@
-extends Node2D
+extends BaseLevel
 class_name levelDungeon
 # Notes
 # Once done, with real development, change this to work with next
-
-#--[ These are reference, will not be used ]--
-var stats: StatComponent
-
-#--[ Get Important Nodes ]--
-@onready var system: TurnSystem = get_node("TurnSystem")
-@onready var turnsLabel = $Notes/Label5
-@onready var battlesLabel = $Notes/Label6
-@onready var friendlyPartyContainer: BasePartyContainer = $FriendlyPartyContainer
-@onready var enemyPartyContainer: BasePartyContainer = $EnemyPartyContainer
-
-#--[ Get all the AOEs]--
-@onready var friendlyAOEAttack = $AOESpawnAreaAttack
-@onready var friendlyAOESupport = $AOESpawnAreaSupport
-@onready var enemyAttackAOE = $EnemyAOEContainerAttack
-@onready var enemySupportAOE = $EnemyAOEContainerSupport
 
 #--[ Characters that spawn ]--
 @export var healer = preload("res://resources/entities/characters_items/character/dev_game_characters/DevSupportCharacter.tscn")
 @export var tank = preload("res://resources/entities/characters_items/character/dev_game_characters/DevTankCharacter.tscn")
 @export var DPSRanged = preload("res://resources/entities/characters_items/character/dev_game_characters/DevArcherCharacter.tscn")
 @export var DPSMelee = preload("res://resources/entities/characters_items/character/dev_game_characters/DevMeleeCharacter.tscn")
-
-#--[ For queue ]--
-var queuedAOE: Array
-var isCharactersActive: bool = true
-
-#--[ Surrender Window ]--
-var surrenderWindow = preload("res://resources/entities/surrender_window/surrender_window.tscn")
-
-#--[ Signal ]--
-signal AOEQueueFinished
 
 #--[ Functions ]--
 func _ready():
@@ -106,35 +80,35 @@ func spawnSurrenderWindow(Lcharacter: BaseCharacter, profilePicture: Texture2D, 
 
 func _on_spawn_friendly_healer_pressed() -> void:
 	var instance = healer.instantiate()
-	friendlyPartyContainer.addCharacter(instance, 0.0)
+	friendlyPartyContainer.addCharacter(instance, 0.0, false, Vector2(0, 0))
 
 func _on_spawn_friendly_tank_pressed() -> void:
 	var instance = tank.instantiate()
-	friendlyPartyContainer.addCharacter(instance, 0.0)
+	friendlyPartyContainer.addCharacter(instance, 0.0, false, Vector2(0, 0))
 
 func _on_spawn_friend_ranged_pressed() -> void:
 	var instance = DPSRanged.instantiate()
-	friendlyPartyContainer.addCharacter(instance, 0.0)
+	friendlyPartyContainer.addCharacter(instance, 0.0, false, Vector2(0, 0))
 
 func _on_spawn_friend_melee_pressed() -> void:
 	var instance = DPSMelee.instantiate()
-	friendlyPartyContainer.addCharacter(instance, 0.0)
+	friendlyPartyContainer.addCharacter(instance, 0.0, false, Vector2(0, 0))
 
 func _on_spawn_enemy_healer_pressed() -> void:
 	var instance = healer.instantiate()
-	enemyPartyContainer.addCharacter(instance, 0.0)
+	enemyPartyContainer.addCharacter(instance, 0.0, false, Vector2(0, 0))
 
 func _on_spawn_enemy_tank_pressed() -> void:
 	var instance = tank.instantiate()
-	enemyPartyContainer.addCharacter(instance, 0.0)
+	enemyPartyContainer.addCharacter(instance, 0.0, false, Vector2(0, 0))
 
 func _on_spawn_enemy_ranged_pressed() -> void:
 	var instance = DPSRanged.instantiate()
-	enemyPartyContainer.addCharacter(instance, 0.0)
+	enemyPartyContainer.addCharacter(instance, 0.0, false, Vector2(0, 0))
 
 func _on_spawn_enemy_melee_pressed() -> void:
 	var instance = DPSMelee.instantiate()
-	enemyPartyContainer.addCharacter(instance, 0.0)
+	enemyPartyContainer.addCharacter(instance, 0.0, false, Vector2(0, 0))
 
 
 func _on_get_attack_aoe_container_nodes_pressed() -> void:

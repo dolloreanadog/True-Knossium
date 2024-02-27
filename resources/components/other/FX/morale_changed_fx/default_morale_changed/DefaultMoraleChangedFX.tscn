@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://gslyjo525r5f"]
+
+[ext_resource type="Script" path="res://resources/components/other/FX/morale_changed_fx/default_morale_changed/DefaultMoraleChangedFX.gd" id="1_uby6k"]
+
+[node name="DefaultMoraleChangedFX" type="Node"]
+script = ExtResource("1_uby6k")

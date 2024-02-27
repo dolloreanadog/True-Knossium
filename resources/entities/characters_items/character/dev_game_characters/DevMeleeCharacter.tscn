@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://swkge67su2hs"]
+[gd_scene load_steps=21 format=3 uid="uid://swkge67su2hs"]
 
 [ext_resource type="Script" path="res://resources/entities/characters_items/character/BaseCharacter.gd" id="1_5rxxu"]
 [ext_resource type="Script" path="res://resources/components/other/StatComponent.gd" id="2_j33de"]
@@ -15,11 +15,15 @@
 [ext_resource type="PackedScene" uid="uid://kv1h2jlak6ta" path="res://resources/components/other/FX/over_max_attack_fx/default_max_attack/DefaultMaxAttackFX.tscn" id="13_ntn38"]
 [ext_resource type="PackedScene" uid="uid://dnoftvoyc1f5x" path="res://resources/components/other/FX/over_max_morale_fx/default_max_morale/DefaultMaxMoraleFX.tscn" id="14_eoul4"]
 [ext_resource type="PackedScene" uid="uid://buvc426adj2om" path="res://resources/components/other/FX/over_max_defense_fx/default_max_defense/DefaultMaxDefenseFX.tscn" id="15_j6gp0"]
+[ext_resource type="PackedScene" uid="uid://denn0vrh87r4h" path="res://resources/components/other/FX/health_changed_fx/default_health_changed/DefaultHealthChangedFX.tscn" id="16_i5j6c"]
+[ext_resource type="PackedScene" uid="uid://butll8uw2kt72" path="res://resources/components/other/FX/attack_changed_fx/default_attack_changed/DefaultAttackChangedFX.tscn" id="17_hs5ig"]
+[ext_resource type="PackedScene" uid="uid://bcp72aooxqkle" path="res://resources/components/other/FX/defense_changed_fx/default_defense_changed/DefaultDefenseChangedFX.tscn" id="18_85u21"]
+[ext_resource type="PackedScene" uid="uid://gslyjo525r5f" path="res://resources/components/other/FX/morale_changed_fx/default_morale_changed/DefaultMoraleChangedFX.tscn" id="19_wyaug"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_k0rgm"]
 size = Vector2(48, 48)
 
-[node name="DevMeleeCharacter" type="CharacterBody2D" node_paths=PackedStringArray("levelUpFX", "healthDeathFX", "defenseDeathFX", "attackDeathFX", "moraleDeathFX", "overHealthFX", "overDefenseFX", "overAttackFX", "overMoraleFX", "action1")]
+[node name="DevMeleeCharacter" type="CharacterBody2D" node_paths=PackedStringArray("levelUpFX", "healthDeathFX", "defenseDeathFX", "attackDeathFX", "moraleDeathFX", "overHealthFX", "overDefenseFX", "overAttackFX", "overMoraleFX", "healthChangedFX", "defenseChangedFX", "attackChangedFX", "moraleChangedFX", "action1")]
 script = ExtResource("1_5rxxu")
 id = "Dev Melee"
 profilePicture = ExtResource("2_vdlws")
@@ -32,6 +36,10 @@ overHealthFX = NodePath("DefaultMaxHealth")
 overDefenseFX = NodePath("DefaultMaxDefenseFX")
 overAttackFX = NodePath("DefaultMaxAttackFX")
 overMoraleFX = NodePath("DefaultMaxMoraleFX")
+healthChangedFX = NodePath("DefaultHealthChangedFX")
+defenseChangedFX = NodePath("DefaultDefenseChangedFX")
+attackChangedFX = NodePath("DefaultAttackChangedFX")
+moraleChangedFX = NodePath("DefaultMoraleChangedFX")
 action1 = NodePath("DevMeleeAction")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -56,10 +64,11 @@ stats = NodePath("../StatComponent")
 animationUsed = "offensive1"
 AOE = ExtResource("4_lvhd2")
 castTime = 1
-health = 10.0
+health = 5.0
 defense = 1.0
 attack = 1.0
 morale = 3.0
+accuracy = 2
 description = "A very strong hit is all you need."
 
 [node name="LevelLabel" type="Label" parent="."]
@@ -84,8 +93,7 @@ stats = NodePath("../StatComponent")
 stats = NodePath("../StatComponent")
 sprite = NodePath("../AnimatedSprite2D")
 
-[node name="DefaultMoraleDeathFX" parent="." node_paths=PackedStringArray("stats") instance=ExtResource("11_3oxj6")]
-stats = NodePath("../StatComponent")
+[node name="DefaultMoraleDeathFX" parent="." instance=ExtResource("11_3oxj6")]
 
 [node name="AttackDeathFX" parent="." node_paths=PackedStringArray("stats") instance=ExtResource("12_gykul")]
 stats = NodePath("../StatComponent")
@@ -98,3 +106,11 @@ stats = NodePath("../StatComponent")
 
 [node name="DefaultMaxDefenseFX" parent="." node_paths=PackedStringArray("stats") instance=ExtResource("15_j6gp0")]
 stats = NodePath("../StatComponent")
+
+[node name="DefaultHealthChangedFX" parent="." instance=ExtResource("16_i5j6c")]
+
+[node name="DefaultAttackChangedFX" parent="." instance=ExtResource("17_hs5ig")]
+
+[node name="DefaultDefenseChangedFX" parent="." instance=ExtResource("18_85u21")]
+
+[node name="DefaultMoraleChangedFX" parent="." instance=ExtResource("19_wyaug")]

@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://djkfwc1g0hk0m"]
+
+[ext_resource type="Script" path="res://resources/components/other/FX/BaseStatChangedFX.gd" id="1_8jc7d"]
+
+[node name="BaseStatChangedFX" type="Node"]
+script = ExtResource("1_8jc7d")

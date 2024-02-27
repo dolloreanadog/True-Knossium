@@ -1,7 +1,7 @@
 extends Control
 class_name SurrenderWindow
 
-@onready var dungeon: levelDungeon = get_parent()
+@onready var dungeon: BaseLevel = get_parent()
 
 @onready var characterPFPHolder: TextureRect = $characterPFPHolder
 @onready var characterNameLabel: Label = $CharacterNameLabel
@@ -21,7 +21,7 @@ func _on_button_yes_pressed():
 	var loadedCharacter = load(character.scene_file_path)
 	var instancedCharacter = loadedCharacter.instantiate()
 	#newCharacter.isFriendly = true
-	dungeon.friendlyPartyContainer.addCharacter(instancedCharacter, totalExperience)
+	dungeon.friendlyPartyContainer.addCharacter(instancedCharacter, totalExperience, false, Vector2(0, 0))
 	character.queue_free()
 	character.stats.emit_signal("moraleBroken", 0, 0)
 	self.queue_free()

@@ -68,6 +68,7 @@ func turnIntoOffensiveAction(inputNumber):
 func spawnAOE():
 #	print(str(self) + ": Spawn AOE")
 #	print(str(self) + ": Amount is: " + str(amount))
+	updateAttackInfo()
 	for i in range(0, amount):
 #		print(str(self) + ": Spawned is "+ str(i))
 #		print(str(self) + ": Amount should be spawned is "+ str(amount))
@@ -114,7 +115,6 @@ func getAttackInfo():
 	print(str(self) + ": attack attack = " + str(CurrentAttack))
 	print(str(self) + ": morale attack = " + str(CurrentMorale))
 
-# This thing is scuffed Pls Fix when coming back
 func updateAttackInfo():
 #	getAttackInfo()
 	var Lhealth: float = health

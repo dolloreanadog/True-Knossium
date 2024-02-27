@@ -97,7 +97,8 @@ func getCharactersInfo():
 			pass
 		
 		if characterStats.currentHealth <= 0:
-			push_warning("Trying to push a character that's Dead")
+			pass
+			#push_warning("Trying to push a character that's Dead")
 		else:
 			
 			match characterStats.role:
@@ -150,11 +151,14 @@ func getCharactersInfo():
 #		print(str(self) + ": Turn: " + str(system.turn) + ": Enemy Character Amount: " + str(charactersAmount))
 	emit_signal("charactersUpdated")
 
-func addCharacter(character: BaseCharacter, startingExperience: float):
+func addCharacter(character: BaseCharacter, startingExperience: float, giveDifficultyEXP: bool, characterPosition: Vector2):
 	print(str(self) + ": Spawning: " + str(character))
+	var tween: Tween = get_tree().create_tween().bind_node(character)
+	print("Tween: " + str(tween))
 	var characterStats: StatComponent = character.get_node("StatComponent")
 	
-	var role = characterStats.role
+	var role := characterStats.role
+	var spot: Vector2
 	
 	if isFriendly:
 		character.isFriendly = true
@@ -164,28 +168,77 @@ func addCharacter(character: BaseCharacter, startingExperience: float):
 			character.characterSprite.flip_h = false
 		match role:
 			characterStats.rolesList.Healer:
-				character.set_position(SupportSpawnArea.randomizeSpawn())
+				if Vector2(0, 0) == characterPosition:
+					spot = SupportSpawnArea.randomizeSpawn()
+					character.set_position(spot - Vector2(150, 0))
+					tween.tween_property(character, "global_position", spot, 1)
+				else:
+					character.set_position(characterPosition - Vector2(150, 0))
+					tween.tween_property(character, "global_position", characterPosition, 1)
 			characterStats.rolesList.Tank: 
-				character.set_position(CQCSpawnArea.randomizeSpawn())
+				if Vector2(0, 0) == characterPosition:
+					spot = CQCSpawnArea.randomizeSpawn()
+					character.set_position(spot - Vector2(550, 0))
+					tween.tween_property(character, "global_position", spot, 1)
+				else:
+					character.set_position(characterPosition - Vector2(150, 0))
+					tween.tween_property(character, "global_position", characterPosition, 1)
 			characterStats.rolesList.DPSMelee: 
-				character.set_position(CQCSpawnArea.randomizeSpawn())
+				if Vector2(0, 0) == characterPosition:
+					spot = CQCSpawnArea.randomizeSpawn()
+					character.set_position(spot - Vector2(550, 0))
+					tween.tween_property(character, "global_position", spot, 1)
+				else:
+					character.set_position(characterPosition - Vector2(150, 0))
+					tween.tween_property(character, "global_position", characterPosition, 1)
 			characterStats.rolesList.DPSRanged: 
-				character.set_position(DPSRangedSpawnArea.randomizeSpawn())
+				if Vector2(0, 0) == characterPosition:
+					spot = DPSRangedSpawnArea.randomizeSpawn()
+					character.set_position(spot - Vector2(300, 0))
+					tween.tween_property(character, "global_position", spot, 1)
+				else:
+					character.set_position(characterPosition - Vector2(150, 0))
+					tween.tween_property(character, "global_position", characterPosition, 1)
 	else:
 		character.isFriendly = false
 		add_child(character, true)
-		characterStats.changeEXP(randomizeDifficultyEXP())
+		if giveDifficultyEXP:
+			characterStats.changeEXP(randomizeDifficultyEXP())
 		if character.characterSprite != null:
 			character.characterSprite.flip_h = true
 		match role:
 			characterStats.rolesList.Healer:
-				character.set_position(SupportSpawnArea.randomizeSpawn())
+				if Vector2(0, 0) == characterPosition:
+					spot = SupportSpawnArea.randomizeSpawn()
+					character.set_position(spot + Vector2(150, 0))
+					tween.tween_property(character, "global_position", spot, 1)
+				else:
+					character.set_position(characterPosition - Vector2(150, 0))
+					tween.tween_property(character, "global_position", characterPosition, 1)
 			characterStats.rolesList.Tank: 
-				character.set_position(CQCSpawnArea.randomizeSpawn())
+				if Vector2(0, 0) == characterPosition:
+					spot = CQCSpawnArea.randomizeSpawn()
+					character.set_position(spot + Vector2(550, 0))
+					tween.tween_property(character, "global_position", spot, 1)
+				else:
+					character.set_position(characterPosition - Vector2(150, 0))
+					tween.tween_property(character, "global_position", characterPosition, 1)
 			characterStats.rolesList.DPSMelee: 
-				character.set_position(CQCSpawnArea.randomizeSpawn())
+				if Vector2(0, 0) == characterPosition:
+					spot = CQCSpawnArea.randomizeSpawn()
+					character.set_position(spot + Vector2(550, 0))
+					tween.tween_property(character, "global_position", spot, 1)
+				else:
+					character.set_position(characterPosition - Vector2(150, 0))
+					tween.tween_property(character, "global_position", characterPosition, 1)
 			characterStats.rolesList.DPSRanged: 
-				character.set_position(DPSRangedSpawnArea.randomizeSpawn())
+				if Vector2(0, 0) == characterPosition:
+					spot = DPSRangedSpawnArea.randomizeSpawn()
+					character.set_position(spot + Vector2(300, 0))
+					tween.tween_property(character, "global_position", spot, 1)
+				else:
+					character.set_position(characterPosition - Vector2(150, 0))
+					tween.tween_property(character, "global_position", characterPosition, 1)
 	
 	getCharactersInfo()
 

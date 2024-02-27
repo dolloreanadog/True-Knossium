@@ -154,7 +154,7 @@ func spawnCharacter(spawnCharacterArrayType: characterType):
 	
 	var realLoadedCharacter = load(loadedCharacter)
 	var instance = realLoadedCharacter.instantiate()
-	enemyPartyContainer.addCharacter(instance, 0.0)
+	enemyPartyContainer.addCharacter(instance, 0.0, true, Vector2(0, 0))
 	enemyPartyContainer.getCharactersInfo()
 	print(str(self) + "new loadedCharactersArray: " + str(loadedCharactersArray))
 	print(str(self) + "new loadedCharactersArray size: " + str(loadedCharactersArray.size()))

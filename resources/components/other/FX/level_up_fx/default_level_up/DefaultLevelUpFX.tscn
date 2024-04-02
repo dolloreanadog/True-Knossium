@@ -9,3 +9,4 @@ audio = ExtResource("2_n2w8a")
 audioStreamPlayer = NodePath("AudioStreamPlayer2D")
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+bus = &"SFX"

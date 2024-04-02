@@ -12,6 +12,7 @@ var characterName: String
 var totalExperience: float
 
 func setWindowInfo():
+	self.z_index = 1
 	characterPFPHolder.texture = characterPFP
 	characterNameLabel.text = characterName
 

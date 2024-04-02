@@ -1,7 +1,6 @@
 extends BaseFX
 
 func playFX():
-	if is_instance_valid(stats):
-		stats.currentHealth = stats.health
+	character.stats.currentHealth = character.stats.health
 	playSFX()
 	playVFX()

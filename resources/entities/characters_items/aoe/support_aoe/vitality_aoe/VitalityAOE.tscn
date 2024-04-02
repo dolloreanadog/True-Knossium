@@ -13,6 +13,7 @@ size = Vector2(64, 64)
 script = ExtResource("1_tcchl")
 AOEName = "Vitality"
 spriteAnimations = NodePath("AnimatedSprite2D")
+isDynamicColor = false
 animationActivateOn = 2
 
 [node name="MeshInstance2D" type="MeshInstance2D" parent="."]

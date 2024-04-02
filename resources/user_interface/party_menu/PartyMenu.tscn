@@ -1,41 +1,45 @@
-[gd_scene load_steps=3 format=3 uid="uid://cmupnt3ig0bql"]
+[gd_scene load_steps=4 format=3 uid="uid://cmupnt3ig0bql"]
 
+[ext_resource type="Script" path="res://resources/user_interface/party_menu/PartyMenu.gd" id="1_m4ha6"]
 [ext_resource type="Texture2D" uid="uid://b5c6x8aob3ey6" path="res://assets/art/character_profile_picture/dev/DevCharacterPFP.png" id="1_mbaac"]
 [ext_resource type="Texture2D" uid="uid://dm7h3arv4m30g" path="res://assets/art/character_profile_picture/dev/placeholder.png" id="2_o3voq"]
 
 [node name="PartyMenu" type="Control"]
 layout_mode = 3
 anchors_preset = 0
-offset_right = 1368.0
-offset_bottom = 768.0
+offset_right = 1920.0
+offset_bottom = 1080.0
+script = ExtResource("1_m4ha6")
 
 [node name="ColorRect" type="ColorRect" parent="."]
 layout_mode = 0
 offset_left = 64.0
 offset_top = 64.0
-offset_right = 1280.0
-offset_bottom = 704.0
-color = Color(0.2, 0.2, 0.2, 0.427451)
+offset_right = 1856.0
+offset_bottom = 1024.0
+color = Color(0.2, 0.2, 0.2, 1)
 
 [node name="CharacterList" type="ItemList" parent="ColorRect"]
 layout_mode = 0
 offset_left = 16.0
-offset_top = 8.0
+offset_top = 32.0
 offset_right = 512.0
-offset_bottom = 632.0
+offset_bottom = 616.0
+allow_reselect = true
 item_count = 1
-fixed_icon_size = Vector2i(112, 112)
+fixed_icon_size = Vector2i(56, 56)
 item_0/text = "Dev Character"
 item_0/icon = ExtResource("1_mbaac")
 
 [node name="Panel" type="Panel" parent="ColorRect"]
 layout_mode = 0
-offset_left = 520.0
+offset_left = 576.0
 offset_top = 8.0
-offset_right = 1208.0
-offset_bottom = 632.0
+offset_right = 1784.0
+offset_bottom = 944.0
 
 [node name="CharacterPFPHolder" type="TextureRect" parent="ColorRect/Panel"]
+texture_filter = 1
 layout_mode = 0
 offset_left = 16.0
 offset_top = 16.0
@@ -46,38 +50,47 @@ expand_mode = 1
 
 [node name="CharacterNameLabel" type="Label" parent="ColorRect/Panel"]
 layout_mode = 0
-offset_left = 208.0
-offset_top = 32.0
-offset_right = 680.0
-offset_bottom = 58.0
+offset_left = 200.0
+offset_top = 16.0
+offset_right = 672.0
+offset_bottom = 42.0
 text = "Character Name"
 
 [node name="LevelLabel" type="Label" parent="ColorRect/Panel"]
 layout_mode = 0
-offset_left = 208.0
-offset_top = 56.0
-offset_right = 296.0
-offset_bottom = 88.0
+offset_left = 200.0
+offset_top = 64.0
+offset_right = 592.0
+offset_bottom = 96.0
 text = "Level: 9999"
 
 [node name="ClassLabel" type="Label" parent="ColorRect/Panel"]
 layout_mode = 0
-offset_left = 304.0
-offset_top = 56.0
-offset_right = 416.0
-offset_bottom = 88.0
-text = "Class: Ranged"
+offset_left = 200.0
+offset_top = 152.0
+offset_right = 400.0
+offset_bottom = 184.0
+text = "Class: Support"
+
+[node name="ExperienceLabel" type="Label" parent="ColorRect/Panel"]
+layout_mode = 0
+offset_left = 200.0
+offset_top = 112.0
+offset_right = 520.0
+offset_bottom = 144.0
+text = "Experience: 999/999"
+text_overrun_behavior = 3
 
 [node name="StatPanel" type="Panel" parent="ColorRect/Panel"]
 layout_mode = 0
-offset_left = 208.0
-offset_top = 88.0
-offset_right = 672.0
-offset_bottom = 184.0
+offset_left = 24.0
+offset_top = 208.0
+offset_right = 1192.0
+offset_bottom = 304.0
 
 [node name="StaticStatsLabel" type="Label" parent="ColorRect/Panel/StatPanel"]
 layout_mode = 0
-offset_right = 464.0
+offset_right = 1168.0
 offset_bottom = 26.0
 text = "Stats"
 horizontal_alignment = 1
@@ -85,28 +98,28 @@ horizontal_alignment = 1
 [node name="HBoxContainer" type="HBoxContainer" parent="ColorRect/Panel/StatPanel"]
 layout_mode = 0
 offset_top = 32.0
-offset_right = 464.0
-offset_bottom = 56.0
+offset_right = 1168.0
+offset_bottom = 88.0
 theme_override_constants/separation = 61
 alignment = 1
 
 [node name="HealthStatContainer" type="VBoxContainer" parent="ColorRect/Panel/StatPanel/HBoxContainer"]
 layout_mode = 2
 
-[node name="StaticHealthStatLabel" type="Label" parent="ColorRect/Panel/StatPanel/HBoxContainer/HealthStatContainer"]
+[node name="Label" type="Label" parent="ColorRect/Panel/StatPanel/HBoxContainer/HealthStatContainer"]
 layout_mode = 2
 text = "Health"
 horizontal_alignment = 1
 
 [node name="HealthStatLabel" type="Label" parent="ColorRect/Panel/StatPanel/HBoxContainer/HealthStatContainer"]
 layout_mode = 2
-text = "99999"
+text = "99999/9"
 horizontal_alignment = 1
 
 [node name="DefenseStatContainer" type="VBoxContainer" parent="ColorRect/Panel/StatPanel/HBoxContainer"]
 layout_mode = 2
 
-[node name="DefenseHealthStatLabel" type="Label" parent="ColorRect/Panel/StatPanel/HBoxContainer/DefenseStatContainer"]
+[node name="Label" type="Label" parent="ColorRect/Panel/StatPanel/HBoxContainer/DefenseStatContainer"]
 layout_mode = 2
 text = "Defense"
 horizontal_alignment = 1
@@ -119,7 +132,7 @@ horizontal_alignment = 1
 [node name="AttackStatContainer" type="VBoxContainer" parent="ColorRect/Panel/StatPanel/HBoxContainer"]
 layout_mode = 2
 
-[node name="AttackHealthStatLabel" type="Label" parent="ColorRect/Panel/StatPanel/HBoxContainer/AttackStatContainer"]
+[node name="Label" type="Label" parent="ColorRect/Panel/StatPanel/HBoxContainer/AttackStatContainer"]
 layout_mode = 2
 text = "Attack"
 horizontal_alignment = 1
@@ -132,7 +145,7 @@ horizontal_alignment = 1
 [node name="MoraleStatContainer" type="VBoxContainer" parent="ColorRect/Panel/StatPanel/HBoxContainer"]
 layout_mode = 2
 
-[node name="MoraleHealthStatLabel" type="Label" parent="ColorRect/Panel/StatPanel/HBoxContainer/MoraleStatContainer"]
+[node name="Label" type="Label" parent="ColorRect/Panel/StatPanel/HBoxContainer/MoraleStatContainer"]
 layout_mode = 2
 text = "Morale"
 horizontal_alignment = 1
@@ -145,147 +158,260 @@ horizontal_alignment = 1
 [node name="ActionPanel" type="Panel" parent="ColorRect/Panel"]
 layout_mode = 0
 offset_left = 16.0
-offset_top = 200.0
-offset_right = 680.0
-offset_bottom = 352.0
+offset_top = 312.0
+offset_right = 1192.0
+offset_bottom = 504.0
+
+[node name="Label" type="Label" parent="ColorRect/Panel/ActionPanel"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = -2.0
+offset_right = 1176.0
+offset_bottom = 24.0
+text = "Actions"
+horizontal_alignment = 1
 
 [node name="HBoxContainer" type="HBoxContainer" parent="ColorRect/Panel/ActionPanel"]
 layout_mode = 0
-offset_right = 664.0
-offset_bottom = 112.0
+offset_left = 80.0
+offset_top = 24.0
+offset_right = 1176.0
+offset_bottom = 192.0
 theme_override_constants/separation = 61
 alignment = 1
 
-[node name="Action1Label" type="VBoxContainer" parent="ColorRect/Panel/ActionPanel/HBoxContainer"]
+[node name="VboxContainer" type="VBoxContainer" parent="ColorRect/Panel/ActionPanel/HBoxContainer"]
 layout_mode = 2
 
-[node name="Action1Label" type="Label" parent="ColorRect/Panel/ActionPanel/HBoxContainer/Action1Label"]
+[node name="Action1Label" type="Label" parent="ColorRect/Panel/ActionPanel/HBoxContainer/VboxContainer"]
 layout_mode = 2
-text = "Action1"
+text = "Super Cool Action"
 horizontal_alignment = 1
 
-[node name="ActionHealthLabel" type="Label" parent="ColorRect/Panel/ActionPanel/HBoxContainer/Action1Label"]
+[node name="ActionHealthLabel" type="Label" parent="ColorRect/Panel/ActionPanel/HBoxContainer/VboxContainer"]
 layout_mode = 2
-text = "99999"
+text = "9999/9999"
 horizontal_alignment = 1
 
-[node name="ActionDefenseLabel" type="Label" parent="ColorRect/Panel/ActionPanel/HBoxContainer/Action1Label"]
+[node name="ActionDefenseLabel" type="Label" parent="ColorRect/Panel/ActionPanel/HBoxContainer/VboxContainer"]
 layout_mode = 2
-text = "99999"
+text = "9999/9999"
 horizontal_alignment = 1
 
-[node name="ActionAttackLabel" type="Label" parent="ColorRect/Panel/ActionPanel/HBoxContainer/Action1Label"]
+[node name="ActionAttackLabel" type="Label" parent="ColorRect/Panel/ActionPanel/HBoxContainer/VboxContainer"]
 layout_mode = 2
-text = "99999"
+text = "9999/9999"
 horizontal_alignment = 1
 
-[node name="ActionMoraleLabel" type="Label" parent="ColorRect/Panel/ActionPanel/HBoxContainer/Action1Label"]
+[node name="ActionMoraleLabel" type="Label" parent="ColorRect/Panel/ActionPanel/HBoxContainer/VboxContainer"]
 layout_mode = 2
-text = "99999"
+text = "9999/9999"
 horizontal_alignment = 1
 
-[node name="Action2Label" type="VBoxContainer" parent="ColorRect/Panel/ActionPanel/HBoxContainer"]
+[node name="VboxContainer2" type="VBoxContainer" parent="ColorRect/Panel/ActionPanel/HBoxContainer"]
 layout_mode = 2
 
-[node name="Action2Label" type="Label" parent="ColorRect/Panel/ActionPanel/HBoxContainer/Action2Label"]
+[node name="Action2Label" type="Label" parent="ColorRect/Panel/ActionPanel/HBoxContainer/VboxContainer2"]
 layout_mode = 2
-text = "Action2"
+text = "Another Cool Action"
 horizontal_alignment = 1
 
-[node name="ActionHealthLabel" type="Label" parent="ColorRect/Panel/ActionPanel/HBoxContainer/Action2Label"]
+[node name="ActionHealthLabel" type="Label" parent="ColorRect/Panel/ActionPanel/HBoxContainer/VboxContainer2"]
 layout_mode = 2
-text = "99999"
+text = "9999/9999"
 horizontal_alignment = 1
 
-[node name="ActionDefenseLabel" type="Label" parent="ColorRect/Panel/ActionPanel/HBoxContainer/Action2Label"]
+[node name="ActionDefenseLabel" type="Label" parent="ColorRect/Panel/ActionPanel/HBoxContainer/VboxContainer2"]
 layout_mode = 2
-text = "99999"
+text = "9999/9999"
 horizontal_alignment = 1
 
-[node name="ActionAttackLabel" type="Label" parent="ColorRect/Panel/ActionPanel/HBoxContainer/Action2Label"]
+[node name="ActionAttackLabel" type="Label" parent="ColorRect/Panel/ActionPanel/HBoxContainer/VboxContainer2"]
 layout_mode = 2
-text = "99999"
+text = "9999/9999"
 horizontal_alignment = 1
 
-[node name="ActionMoraleLabel" type="Label" parent="ColorRect/Panel/ActionPanel/HBoxContainer/Action2Label"]
+[node name="ActionMoraleLabel" type="Label" parent="ColorRect/Panel/ActionPanel/HBoxContainer/VboxContainer2"]
 layout_mode = 2
-text = "99999"
+text = "9999/9999"
 horizontal_alignment = 1
 
-[node name="Action3Label" type="VBoxContainer" parent="ColorRect/Panel/ActionPanel/HBoxContainer"]
+[node name="VboxContainer3" type="VBoxContainer" parent="ColorRect/Panel/ActionPanel/HBoxContainer"]
 layout_mode = 2
 
-[node name="Action3Label" type="Label" parent="ColorRect/Panel/ActionPanel/HBoxContainer/Action3Label"]
+[node name="Action3Label" type="Label" parent="ColorRect/Panel/ActionPanel/HBoxContainer/VboxContainer3"]
 layout_mode = 2
-text = "Action3"
 horizontal_alignment = 1
 
-[node name="ActionHealthLabel" type="Label" parent="ColorRect/Panel/ActionPanel/HBoxContainer/Action3Label"]
+[node name="ActionHealthLabel" type="Label" parent="ColorRect/Panel/ActionPanel/HBoxContainer/VboxContainer3"]
 layout_mode = 2
-text = "99999"
 horizontal_alignment = 1
 
-[node name="ActionDefenseLabel" type="Label" parent="ColorRect/Panel/ActionPanel/HBoxContainer/Action3Label"]
+[node name="ActionDefenseLabel" type="Label" parent="ColorRect/Panel/ActionPanel/HBoxContainer/VboxContainer3"]
 layout_mode = 2
-text = "99999"
 horizontal_alignment = 1
 
-[node name="ActionAttackLabel" type="Label" parent="ColorRect/Panel/ActionPanel/HBoxContainer/Action3Label"]
+[node name="ActionAttackLabel" type="Label" parent="ColorRect/Panel/ActionPanel/HBoxContainer/VboxContainer3"]
 layout_mode = 2
-text = "99999"
 horizontal_alignment = 1
 
-[node name="ActionMoraleLabel" type="Label" parent="ColorRect/Panel/ActionPanel/HBoxContainer/Action3Label"]
+[node name="ActionMoraleLabel" type="Label" parent="ColorRect/Panel/ActionPanel/HBoxContainer/VboxContainer3"]
 layout_mode = 2
-text = "99999"
 horizontal_alignment = 1
 
-[node name="Action4Label" type="VBoxContainer" parent="ColorRect/Panel/ActionPanel/HBoxContainer"]
+[node name="VboxContainer4" type="VBoxContainer" parent="ColorRect/Panel/ActionPanel/HBoxContainer"]
 layout_mode = 2
 
-[node name="Action4Label" type="Label" parent="ColorRect/Panel/ActionPanel/HBoxContainer/Action4Label"]
+[node name="Action4Label" type="Label" parent="ColorRect/Panel/ActionPanel/HBoxContainer/VboxContainer4"]
 layout_mode = 2
-text = "Action4"
 horizontal_alignment = 1
 
-[node name="ActionHealthLabel" type="Label" parent="ColorRect/Panel/ActionPanel/HBoxContainer/Action4Label"]
+[node name="ActionHealthLabel" type="Label" parent="ColorRect/Panel/ActionPanel/HBoxContainer/VboxContainer4"]
 layout_mode = 2
-text = "99999"
 horizontal_alignment = 1
 
-[node name="ActionDefenseLabel" type="Label" parent="ColorRect/Panel/ActionPanel/HBoxContainer/Action4Label"]
+[node name="ActionDefenseLabel" type="Label" parent="ColorRect/Panel/ActionPanel/HBoxContainer/VboxContainer4"]
 layout_mode = 2
-text = "99999"
 horizontal_alignment = 1
 
-[node name="ActionAttackLabel" type="Label" parent="ColorRect/Panel/ActionPanel/HBoxContainer/Action4Label"]
+[node name="ActionAttackLabel" type="Label" parent="ColorRect/Panel/ActionPanel/HBoxContainer/VboxContainer4"]
 layout_mode = 2
-text = "99999"
 horizontal_alignment = 1
 
-[node name="ActionMoraleLabel" type="Label" parent="ColorRect/Panel/ActionPanel/HBoxContainer/Action4Label"]
+[node name="ActionMoraleLabel" type="Label" parent="ColorRect/Panel/ActionPanel/HBoxContainer/VboxContainer4"]
 layout_mode = 2
-text = "99999"
 horizontal_alignment = 1
 
-[node name="Panel" type="Panel" parent="ColorRect/Panel"]
-layout_mode = 0
-offset_left = 16.0
-offset_top = 360.0
-offset_right = 680.0
-offset_bottom = 608.0
+[node name="VBoxContainer" type="VBoxContainer" parent="ColorRect/Panel/ActionPanel"]
+layout_mode = 2
+offset_left = 8.0
+offset_top = 24.0
+offset_right = 72.0
+offset_bottom = 191.0
 
-[node name="DescriptionLabel" type="Label" parent="ColorRect/Panel/Panel"]
+[node name="Label2" type="Label" parent="ColorRect/Panel/ActionPanel/VBoxContainer"]
+layout_mode = 2
+text = " "
+
+[node name="Label" type="Label" parent="ColorRect/Panel/ActionPanel/VBoxContainer"]
+layout_mode = 2
+text = "Health"
+
+[node name="Label3" type="Label" parent="ColorRect/Panel/ActionPanel/VBoxContainer"]
+layout_mode = 2
+text = "Defense"
+
+[node name="Label4" type="Label" parent="ColorRect/Panel/ActionPanel/VBoxContainer"]
+layout_mode = 2
+text = "Attack"
+
+[node name="Label5" type="Label" parent="ColorRect/Panel/ActionPanel/VBoxContainer"]
+layout_mode = 2
+text = "Morale"
+
+[node name="UpkeepPanel" type="Panel" parent="ColorRect/Panel"]
 layout_mode = 0
 offset_left = 8.0
-offset_right = 664.0
-offset_bottom = 248.0
+offset_top = 512.0
+offset_right = 1192.0
+offset_bottom = 552.0
+
+[node name="UpkeepLabel" type="Label" parent="ColorRect/Panel/UpkeepPanel"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 952.0
+offset_bottom = 34.0
+text = "Upkeep:"
+
+[node name="UpkeepAmount" type="Label" parent="ColorRect/Panel/UpkeepPanel"]
+layout_mode = 0
+offset_left = 1064.0
+offset_top = 8.0
+offset_right = 1176.0
+offset_bottom = 34.0
+text = "x9999"
+
+[node name="DropPanel" type="Panel" parent="ColorRect/Panel"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 560.0
+offset_right = 1192.0
+offset_bottom = 600.0
+
+[node name="DropsLabel" type="Label" parent="ColorRect/Panel/DropPanel"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 944.0
+offset_bottom = 34.0
+text = "Drops:"
+
+[node name="DropsAmount" type="Label" parent="ColorRect/Panel/DropPanel"]
+layout_mode = 0
+offset_left = 1064.0
+offset_top = 8.0
+offset_right = 1176.0
+offset_bottom = 34.0
+text = "x9999"
+
+[node name="DropsChance" type="Label" parent="ColorRect/Panel/DropPanel"]
+layout_mode = 0
+offset_left = 984.0
+offset_top = 8.0
+offset_right = 1064.0
+offset_bottom = 34.0
+text = "100.00%"
+
+[node name="DescriptionPanel" type="Panel" parent="ColorRect/Panel"]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 632.0
+offset_right = 1192.0
+offset_bottom = 920.0
+
+[node name="DescriptionLabel" type="Label" parent="ColorRect/Panel/DescriptionPanel"]
+layout_mode = 0
+offset_left = 8.0
+offset_right = 1168.0
+offset_bottom = 288.0
 text = "Description"
 
-[node name="Button" type="Button" parent="ColorRect"]
+[node name="ExitButton" type="Button" parent="ColorRect"]
 layout_mode = 0
-offset_left = 1016.0
-offset_top = 8.0
-offset_right = 1208.0
-offset_bottom = 39.0
+offset_left = 1584.0
+offset_top = 16.0
+offset_right = 1776.0
+offset_bottom = 47.0
 text = "Exit"
+
+[node name="UpkeepList" type="ItemList" parent="ColorRect"]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 640.0
+offset_right = 512.0
+offset_bottom = 944.0
+fixed_icon_size = Vector2i(28, 28)
+
+[node name="Label" type="Label" parent="ColorRect"]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 616.0
+offset_right = 512.0
+offset_bottom = 642.0
+text = "Upkeep List"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label2" type="Label" parent="ColorRect"]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 8.0
+offset_right = 512.0
+offset_bottom = 34.0
+text = "Characters"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="item_selected" from="ColorRect/CharacterList" to="." method="_on_character_list_item_selected"]
+[connection signal="pressed" from="ColorRect/ExitButton" to="." method="_on_exit_button_pressed"]

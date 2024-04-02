@@ -7,6 +7,7 @@ class_name BaseActionComponent
 @onready var character: BaseCharacter = get_parent()
 
 ## What animation to use when casted, Check Animation Naming Convention in Discord.
+@export var ActionName: String
 @export var animationUsed: String
 @onready var spawnAreaAttack: BaseSpawnArea = get_parent().get_parent().get_parent().get_node("AOESpawnAreaAttack")
 @onready var spawnAreaSupport: BaseSpawnArea = get_parent().get_parent().get_parent().get_node("AOESpawnAreaSupport")
@@ -18,7 +19,7 @@ class_name BaseActionComponent
 @onready var system: TurnSystem = get_parent().get_parent().get_parent().get_node("TurnSystem")
 # This is default
 ## This will be in each individual class (OVERRIDE THIS)
-@export var AOE = preload("res://resources/entities/characters_items/aoe/dev_aoe/DevAOE.tscn")
+@export var AOE := preload("res://resources/entities/characters_items/aoe/dev_aoe/DevAOE.tscn")
 #--[ Cast Time ]--
 ## How many turns it takes to spawn it
 @export var castTime: int
@@ -41,38 +42,43 @@ var CurrentAttack: float
 var CurrentMorale: float
 
 #--[ Other important variables ]-- 
-@export var description: String
+@export_multiline var description: String
 
+func _ready() -> void:
+	if !(character is BaseCharacter):
+		assert(false, str(character) + " is not BaseCharacter")
+	else:
+		print(str(character) + " is BaseCharacter (check)")
+	if !is_instance_valid(character):
+		assert(false, "Character is not valid")
 
-
-func _ready():
-	pass
-	#getAttackInfo()
-
-func onCastTimeMinimum():
+func onCastTimeMinimum() -> void:
 	if currentCastTime <= 0:
 		spawnAOE()
 		currentCastTime = castTime
 		print(str(self) + ": AOE has been Casted")
 
-func removeCastTime():
+func removeCastTime() -> void:
 	currentCastTime -= 1
 	print(str(self) + ": Cast Time Going Down")
 	onCastTimeMinimum()
 
 ## Make the number negative
-func turnIntoOffensiveAction(inputNumber):
+func turnIntoOffensiveAction(inputNumber) -> int:
 	inputNumber *= -1
 	return inputNumber
 
-func spawnAOE():
-#	print(str(self) + ": Spawn AOE")
-#	print(str(self) + ": Amount is: " + str(amount))
+func spawnAOE() -> void:
+	if !is_instance_valid(character):
+		assert(false, "Character is not valid")
+	
 	updateAttackInfo()
 	for i in range(0, amount):
 #		print(str(self) + ": Spawned is "+ str(i))
 #		print(str(self) + ": Amount should be spawned is "+ str(amount))
+		
 		var instance: BaseAOE = AOE.instantiate()
+		
 		if isOffensive:
 			instance.health = turnIntoOffensiveAction(currentHealth)
 			instance.defense = turnIntoOffensiveAction(CurrentDefense)
@@ -85,6 +91,10 @@ func spawnAOE():
 			instance.morale = CurrentMorale
 		
 		# some essential stuff the AOE needs
+
+			#character = get_parent()
+
+		instance.AOEName = ActionName
 		instance.accuracy = accuracy
 		instance.ownerCharacter = self.get_owner()
 		instance.ownerCharacterAnimation = animationUsed
@@ -92,10 +102,12 @@ func spawnAOE():
 		instance.ownerCharacterPFP = character.profilePicture
 		instance.ownerActionDescription = description
 		
+		
 		if character.isFriendly && isOffensive:
 			print(str(character) + " " + str(self) + ": (Surrender) 1")
 			spawnAreaAttack.add_child(instance, true)
 			instance.set_global_position(spawnAreaAttack.randomizeSpawn())
+			instance.get_node("MeshInstance2D").modulate = Color(1, 1, 1, 0.05)
 		elif character.isFriendly && isOffensive == false:
 			print(str(character) + " " + str(self) + ": (Surrender) 2")
 			spawnAreaSupport.add_child(instance, true)
@@ -103,19 +115,24 @@ func spawnAOE():
 		elif character.isFriendly == false && isOffensive:
 			print(str(character) + " " + str(self) + ": (Surrender) 3")
 			EnemyAOEContainerAttack.add_child(instance, true)
+			instance.draggable = false
+			instance.mainColor = Color(0.5, 0, 0.5, 0.05)
+			instance.isDynamicColor = false
+			instance.get_node("MeshInstance2D").modulate = Color(0.5, 0, 0.5, 0.05)
 		elif character.isFriendly == false && isOffensive == false:
 			print(str(character) + " " + str(self) + ": (Surrender) 4")
 			EnemyAOEContainerSupport.add_child(instance, true)
+			instance.draggable = false
 		else:
 			push_error("Action Broke!")
 
-func getAttackInfo():
+func getAttackInfo() -> void:
 	print(str(self) + ": health attack = " + str(currentHealth))
 	print(str(self) + ": defense attack = " + str(CurrentDefense))
 	print(str(self) + ": attack attack = " + str(CurrentAttack))
 	print(str(self) + ": morale attack = " + str(CurrentMorale))
 
-func updateAttackInfo():
+func updateAttackInfo() -> void:
 #	getAttackInfo()
 	var Lhealth: float = health
 	var Ldefense: float = defense

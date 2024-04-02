@@ -17,7 +17,7 @@ animationActivateOn = 2
 isMelee = true
 
 [node name="MeshInstance2D" type="MeshInstance2D" parent="."]
-modulate = Color(1, 0, 0, 0.117647)
+modulate = Color(1, 1, 1, 0.11)
 position = Vector2(0, -1.90735e-06)
 scale = Vector2(64, 144)
 mesh = SubResource("BoxMesh_cqwa1")

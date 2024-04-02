@@ -1,8 +1,7 @@
 extends BaseFX
 
 func playFX():
-	if is_instance_valid(stats):
-		stats.currentAttack = 0
+	character.stats.currentAttack = 0
 	playVFX()
 
 func playVFX():

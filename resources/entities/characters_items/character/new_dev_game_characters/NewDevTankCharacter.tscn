@@ -1,0 +1,137 @@
+[gd_scene load_steps=23 format=3 uid="uid://by4b3qkfgq1e2"]
+
+[ext_resource type="Script" path="res://resources/entities/characters_items/character/BaseCharacter.gd" id="1_r68vv"]
+[ext_resource type="Resource" uid="uid://3i41wk26jwk2" path="res://resources/entities/inventory_items/dev_items/DevGold.tres" id="2_f1k35"]
+[ext_resource type="Texture2D" uid="uid://b5c6x8aob3ey6" path="res://assets/art/character_profile_picture/dev/DevCharacterPFP.png" id="2_kplo1"]
+[ext_resource type="SpriteFrames" uid="uid://bcr2f7fck2lv3" path="res://assets/sprites/character/dev/DevTankSprite.tres" id="3_3l11k"]
+[ext_resource type="Script" path="res://resources/components/other/StatComponent.gd" id="5_bcgar"]
+[ext_resource type="Script" path="res://resources/components/actions/BaseAction.gd" id="6_gqvjb"]
+[ext_resource type="PackedScene" uid="uid://u172rb6a25bx" path="res://resources/entities/characters_items/aoe/melee_aoe/swing_aoe/SwingAOE.tscn" id="7_x80r1"]
+[ext_resource type="PackedScene" uid="uid://d2hgrnkks06qa" path="res://resources/entities/characters_items/aoe/tank_aoe/fortify_aoe/FortifyAOE.tscn" id="7_ytqte"]
+[ext_resource type="PackedScene" uid="uid://dhw2i4apl4wh6" path="res://resources/components/other/FX/level_up_fx/default_level_up/DefaultLevelUpFX.tscn" id="8_6ihyt"]
+[ext_resource type="PackedScene" uid="uid://p6mxudeee7ur" path="res://resources/components/other/FX/health_death_fx/default_health_death/DefaultHealthDeathFX.tscn" id="9_g7orj"]
+[ext_resource type="PackedScene" uid="uid://c1jhuxqcexyqy" path="res://resources/components/other/FX/defense_death_fx/default_death_fx/DefaultDefenseDeathFX.tscn" id="10_73u3h"]
+[ext_resource type="PackedScene" uid="uid://bacq2pj0ev6au" path="res://resources/components/other/FX/attack_death_fx/default_attack_death/DefaultAttackDeathFX.tscn" id="11_xudrs"]
+[ext_resource type="PackedScene" uid="uid://ccggwqygiqjfq" path="res://resources/components/other/FX/morale_death_fx/default_morale_death/DefaultMoraleDeathFX.tscn" id="12_vbxbn"]
+[ext_resource type="PackedScene" uid="uid://bi1oe18bs03s5" path="res://resources/components/other/FX/over_max_health_fx/over_max_health_default/DefaultMaxHealthFX.tscn" id="13_0wvwl"]
+[ext_resource type="PackedScene" uid="uid://buvc426adj2om" path="res://resources/components/other/FX/over_max_defense_fx/default_max_defense/DefaultMaxDefenseFX.tscn" id="14_ys6xf"]
+[ext_resource type="PackedScene" uid="uid://kv1h2jlak6ta" path="res://resources/components/other/FX/over_max_attack_fx/default_max_attack/DefaultMaxAttackFX.tscn" id="15_cq28m"]
+[ext_resource type="PackedScene" uid="uid://dnoftvoyc1f5x" path="res://resources/components/other/FX/over_max_morale_fx/default_max_morale/DefaultMaxMoraleFX.tscn" id="16_r8hj3"]
+[ext_resource type="PackedScene" uid="uid://denn0vrh87r4h" path="res://resources/components/other/FX/health_changed_fx/default_health_changed/DefaultHealthChangedFX.tscn" id="17_au74m"]
+[ext_resource type="PackedScene" uid="uid://bcp72aooxqkle" path="res://resources/components/other/FX/defense_changed_fx/default_defense_changed/DefaultDefenseChangedFX.tscn" id="18_e5eu4"]
+[ext_resource type="PackedScene" uid="uid://butll8uw2kt72" path="res://resources/components/other/FX/attack_changed_fx/default_attack_changed/DefaultAttackChangedFX.tscn" id="19_a3vct"]
+[ext_resource type="PackedScene" uid="uid://gslyjo525r5f" path="res://resources/components/other/FX/morale_changed_fx/default_morale_changed/DefaultMoraleChangedFX.tscn" id="20_cmhjc"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_x2m2k"]
+size = Vector2(48, 48)
+
+[node name="NewDevTankCharacter" type="CharacterBody2D" node_paths=PackedStringArray("stats", "levelUpFX", "healthDeathFX", "defenseDeathFX", "attackDeathFX", "moraleDeathFX", "overHealthFX", "overDefenseFX", "overAttackFX", "overMoraleFX", "healthChangedFX", "defenseChangedFX", "attackChangedFX", "moraleChangedFX", "action1", "action2")]
+script = ExtResource("1_r68vv")
+id = "Dev Tank II"
+profilePicture = ExtResource("2_kplo1")
+characterDescription = "I take hits alright, also not broken."
+stats = NodePath("StatComponent")
+ResourceNeeded = ExtResource("2_f1k35")
+ResourceNeededNumber = 2
+ResourceDrop = ExtResource("2_f1k35")
+ResourceDropChance = 1.0
+ResourceDropAmount = 5
+levelUpFX = NodePath("DefaultLevelUpFX")
+healthDeathFX = NodePath("HealthDeathFX")
+defenseDeathFX = NodePath("DefenseDeathFX")
+attackDeathFX = NodePath("AttackDeathFX")
+moraleDeathFX = NodePath("DefaultMoraleDeathFX")
+overHealthFX = NodePath("DefaultMaxHealth")
+overDefenseFX = NodePath("DefaultMaxDefenseFX")
+overAttackFX = NodePath("DefaultMaxAttackFX")
+overMoraleFX = NodePath("DefaultMaxMoraleFX")
+healthChangedFX = NodePath("DefaultHealthChangedFX")
+defenseChangedFX = NodePath("DefaultDefenseChangedFX")
+attackChangedFX = NodePath("DefaultAttackChangedFX")
+moraleChangedFX = NodePath("DefaultMoraleChangedFX")
+action1 = NodePath("Action1Component")
+action2 = NodePath("Action2Component")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.12, 0.12)
+sprite_frames = ExtResource("3_3l11k")
+animation = &"death"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_x2m2k")
+
+[node name="LevelLabel" type="Label" parent="."]
+editor_description = "This will show level, if the level visibility button is pushed"
+offset_left = -24.0
+offset_top = -24.0
+offset_right = 24.0
+offset_bottom = 24.0
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="StatComponent" type="Node" parent="."]
+script = ExtResource("5_bcgar")
+maxEXP = 15.0
+worthEXP = 8.0
+role = 3
+health = 15.0
+defense = 3.0
+morale = 15.0
+potentialHealthGain = 3.0
+potentialDefenseGain = 0.5
+potentialAttackGain = 1.0
+potentialMoraleGain = 3.0
+
+[node name="Action1Component" type="Node" parent="." node_paths=PackedStringArray("stats")]
+script = ExtResource("6_gqvjb")
+stats = NodePath("../StatComponent")
+ActionName = "Breaker"
+animationUsed = "offensive1"
+AOE = ExtResource("7_x80r1")
+health = 2.5
+defense = 1.5
+attack = 2.0
+morale = 3.0
+accuracy = 1
+description = "An attack where when swung on an enemy, devastatingly damages their defenses."
+
+[node name="Action2Component" type="Node" parent="." node_paths=PackedStringArray("stats")]
+script = ExtResource("6_gqvjb")
+stats = NodePath("../StatComponent")
+ActionName = "Fortification"
+animationUsed = "inoffensive1"
+AOE = ExtResource("7_ytqte")
+castTime = 3
+isOffensive = false
+health = 1.0
+defense = 1.5
+morale = 5.0
+description = "This creates a Shields for any character caught within its radius."
+
+[node name="DefaultLevelUpFX" parent="." instance=ExtResource("8_6ihyt")]
+
+[node name="HealthDeathFX" parent="." node_paths=PackedStringArray("sprite") instance=ExtResource("9_g7orj")]
+sprite = NodePath("../AnimatedSprite2D")
+
+[node name="DefenseDeathFX" parent="." instance=ExtResource("10_73u3h")]
+
+[node name="AttackDeathFX" parent="." instance=ExtResource("11_xudrs")]
+
+[node name="DefaultMoraleDeathFX" parent="." instance=ExtResource("12_vbxbn")]
+
+[node name="DefaultMaxHealth" parent="." instance=ExtResource("13_0wvwl")]
+
+[node name="DefaultMaxDefenseFX" parent="." instance=ExtResource("14_ys6xf")]
+
+[node name="DefaultMaxAttackFX" parent="." instance=ExtResource("15_cq28m")]
+
+[node name="DefaultMaxMoraleFX" parent="." instance=ExtResource("16_r8hj3")]
+
+[node name="DefaultHealthChangedFX" parent="." instance=ExtResource("17_au74m")]
+
+[node name="DefaultDefenseChangedFX" parent="." instance=ExtResource("18_e5eu4")]
+
+[node name="DefaultAttackChangedFX" parent="." instance=ExtResource("19_a3vct")]
+
+[node name="DefaultMoraleChangedFX" parent="." instance=ExtResource("20_cmhjc")]

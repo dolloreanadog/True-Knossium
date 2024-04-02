@@ -4,19 +4,22 @@ class_name BaseCharacter
 #--[ Some important stuff ]--
 @export var id: String
 @export var profilePicture: Texture2D
+@export_multiline var characterDescription: String
 @onready var dungeon: BaseLevel = get_parent().get_parent()
-@onready var stats: StatComponent = get_node("StatComponent")
+@onready var partyContainer: BasePartyContainer = get_parent()
+@export var stats: StatComponent
 @onready var system: TurnSystem = get_parent().get_parent().get_node("TurnSystem")
+@onready var inventory: InventorySystem = get_parent().get_parent().get_node("InventorySystem")
+
 @onready var levelLabel: Label = get_node("LevelLabel")
 @onready var characterSprite: AnimatedSprite2D = get_node("AnimatedSprite2D")
 var isFriendly: bool = true
-@export var ResourceNeeded: String # We still don't know how or what variable it's as
+@export var ResourceNeeded: BaseInventoryItem # We still don't know how or what variable it's as
 @export var ResourceNeededNumber: int
+@export var ResourceDrop: BaseInventoryItem
+@export_range(0, 1) var ResourceDropChance: float
+@export var ResourceDropAmount: int
 var turns: int
-
-
-
-
 
 #--[ Effects ]--
 # This video https://www.youtube.com/watch?v=vzRZjM9MTGw
@@ -54,6 +57,8 @@ func _ready():
 	dungeon.connect("AOEQueueFinished", characterNewTurn) # Instead of this use Dungeon's Queue Signal
 	system.connect("OnNewBattle", characterNewBattle)
 	runAnimation("idle1")
+	if ResourceNeeded == null && ResourceNeededNumber > 0:
+		push_error(str(self) + " Resource is empty")
 
 func damageStats(health, defense, attack, morale): # Print out the stats of getting damage
 	print(str(self) + ": Body is getting Damaged")
@@ -109,6 +114,8 @@ func playAttackDeathFX():
 	attackDeathFX.playFX()
 
 func playMoraleDeathFX():
+	unlockCharacter()
+	unlockItem()
 	moraleDeathFX.playFX()
 
 func playOverHealthFX():
@@ -121,6 +128,8 @@ func playOverAttackFX():
 	overAttackFX.playFX()
 
 func playOverMorale():
+	unlockCharacter()
+	unlockItem()
 	overMoraleFX.playFX()
 
 func playHealthChangedFX(amount: float):
@@ -154,37 +163,12 @@ func idleAnimation():
 
 # The new way to do attack animation
 # When AOE is used it either choose attack animation, special attack animation, buff animation, defense animation
+
 func runAnimation(animationName: String):
+	# We can do a more dynamic system by running a loop statement to get all string names of the character's animated sprite
+	# Then matching animationName to the an item in an array with the same string <- Low Priority
 	print(str(self) + ": (runAnimation) " + getAnimation() + " - " + animationName)
-	match animationName:
-		"idle1":
-			characterSprite.play("idle1")
-		"idle2":
-			characterSprite.play("idle2")
-		"idle3":
-			characterSprite.play("idle3")
-		"offensive1":
-			characterSprite.play("offensive1")
-		"offensive2":
-			characterSprite.play("offensive2")
-		"offensive3":
-			characterSprite.play("offensive3")
-		"offensive4":
-			characterSprite.play("offensive4")
-		"inoffensive1":
-			characterSprite.play("inoffensive1")
-		"inoffensive2":
-			characterSprite.play("inoffensive1")
-		"inoffensive3":
-			characterSprite.play("inoffensive1")
-		"inoffensive4":
-			characterSprite.play("inoffensive1")
-		"death":
-			characterSprite.play("death")
-		"surrender":
-			characterSprite.play("surrender")
-		_:
-			push_warning(animationName + ": There is no sprite animation by that name!")
+	characterSprite.play(animationName)
 	emit_signal("characterAnimationFinished")
 
 func getAnimation():
@@ -196,6 +180,17 @@ func getAnimation():
 func characterNewTurn():
 	#print(str(self) + ": (L) Received Signal") # We're receiving the signal Twice?
 	useActions()
+	if partyContainer.isFriendly:
+		if inventory.storedItems.has(ResourceNeeded):
+			inventory.removeFromInventory(ResourceNeeded, ResourceNeededNumber)
+			dungeon.warningLabel.text = ""
+		else:
+			dungeon.warningLabel.text = "We Ran out of " + str(ResourceNeeded.itemName)
+			match randi_range(0, 1):
+				1:
+					stats.changeCurrentMorale(-999)
+				2:
+					stats.changeCurrentHealth(-999)
 	runAnimation("idle1")
 
 func characterNewBattle():
@@ -206,3 +201,13 @@ func characterNewBattle():
 # Have the party container run a loop to use this function on all children
 func changeFriendliness(boolean: bool):
 	isFriendly = boolean
+
+func unlockCharacter():
+	print("Unlocked Character")
+	var characterFilePath := self.scene_file_path
+	Global.unlockCharacter(characterFilePath)
+
+func unlockItem():
+	print("Unlocked Item")
+	var itemFilePath := ResourceNeeded.resource_path
+	Global.unlockItem(itemFilePath)

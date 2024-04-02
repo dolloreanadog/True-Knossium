@@ -7,7 +7,7 @@ class_name BaseFX
 
 #--[ Need info from these ]--
 ## Try not to use this use (character.stats) instead
-@export var stats: StatComponent
+#@export var stats: StatComponent
 
 
 ## Either a Sprite2D or AnimatedSprite2D

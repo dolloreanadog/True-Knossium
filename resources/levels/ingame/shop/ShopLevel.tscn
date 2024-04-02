@@ -1,0 +1,38 @@
+[gd_scene format=3 uid="uid://cwv7aynovn0t5"]
+
+[node name="ShopLevel" type="Node2D"]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(640, 360)
+
+[node name="ShoppingList" type="ItemList" parent="."]
+editor_description = "What Items are needed for upkeep"
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 256.0
+offset_bottom = 320.0
+
+[node name="Button" type="Button" parent="."]
+offset_left = 1152.0
+offset_top = 664.0
+offset_right = 1266.0
+offset_bottom = 704.0
+text = "End Shopping"
+
+[node name="InventoryList" type="ItemList" parent="."]
+offset_left = 16.0
+offset_top = 336.0
+offset_right = 256.0
+offset_bottom = 704.0
+
+[node name="ItemDescriptionPanel" type="Panel" parent="."]
+offset_left = 288.0
+offset_top = 512.0
+offset_right = 1120.0
+offset_bottom = 704.0
+
+[node name="BuyableItems" type="ItemList" parent="."]
+offset_left = 288.0
+offset_top = 16.0
+offset_right = 544.0
+offset_bottom = 496.0

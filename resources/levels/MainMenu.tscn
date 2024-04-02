@@ -1,15 +1,16 @@
-[gd_scene load_steps=2 format=3 uid="uid://bxih4r4v0j83h"]
+[gd_scene load_steps=3 format=3 uid="uid://bxih4r4v0j83h"]
 
 [ext_resource type="Script" path="res://resources/levels/MainMenu.gd" id="1_4owyw"]
+[ext_resource type="PackedScene" uid="uid://cxanc31p5n85d" path="res://resources/user_interface/settings_menu/SettingsMenu.tscn" id="2_fa2k7"]
 
 [node name="MainMenu" type="Node2D"]
 script = ExtResource("1_4owyw")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
-offset_left = 1152.0
-offset_top = 64.0
-offset_right = 1340.0
-offset_bottom = 704.0
+offset_left = 1600.0
+offset_top = 72.0
+offset_right = 1860.0
+offset_bottom = 1024.0
 
 [node name="NewGameButton" type="Button" parent="VBoxContainer"]
 layout_mode = 2
@@ -31,21 +32,143 @@ text = "Credits"
 layout_mode = 2
 text = "Settings"
 
+[node name="ClearGlobalProgression" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Clear Global Progression"
+
 [node name="ExitButton" type="Button" parent="VBoxContainer"]
 layout_mode = 2
+action_mode = 0
 text = "Exit Game"
 
 [node name="DevStartButton" type="Button" parent="."]
-offset_left = 832.0
-offset_top = 64.0
-offset_right = 1020.0
-offset_bottom = 95.0
+offset_left = 696.0
+offset_top = -64.0
+offset_right = 884.0
+offset_bottom = -33.0
 text = "Dev Start Game"
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(960, 540)
+
+[node name="Control" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1920.0
+offset_bottom = 1080.0
+
+[node name="NewGameWarning" type="ColorRect" parent="Control"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -184.0
+offset_top = -48.0
+offset_right = 184.0
+offset_bottom = 96.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.219608, 0.219608, 0.219608, 1)
+
+[node name="Label" type="Label" parent="Control/NewGameWarning"]
+layout_mode = 0
+offset_left = 8.0
+offset_right = 360.0
+offset_bottom = 26.0
+text = "Are you sure you want to start a new game?"
+horizontal_alignment = 1
+
+[node name="NewGameYes" type="Button" parent="Control/NewGameWarning"]
+layout_mode = 2
+offset_left = 224.0
+offset_top = 64.0
+offset_right = 336.0
+offset_bottom = 96.0
+text = "Yes"
+
+[node name="NewGameNo" type="Button" parent="Control/NewGameWarning"]
+layout_mode = 2
+offset_left = 32.0
+offset_top = 64.0
+offset_right = 144.0
+offset_bottom = 95.0
+text = "No"
+
+[node name="Control2" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1920.0
+offset_bottom = 1080.0
+
+[node name="ClearGlobalProgressionWarning" type="ColorRect" parent="Control2"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -184.0
+offset_top = -48.0
+offset_right = 184.0
+offset_bottom = 96.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.219608, 0.219608, 0.219608, 1)
+
+[node name="Label" type="Label" parent="Control2/ClearGlobalProgressionWarning"]
+layout_mode = 0
+offset_left = 8.0
+offset_right = 360.0
+offset_bottom = 26.0
+text = "Are you sure you want to start a new game?"
+horizontal_alignment = 1
+
+[node name="ClearProgressionYes" type="Button" parent="Control2/ClearGlobalProgressionWarning"]
+layout_mode = 2
+offset_left = 224.0
+offset_top = 64.0
+offset_right = 336.0
+offset_bottom = 96.0
+text = "Yes"
+
+[node name="ClearProgressionNo" type="Button" parent="Control2/ClearGlobalProgressionWarning"]
+layout_mode = 2
+offset_left = 32.0
+offset_top = 64.0
+offset_right = 144.0
+offset_bottom = 95.0
+text = "No"
+
+[node name="Label" type="Label" parent="."]
+offset_right = 40.0
+offset_bottom = 23.0
+text = "Early Version Expect Some Stuff to be Missing or Broken"
+
+[node name="Label2" type="Label" parent="."]
+offset_left = 1224.0
+offset_top = 104.0
+offset_right = 1592.0
+offset_bottom = 136.0
+text = "Works! (Some Minor Issues Though) -->"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="SettingsMenu" parent="." instance=ExtResource("2_fa2k7")]
+visible = false
 
 [connection signal="pressed" from="VBoxContainer/NewGameButton" to="." method="_on_new_game_button_pressed"]
 [connection signal="pressed" from="VBoxContainer/ContinueButton" to="." method="_on_continue_button_pressed"]
 [connection signal="pressed" from="VBoxContainer/TutorialButton" to="." method="_on_tutorial_button_pressed"]
 [connection signal="pressed" from="VBoxContainer/CreditsButton" to="." method="_on_credits_button_pressed"]
 [connection signal="pressed" from="VBoxContainer/SettingsButton" to="." method="_on_settings_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/ClearGlobalProgression" to="." method="_on_clear_global_progression_pressed"]
 [connection signal="pressed" from="VBoxContainer/ExitButton" to="." method="_on_exit_button_pressed"]
 [connection signal="pressed" from="DevStartButton" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="Control/NewGameWarning/NewGameYes" to="." method="_on_new_game_yes_pressed"]
+[connection signal="pressed" from="Control/NewGameWarning/NewGameNo" to="." method="_on_new_game_no_pressed"]
+[connection signal="pressed" from="Control2/ClearGlobalProgressionWarning/ClearProgressionYes" to="." method="_on_clear_progression_yes_pressed"]
+[connection signal="pressed" from="Control2/ClearGlobalProgressionWarning/ClearProgressionNo" to="." method="_on_clear_progression_no_pressed"]

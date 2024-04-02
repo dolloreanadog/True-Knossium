@@ -99,7 +99,7 @@ func insertAOEInfo():
 	if isMeleeValue:
 		AOEIsMeleeLabel.text = "It's a melee attack"
 	else:
-		AOEIsMeleeLabel.text = "It's not a melee attack"
+		AOEIsMeleeLabel.text = "It's a ranged attack"
 		
 	if isMovableValue:
 		AOEIsMovableLabel.text = "It's movable"

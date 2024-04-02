@@ -1,0 +1,93 @@
+[gd_scene load_steps=2 format=3 uid="uid://bjkenydobhj7i"]
+
+[ext_resource type="Script" path="res://resources/levels/menu/GameOverMenu/GameOverMenu.gd" id="1_1htv5"]
+
+[node name="GameOverMenu" type="Node2D"]
+script = ExtResource("1_1htv5")
+
+[node name="GoToMenu" type="Button" parent="."]
+offset_left = 1088.0
+offset_top = 672.0
+offset_right = 1216.0
+offset_bottom = 703.0
+text = "Back To Menu"
+
+[node name="StatsPanel" type="Panel" parent="."]
+offset_left = 768.0
+offset_top = 24.0
+offset_right = 1216.0
+offset_bottom = 640.0
+
+[node name="Label" type="Label" parent="StatsPanel"]
+layout_mode = 0
+offset_right = 448.0
+offset_bottom = 26.0
+text = "Stats"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CharactersDiedLabel" type="Label" parent="StatsPanel"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 40.0
+offset_right = 448.0
+offset_bottom = 66.0
+text = "Characters Died:"
+
+[node name="CharactersSurrenderedLabel" type="Label" parent="StatsPanel"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 64.0
+offset_right = 448.0
+offset_bottom = 90.0
+text = "Characters Surrendered:"
+
+[node name="TotalBattlesLabel" type="Label" parent="StatsPanel"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 136.0
+offset_right = 448.0
+offset_bottom = 162.0
+text = "Total Battles:"
+
+[node name="TotalTurnsLabel" type="Label" parent="StatsPanel"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 112.0
+offset_right = 448.0
+offset_bottom = 138.0
+text = "Total Turns:"
+
+[node name="PeakTotalStatPointsLabel" type="Label" parent="StatsPanel"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 88.0
+offset_right = 448.0
+offset_bottom = 114.0
+text = "Peak Total Stat Points: "
+
+[node name="UnlockedPanel" type="Panel" parent="."]
+offset_left = 64.0
+offset_top = 24.0
+offset_right = 704.0
+offset_bottom = 704.0
+
+[node name="Label" type="Label" parent="UnlockedPanel"]
+layout_mode = 0
+offset_right = 640.0
+offset_bottom = 26.0
+text = "Unlocked"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="UnlockedList" type="ItemList" parent="UnlockedPanel"]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 40.0
+offset_right = 624.0
+offset_bottom = 672.0
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(960, 540)
+
+[connection signal="pressed" from="GoToMenu" to="." method="_on_go_to_menu_pressed"]

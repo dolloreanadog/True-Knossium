@@ -17,6 +17,6 @@ func playVFX():
 		sprite.pause()
 		sprite.stop()
 		character.queue_free()
-		stats.emit_signal("death", stats.worthEXP, stats.characterBody)
+		character.stats.emit_signal("death", character.stats.worthEXP, character.stats.characterBody)
 			
 

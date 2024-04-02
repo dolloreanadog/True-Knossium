@@ -1,0 +1,338 @@
+[gd_scene load_steps=2 format=3 uid="uid://y244ci3gm7os"]
+
+[ext_resource type="Script" path="res://resources/levels/menu/NewGameStartMenu/NewGameStartMenu.gd" id="1_7i7pn"]
+
+[node name="NewGameStartMenu" type="Node2D"]
+script = ExtResource("1_7i7pn")
+maxValue = 500.0
+
+[node name="Viusal" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="ColorRect" type="ColorRect" parent="Viusal"]
+layout_mode = 0
+offset_right = 832.0
+offset_bottom = 1080.0
+color = Color(0.537255, 0.262745, 0.345098, 1)
+
+[node name="ColorRect2" type="ColorRect" parent="Viusal"]
+layout_mode = 0
+offset_left = 1088.0
+offset_right = 1920.0
+offset_bottom = 1080.0
+color = Color(0.329412, 0.52549, 0.486275, 1)
+
+[node name="Lists" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="ChooseCharacterList" type="ItemList" parent="Lists"]
+layout_mode = 0
+offset_left = 64.0
+offset_top = 128.0
+offset_right = 384.0
+offset_bottom = 1024.0
+allow_reselect = true
+fixed_icon_size = Vector2i(28, 28)
+
+[node name="ChooseInventoryrList" type="ItemList" parent="Lists"]
+layout_mode = 0
+offset_left = 448.0
+offset_top = 128.0
+offset_right = 768.0
+offset_bottom = 1024.0
+allow_reselect = true
+fixed_icon_size = Vector2i(28, 28)
+
+[node name="FinalCharacterList" type="ItemList" parent="Lists"]
+layout_mode = 0
+offset_left = 1536.0
+offset_top = 128.0
+offset_right = 1856.0
+offset_bottom = 1024.0
+allow_reselect = true
+fixed_icon_size = Vector2i(28, 28)
+
+[node name="FinalInventoryList" type="ItemList" parent="Lists"]
+layout_mode = 0
+offset_left = 1152.0
+offset_top = 128.0
+offset_right = 1472.0
+offset_bottom = 768.0
+allow_reselect = true
+fixed_icon_size = Vector2i(28, 28)
+
+[node name="UpkeepList" type="ItemList" parent="Lists"]
+layout_mode = 0
+offset_left = 1152.0
+offset_top = 800.0
+offset_right = 1472.0
+offset_bottom = 1024.0
+allow_reselect = true
+fixed_icon_size = Vector2i(28, 28)
+
+[node name="Label" type="Label" parent="Lists"]
+layout_mode = 0
+offset_left = 64.0
+offset_top = 96.0
+offset_right = 384.0
+offset_bottom = 128.0
+text = "Characters"
+horizontal_alignment = 1
+
+[node name="Label2" type="Label" parent="Lists"]
+layout_mode = 0
+offset_left = 448.0
+offset_top = 96.0
+offset_right = 768.0
+offset_bottom = 128.0
+text = "Items"
+horizontal_alignment = 1
+
+[node name="Label3" type="Label" parent="Lists"]
+layout_mode = 0
+offset_left = 1536.0
+offset_top = 96.0
+offset_right = 1856.0
+offset_bottom = 128.0
+text = "Characters"
+horizontal_alignment = 1
+
+[node name="Label4" type="Label" parent="Lists"]
+layout_mode = 0
+offset_left = 1152.0
+offset_top = 96.0
+offset_right = 1472.0
+offset_bottom = 128.0
+text = "Items"
+horizontal_alignment = 1
+
+[node name="MiddleInfo" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="StartGameButton" type="Button" parent="MiddleInfo"]
+layout_mode = 0
+offset_left = 832.0
+offset_top = 312.0
+offset_right = 1088.0
+offset_bottom = 343.0
+text = "Start Game"
+
+[node name="ResetListsButton" type="Button" parent="MiddleInfo"]
+layout_mode = 0
+offset_left = 832.0
+offset_top = 352.0
+offset_right = 1088.0
+offset_bottom = 383.0
+text = "Reset"
+
+[node name="BackToMenuButton" type="Button" parent="MiddleInfo"]
+layout_mode = 0
+offset_left = 832.0
+offset_top = 392.0
+offset_right = 1088.0
+offset_bottom = 423.0
+text = "Back To Menu"
+
+[node name="Label" type="Label" parent="MiddleInfo"]
+layout_mode = 0
+offset_left = 832.0
+offset_top = 448.0
+offset_right = 1088.0
+offset_bottom = 474.0
+text = "Max Value"
+horizontal_alignment = 1
+
+[node name="MaxValueLabel" type="Label" parent="MiddleInfo"]
+layout_mode = 0
+offset_left = 832.0
+offset_top = 480.0
+offset_right = 1088.0
+offset_bottom = 506.0
+text = "99999"
+horizontal_alignment = 1
+
+[node name="CurrentValueLabel" type="Label" parent="MiddleInfo"]
+layout_mode = 0
+offset_left = 832.0
+offset_top = 552.0
+offset_right = 1088.0
+offset_bottom = 578.0
+text = "9999999"
+horizontal_alignment = 1
+
+[node name="Label2" type="Label" parent="MiddleInfo"]
+layout_mode = 0
+offset_left = 832.0
+offset_top = 520.0
+offset_right = 1088.0
+offset_bottom = 546.0
+text = "Current Value"
+horizontal_alignment = 1
+
+[node name="Label" type="Label" parent="."]
+offset_right = 832.0
+offset_bottom = 26.0
+text = "Choose what to bring in!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label2" type="Label" parent="."]
+offset_left = 1408.0
+offset_top = 8.0
+offset_right = 1920.0
+offset_bottom = 34.0
+text = "What you're bringing in!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Panel" type="Panel" parent="."]
+offset_left = 64.0
+offset_top = 32.0
+offset_right = 768.0
+offset_bottom = 64.0
+
+[node name="CharacterNameLabel" type="Label" parent="Panel"]
+layout_mode = 0
+offset_left = 8.0
+offset_right = 288.0
+offset_bottom = 32.0
+text = "Character Name"
+vertical_alignment = 1
+
+[node name="UpkeepLabel" type="Label" parent="Panel"]
+layout_mode = 0
+offset_left = 464.0
+offset_right = 704.0
+offset_bottom = 31.0
+text = "(Upkeep Type) x(amount)"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Label3" type="Label" parent="."]
+offset_left = 1152.0
+offset_top = 776.0
+offset_right = 1472.0
+offset_bottom = 802.0
+text = "Upkeep Per Turn"
+horizontal_alignment = 1
+
+[node name="CharacterSelection" type="Panel" parent="."]
+offset_left = 832.0
+offset_top = 832.0
+offset_right = 1088.0
+offset_bottom = 1000.0
+
+[node name="CharacterAmountWanted" type="SpinBox" parent="CharacterSelection"]
+layout_mode = 0
+offset_left = 152.0
+offset_top = 91.0
+offset_right = 248.0
+offset_bottom = 122.0
+max_value = 0.0
+
+[node name="Label" type="Label" parent="CharacterSelection"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 88.0
+offset_right = 152.0
+offset_bottom = 120.0
+text = "amount:"
+vertical_alignment = 1
+
+[node name="ConfirmCharacterSelectedAmount" type="Button" parent="CharacterSelection"]
+layout_mode = 0
+offset_left = 72.0
+offset_top = 128.0
+offset_right = 184.0
+offset_bottom = 160.0
+text = "Confirm"
+
+[node name="SelectedCharacterName" type="Label" parent="CharacterSelection"]
+layout_mode = 0
+offset_top = 32.0
+offset_right = 256.0
+offset_bottom = 88.0
+text = "Choose a Character"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label2" type="Label" parent="CharacterSelection"]
+layout_mode = 0
+offset_right = 256.0
+offset_bottom = 26.0
+text = "Add Selected Character Amount"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="ItemSelection" type="Panel" parent="."]
+offset_left = 832.0
+offset_top = 624.0
+offset_right = 1088.0
+offset_bottom = 792.0
+
+[node name="ItemAmountWanted" type="SpinBox" parent="ItemSelection"]
+layout_mode = 0
+offset_left = 152.0
+offset_top = 91.0
+offset_right = 248.0
+offset_bottom = 122.0
+
+[node name="Label" type="Label" parent="ItemSelection"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 88.0
+offset_right = 152.0
+offset_bottom = 120.0
+text = "amount:"
+vertical_alignment = 1
+
+[node name="ConfirmItemSelectedAmount" type="Button" parent="ItemSelection"]
+layout_mode = 0
+offset_left = 72.0
+offset_top = 128.0
+offset_right = 184.0
+offset_bottom = 160.0
+text = "Confirm"
+
+[node name="SelectedItemName" type="Label" parent="ItemSelection"]
+layout_mode = 0
+offset_top = 32.0
+offset_right = 256.0
+offset_bottom = 80.0
+text = "Choose an item"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label2" type="Label" parent="ItemSelection"]
+layout_mode = 0
+offset_right = 256.0
+offset_bottom = 26.0
+text = "Add Selected Item Amount"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(960, 540)
+
+[connection signal="item_selected" from="Lists/ChooseCharacterList" to="." method="_on_choose_character_list_item_selected"]
+[connection signal="item_selected" from="Lists/ChooseInventoryrList" to="." method="_on_choose_inventoryr_list_item_selected"]
+[connection signal="item_selected" from="Lists/FinalCharacterList" to="." method="_on_final_character_list_item_selected"]
+[connection signal="item_selected" from="Lists/FinalInventoryList" to="." method="_on_final_inventory_list_item_selected"]
+[connection signal="pressed" from="MiddleInfo/StartGameButton" to="." method="_on_start_game_button_pressed"]
+[connection signal="pressed" from="MiddleInfo/ResetListsButton" to="." method="_on_reset_lists_button_pressed"]
+[connection signal="pressed" from="MiddleInfo/BackToMenuButton" to="." method="_on_back_to_menu_button_pressed"]
+[connection signal="value_changed" from="CharacterSelection/CharacterAmountWanted" to="." method="_on_character_amount_wanted_value_changed"]
+[connection signal="pressed" from="CharacterSelection/ConfirmCharacterSelectedAmount" to="." method="_on_confirm_character_selected_amount_pressed"]
+[connection signal="value_changed" from="ItemSelection/ItemAmountWanted" to="." method="_on_item_amount_wanted_value_changed"]
+[connection signal="pressed" from="ItemSelection/ConfirmItemSelectedAmount" to="." method="_on_confirm_item_selected_amount_pressed"]

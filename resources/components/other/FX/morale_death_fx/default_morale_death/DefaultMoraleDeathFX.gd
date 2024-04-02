@@ -23,8 +23,8 @@ func playVFX():
 					var loadedCharacter = load(character.scene_file_path)
 					var instance = loadedCharacter.instantiate()
 					print("instance: " + str(instance))
-					character.queue_free()
 					character.dungeon.enemyPartyContainer.addCharacter(instance, character.stats.totalExperience, false, Vector2(0, 0))
+					character.queue_free()
 					character.stats.emit_signal("moraleBroken", 0, character.stats.characterBody)
 				else:
 					character.dungeon.spawnSurrenderWindow(character, character.profilePicture, character.id, character.stats.totalExperience)

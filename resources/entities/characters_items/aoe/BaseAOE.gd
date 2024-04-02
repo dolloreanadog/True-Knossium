@@ -2,6 +2,8 @@ extends Area2D
 class_name BaseAOE
 # Notes
 # This should always be the child
+# https://docs.godotengine.org/en/stable/tutorials/audio/audio_buses.html
+# ^ Make sure to set bus to SFX
 
 @export var AOEName: String
 
@@ -12,6 +14,10 @@ var ownerActionDescription: String
 var ownerCharacterPFP: Texture2D
 var ownerCharacterAnimation: String
 
+#--[ dungeon ]--
+@onready var dungeon: BaseLevel = get_parent().get_parent()
+
+
 #--[ Turn System ]--
 @onready var system: TurnSystem
 
@@ -20,9 +26,10 @@ var ownerCharacterAnimation: String
 @onready var collisionVisualizer: MeshInstance2D = get_node("MeshInstance2D")
 @onready var button: Button = get_node("Button")
 
+@export var isDynamicColor: bool = true
+var mainColor: Color
 #--[ Other Nodes]--
 @onready var dungeonAOEInfoBox: AOEInfoBox = get_parent().get_parent().get_node("AOEInfoBox")
-
 
 #--[ Stats ]--
 
@@ -32,6 +39,7 @@ var attack: float
 var morale: float
 # Determine if attack lands or not
 ## The lower the number, the more accurate it is
+var experience: float
 var accuracy: int
 
 
@@ -61,6 +69,7 @@ var lastPosition: Vector2
 #--[ Base Functions ]--
 func _ready():
 	system = get_parent().get_parent().get_node("TurnSystem")
+	mainColor = collisionVisualizer.modulate
 	#system.connect("OnNewTurn", NewTurnSignaled)
 	system.connect("OnNewBattle", inBattle)
 	self.z_index = 1
@@ -76,13 +85,24 @@ func _process(_delta):
 # Make sure to connect these functions to the button
 func _on_button_pressed():
 	print(str(self) + ": Pressed")
-	if is_instance_valid(ownerCharacter.action1):
-		print(str(self) + ": Attack Stat at stat: " + str(ownerCharacter.stats.currentAttack))
-	if is_instance_valid(ownerCharacter.action1):
-		print(str(self) + ": Attack Stat at action1: " + str(ownerCharacter.action1.attack))
-	if is_instance_valid(ownerCharacter.action2):
-		print(str(self) + ": Attack Stat at action2: " + str(ownerCharacter.action2.attack))
 	
+	if SettingsSystem.getAOEMovement():
+		if dragging:
+			dungeon.setDisabledAllAOE(true)
+			dragging = false
+			collisionVisualizer.modulate = mainColor
+			await get_tree().create_timer(0.1).timeout
+			getItemsInside()
+			areaOverlapCharacter(false)
+			areaOverlapIsBadArea()
+		else:
+			button.mouse_filter = Control.MOUSE_FILTER_STOP
+			dragging = true
+			collisionVisualizer.modulate = Color(1, 1, 1, 0.2)
+			currentPosition = get_global_mouse_position() - self.global_position
+			lastPosition = self.global_position 
+			dungeon.setDisabledAllAOE(false)
+			button.visible = true
 	
 	dungeonAOEInfoBox.characterPFP = ownerCharacterPFP
 	dungeonAOEInfoBox.characterName = ownerCharacterName
@@ -100,49 +120,94 @@ func _on_button_pressed():
 
 func _on_button_button_up():
 	# When Up should whether its in an area it's not suppose to be in
-	dragging = false
-	await get_tree().create_timer(0.1).timeout
-	getItemsInside()
-	areaOverlapCharacter(false)
-	areaOverlapIsBadArea()
+	if SettingsSystem.getAOEMovement():
+		pass
+	else:
+		dragging = false
+		collisionVisualizer.modulate = mainColor
+		await get_tree().create_timer(0.1).timeout
+		getItemsInside()
+		areaOverlapCharacter(false)
+		areaOverlapIsBadArea()
 	
 
 func _on_button_button_down():
-	dragging = true
-	currentPosition = get_global_mouse_position() - self.global_position
-	lastPosition = self.global_position 
-	print(str(self) + ": Global Position:" + str(lastPosition))
-	
+	if SettingsSystem.getAOEMovement():
+		pass
+	else:
+		dragging = true
+		#if isDynamicColor:
+		collisionVisualizer.modulate = Color(1, 1, 1, 0.2)
+		currentPosition = get_global_mouse_position() - self.global_position
+		lastPosition = self.global_position 
+		print(str(self) + ": Global Position:" + str(lastPosition))
 
 # When you place it in an area you're not suppose to
 func returnToLastPosition():
+	var warningLabel: Label = Label.new()
+	
+	draggable = false
+	button.disabled = true
+	
+	warningLabel.modulate = Color(1, 0, 0, 1)
+	warningLabel.text = "Can't Place Here!"
+	collisionVisualizer.modulate = Color(1, 0, 0, 0.11)
+	
+	# This is here so that it doesn't become a child of AOE Containers
+	dungeon.add_child(warningLabel)
+	warningLabel.global_position = collisionVisualizer.global_position - Vector2(60, 0)
+	
+	
+	await get_tree().create_timer(0.2).timeout
+	collisionVisualizer.modulate = mainColor
+	
 	self.set_global_position(lastPosition)
+	draggable = true
+	button.disabled = false
+	
+	await get_tree().create_timer(1).timeout
+	
+	warningLabel.queue_free()
 
 #Check if overlaps an Area it's not suppose to
 #Example: if it isn't melee, it should not be in anti-melee area
 func areaOverlapIsBadArea():
 	# The plan to remove the area is to set the position somewhere else
 	print(str(self) + ": Start Overlap Area Check")
+	
 	var overlappingAreaArrayCount = overlappingAreaArray.size()
 	print("overlapping Areas: " + str(overlappingAreaArray))
-	if isMelee:
-		for i in overlappingAreaArrayCount:
-			var target = overlappingAreaArray.pop_front()
-			if target is BaseAreaAOEDenial && target.active == true:
+	for i in overlappingAreaArrayCount:
+		var target = overlappingAreaArray.pop_front()
+		if target is BaseAreaAOEDenial && target.active == true:
+			if target.blocker == target.blockType.ALL:
 				print("Returning")
 				returnToLastPosition()
-				draggable = true
+				break
+			if target.blocker == target.blockType.MELEE && isMelee:
+				print("Returning")
+				returnToLastPosition()
+				break
+			if target.blocker == target.blockType.RANGED && !(isMelee):
+				print("Returning")
+				returnToLastPosition()
+				break
 
 #When it overlaps character should put into an array
 func areaOverlapCharacter(ActiveAttack: bool):
-	print(str(self) + ": Start Overlap Character Check")
-	var overlappingBodiesArrayCount = overlappingBodiesArray.size()
-	for i in overlappingBodiesArrayCount:
-		var target = overlappingBodiesArray.pop_front()
-		if target is BaseCharacter:
-			if ActiveAttack:
-				attackStats(target)
-			#draggable = false
+	print(str(self) + ": Start Overlap Character Check (overlap)")
+	print(str(self) + ": (overlap) Start Overlap Character Check " + str(overlappingBodiesArray.size()))
+	if overlappingBodiesArray.size() != 0:
+		for i in overlappingBodiesArray.size():
+			var target = overlappingBodiesArray.pop_front()
+			if target is BaseCharacter:
+				if isDynamicColor:
+					collisionVisualizer.modulate = Color(0, 0, 1, 0.05)
+				if ActiveAttack:
+					attackStats(target)
+				#draggable = false
+	else:
+		collisionVisualizer.modulate = mainColor
 
 func getItemsInside():
 	# We Should make a Temporary Array in here, if we're going to use every turn
@@ -185,8 +250,9 @@ func InTurn():
 		lastTurn()
 		if animationActivateOn == animationActivation.LASTTURN:
 			animationActivate()
-		while spriteAnimations.is_playing():
-			await get_tree().create_timer(0.01).timeout
+		if is_instance_valid(spriteAnimations):
+			while spriteAnimations.is_playing():
+				await get_tree().create_timer(0.01).timeout
 		self.queue_free()
 		
 
@@ -215,6 +281,7 @@ func attackStats(body: BaseCharacter):
 	if target:
 		print(str(self) + ": Target Has Been hit ")
 		body.damageStats(health, defense, attack, morale)
+		body.stats.changeEXP(experience)
 	else:
 		print(str(self) + ": Target Has Been missed ")
 		body.damageStats(0, 0, 0, 0)

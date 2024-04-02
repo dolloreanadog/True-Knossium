@@ -72,12 +72,12 @@ signal statChanged
 signal statReset
 
 #--[ Basic Functions ]--
-func _ready():
+func _ready() -> void:
 	emit_signal("statChanged")
 	resetCurrentStats()
 	getTotalStatPoints()
 
-func resetCurrentStats():
+func resetCurrentStats() -> void:
 	currentHealth = health
 	currentDefense = defense
 	currentAttack = attack
@@ -87,11 +87,14 @@ func resetCurrentStats():
 	emit_signal("statChanged")
 	emit_signal("statReset")
 
-func getTotalStatPoints():
+func getTotalStatPoints() -> void:
 	@warning_ignore("narrowing_conversion")
 	totalStatPoints = health + attack + defense + morale
 
-func updateActionAttackInfo():
+func getCurrentTotalStatPoints() -> float:
+	return (currentHealth + currentDefense + currentAttack + currentMorale)
+
+func updateActionAttackInfo() -> void:
 	if characterBody.action1 != null:
 		characterBody.action1.updateAttackInfo()
 	if characterBody.action2 != null:
@@ -103,7 +106,7 @@ func updateActionAttackInfo():
 
 # -- Can override these, or add a resource to add an effect to these?
 
-func changeEXP(amount: float):
+func changeEXP(amount: float) -> void:
 	experience += amount
 	totalExperience += amount
 	while experience >= maxEXP:
@@ -117,7 +120,11 @@ func changeEXP(amount: float):
 		changeAttack(potentialAttackGain)
 		changeMorale(potentialMoraleGain)
 		
-		resetCurrentStats()
+		
+		currentHealth = clampf(currentHealth * 1.10, 0, health)
+		currentDefense = clampf(currentDefense * 1.15, 0, defense)
+		currentAttack = clampf(currentAttack * 1.15, 0, attack)
+		currentMorale = clampf(currentMorale * 1.10, 0, morale)
 		getTotalStatPoints()
 		characterBody.updateLevelLabel()
 		
@@ -130,7 +137,7 @@ func changeEXP(amount: float):
 	emit_signal("experienceChanged")
 
 
-func healthDeath():
+func healthDeath() -> void:
 	print(str(self) + ": Running health death method")
 	if alreadyDied != true:
 		if currentHealth <= 0:
@@ -140,132 +147,97 @@ func healthDeath():
 			else:
 				push_warning("There's no health death effect")
 			alreadyDied = false
-			
+			characterBody.dungeon.totalCharactersDied += 1
+			if characterBody.ResourceDropChance >= randf_range(0, 1) && characterBody.ResourceDropChance != 0:
+				characterBody.inventory.addToInventory(characterBody.ResourceDrop, characterBody.ResourceDropAmount)
 			#emit_signal("death", worthEXP, characterBody) # Moving this FX, some issues having it not there
 	else:
 		print(str(self) + ": It already died")
 
-func defenseDeath():
-	var boolean: bool
+func defenseDeath() -> void:
 	if currentDefense < 1:
 		print(str(self) + ": current Defense reached 0: " + str(currentDefense))
-		boolean = true
 		if characterBody.defenseDeathFX != null:
 			characterBody.playDefenseDeathFX()
 		else:
 			push_warning("There's no defense death effect")
-	else:
-		boolean = false
-	return boolean
 
-func attackDeath():
-	var boolean: bool
+func attackDeath() -> void:
 	if currentAttack < 0:
-		boolean = true
 		if characterBody.attackDeathFX != null:
 			print("Attack Died")
 			characterBody.playAttackDeathFX()
 		else:
 			push_warning("There's no attack death effect")
-	else:
-		boolean = false
-	return boolean
 
-func moraleDeath():
-	var boolean: bool
-	
+func moraleDeath() -> void:
 	if currentMorale <= 0:
 		if moraleAlreadyBroken != true:
-			boolean = true
 			if characterBody.moraleDeathFX != null:
 				characterBody.playMoraleDeathFX()
 			else:
 				push_warning("There's no morale death effect")
 			moraleAlreadyBroken = true
-	else:
-		boolean = false
-			
-	
-	return boolean
+			characterBody.dungeon.totalCharactersSurrendered += 1
 
-func overMaxHealth():
-	var boolean: bool
+func overMaxHealth() -> void:
 	print(str(self) + ": Function not overridem!")
 	if currentHealth > health:
-		boolean = true
 		if characterBody.overHealthFX != null:
 			characterBody.playOverHealthFX()
 		else:
 			push_warning("There's no over health max effect")
-	else:
-		boolean = false
-	return boolean
 
-func overMaxDefense():
-	var boolean: bool
+func overMaxDefense() -> void:
 	if currentDefense > defense:
-		boolean = true
 		if characterBody.overDefenseFX != null:
 			characterBody.playOverDefenseFX()
 		else:
 			push_warning("There's no over defense max effect")
-	else:
-		boolean = false
-	return boolean
 	
-func overMaxAttack():
-	var boolean: bool
+func overMaxAttack() -> void:
 	if currentAttack > attack:
-		boolean = true
 		if characterBody.overAttackFX != null:
 			characterBody.playOverAttackFX()
 		else:
 			push_warning("There's no over attack max effect")
-	else:
-		boolean = false
-	return boolean
 	
-func overMaxMorale():
-	var boolean: bool
+func overMaxMorale() -> void:
 	if currentMorale > morale:
-		boolean = true
 		if characterBody.overMoraleFX != null:
 			characterBody.playOverMorale()
 		else:
 			push_warning("There's no over morale max effect")
-	else:
-		boolean = false
-	return boolean
 
 
 #--[ When changing a variable above ]--
 
-func changeHealth(amount: float):
+func changeHealth(amount: float) -> void:
 	health += amount
 	print(str(self) + ": health changed = " + str(amount))
 	emit_signal("statChanged")
 	emit_signal("healthChanged")
 
-func changeDefense(amount: float):
+func changeDefense(amount: float) -> void:
 	defense += amount
 	print(str(self) + ": defense changed = " + str(amount))
 	emit_signal("statChanged")
 	emit_signal("defenseChanged")
 
-func changeAttack(amount: float):
+func changeAttack(amount: float) -> void:
 	attack += amount
 	print(str(self) + ": attack changed = " + str(amount))
 	emit_signal("statChanged")
 	emit_signal("attackChanged")
 
-func changeMorale(amount: float):
+func changeMorale(amount: float) -> void:
 	morale += amount
 	print(str(self) + ": morale changed = " + str(amount))
 	emit_signal("statChanged")
 	emit_signal("moraleChanged")
 
 # There's an in lore reason why defense affects buffs
-func changeCurrentHealth(amount: float):
+func changeCurrentHealth(amount: float) -> void:
 	amount /= currentDefense
 	currentHealth += amount
 	if characterBody.healthChangedFX != null:
@@ -276,7 +248,7 @@ func changeCurrentHealth(amount: float):
 	healthDeath()
 	overMaxHealth()
 
-func changeCurrentDefense(amount: float):
+func changeCurrentDefense(amount: float) -> void:
 	amount /= currentDefense
 	currentDefense += amount
 	if characterBody.defenseChangedFX != null:
@@ -287,7 +259,7 @@ func changeCurrentDefense(amount: float):
 	defenseDeath()
 	overMaxDefense()
 
-func changeCurrentAttack(amount: float):
+func changeCurrentAttack(amount: float) -> void:
 	amount /= currentDefense
 	currentAttack += amount
 	if characterBody.attackChangedFX != null:
@@ -299,7 +271,7 @@ func changeCurrentAttack(amount: float):
 	attackDeath()
 	overMaxAttack()
 
-func changeCurrentMorale(amount: float):
+func changeCurrentMorale(amount: float) -> void:
 	amount /= currentDefense
 	currentMorale += amount
 	if characterBody.moraleChangedFX != null:
@@ -309,3 +281,50 @@ func changeCurrentMorale(amount: float):
 	emit_signal("statChanged")
 	moraleDeath()
 	overMaxMorale()
+
+#--[ For Save/Load System or something else ]--
+
+func setCurrentHealth(amount: float) -> void:
+	currentHealth = amount
+	healthDeath()
+	overMaxHealth()
+
+func setCurrentDefense(amount: float) -> void:
+	currentDefense = amount
+	defenseDeath()
+	overMaxDefense()
+	
+func setCurrentAttack(amount: float) -> void:
+	currentAttack = amount
+	updateActionAttackInfo()
+	attackDeath()
+	overMaxAttack()
+	
+func setCurrentMorale(amount: float) -> void:
+	currentMorale = amount
+	moraleDeath()
+	overMaxMorale()
+
+func setCurrentExperience(amount: float) -> void: 
+	experience = amount
+	totalExperience = amount
+	while experience >= maxEXP:
+		experience -= maxEXP
+		level += 1
+		maxEXP *= 1.02
+		worthEXP *= 1.25
+		
+		changeHealth(potentialHealthGain)
+		changeDefense(potentialDefenseGain)
+		changeAttack(potentialAttackGain)
+		changeMorale(potentialMoraleGain)
+		
+		currentHealth += clampf(currentHealth * 1.10, 0, health)
+		currentDefense += clampf(currentDefense * 1.50, 0, defense)
+		currentAttack += clampf(currentAttack * 1.50, 0, attack)
+		currentMorale += clampf(currentMorale * 1.10, 0, morale)
+		getTotalStatPoints()
+		characterBody.updateLevelLabel()
+		
+	emit_signal("statChanged")
+	emit_signal("experienceChanged")

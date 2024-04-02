@@ -8,7 +8,7 @@ class_name BasePartyContainer
 
 
 #--[ Some Important Info In Order To Run This Node ]--
-@onready var dungeon = get_parent()
+@onready var dungeon: BaseLevel = get_parent()
 @export var system: TurnSystem
 #@export var director: DifficultySystem
 @export var otherPartyContainer: BasePartyContainer
@@ -23,6 +23,9 @@ var stopPreEmptiveBattleEnd: bool = true
 
 #--[ For Difficulty System ]--
 var totalStatPoints: float = 0
+
+# Not for Difficulty System
+var currentTotalStatPoints: float = 0
 
 #--[ EXP System ]--
 # From self to other PartyContainer
@@ -67,6 +70,7 @@ func getCharactersInfo():
 		pass
 #		print(str(self) + ": Getting Character Info")
 	var LtotalStatPoints: int = 0
+	var LtotalCurrentStatPoints: float =0
 	var LcharacterIsHealer: Array = []
 	var LcharacterIsTank: Array = []
 	var LcharacterIsDPSMelee: Array = []
@@ -79,7 +83,10 @@ func getCharactersInfo():
 #	print(str(self) + ": (getCharactersInfo) charactersAmount: " + str(charactersAmount))
 	
 	# Dividing EXP here to split between characters
-	receivingEXP /= charactersAmount
+	if isFriendly:
+		receivingEXP /= charactersAmount * 2.5
+	else:
+		receivingEXP /= charactersAmount * 2
 	
 	for i in charactersAmount:
 		#Grabs important Nodes
@@ -113,16 +120,18 @@ func getCharactersInfo():
 				_:
 					push_error("Line 58-68, Role does not apply to existing ones!")
 					
-			print(str(self) + ": Receiving EXP: " + str(receivingEXP))
+#			print(str(self) + ": Receiving EXP: " + str(receivingEXP))
 			characterStats.changeEXP(receivingEXP)
 			
 			# Adds to the temporary totalStatPoints
 			LtotalStatPoints += characterStats.totalStatPoints
+			LtotalCurrentStatPoints += characterStats.getCurrentTotalStatPoints()
 	# reset receiving EXP since we're done using it, also to not use excess
 	receivingEXP = 0
 	print(str(self) + ": Reset receiving EXP")
 	
 	# Put all temporary variables into the permanent ones
+	currentTotalStatPoints = LtotalCurrentStatPoints
 	totalStatPoints = LtotalStatPoints
 	
 	characterIsHealer = LcharacterIsHealer
@@ -173,7 +182,7 @@ func addCharacter(character: BaseCharacter, startingExperience: float, giveDiffi
 					character.set_position(spot - Vector2(150, 0))
 					tween.tween_property(character, "global_position", spot, 1)
 				else:
-					character.set_position(characterPosition - Vector2(150, 0))
+					character.set_position(characterPosition)
 					tween.tween_property(character, "global_position", characterPosition, 1)
 			characterStats.rolesList.Tank: 
 				if Vector2(0, 0) == characterPosition:
@@ -181,7 +190,7 @@ func addCharacter(character: BaseCharacter, startingExperience: float, giveDiffi
 					character.set_position(spot - Vector2(550, 0))
 					tween.tween_property(character, "global_position", spot, 1)
 				else:
-					character.set_position(characterPosition - Vector2(150, 0))
+					character.set_position(characterPosition)
 					tween.tween_property(character, "global_position", characterPosition, 1)
 			characterStats.rolesList.DPSMelee: 
 				if Vector2(0, 0) == characterPosition:
@@ -189,7 +198,7 @@ func addCharacter(character: BaseCharacter, startingExperience: float, giveDiffi
 					character.set_position(spot - Vector2(550, 0))
 					tween.tween_property(character, "global_position", spot, 1)
 				else:
-					character.set_position(characterPosition - Vector2(150, 0))
+					character.set_position(characterPosition)
 					tween.tween_property(character, "global_position", characterPosition, 1)
 			characterStats.rolesList.DPSRanged: 
 				if Vector2(0, 0) == characterPosition:
@@ -197,7 +206,7 @@ func addCharacter(character: BaseCharacter, startingExperience: float, giveDiffi
 					character.set_position(spot - Vector2(300, 0))
 					tween.tween_property(character, "global_position", spot, 1)
 				else:
-					character.set_position(characterPosition - Vector2(150, 0))
+					character.set_position(characterPosition)
 					tween.tween_property(character, "global_position", characterPosition, 1)
 	else:
 		character.isFriendly = false
@@ -213,7 +222,7 @@ func addCharacter(character: BaseCharacter, startingExperience: float, giveDiffi
 					character.set_position(spot + Vector2(150, 0))
 					tween.tween_property(character, "global_position", spot, 1)
 				else:
-					character.set_position(characterPosition - Vector2(150, 0))
+					character.set_position(characterPosition)
 					tween.tween_property(character, "global_position", characterPosition, 1)
 			characterStats.rolesList.Tank: 
 				if Vector2(0, 0) == characterPosition:
@@ -221,7 +230,7 @@ func addCharacter(character: BaseCharacter, startingExperience: float, giveDiffi
 					character.set_position(spot + Vector2(550, 0))
 					tween.tween_property(character, "global_position", spot, 1)
 				else:
-					character.set_position(characterPosition - Vector2(150, 0))
+					character.set_position(characterPosition)
 					tween.tween_property(character, "global_position", characterPosition, 1)
 			characterStats.rolesList.DPSMelee: 
 				if Vector2(0, 0) == characterPosition:
@@ -229,7 +238,7 @@ func addCharacter(character: BaseCharacter, startingExperience: float, giveDiffi
 					character.set_position(spot + Vector2(550, 0))
 					tween.tween_property(character, "global_position", spot, 1)
 				else:
-					character.set_position(characterPosition - Vector2(150, 0))
+					character.set_position(characterPosition)
 					tween.tween_property(character, "global_position", characterPosition, 1)
 			characterStats.rolesList.DPSRanged: 
 				if Vector2(0, 0) == characterPosition:
@@ -237,7 +246,7 @@ func addCharacter(character: BaseCharacter, startingExperience: float, giveDiffi
 					character.set_position(spot + Vector2(300, 0))
 					tween.tween_property(character, "global_position", spot, 1)
 				else:
-					character.set_position(characterPosition - Vector2(150, 0))
+					character.set_position(characterPosition)
 					tween.tween_property(character, "global_position", characterPosition, 1)
 	
 	getCharactersInfo()
@@ -247,10 +256,12 @@ func onCharacterDeath(EXPWorth, characterBody):
 	print(str(self) + ": (onCharacterDeath) Character Died, giving EXPWorth = " + str(EXPWorth))
 	characterDied = true
 	addCharityEXPTotal(EXPWorth)
+	# if container is enemy, give the character drop to the inventorySystem
 	await get_tree().create_timer(0.04).timeout
 	print(str(self) + ": (onCharacterDeath) old Character Died " + str(characterBody))
 	characters.filter(func(object): return is_instance_valid(object))
 	print(str(self) + ": (onCharacterDeath) new Character Died" + str(characterBody))
+	
 	getCharactersInfo()
 	onAllCharactersDead() 
 
@@ -285,8 +296,11 @@ func onAllCharactersDead():
 	if charactersAmount <= 0:
 		print(str(self) + ": All Characters Died")
 		if isFriendly:
+			dungeon.get_node("StopControl").show()
+			dungeon.saveToSaveSystem()
+			await SaveSystem.Saved
 			dungeon.queue_free()
-			get_tree().change_scene_to_file("res://resources/levels/MainMenu.tscn")
+			get_tree().change_scene_to_file("res://resources/levels/menu/GameOverMenu/GameOverMenu.tscn")
 		else:
 			print(str(self) + ": Battle should have ended")
 			system.newBattle()

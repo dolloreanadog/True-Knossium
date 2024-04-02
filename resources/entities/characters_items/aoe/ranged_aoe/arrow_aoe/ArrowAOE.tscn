@@ -16,7 +16,7 @@ spriteAnimations = NodePath("AnimatedSprite2D")
 animationActivateOn = 2
 
 [node name="MeshInstance2D" type="MeshInstance2D" parent="."]
-modulate = Color(1, 0, 0, 0.117647)
+modulate = Color(1, 1, 1, 0.11)
 position = Vector2(1.14441e-05, 0)
 scale = Vector2(256, 32)
 mesh = SubResource("BoxMesh_lmp76")

@@ -1,6 +1,5 @@
 extends BaseFX
 
 func playFX():
-	if is_instance_valid(stats):
-		if stats.defense * 2 < stats.currentDefense:
-			stats.currentDefense = stats.defense * 2
+	if character.stats.defense * 2 < character.stats.currentDefense:
+		character.stats.currentDefense = character.stats.defense * 2

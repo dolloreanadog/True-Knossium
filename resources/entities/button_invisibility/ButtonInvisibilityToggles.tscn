@@ -43,7 +43,7 @@ layout_mode = 0
 offset_top = 128.0
 offset_right = 24.0
 offset_bottom = 152.0
-text = "Draggable AOE Visible"
+text = "Non-Draggable AOE Visible"
 
 [connection signal="toggled" from="EnemyAOEInvisible" to="." method="_on_enemy_aoe_invisible_toggled"]
 [connection signal="toggled" from="FriendlyAOEInvisible" to="." method="_on_friendly_aoe_invisible_toggled"]

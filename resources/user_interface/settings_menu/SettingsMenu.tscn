@@ -1,0 +1,372 @@
+[gd_scene load_steps=2 format=3 uid="uid://cxanc31p5n85d"]
+
+[ext_resource type="Script" path="res://resources/user_interface/settings_menu/SettingsMenu.gd" id="1_mdwnf"]
+
+[node name="SettingsMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_mdwnf")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 0
+offset_right = 1920.0
+offset_bottom = 1080.0
+color = Color(0.152941, 0.152941, 0.152941, 1)
+
+[node name="GameplayPanel" type="Panel" parent="ColorRect"]
+layout_mode = 2
+offset_left = 64.0
+offset_top = 64.0
+offset_right = 416.0
+offset_bottom = 896.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ColorRect/GameplayPanel"]
+layout_mode = 2
+offset_top = 40.0
+offset_right = 352.0
+offset_bottom = 66.0
+alignment = 1
+
+[node name="Label2" type="Label" parent="ColorRect/GameplayPanel/HBoxContainer"]
+layout_mode = 2
+text = "Click & Drag"
+
+[node name="AOEMovementButton" type="CheckButton" parent="ColorRect/GameplayPanel/HBoxContainer"]
+layout_mode = 2
+
+[node name="Label3" type="Label" parent="ColorRect/GameplayPanel/HBoxContainer"]
+layout_mode = 2
+text = "Click & Click"
+
+[node name="Label" type="Label" parent="ColorRect/GameplayPanel"]
+layout_mode = 0
+offset_right = 352.0
+offset_bottom = 23.0
+text = "General"
+horizontal_alignment = 1
+
+[node name="DisplayPanel" type="Panel" parent="ColorRect"]
+layout_mode = 2
+offset_left = 480.0
+offset_top = 64.0
+offset_right = 864.0
+offset_bottom = 896.0
+
+[node name="Label" type="Label" parent="ColorRect/DisplayPanel"]
+layout_mode = 0
+offset_right = 384.0
+offset_bottom = 23.0
+text = "Display
+"
+horizontal_alignment = 1
+
+[node name="Control" type="Control" parent="ColorRect/DisplayPanel"]
+anchors_preset = 0
+offset_right = 8.0
+offset_bottom = 8.0
+
+[node name="Label2" type="Label" parent="ColorRect/DisplayPanel/Control"]
+layout_mode = 2
+offset_left = 8.0
+offset_top = 32.0
+offset_right = 136.0
+offset_bottom = 64.0
+text = "Resolution"
+vertical_alignment = 1
+
+[node name="ResolutionOptions" type="OptionButton" parent="ColorRect/DisplayPanel/Control"]
+layout_mode = 2
+offset_left = 200.0
+offset_top = 32.0
+offset_right = 352.0
+offset_bottom = 64.0
+item_count = 6
+allow_reselect = true
+popup/item_0/text = "1280x720"
+popup/item_0/id = 0
+popup/item_1/text = "1366x768"
+popup/item_1/id = 1
+popup/item_2/text = "1920x1080"
+popup/item_2/id = 2
+popup/item_3/text = "2560x1440"
+popup/item_3/id = 3
+popup/item_4/text = "3840x2160"
+popup/item_4/id = 4
+popup/item_5/text = "Automatic"
+popup/item_5/id = 5
+
+[node name="Control2" type="Control" parent="ColorRect/DisplayPanel"]
+anchors_preset = 0
+offset_right = 8.0
+offset_bottom = 8.0
+
+[node name="Label2" type="Label" parent="ColorRect/DisplayPanel/Control2"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 72.0
+offset_right = 136.0
+offset_bottom = 104.0
+text = "Window Mode"
+vertical_alignment = 1
+
+[node name="WindowModeOptions" type="OptionButton" parent="ColorRect/DisplayPanel/Control2"]
+layout_mode = 0
+offset_left = 144.0
+offset_top = 72.0
+offset_right = 353.0
+offset_bottom = 104.0
+item_count = 4
+allow_reselect = true
+popup/item_0/text = "Fullscreen"
+popup/item_0/id = 0
+popup/item_1/text = "Windowed"
+popup/item_1/id = 1
+popup/item_2/text = "Borderless Fullscreen"
+popup/item_2/id = 2
+popup/item_3/text = "Borderless Window"
+popup/item_3/id = 3
+
+[node name="Control3" type="Control" parent="ColorRect/DisplayPanel"]
+anchors_preset = 0
+offset_right = 8.0
+offset_bottom = 8.0
+
+[node name="Label2" type="Label" parent="ColorRect/DisplayPanel/Control3"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 112.0
+offset_right = 136.0
+offset_bottom = 144.0
+text = "Language"
+vertical_alignment = 1
+
+[node name="LanguageOptions" type="OptionButton" parent="ColorRect/DisplayPanel/Control3"]
+layout_mode = 0
+offset_left = 192.0
+offset_top = 112.0
+offset_right = 353.0
+offset_bottom = 144.0
+item_count = 5
+allow_reselect = true
+popup/item_0/text = "English"
+popup/item_0/id = 0
+popup/item_1/text = "Simple Chinese"
+popup/item_1/id = 1
+popup/item_2/text = "Japanese"
+popup/item_2/id = 2
+popup/item_3/text = "Spanish"
+popup/item_3/id = 3
+popup/item_4/text = "French"
+popup/item_4/id = 4
+
+[node name="AudioPanel" type="Panel" parent="ColorRect"]
+layout_mode = 2
+offset_left = 928.0
+offset_top = 64.0
+offset_right = 1312.0
+offset_bottom = 896.0
+
+[node name="Label" type="Label" parent="ColorRect/AudioPanel"]
+layout_mode = 0
+offset_right = 384.0
+offset_bottom = 23.0
+text = "Audio"
+horizontal_alignment = 1
+
+[node name="Control" type="Control" parent="ColorRect/AudioPanel"]
+anchors_preset = 0
+offset_right = 8.0
+offset_bottom = 8.0
+
+[node name="Label2" type="Label" parent="ColorRect/AudioPanel/Control"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 32.0
+offset_right = 136.0
+offset_bottom = 96.0
+text = "Master Volume"
+vertical_alignment = 1
+
+[node name="MasterVolSlider" type="HSlider" parent="ColorRect/AudioPanel/Control"]
+layout_mode = 0
+offset_left = 248.0
+offset_top = 32.0
+offset_right = 376.0
+offset_bottom = 64.0
+rounded = true
+
+[node name="MasterVolSpinbox" type="SpinBox" parent="ColorRect/AudioPanel/Control"]
+layout_mode = 0
+offset_left = 272.0
+offset_top = 64.0
+offset_right = 360.0
+offset_bottom = 95.0
+value = 100.0
+rounded = true
+
+[node name="Control2" type="Control" parent="ColorRect/AudioPanel"]
+anchors_preset = 0
+offset_right = 8.0
+offset_bottom = 8.0
+
+[node name="Label2" type="Label" parent="ColorRect/AudioPanel/Control2"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 112.0
+offset_right = 136.0
+offset_bottom = 176.0
+text = "Music Volume"
+vertical_alignment = 1
+
+[node name="MusicVolSlider" type="HSlider" parent="ColorRect/AudioPanel/Control2"]
+layout_mode = 0
+offset_left = 248.0
+offset_top = 112.0
+offset_right = 376.0
+offset_bottom = 144.0
+rounded = true
+
+[node name="MusicVolSpinbox" type="SpinBox" parent="ColorRect/AudioPanel/Control2"]
+layout_mode = 0
+offset_left = 272.0
+offset_top = 144.0
+offset_right = 360.0
+offset_bottom = 175.0
+value = 100.0
+rounded = true
+
+[node name="Control3" type="Control" parent="ColorRect/AudioPanel"]
+anchors_preset = 0
+offset_right = 8.0
+offset_bottom = 8.0
+
+[node name="Label2" type="Label" parent="ColorRect/AudioPanel/Control3"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 200.0
+offset_right = 148.0
+offset_bottom = 264.0
+text = "Character Volume"
+vertical_alignment = 1
+
+[node name="CharacterVolSlider" type="HSlider" parent="ColorRect/AudioPanel/Control3"]
+layout_mode = 0
+offset_left = 248.0
+offset_top = 200.0
+offset_right = 376.0
+offset_bottom = 232.0
+rounded = true
+
+[node name="CharacterVolSpinbox" type="SpinBox" parent="ColorRect/AudioPanel/Control3"]
+layout_mode = 0
+offset_left = 272.0
+offset_top = 232.0
+offset_right = 360.0
+offset_bottom = 263.0
+value = 100.0
+rounded = true
+
+[node name="Control4" type="Control" parent="ColorRect/AudioPanel"]
+anchors_preset = 0
+offset_right = 8.0
+offset_bottom = 8.0
+
+[node name="Label2" type="Label" parent="ColorRect/AudioPanel/Control4"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 280.0
+offset_right = 136.0
+offset_bottom = 344.0
+text = "SFX Volume"
+vertical_alignment = 1
+
+[node name="SFXVolSlider" type="HSlider" parent="ColorRect/AudioPanel/Control4"]
+layout_mode = 0
+offset_left = 248.0
+offset_top = 280.0
+offset_right = 376.0
+offset_bottom = 312.0
+rounded = true
+
+[node name="SFXSpinboxSpinbox" type="SpinBox" parent="ColorRect/AudioPanel/Control4"]
+layout_mode = 0
+offset_left = 272.0
+offset_top = 312.0
+offset_right = 360.0
+offset_bottom = 343.0
+value = 100.0
+rounded = true
+
+[node name="KeybindsPanel" type="Panel" parent="ColorRect"]
+layout_mode = 2
+offset_left = 1376.0
+offset_top = 64.0
+offset_right = 1728.0
+offset_bottom = 896.0
+
+[node name="Label" type="Label" parent="ColorRect/KeybindsPanel"]
+layout_mode = 0
+offset_right = 352.0
+offset_bottom = 26.0
+text = "Keybinds"
+horizontal_alignment = 1
+
+[node name="Exit" type="Button" parent="ColorRect"]
+layout_mode = 0
+offset_left = 1576.0
+offset_top = 16.0
+offset_right = 1776.0
+offset_bottom = 48.0
+text = "Exit"
+
+[node name="Save" type="Button" parent="ColorRect"]
+layout_mode = 0
+offset_left = 1408.0
+offset_top = 16.0
+offset_right = 1568.0
+offset_bottom = 47.0
+text = "Save"
+
+[node name="UnsavedWarning" type="ColorRect" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -224.0
+offset_top = -96.0
+offset_right = 224.0
+offset_bottom = 96.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.286275, 0.286275, 0.286275, 1)
+
+[node name="Label" type="Label" parent="UnsavedWarning"]
+visible = false
+layout_mode = 0
+offset_top = 4.0
+offset_right = 448.0
+offset_bottom = 30.0
+text = "All Unsaved Changes will be missing, Are you sure to exit?"
+horizontal_alignment = 1
+
+[connection signal="toggled" from="ColorRect/GameplayPanel/HBoxContainer/AOEMovementButton" to="." method="AOEMovementButtonToggled"]
+[connection signal="item_selected" from="ColorRect/DisplayPanel/Control/ResolutionOptions" to="." method="ResolutionOptionItemSelected"]
+[connection signal="item_selected" from="ColorRect/DisplayPanel/Control2/WindowModeOptions" to="." method="WindowModeOptionItemSelected"]
+[connection signal="item_selected" from="ColorRect/DisplayPanel/Control3/LanguageOptions" to="." method="LanguageOptionItemSelected"]
+[connection signal="value_changed" from="ColorRect/AudioPanel/Control/MasterVolSlider" to="." method="MasterVolSliderChanged"]
+[connection signal="value_changed" from="ColorRect/AudioPanel/Control/MasterVolSpinbox" to="." method="MasterVolSpinboxChanged"]
+[connection signal="value_changed" from="ColorRect/AudioPanel/Control2/MusicVolSlider" to="." method="MusicVolSliderChanged"]
+[connection signal="value_changed" from="ColorRect/AudioPanel/Control2/MusicVolSpinbox" to="." method="MusicVolSpinboxChanged"]
+[connection signal="value_changed" from="ColorRect/AudioPanel/Control3/CharacterVolSlider" to="." method="CharacterVolSliderChanged"]
+[connection signal="value_changed" from="ColorRect/AudioPanel/Control3/CharacterVolSpinbox" to="." method="CharacterVolSpinboxChanged"]
+[connection signal="value_changed" from="ColorRect/AudioPanel/Control4/SFXVolSlider" to="." method="SFXVolSliderChanged"]
+[connection signal="value_changed" from="ColorRect/AudioPanel/Control4/SFXSpinboxSpinbox" to="." method="SFXVolSpinboxChanged"]
+[connection signal="pressed" from="ColorRect/Exit" to="." method="OnExitPressed"]
+[connection signal="pressed" from="ColorRect/Save" to="." method="onSavedPressed"]

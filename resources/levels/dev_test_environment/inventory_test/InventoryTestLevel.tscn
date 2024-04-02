@@ -1,0 +1,78 @@
+[gd_scene load_steps=8 format=3 uid="uid://b4r85ypnjf3km"]
+
+[ext_resource type="Script" path="res://resources/levels/dev_test_environment/inventory_test/InventoryTestLevel.gd" id="1_4xang"]
+[ext_resource type="Script" path="res://resources/entities/inventory_system/InventorySystem.gd" id="2_108wl"]
+[ext_resource type="Resource" uid="uid://n7i7t460s6dg" path="res://resources/entities/inventory_items/DevGold.tres" id="2_q1xyn"]
+[ext_resource type="Resource" path="res://resources/entities/inventory_items/dev_items/SuperCoolItem.tres" id="3_pqtex"]
+[ext_resource type="PackedScene" uid="uid://ci3j4o0qfk5qa" path="res://resources/user_interface/inventory_menu/inventoryMenu.tscn" id="5_txog8"]
+[ext_resource type="PackedScene" uid="uid://b8kerqouxqko2" path="res://resources/entities/aoe_info_box/aoe_info_box.tscn" id="6_lk1ky"]
+[ext_resource type="Script" path="res://resources/entities/turn_system/TurnSystem.gd" id="7_saw0s"]
+
+[node name="InventoryTestLevel" type="Node2D"]
+script = ExtResource("1_4xang")
+startingItem = ExtResource("2_q1xyn")
+otherStartingItem = ExtResource("3_pqtex")
+
+[node name="InventorySystem" type="Node" parent="."]
+script = ExtResource("2_108wl")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+offset_left = 64.0
+offset_top = 64.0
+offset_right = 320.0
+offset_bottom = 576.0
+
+[node name="GetInventoryArray" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Get Inventory Array"
+
+[node name="AddExistingItemToArray" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Add Existing Item to Array"
+
+[node name="AddNewItemToArray" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Add new Item To array"
+
+[node name="RemoveExistingItemToArray" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Remove existing item to array"
+
+[node name="RemoveNewItemToArray" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Remove new item to array"
+
+[node name="ShowInventoryMenu" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Show Inventory Menu"
+
+[node name="InventoryMenu" parent="." node_paths=PackedStringArray("inventorySystem") instance=ExtResource("5_txog8")]
+visible = false
+inventorySystem = NodePath("../InventorySystem")
+
+[node name="AOEInfoBox" parent="." instance=ExtResource("6_lk1ky")]
+offset_left = 424.0
+offset_top = 576.0
+offset_right = 1280.0
+offset_bottom = 720.0
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Control" type="Control" parent="Control"]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="TurnSystem" type="Node" parent="."]
+script = ExtResource("7_saw0s")
+
+[connection signal="pressed" from="VBoxContainer/GetInventoryArray" to="." method="_on_get_inventory_array_pressed"]
+[connection signal="pressed" from="VBoxContainer/AddExistingItemToArray" to="." method="_on_add_existing_item_to_array_pressed"]
+[connection signal="pressed" from="VBoxContainer/AddNewItemToArray" to="." method="_on_add_new_item_to_array_pressed"]
+[connection signal="pressed" from="VBoxContainer/RemoveExistingItemToArray" to="." method="_on_remove_existing_item_to_array_pressed"]
+[connection signal="pressed" from="VBoxContainer/RemoveNewItemToArray" to="." method="_on_remove_new_item_to_array_pressed"]
+[connection signal="pressed" from="VBoxContainer/ShowInventoryMenu" to="." method="_on_show_inventory_menu_pressed"]

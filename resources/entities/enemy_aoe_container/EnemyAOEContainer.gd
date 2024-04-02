@@ -234,7 +234,7 @@ func findTarget(priority: highAttackIn, targetAOE: BaseAOE):
 			print("sorting morale")
 			targetArray.sort_custom(sortMorale)
 	targetArray.reverse()
-	match preferredPlan: # WE EITHER PUT checkCurrentSectionAlive somewhere here!!!
+	match preferredPlan:
 		behaviorPlans.TARGETSINGLE:
 			print("Targetted Single")
 			targetArray.resize(1)
@@ -271,7 +271,6 @@ func positionAOE(targetAOE: BaseAOE, targetCharacter: BaseCharacter):
 		print(str(self) + ": (positionAOE) targetAOE position: " + str(targetAOE.global_position))
 		print(str(self) + ": (positionAOE) targetCharacter: " + str(targetCharacter))
 		print(str(self) + ": (positionAOE) targetCharacter position: " + str(targetCharacter.global_position))
-		targetAOE.draggable = false
 		print("Placed")
 
 

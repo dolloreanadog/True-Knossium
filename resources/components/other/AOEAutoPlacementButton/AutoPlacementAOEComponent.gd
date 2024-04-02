@@ -86,6 +86,8 @@ func getAOEInfo():
 				else:
 					AOEListHighMoraleAttack.push_back(targetAOE)
 					print(str(self) + ": (getAOEInfo) Has high morale attack ")
+				
+
 	
 	print(str(self) + ": (getAOEInfo) new AOEList: " + str(AOEList))
 
@@ -115,7 +117,7 @@ func getCharacters():
 
 ## gets all AOE & uses them
 func useAllAOE():
-	await get_tree().create_timer(0.25).timeout
+#	await get_tree().create_timer(0.5).timeout
 	var targetAOE: BaseAOE
 	var attackPriority: highAttackIn
 	
@@ -251,12 +253,17 @@ func findTarget(priority: highAttackIn, targetAOE: BaseAOE):
 
 func positionAOE(targetAOE: BaseAOE, targetCharacter: BaseCharacter):
 	if targetCharacter != null:
-		targetAOE.set_global_position(targetCharacter.global_position)
-		print(str(self) + ": (positionAOE) targetAOE: " + str(targetAOE))
-		print(str(self) + ": (positionAOE) targetAOE position: " + str(targetAOE.global_position))
-		print(str(self) + ": (positionAOE) targetCharacter: " + str(targetCharacter))
-		print(str(self) + ": (positionAOE) targetCharacter position: " + str(targetCharacter.global_position))
-		print("Placed")
+		if targetAOE.draggable:
+			targetAOE.set_global_position(targetCharacter.global_position)
+			print(str(self) + ": (positionAOE) targetAOE: " + str(targetAOE))
+			print(str(self) + ": (positionAOE) targetAOE position: " + str(targetAOE.global_position))
+			print(str(self) + ": (positionAOE) targetCharacter: " + str(targetCharacter))
+			print(str(self) + ": (positionAOE) targetCharacter position: " + str(targetCharacter.global_position))
+			print("Placed")
+			await get_tree().create_timer(0.03).timeout
+			if !(isAOESupportContainer):
+				targetAOE.getItemsInside()
+				targetAOE.areaOverlapCharacter(false)
 
 
 #--[ Sorting ]--

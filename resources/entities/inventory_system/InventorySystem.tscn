@@ -1,9 +1,6 @@
-[gd_scene format=3 uid="uid://q6x5klbwasyb"]
+[gd_scene load_steps=2 format=3 uid="uid://q6x5klbwasyb"]
 
-[node name="InventorySystem" type="Control"]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+[ext_resource type="Script" path="res://resources/entities/inventory_system/InventorySystem.gd" id="1_xqyhj"]
+
+[node name="InventorySystem" type="Node"]
+script = ExtResource("1_xqyhj")

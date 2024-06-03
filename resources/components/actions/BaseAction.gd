@@ -5,18 +5,18 @@ class_name BaseActionComponent
 ## This is where we'll spawn it & make it a child of
 @export var stats: StatComponent
 @onready var character: BaseCharacter = get_parent()
-
+@onready var dungeon: BaseLevel
 ## What animation to use when casted, Check Animation Naming Convention in Discord.
 @export var ActionName: String
 @export var animationUsed: String
-@onready var spawnAreaAttack: BaseSpawnArea = get_parent().get_parent().get_parent().get_node("AOESpawnAreaAttack")
-@onready var spawnAreaSupport: BaseSpawnArea = get_parent().get_parent().get_parent().get_node("AOESpawnAreaSupport")
+var spawnAreaAttack: BaseSpawnArea
+var spawnAreaSupport: BaseSpawnArea
 ## For the AI use
 # This is used to store the attack, the AOEs here should be sent to other Party Container
-@onready var EnemyAOEContainerAttack: EnemyAOEContainer = get_parent().get_parent().get_parent().get_node("EnemyAOEContainerAttack")
+var EnemyAOEContainerAttack: EnemyAOEContainer
 #This is used to store the attack (support), the AOEs here should be sent to self Party Container
-@onready var EnemyAOEContainerSupport: EnemyAOEContainer = get_parent().get_parent().get_parent().get_node("EnemyAOEContainerSupport")
-@onready var system: TurnSystem = get_parent().get_parent().get_parent().get_node("TurnSystem")
+var EnemyAOEContainerSupport: EnemyAOEContainer
+var system: TurnSystem
 # This is default
 ## This will be in each individual class (OVERRIDE THIS)
 @export var AOE := preload("res://resources/entities/characters_items/aoe/dev_aoe/DevAOE.tscn")
@@ -35,7 +35,7 @@ var currentCastTime: int
 @export var attack: float = 0
 @export var morale: float = 0
 ## The higher the accuracy, the more it misses
-@export_range(0, 20, 1) var accuracy: int
+@export_range(0, 1, 0.01) var accuracy: float
 var currentHealth: float
 var CurrentDefense: float
 var CurrentAttack: float
@@ -45,10 +45,32 @@ var CurrentMorale: float
 @export_multiline var description: String
 
 func _ready() -> void:
+	# All things we'll automatically get
+	if get_parent().get_parent().get_parent().get_parent() != null:
+		dungeon = get_parent().get_parent().get_parent().get_parent()
+		
+		if dungeon.friendlyAOEAttack != null:
+			spawnAreaAttack = dungeon.friendlyAOEAttack
+		
+		if dungeon.friendlyAOESupport != null:
+			spawnAreaSupport = dungeon.friendlyAOESupport
+		
+		if dungeon.enemyAttackAOE != null:
+			EnemyAOEContainerAttack = dungeon.enemyAttackAOE
+		
+		if dungeon.enemySupportAOE != null:
+			EnemyAOEContainerSupport = dungeon.enemySupportAOE
+		
+		if dungeon.system != null:
+			system = dungeon.system
+	else:
+		push_error("Dungeon does not exist for action")
+	
+	
 	if !(character is BaseCharacter):
 		assert(false, str(character) + " is not BaseCharacter")
 	else:
-		print(str(character) + " is BaseCharacter (check)")
+		print(str(character) + " is BaseCharacter")
 	if !is_instance_valid(character):
 		assert(false, "Character is not valid")
 
@@ -93,7 +115,7 @@ func spawnAOE() -> void:
 		# some essential stuff the AOE needs
 
 			#character = get_parent()
-
+		instance.dungeon = dungeon
 		instance.AOEName = ActionName
 		instance.accuracy = accuracy
 		instance.ownerCharacter = self.get_owner()
@@ -111,18 +133,23 @@ func spawnAOE() -> void:
 		elif character.isFriendly && isOffensive == false:
 			print(str(character) + " " + str(self) + ": (Surrender) 2")
 			spawnAreaSupport.add_child(instance, true)
+			instance.mainColor = Color(0, 1, 0, 0.1)
 			instance.set_global_position(spawnAreaSupport.randomizeSpawn())
+			instance.get_node("MeshInstance2D").modulate = instance.mainColor
 		elif character.isFriendly == false && isOffensive:
 			print(str(character) + " " + str(self) + ": (Surrender) 3")
 			EnemyAOEContainerAttack.add_child(instance, true)
 			instance.draggable = false
-			instance.mainColor = Color(0.5, 0, 0.5, 0.05)
+			instance.mainColor = Color(0.5, 0, 0.5, 0.1)
 			instance.isDynamicColor = false
-			instance.get_node("MeshInstance2D").modulate = Color(0.5, 0, 0.5, 0.05)
+			instance.get_node("MeshInstance2D").modulate = instance.mainColor
 		elif character.isFriendly == false && isOffensive == false:
 			print(str(character) + " " + str(self) + ": (Surrender) 4")
 			EnemyAOEContainerSupport.add_child(instance, true)
 			instance.draggable = false
+			instance.mainColor = Color(1, 0.5, 0.5, 0.1)
+			instance.isDynamicColor = false
+			instance.get_node("MeshInstance2D").modulate = instance.mainColor
 		else:
 			push_error("Action Broke!")
 

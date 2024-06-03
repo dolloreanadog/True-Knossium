@@ -1,16 +1,26 @@
 extends Node2D
 
 func _ready() -> void:
+	Global.StartLoadingScreen(false)
 	$VBoxContainer/TutorialButton.disabled = true
 	if !(SaveSystem.checkSaveFileExists()):
+		print("Save File Doesn't Exist!")
 		$VBoxContainer/ContinueButton.disabled = true
 	else:
-		$VBoxContainer/ContinueButton.disabled = false
+		SaveSystem.loadAllData()
+		print("checking the save version")
+		if SaveSystem.checkSaveVersion():
+			$VBoxContainer/ContinueButton.disabled = false
+		else:
+			$VBoxContainer/ContinueButton.disabled = true
+	
+	$AudioStreamPlayer.play()
+	Global.EndLoadingScreen()
 
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_WM_CLOSE_REQUEST:
-		Global.saveAllData()
-		await Global.saved
+		Global.call_deferred("saveAllData")
+		await Global.Saved
 
 func _on_button_pressed():
 	get_tree().change_scene_to_file("res://resources/levels/ingame/dungeon/Dungeon.tscn")
@@ -23,7 +33,9 @@ func _on_continue_button_pressed() -> void:
 	Global.newGameInventoryInfo.clear()
 	print("Pressed Continue Button")
 	if SaveSystem.checkSaveFileExists():
+		Global.StartLoadingScreen(true)
 		print("Going to Dungeon")
+		await create_tween().tween_property($AudioStreamPlayer, "volume_db", -80, 1).finished
 		get_tree().change_scene_to_file("res://resources/levels/ingame/dungeon/Dungeon.tscn")
 	else:
 		push_error("There is no Save")
@@ -32,18 +44,29 @@ func _on_tutorial_button_pressed() -> void:
 	pass
 
 func _on_credits_button_pressed() -> void:
+	Global.StartLoadingScreen(true)
 	get_tree().change_scene_to_file("res://resources/levels/menu/Credits.tscn")
 
 func _on_settings_button_pressed() -> void:
-	$SettingsMenu.show()
+	Global.StartLoadingScreen(true)
+	Global.previousScene = get_tree().get_current_scene().scene_file_path
+	get_tree().change_scene_to_file("res://resources/user_interface/settings_menu/SettingsMenu.tscn")
 
 func _on_exit_button_pressed() -> void:
-	Global.saveAllData()
-	await Global.saved
-	get_tree().quit()
+	Global.call_deferred("saveAllData")
+	@warning_ignore("redundant_await")
+	var confirm: bool = await Global.saveAllData()
+#	await Global.Saved
+	if confirm:
+		print("Saved")
+		get_tree().quit()
 
 func _on_new_game_yes_pressed() -> void:
+	Global.StartLoadingScreen(true)
 	SaveSystem.clearSaveThroughDeletion()
+	Global.clearNewProgressThroughDeletion()
+	Global.clearNewProgressionDict()
+	await create_tween().tween_property($AudioStreamPlayer, "volume_db", -80, 1).finished
 	get_tree().change_scene_to_file("res://resources/levels/menu/NewGameStartMenu/NewGameStartMenu.tscn")
 
 func _on_new_game_no_pressed() -> void:

@@ -8,13 +8,16 @@ class_name BasePartyContainer
 
 
 #--[ Some Important Info In Order To Run This Node ]--
-@onready var dungeon: BaseLevel = get_parent()
+@export_category("Important Nodes")
+@onready var dungeon: BaseLevel = get_parent().get_parent()
 @export var system: TurnSystem
 #@export var director: DifficultySystem
 @export var otherPartyContainer: BasePartyContainer
+@export_category("AOE Containers")
 @export var CQCSpawnArea: BaseSpawnArea
 @export var DPSRangedSpawnArea: BaseSpawnArea
 @export var SupportSpawnArea: BaseSpawnArea
+@export_category("Denial Areas")
 @export var AOEDenialRanged: BaseAreaAOEDenial
 @export var AOEDenialSupport: BaseAreaAOEDenial
 @export var isFriendly: bool
@@ -79,8 +82,8 @@ func getCharactersInfo():
 	characters = get_children()
 	charactersAmount = get_child_count()
 	
-#	print(str(self) + ": (getCharactersInfo) characters: " + str(characters))
-#	print(str(self) + ": (getCharactersInfo) charactersAmount: " + str(charactersAmount))
+#	print(str(self) + ": (check) characters: " + str(characters))
+#	print(str(self) + ": (check) charactersAmount: " + str(charactersAmount))
 	
 	# Dividing EXP here to split between characters
 	if isFriendly:
@@ -95,17 +98,13 @@ func getCharactersInfo():
 		
 		if characterStats.is_connected("death", onCharacterDeath) == false:
 			characterStats.connect("death", onCharacterDeath)
-		else:
-			pass
 			
 		if characterStats.is_connected("moraleBroken", onCharacterDeath) == false:
 			characterStats.connect("moraleBroken", onCharacterDeath)
-		else:
-			pass
 		
 		if characterStats.currentHealth <= 0:
 			pass
-			#push_warning("Trying to push a character that's Dead")
+			push_warning("Trying to push a character that's Dead")
 		else:
 			
 			match characterStats.role:
@@ -126,6 +125,7 @@ func getCharactersInfo():
 			# Adds to the temporary totalStatPoints
 			LtotalStatPoints += characterStats.totalStatPoints
 			LtotalCurrentStatPoints += characterStats.getCurrentTotalStatPoints()
+			
 	# reset receiving EXP since we're done using it, also to not use excess
 	receivingEXP = 0
 	print(str(self) + ": Reset receiving EXP")
@@ -149,19 +149,12 @@ func getCharactersInfo():
 		AOEDenialSupport.setActive(false)
 	else: 
 		AOEDenialSupport.setActive(true)
-	
-#	if isFriendly:
-#		print(str(self) + ": Friendly Total Stat Points = " + str(totalStatPoints))
-#		print(str(self) + ": Turn: " + str(system.turn) + ": Friendly Characters: " + str(characters))
-#		print(str(self) + ": Turn: " + str(system.turn) + ": Friendly Character Amount: " + str(charactersAmount))
-#	else:
-#		print(str(self) + ": Enemy Total Stat Points = " + str(totalStatPoints))
-#		print(str(self) + ": Turn: " + str(system.turn) + ": Enemy Characters" + str(characters))
-#		print(str(self) + ": Turn: " + str(system.turn) + ": Enemy Character Amount: " + str(charactersAmount))
+
 	emit_signal("charactersUpdated")
 
 func addCharacter(character: BaseCharacter, startingExperience: float, giveDifficultyEXP: bool, characterPosition: Vector2):
 	print(str(self) + ": Spawning: " + str(character))
+	print(str(self) + ": charityDifficultyEXP: " + str(giveDifficultyEXP))
 	var tween: Tween = get_tree().create_tween().bind_node(character)
 	print("Tween: " + str(tween))
 	var characterStats: StatComponent = character.get_node("StatComponent")
@@ -179,6 +172,7 @@ func addCharacter(character: BaseCharacter, startingExperience: float, giveDiffi
 			characterStats.rolesList.Healer:
 				if Vector2(0, 0) == characterPosition:
 					spot = SupportSpawnArea.randomizeSpawn()
+					character.trueGlobalPosition = spot
 					character.set_position(spot - Vector2(150, 0))
 					tween.tween_property(character, "global_position", spot, 1)
 				else:
@@ -187,6 +181,7 @@ func addCharacter(character: BaseCharacter, startingExperience: float, giveDiffi
 			characterStats.rolesList.Tank: 
 				if Vector2(0, 0) == characterPosition:
 					spot = CQCSpawnArea.randomizeSpawn()
+					character.trueGlobalPosition = spot
 					character.set_position(spot - Vector2(550, 0))
 					tween.tween_property(character, "global_position", spot, 1)
 				else:
@@ -195,6 +190,7 @@ func addCharacter(character: BaseCharacter, startingExperience: float, giveDiffi
 			characterStats.rolesList.DPSMelee: 
 				if Vector2(0, 0) == characterPosition:
 					spot = CQCSpawnArea.randomizeSpawn()
+					character.trueGlobalPosition = spot
 					character.set_position(spot - Vector2(550, 0))
 					tween.tween_property(character, "global_position", spot, 1)
 				else:
@@ -203,6 +199,7 @@ func addCharacter(character: BaseCharacter, startingExperience: float, giveDiffi
 			characterStats.rolesList.DPSRanged: 
 				if Vector2(0, 0) == characterPosition:
 					spot = DPSRangedSpawnArea.randomizeSpawn()
+					character.trueGlobalPosition = spot
 					character.set_position(spot - Vector2(300, 0))
 					tween.tween_property(character, "global_position", spot, 1)
 				else:
@@ -211,6 +208,7 @@ func addCharacter(character: BaseCharacter, startingExperience: float, giveDiffi
 	else:
 		character.isFriendly = false
 		add_child(character, true)
+		character.stats.changeEXP(startingExperience)
 		if giveDifficultyEXP:
 			characterStats.changeEXP(randomizeDifficultyEXP())
 		if character.characterSprite != null:
@@ -219,6 +217,7 @@ func addCharacter(character: BaseCharacter, startingExperience: float, giveDiffi
 			characterStats.rolesList.Healer:
 				if Vector2(0, 0) == characterPosition:
 					spot = SupportSpawnArea.randomizeSpawn()
+					character.trueGlobalPosition = spot
 					character.set_position(spot + Vector2(150, 0))
 					tween.tween_property(character, "global_position", spot, 1)
 				else:
@@ -227,6 +226,7 @@ func addCharacter(character: BaseCharacter, startingExperience: float, giveDiffi
 			characterStats.rolesList.Tank: 
 				if Vector2(0, 0) == characterPosition:
 					spot = CQCSpawnArea.randomizeSpawn()
+					character.trueGlobalPosition = spot
 					character.set_position(spot + Vector2(550, 0))
 					tween.tween_property(character, "global_position", spot, 1)
 				else:
@@ -235,6 +235,7 @@ func addCharacter(character: BaseCharacter, startingExperience: float, giveDiffi
 			characterStats.rolesList.DPSMelee: 
 				if Vector2(0, 0) == characterPosition:
 					spot = CQCSpawnArea.randomizeSpawn()
+					character.trueGlobalPosition = spot
 					character.set_position(spot + Vector2(550, 0))
 					tween.tween_property(character, "global_position", spot, 1)
 				else:
@@ -243,6 +244,7 @@ func addCharacter(character: BaseCharacter, startingExperience: float, giveDiffi
 			characterStats.rolesList.DPSRanged: 
 				if Vector2(0, 0) == characterPosition:
 					spot = DPSRangedSpawnArea.randomizeSpawn()
+					character.trueGlobalPosition = spot
 					character.set_position(spot + Vector2(300, 0))
 					tween.tween_property(character, "global_position", spot, 1)
 				else:
@@ -250,6 +252,7 @@ func addCharacter(character: BaseCharacter, startingExperience: float, giveDiffi
 					tween.tween_property(character, "global_position", characterPosition, 1)
 	
 	getCharactersInfo()
+	dungeon.statButtonGroup.updateModulation()
 
 ## using a signal, this function does stuff when a character dies
 func onCharacterDeath(EXPWorth, characterBody):
@@ -263,13 +266,14 @@ func onCharacterDeath(EXPWorth, characterBody):
 	print(str(self) + ": (onCharacterDeath) new Character Died" + str(characterBody))
 	
 	getCharactersInfo()
-	onAllCharactersDead() 
+	call_deferred("onAllCharactersDead")
 
 ## Randomizes difficulty Experience
 func randomizeDifficultyEXP():
-	var LdifficultyEXP = randf_range(5.0, 25.0)
+	var LdifficultyEXP = randf_range(1.0, 2.0)
 	LdifficultyEXP *= difficultyEXP
-	print(str(self) + ": DifficultyEXP Given: " + str(LdifficultyEXP))
+	print(str(self) + ": Old DifficultyEXP Given: " + str(difficultyEXP))
+	print(str(self) + ": New DifficultyEXP Given: " + str(LdifficultyEXP))
 	return LdifficultyEXP
 
 

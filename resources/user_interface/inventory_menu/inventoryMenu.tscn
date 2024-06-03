@@ -90,22 +90,6 @@ offset_top = 88.0
 offset_right = 360.0
 offset_bottom = 184.0
 
-[node name="Label" type="Label" parent="ColorRect/Panel/Panel"]
-layout_mode = 0
-offset_right = 168.0
-offset_bottom = 26.0
-text = "Interactable"
-horizontal_alignment = 1
-
-[node name="InteractableLabel" type="Label" parent="ColorRect/Panel/Panel"]
-layout_mode = 0
-offset_top = 24.0
-offset_right = 168.0
-offset_bottom = 96.0
-text = "Yes/No"
-horizontal_alignment = 1
-vertical_alignment = 1
-
 [node name="Panel2" type="Panel" parent="ColorRect/Panel"]
 layout_mode = 0
 offset_left = 16.0
@@ -130,13 +114,23 @@ text = "Exit"
 
 [node name="SpawnAOEButton" type="Button" parent="ColorRect"]
 layout_mode = 0
-offset_left = 448.0
-offset_top = 8.0
-offset_right = 584.0
-offset_bottom = 40.0
+offset_left = 652.0
+offset_top = 156.0
+offset_right = 796.0
+offset_bottom = 188.0
 disabled = true
 text = "Use Item"
+
+[node name="SpawnAllAOEButton" type="Button" parent="ColorRect"]
+layout_mode = 0
+offset_left = 652.0
+offset_top = 196.0
+offset_right = 796.0
+offset_bottom = 228.0
+disabled = true
+text = "Use All Items"
 
 [connection signal="item_selected" from="ColorRect/ItemList" to="." method="_on_item_list_item_selected"]
 [connection signal="pressed" from="ColorRect/ExitButton" to="." method="_on_exit_button_pressed"]
 [connection signal="pressed" from="ColorRect/SpawnAOEButton" to="." method="_on_spawn_aoe_button_pressed"]
+[connection signal="pressed" from="ColorRect/SpawnAllAOEButton" to="." method="SpawnAllAOEButtonPressed"]

@@ -1,23 +1,26 @@
 extends Control
 class_name InventoryMenu
 
-@export var inventorySystem: InventorySystem
-@export var spawnArea: BaseSpawnArea
 
+@export var inventorySystem: InventorySystem
+@export var spawnAreaSupport: BaseSpawnArea
+@export var spawnAreaOffensive: BaseSpawnArea
+
+@onready var dungeon: BaseLevel = get_parent()
 @onready var itemList: ItemList = get_node("ColorRect/ItemList")
 @onready var itemPFP: TextureRect = get_node("ColorRect/Panel/ItemPFPHolder")
 @onready var itemName: Label = get_node("ColorRect/Panel/ItemName")
 @onready var itemAmount: Label = get_node("ColorRect/Panel/ItemAmount")
 @onready var itemValue: Label = get_node("ColorRect/Panel/ItemValue")
-@onready var itemInteractable: Label = get_node("ColorRect/Panel/Panel/InteractableLabel")
 @onready var itemDescription: Label = get_node("ColorRect/Panel/Panel2/ItemDescription")
 @onready var spawnAOEButton: Button = get_node("ColorRect/SpawnAOEButton")
+@onready var spawnAllAOEButton: Button = get_node("ColorRect/SpawnAllAOEButton")
 
 var targetItem: BaseInventoryItem
 
 func _ready() -> void:
 	spawnAOEButton.disabled = true
-	itemInteractable.text = ""
+	spawnAllAOEButton.disabled = true
 	itemPFP.texture = ImageTexture.new()
 	itemName.text = ""
 	itemAmount.text = ""
@@ -33,13 +36,19 @@ func updateInventoryItemList() -> void:
 		itemList.add_item(LitemName, inventorySystem.storedItems[i].image)
 
 func _on_exit_button_pressed() -> void:
-	get_parent().stopControl.hide()
+	if !(dungeon.isCharactersActive) && (dungeon.specialWindowContainer.get_child_count() == 0) && (dungeon.difficulty.isCharactersSpawningIn != true) && dungeon.knossiumConsole.visible == false:
+		dungeon.stopControlVisible(false, 1)
+		dungeon.stopControlVisible(false, 2)
+	dungeon.inventoryButton.disabled = false
+#	dungeon.checkSpecialWindowContainer()
+#	get_parent().stopControl.hide()
 	self.hide()
 
 func _on_item_list_item_selected(index: int) -> void:
 	#if is_instance_valid(inventorySystem.storedItems[index]):
 	targetItem = inventorySystem.storedItems[index]
 	spawnAOEButton.disabled = true
+	spawnAllAOEButton.disabled = true
 	updateItemInformation()
 
 func updateItemInformation() -> void:
@@ -47,9 +56,7 @@ func updateItemInformation() -> void:
 	if targetItem.isInteractable:
 		if targetItem.amount > 0:
 			spawnAOEButton.disabled = false
-			itemInteractable.text = "Yes"
-	else:
-		itemInteractable.text = "No"
+			spawnAllAOEButton.disabled = false
 		
 	if is_instance_valid(targetItem.image):
 		itemPFP.texture = targetItem.image
@@ -77,9 +84,44 @@ func _on_spawn_aoe_button_pressed() -> void:
 	updateInventoryItemList()
 	updateItemInformation()
 	
-	
-	spawnArea.add_child(instance, true)
-	instance.set_global_position(spawnArea.randomizeSpawn())
+	if targetItem.isOffensive:
+		spawnAreaOffensive.add_child(instance, true)
+		instance.set_global_position(spawnAreaOffensive.randomizeSpawn())
+	else:
+		spawnAreaSupport.add_child(instance, true)
+		instance.set_global_position(spawnAreaSupport.randomizeSpawn())
 	
 	if targetItem.amount <= 0:
 		spawnAOEButton.disabled = true
+		spawnAllAOEButton.disabled = true
+
+
+func SpawnAllAOEButtonPressed() -> void:
+	while inventorySystem.getNamedItemAmount(targetItem.itemName) != 0:
+		var instance: BaseAOE = targetItem.AOE.instantiate()
+		
+		instance.health = targetItem.AOEHealthGain
+		instance.defense = targetItem.AOEDefenseGain
+		instance.attack = targetItem.AOEAttackGain
+		instance.morale = targetItem.AOEMoraleGain
+		instance.experience = targetItem.AOEExpGain
+		
+		instance.ownerCharacterName = targetItem.itemName
+		instance.ownerCharacterPFP = targetItem.image
+		instance.ownerActionDescription = targetItem.itemDesciption
+		
+		inventorySystem.removeFromInventory(targetItem, 1)
+		updateInventoryItemList()
+		updateItemInformation()
+		
+		if targetItem.isOffensive:
+			spawnAreaOffensive.add_child(instance, true)
+			instance.set_global_position(spawnAreaOffensive.randomizeSpawn())
+		else:
+			spawnAreaSupport.add_child(instance, true)
+			instance.set_global_position(spawnAreaSupport.randomizeSpawn())
+		await get_tree().create_timer(0.01).timeout
+	
+	if targetItem.amount <= 0:
+		spawnAOEButton.disabled = true
+		spawnAllAOEButton.disabled = true

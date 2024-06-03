@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://4m1qmfvuv20p"]
+
+[ext_resource type="Script" path="res://resources/entities/battle_status_bar/BattleStatusBar.gd" id="1_f4t00"]
+
+[node name="BattleStatusBar" type="ProgressBar"]
+offset_right = 528.0
+offset_bottom = 24.0
+script = ExtResource("1_f4t00")

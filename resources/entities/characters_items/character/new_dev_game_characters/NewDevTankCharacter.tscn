@@ -1,9 +1,10 @@
-[gd_scene load_steps=23 format=3 uid="uid://by4b3qkfgq1e2"]
+[gd_scene load_steps=24 format=3 uid="uid://by4b3qkfgq1e2"]
 
 [ext_resource type="Script" path="res://resources/entities/characters_items/character/BaseCharacter.gd" id="1_r68vv"]
 [ext_resource type="Resource" uid="uid://3i41wk26jwk2" path="res://resources/entities/inventory_items/dev_items/DevGold.tres" id="2_f1k35"]
 [ext_resource type="Texture2D" uid="uid://b5c6x8aob3ey6" path="res://assets/art/character_profile_picture/dev/DevCharacterPFP.png" id="2_kplo1"]
 [ext_resource type="SpriteFrames" uid="uid://bcr2f7fck2lv3" path="res://assets/sprites/character/dev/DevTankSprite.tres" id="3_3l11k"]
+[ext_resource type="AudioStream" uid="uid://86y3l43bkqph" path="res://assets/audio/music/dev/character/BernisEntorevolution.mp3" id="4_nxelk"]
 [ext_resource type="Script" path="res://resources/components/other/StatComponent.gd" id="5_bcgar"]
 [ext_resource type="Script" path="res://resources/components/actions/BaseAction.gd" id="6_gqvjb"]
 [ext_resource type="PackedScene" uid="uid://u172rb6a25bx" path="res://resources/entities/characters_items/aoe/melee_aoe/swing_aoe/SwingAOE.tscn" id="7_x80r1"]
@@ -34,8 +35,9 @@ stats = NodePath("StatComponent")
 ResourceNeeded = ExtResource("2_f1k35")
 ResourceNeededNumber = 2
 ResourceDrop = ExtResource("2_f1k35")
-ResourceDropChance = 1.0
-ResourceDropAmount = 5
+ResourceMaxDropAmount = 50
+characterThemeMusic = ExtResource("4_nxelk")
+characterMusicPriority = 1
 levelUpFX = NodePath("DefaultLevelUpFX")
 healthDeathFX = NodePath("HealthDeathFX")
 defenseDeathFX = NodePath("DefenseDeathFX")
@@ -72,7 +74,7 @@ autowrap_mode = 3
 
 [node name="StatComponent" type="Node" parent="."]
 script = ExtResource("5_bcgar")
-maxEXP = 15.0
+maxEXP = 12.5
 worthEXP = 8.0
 role = 3
 health = 15.0
@@ -93,7 +95,7 @@ health = 2.5
 defense = 1.5
 attack = 2.0
 morale = 3.0
-accuracy = 1
+accuracy = 0.75
 description = "An attack where when swung on an enemy, devastatingly damages their defenses."
 
 [node name="Action2Component" type="Node" parent="." node_paths=PackedStringArray("stats")]
@@ -107,6 +109,7 @@ isOffensive = false
 health = 1.0
 defense = 1.5
 morale = 5.0
+accuracy = 1.0
 description = "This creates a Shields for any character caught within its radius."
 
 [node name="DefaultLevelUpFX" parent="." instance=ExtResource("8_6ihyt")]

@@ -94,7 +94,7 @@ func insertAOEInfo():
 		AOEMoraleDamageLabel.set_modulate(Color(0, 1, 0))
 	
 	
-	AOEAccuracyLabel.text = "Accuracy: " + str(snapped(abs(100 * (1 - (accuracyValue/(3 + accuracyValue)))), 0.01)) + "%"
+	AOEAccuracyLabel.text = "Accuracy: " + str(snappedf(accuracyValue * 100, 0.01)) + "%"
 	
 	if isMeleeValue:
 		AOEIsMeleeLabel.text = "It's a melee attack"

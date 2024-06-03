@@ -33,8 +33,7 @@ stats = NodePath("StatComponent")
 ResourceNeeded = ExtResource("3_2mrem")
 ResourceNeededNumber = 4
 ResourceDrop = ExtResource("3_2mrem")
-ResourceDropChance = 1.0
-ResourceDropAmount = 10
+ResourceMaxDropAmount = 30
 levelUpFX = NodePath("DefaultLevelUpFX")
 healthDeathFX = NodePath("HealthDeathFX")
 defenseDeathFX = NodePath("DefenseDeathFX")
@@ -91,6 +90,7 @@ amount = 2
 health = 1.5
 attack = 3.0
 morale = 2.0
+accuracy = 1.0
 description = "If you really want to heal a person."
 
 [node name="DefaultLevelUpFX" parent="." instance=ExtResource("8_m3m2t")]

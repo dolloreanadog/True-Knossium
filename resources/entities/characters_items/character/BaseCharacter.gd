@@ -5,27 +5,33 @@ class_name BaseCharacter
 @export var id: String
 @export var profilePicture: Texture2D
 @export_multiline var characterDescription: String
-@onready var dungeon: BaseLevel = get_parent().get_parent()
 @onready var partyContainer: BasePartyContainer = get_parent()
+@onready var dungeon: BaseLevel = partyContainer.dungeon
+var system: TurnSystem
+var inventory: InventorySystem
 @export var stats: StatComponent
-@onready var system: TurnSystem = get_parent().get_parent().get_node("TurnSystem")
-@onready var inventory: InventorySystem = get_parent().get_parent().get_node("InventorySystem")
+
+var trueGlobalPosition: Vector2
 
 @onready var levelLabel: Label = get_node("LevelLabel")
 @onready var characterSprite: AnimatedSprite2D = get_node("AnimatedSprite2D")
 var isFriendly: bool = true
+@export_category("Resource Drop")
 @export var ResourceNeeded: BaseInventoryItem # We still don't know how or what variable it's as
 @export var ResourceNeededNumber: int
 @export var ResourceDrop: BaseInventoryItem
-@export_range(0, 1) var ResourceDropChance: float
-@export var ResourceDropAmount: int
+@export var ResourceMaxDropAmount: int
 var turns: int
 
+@export_category("Music")
+@export var characterThemeMusic: AudioStream
+@export var characterMusicPriority: int
 #--[ Effects ]--
 # This video https://www.youtube.com/watch?v=vzRZjM9MTGw
 # add a if null statement so we don't crash
 # With this we can add more functions, SFX, VFX, & More
 # Like if I were to make a shield break VFX just for that character, I just attach it to that resource
+@export_category("Effects")
 @export var levelUpFX: BaseFX
 @export var healthDeathFX: BaseFX
 @export var defenseDeathFX: BaseFX
@@ -41,6 +47,7 @@ var turns: int
 @export var moraleChangedFX: BaseStatChangedFX
 
 #--[ Actions ]--
+@export_category("Actions")
 @export var action1: BaseActionComponent
 @export var action2: BaseActionComponent
 @export var action3: BaseActionComponent
@@ -52,6 +59,9 @@ signal characterAnimationFinished
 
 #--[ Base Functions ]--
 func _ready():
+	print("(check) party container dungeon = " + str(partyContainer.dungeon))
+	system = dungeon.system
+	inventory = dungeon.inventory
 	activateLevelLabel(false)
 	print("TurnSystem: " + str(system))
 	dungeon.connect("AOEQueueFinished", characterNewTurn) # Instead of this use Dungeon's Queue Signal
@@ -73,18 +83,20 @@ func damageStats(health, defense, attack, morale): # Print out the stats of gett
 	stats.changeCurrentMorale(morale)
 
 func useActions():
-	if action1 != null:
-		action1.removeCastTime()
-		action1.getAttackInfo()
-	if action2 != null:
-		action2.removeCastTime()
-		action2.getAttackInfo()
-	if action3 != null:
-		action3.removeCastTime()
-		action3.getAttackInfo()
-	if action4 != null:
-		action4.removeCastTime()
-		action4.getAttackInfo()
+	if dungeon.difficulty.isCharactersSpawningIn != true:
+		if stats.alreadyDied != true && stats.moraleAlreadyBroken != true:
+			if action1 != null:
+				action1.removeCastTime()
+				action1.getAttackInfo()
+			if action2 != null:
+				action2.removeCastTime()
+				action2.getAttackInfo()
+			if action3 != null:
+				action3.removeCastTime()
+				action3.getAttackInfo()
+			if action4 != null:
+				action4.removeCastTime()
+				action4.getAttackInfo()
 
 #--[ Level Label ]--
 
@@ -104,6 +116,8 @@ func playLevelUpFX():
 
 func playhealthDeathFX():
 	#print("Should run Health Death playFX")
+	unlockCharacter()
+	unlockItem()
 	healthDeathFX.playFX()
 
 func playDefenseDeathFX():
@@ -128,8 +142,6 @@ func playOverAttackFX():
 	overAttackFX.playFX()
 
 func playOverMorale():
-	unlockCharacter()
-	unlockItem()
 	overMoraleFX.playFX()
 
 func playHealthChangedFX(amount: float):
@@ -181,7 +193,7 @@ func characterNewTurn():
 	#print(str(self) + ": (L) Received Signal") # We're receiving the signal Twice?
 	useActions()
 	if partyContainer.isFriendly:
-		if inventory.storedItems.has(ResourceNeeded):
+		if inventory.getNamedItemAmount(ResourceNeeded.itemName) > 0:
 			inventory.removeFromInventory(ResourceNeeded, ResourceNeededNumber)
 			dungeon.warningLabel.text = ""
 		else:
@@ -194,7 +206,9 @@ func characterNewTurn():
 	runAnimation("idle1")
 
 func characterNewBattle():
-	stats.resetCurrentStats()
+	pass
+#	Wanted to see how the game would be if it were to transfer buffs from previous game
+#	stats.resetCurrentStats()
 
 # Idk why we have this, we'll see what this means
 # ^ Determines if to spawn AOE or not

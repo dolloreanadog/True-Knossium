@@ -3,6 +3,7 @@ class_name PartyMenu
 
 #--[ Some other important nodes ]--
 @export var partyContainer: BasePartyContainer
+@onready var dungeon: BaseLevel = get_parent()
 
 #--[ ItemList ]--
 @onready var characterList: ItemList = get_node("ColorRect/CharacterList")
@@ -54,7 +55,6 @@ var upkeepListArray: Array
 
 @onready var DropNameLabel: Label = get_node("ColorRect/Panel/DropPanel/DropsLabel")
 @onready var DropAmount: Label = get_node("ColorRect/Panel/DropPanel/DropsAmount")
-@onready var DropChance: Label = get_node("ColorRect/Panel/DropPanel/DropsChance")
 
 #--[ Description ]--
 @onready var characterDescription: Label = get_node("ColorRect/Panel/DescriptionPanel/DescriptionLabel")
@@ -105,15 +105,20 @@ func _ready() -> void:
 	
 	DropNameLabel.text = "Drops: "
 	DropAmount.text = ""
-	DropChance.text = ""
 	
 	characterDescription.text = ""
 	
-	
-	
 
 func _on_exit_button_pressed() -> void:
-	get_parent().stopControl.hide()
+	if dungeon.isCharactersActive != true && dungeon.specialWindowContainer.get_child_count() == 0 && dungeon.difficulty.isCharactersSpawningIn != true && dungeon.knossiumConsole.visible == false:
+		print("(check3) isCharactersActive " + str(dungeon.isCharactersActive))
+		print("(check3) get_child_count " + str(dungeon.specialWindowContainer.get_child_count()))
+		print("(check3) isCharactersSpawningIn " + str(dungeon.difficulty.isCharactersSpawningIn))
+		dungeon.stopControlVisible(false, 1)
+		dungeon.stopControlVisible(false, 2)
+	dungeon.partyButton.disabled = false
+#	dungeon.checkSpecialWindowContainer()
+#	get_parent().stopControl.hide()
 	self.hide()
 
 
@@ -143,22 +148,22 @@ func updateUpkeepList() -> void:
 		
 		if upkeepListArray.size() != 0:
 			for index in upkeepListArray.size():
-				print("does exist (check2)")
+				print("does exist")
 				if upkeepListArray[index].itemName == Litem.itemName:
 					print("Old Amount: " + str(upkeepListArray[index].amount))
 					upkeepListArray[index].amount += Litem.amount
 					print("New Amount: " + str(upkeepListArray[index].amount))
 					break
 				else:
-					print("doesn't exist yet (check2)")
+					print("doesn't exist yet")
 					Litem.amount = Litem.amount
 					upkeepListArray.push_back(Litem)
 		else:
-			print("count is 0 (check2)")
+			print("count is 0")
 			Litem.amount = Litem.amount
 			upkeepListArray.push_back(Litem)
 
-	print("Upkeep List (check2) " + str(upkeepListArray))
+#	print("Upkeep List " + str(upkeepListArray))
 
 	for i in upkeepListArray.size():
 		var Litem: BaseInventoryItem = upkeepListArray[i]
@@ -246,7 +251,6 @@ func updateCharacterInfo() -> void:
 	UpkeepNameLabel.text = "Upkeep: " + targetCharacter.ResourceNeeded.itemName
 	UpkeepAmountLabel.text = "x" + str(targetCharacter.ResourceNeededNumber)
 	DropNameLabel.text = "Drop: " + str(targetCharacter.ResourceDrop.itemName)
-	DropAmount.text = "x" + str(targetCharacter.ResourceDropAmount)
-	DropChance.text = str("%.2f" % (targetCharacter.ResourceDropChance * 100)) + "%"
+	DropAmount.text = "x" + str(targetCharacter.ResourceMaxDropAmount)
 	
 	characterDescription.text = targetCharacter.characterDescription

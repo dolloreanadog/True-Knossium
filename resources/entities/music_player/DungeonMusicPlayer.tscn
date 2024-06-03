@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://cr16oi0mqt7mb"]
+
+[ext_resource type="Script" path="res://resources/entities/music_player/DungeonMusicPlayer.gd" id="1_yaq1g"]
+
+[node name="DungeonMusicPlayer" type="AudioStreamPlayer"]
+bus = &"Music"
+script = ExtResource("1_yaq1g")

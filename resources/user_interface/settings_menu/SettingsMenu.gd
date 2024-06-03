@@ -10,7 +10,7 @@ class_name SettingsMenu
 @onready var resolutionOptions: OptionButton = get_node("ColorRect/DisplayPanel/Control/ResolutionOptions")
 @onready var windowModeOptions: OptionButton = get_node("ColorRect/DisplayPanel/Control2/WindowModeOptions")
 @onready var languageOptions: OptionButton = get_node("ColorRect/DisplayPanel/Control3/LanguageOptions")
-
+@onready var monitorDisplayOptions: OptionButton = get_node("ColorRect/DisplayPanel/Control4/MonitorDisplayOptions")
 #--[ Audio Buttons ]--
 
 @onready var masterVolSlider: HSlider = get_node("ColorRect/AudioPanel/Control/MasterVolSlider")
@@ -27,6 +27,7 @@ class_name SettingsMenu
 
 #--[ Keybinds ]--
 
+@export var KeybindButtons: Array
 
 #-- Button Values
 var AOEMovementValue: bool
@@ -41,25 +42,35 @@ var SFXVolValue: int
 #--[ Base Functions ]--
 
 func _ready() -> void:
+	Global.StartLoadingScreen(false)
 	setSettings()
+	Global.EndLoadingScreen()
 
 func setSettings() -> void:
 	AOEMovementButton.button_pressed = SettingsSystem.getAOEMovement()
 	resolutionOptions.selected = SettingsSystem.getScreenSize()
 	windowModeOptions.selected = SettingsSystem.getWindowedMode()
 	languageOptions.selected = SettingsSystem.getTranslation()
+	for i in DisplayServer.get_screen_count():
+		monitorDisplayOptions.add_item(str(i), i)
+	monitorDisplayOptions.selected = DisplayServer.window_get_current_screen(0)
 	
 	masterVolSlider.value = SettingsSystem.getMasterVolume()
-	masterVolSpinbox.value = SettingsSystem.getMasterVolume()
+	masterVolSpinbox.value = SettingsSystem.getMasterVolume() * 100
 	
+	print("(check) Music Volume: " + str(SettingsSystem.getMusicVolume()))
 	MusicVolSlider.value = SettingsSystem.getMusicVolume()
-	MusicVolSpinbox.value = SettingsSystem.getMusicVolume()
+	MusicVolSpinbox.value = SettingsSystem.getMusicVolume() * 100
 	
 	characterVolSlider.value = SettingsSystem.getCharacterVolume()
-	characterVolSpinbox.value = SettingsSystem.getCharacterVolume()
+	characterVolSpinbox.value = SettingsSystem.getCharacterVolume() * 100
 	
 	SFXVolSlider.value = SettingsSystem.getSFXVolume()
-	SFXVolSpinbox.value = SettingsSystem.getSFXVolume()
+	SFXVolSpinbox.value = SettingsSystem.getSFXVolume() * 100
+	
+
+	
+	
 
 #--[ Button Functions]--
 
@@ -76,8 +87,7 @@ func ResolutionOptionItemSelected(index: int) -> void:
 
 # 0 Fullscreen
 # 1 Windowed
-# 2 Borderless Fullscreen
-# 3 Borderless Windowed
+# 2 Borderless Windowed
 func WindowModeOptionItemSelected(index: int) -> void:
 	SettingsSystem.setWindowedMode(windowModeOptions.get_item_id(index))
 
@@ -89,11 +99,16 @@ func WindowModeOptionItemSelected(index: int) -> void:
 func LanguageOptionItemSelected(index: int) -> void:
 	SettingsSystem.setTranslation(languageOptions.get_item_id(index))
 
+func MonitorDisplayOptionItemsSelected(index: int) -> void:
+	SettingsSystem.SetScreenDisplay(index)
+
+
 func MasterVolSliderChanged(value: float) -> void:
 	@warning_ignore("narrowing_conversion")
 	SettingsSystem.setMasterVolume(value)
-	masterVolSpinbox.value = SettingsSystem.getMasterVolume()
+	masterVolSpinbox.value = SettingsSystem.getMasterVolume() * 100
 func MasterVolSpinboxChanged(value: float) -> void:
+	value /= 100
 	@warning_ignore("narrowing_conversion")
 	SettingsSystem.setMasterVolume(value)
 	masterVolSlider.value = SettingsSystem.getMasterVolume()
@@ -101,9 +116,9 @@ func MasterVolSpinboxChanged(value: float) -> void:
 func MusicVolSliderChanged(value: float) -> void:
 	@warning_ignore("narrowing_conversion")
 	SettingsSystem.setMusicVolume(value)
-
-	MusicVolSpinbox.value = SettingsSystem.getMusicVolume()
+	MusicVolSpinbox.value = SettingsSystem.getMusicVolume()  * 100
 func MusicVolSpinboxChanged(value: float) -> void:
+	value /= 100
 	@warning_ignore("narrowing_conversion")
 	SettingsSystem.setMusicVolume(value)
 	MusicVolSlider.value = SettingsSystem.getMusicVolume()
@@ -111,8 +126,9 @@ func MusicVolSpinboxChanged(value: float) -> void:
 func CharacterVolSliderChanged(value: float) -> void:
 	@warning_ignore("narrowing_conversion")
 	SettingsSystem.setCharacterVolume(value)
-	characterVolSpinbox.value = SettingsSystem.getCharacterVolume()
+	characterVolSpinbox.value = SettingsSystem.getCharacterVolume()  * 100
 func CharacterVolSpinboxChanged(value: float) -> void:
+	value /= 100
 	@warning_ignore("narrowing_conversion")
 	SettingsSystem.setCharacterVolume(value)
 	characterVolSlider.value = SettingsSystem.getCharacterVolume()
@@ -120,20 +136,25 @@ func CharacterVolSpinboxChanged(value: float) -> void:
 func SFXVolSliderChanged(value: float) -> void:
 	@warning_ignore("narrowing_conversion")
 	SettingsSystem.setSFXVolume(value)
-	SFXVolSpinbox.value = SettingsSystem.getSFXVolume()
-
+	SFXVolSpinbox.value = SettingsSystem.getSFXVolume() * 100
 func SFXVolSpinboxChanged(value: float) -> void:
+	value /= 100
 	@warning_ignore("narrowing_conversion")
 	SettingsSystem.setSFXVolume(value)
-	MusicVolSpinbox.value = SettingsSystem.getMusicVolume()
 	SFXVolSlider.value = SettingsSystem.getSFXVolume()
 
 
 func OnExitPressed() -> void:
-	self.hide()
+	@warning_ignore("redundant_await")
+	await Global.StartLoadingScreen(true)
+	get_tree().change_scene_to_file(Global.previousScene)
+#	self.hide()
 
 func onSavedPressed() -> void:
 	SettingsSystem.clearSettingsThroughDeletion()
 	SettingsSystem.saveSettings()
 	SettingsSystem.applySettings()
 	print(SettingsSystem.SettingsDict)
+
+
+

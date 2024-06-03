@@ -1,6 +1,36 @@
-[gd_scene load_steps=2 format=3 uid="uid://dacl7cdqcmb3c"]
+[gd_scene load_steps=12 format=3 uid="uid://dacl7cdqcmb3c"]
 
 [ext_resource type="Script" path="res://resources/entities/button_invisibility/ButtonInvisibilityToggles.gd" id="1_lfe4p"]
+
+[sub_resource type="InputEventAction" id="InputEventAction_vlrxd"]
+action = &"ToggleVisibilityAOEEnemy"
+
+[sub_resource type="Shortcut" id="Shortcut_n18k6"]
+events = [SubResource("InputEventAction_vlrxd")]
+
+[sub_resource type="InputEventAction" id="InputEventAction_kpurl"]
+action = &"ToggleVisibilityAOEFriendly"
+
+[sub_resource type="Shortcut" id="Shortcut_58ir4"]
+events = [SubResource("InputEventAction_kpurl")]
+
+[sub_resource type="InputEventAction" id="InputEventAction_athey"]
+action = &"ToggleVisibilityAOESupport"
+
+[sub_resource type="Shortcut" id="Shortcut_ovthg"]
+events = [SubResource("InputEventAction_athey")]
+
+[sub_resource type="InputEventAction" id="InputEventAction_sgsjg"]
+action = &"ToggleVisibilityAOEOffensive"
+
+[sub_resource type="Shortcut" id="Shortcut_m3fgj"]
+events = [SubResource("InputEventAction_sgsjg")]
+
+[sub_resource type="InputEventAction" id="InputEventAction_8mn53"]
+action = &"ToggleVisibilityAOENonDraggable"
+
+[sub_resource type="Shortcut" id="Shortcut_x8buj"]
+events = [SubResource("InputEventAction_8mn53")]
 
 [node name="ButtonInvisibilityToggles" type="Control"]
 layout_mode = 3
@@ -11,42 +41,39 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_lfe4p")
 
-[node name="EnemyAOEInvisible" type="CheckBox" parent="."]
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 0
-offset_right = 24.0
-offset_bottom = 24.0
+offset_right = 40.0
+offset_bottom = 40.0
+theme_override_constants/separation = -3
+
+[node name="EnemyAOEInvisible" type="CheckBox" parent="VBoxContainer"]
+layout_mode = 2
+shortcut = SubResource("Shortcut_n18k6")
 text = "Enemy AOE Visible"
 
-[node name="FriendlyAOEInvisible" type="CheckBox" parent="."]
-layout_mode = 0
-offset_top = 32.0
-offset_right = 182.0
-offset_bottom = 63.0
+[node name="FriendlyAOEInvisible" type="CheckBox" parent="VBoxContainer"]
+layout_mode = 2
+shortcut = SubResource("Shortcut_58ir4")
 text = "Friendly AOE Visible"
 
-[node name="SupportAOEInvisible" type="CheckBox" parent="."]
-layout_mode = 0
-offset_top = 64.0
-offset_right = 182.0
-offset_bottom = 95.0
+[node name="SupportAOEInvisible" type="CheckBox" parent="VBoxContainer"]
+layout_mode = 2
+shortcut = SubResource("Shortcut_ovthg")
 text = "Support AOE Visible"
 
-[node name="OffensiveAOEInvisible" type="CheckBox" parent="."]
-layout_mode = 0
-offset_top = 96.0
-offset_right = 195.0
-offset_bottom = 127.0
+[node name="OffensiveAOEInvisible" type="CheckBox" parent="VBoxContainer"]
+layout_mode = 2
+shortcut = SubResource("Shortcut_m3fgj")
 text = "Offensive AOE Visible"
 
-[node name="DraggableAOEInvisible" type="CheckBox" parent="."]
-layout_mode = 0
-offset_top = 128.0
-offset_right = 24.0
-offset_bottom = 152.0
+[node name="DraggableAOEInvisible" type="CheckBox" parent="VBoxContainer"]
+layout_mode = 2
+shortcut = SubResource("Shortcut_x8buj")
 text = "Non-Draggable AOE Visible"
 
-[connection signal="toggled" from="EnemyAOEInvisible" to="." method="_on_enemy_aoe_invisible_toggled"]
-[connection signal="toggled" from="FriendlyAOEInvisible" to="." method="_on_friendly_aoe_invisible_toggled"]
-[connection signal="toggled" from="SupportAOEInvisible" to="." method="_on_support_aoe_invisible_toggled"]
-[connection signal="toggled" from="OffensiveAOEInvisible" to="." method="_on_offensive_aoe_invisible_toggled"]
-[connection signal="toggled" from="DraggableAOEInvisible" to="." method="_on_draggable_aoe_invisible_toggled"]
+[connection signal="toggled" from="VBoxContainer/EnemyAOEInvisible" to="." method="_on_enemy_aoe_invisible_toggled"]
+[connection signal="toggled" from="VBoxContainer/FriendlyAOEInvisible" to="." method="_on_friendly_aoe_invisible_toggled"]
+[connection signal="toggled" from="VBoxContainer/SupportAOEInvisible" to="." method="_on_support_aoe_invisible_toggled"]
+[connection signal="toggled" from="VBoxContainer/OffensiveAOEInvisible" to="." method="_on_offensive_aoe_invisible_toggled"]
+[connection signal="toggled" from="VBoxContainer/DraggableAOEInvisible" to="." method="_on_draggable_aoe_invisible_toggled"]

@@ -6,6 +6,7 @@
 
 [resource]
 script = ExtResource("1_7tuf8")
+globalFilePath = "res://resources/entities/inventory_items/dev_items/ExperiencePotion.tres"
 image = ExtResource("1_lniyf")
 itemName = "Experience I Potion"
 itemDesciption = "This potion will a good portion of experience"
@@ -13,9 +14,11 @@ amount = 0
 value = 10.0
 doesValueChange = false
 isInteractable = true
+isOffensive = false
 AOE = ExtResource("1_xus4l")
 AOEHealthGain = 0.0
 AOEDefenseGain = 0.0
 AOEAttackGain = 0.0
 AOEMoraleGain = 0.0
 AOEExpGain = 10.0
+AOEAccuracy = 1.0

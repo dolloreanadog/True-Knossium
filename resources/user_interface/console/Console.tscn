@@ -1,9 +1,453 @@
-[gd_scene format=3 uid="uid://2067o3jclptt"]
+[gd_scene load_steps=2 format=3 uid="uid://2067o3jclptt"]
 
-[node name="Console" type="Control"]
+[ext_resource type="Script" path="res://resources/user_interface/console/Console.gd" id="1_5ifek"]
+
+[node name="Console" type="Control" node_paths=PackedStringArray("consoleInputLine", "consoleTextLabel", "spawnBehaviorDebugMenu", "spawnCharacterDebugMenu", "spawnItemDebugMenu", "spawnCharacterInputFileNameLine", "spawnCharacterPartyOption", "spawnCharacterInputExperienceLine", "spawnBehaviorChooser", "normalSpawnBehaviorWeightSpinBox", "hordeSpawnBehaviorWeightSpinBox", "eliteSpawnBehaviorWeightSpinBox", "legendarySpawnBehaviorWeightSpinBox", "mythicalSpawnBehaviorWeightSpinBox", "godSpawnBehaviorWeightSpinBox", "spawnItemInputFileNameLine", "spawnItemAmountSpinbox")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_5ifek")
+consoleInputLine = NodePath("MainMenuDebugMenu/ConsoleInputLine")
+consoleTextLabel = NodePath("MainMenuDebugMenu/ConsoleTextLabel")
+spawnBehaviorDebugMenu = NodePath("SpawnBehaviorDebugMenu")
+spawnCharacterDebugMenu = NodePath("SpawnCharacterDebugMenu")
+spawnItemDebugMenu = NodePath("SpawnItemDebugMenu")
+spawnCharacterInputFileNameLine = NodePath("SpawnCharacterDebugMenu/SpawnCharacterFilePathLine")
+spawnCharacterPartyOption = NodePath("SpawnCharacterDebugMenu/Control2/OptionButton")
+spawnCharacterInputExperienceLine = NodePath("SpawnCharacterDebugMenu/Control3/SpinBox")
+spawnBehaviorChooser = NodePath("SpawnBehaviorDebugMenu/SpawnBehaviorOptionButton")
+normalSpawnBehaviorWeightSpinBox = NodePath("SpawnBehaviorDebugMenu/SpawnBehaviorWeights/SpawnBehavior/NormalSpawnBehaviorWeightSpinbox")
+hordeSpawnBehaviorWeightSpinBox = NodePath("SpawnBehaviorDebugMenu/SpawnBehaviorWeights/SpawnBehavior2/HordeSpawnBehaviorWeightSpinbox")
+eliteSpawnBehaviorWeightSpinBox = NodePath("SpawnBehaviorDebugMenu/SpawnBehaviorWeights/SpawnBehavior3/EliteSpawnBehaviorWeightSpinbox")
+legendarySpawnBehaviorWeightSpinBox = NodePath("SpawnBehaviorDebugMenu/SpawnBehaviorWeights/SpawnBehavior4/LegendarySpawnBehaviorWeightSpinbox")
+mythicalSpawnBehaviorWeightSpinBox = NodePath("SpawnBehaviorDebugMenu/SpawnBehaviorWeights/SpawnBehavior5/MythicalSpawnBehaviorWeightSpinbox")
+godSpawnBehaviorWeightSpinBox = NodePath("SpawnBehaviorDebugMenu/SpawnBehaviorWeights/SpawnBehavior6/GodSpawnBehaviorWeightSpinbox")
+spawnItemInputFileNameLine = NodePath("SpawnItemDebugMenu/SpawnItemFilePathLine")
+spawnItemAmountSpinbox = NodePath("SpawnItemDebugMenu/ItemAmountSpinBox")
+
+[node name="MainMenuDebugMenu" type="ColorRect" parent="."]
+layout_mode = 0
+offset_right = 832.0
+offset_bottom = 384.0
+color = Color(0, 0, 0, 0.956863)
+
+[node name="Label" type="Label" parent="MainMenuDebugMenu"]
+layout_mode = 0
+offset_left = 8.0
+offset_right = 70.0
+offset_bottom = 32.0
+text = "Console"
+vertical_alignment = 1
+
+[node name="ExitButton" type="Button" parent="MainMenuDebugMenu"]
+layout_mode = 0
+offset_left = 800.0
+offset_right = 832.0
+offset_bottom = 31.0
+text = "X"
+
+[node name="HSeparator" type="HSeparator" parent="MainMenuDebugMenu"]
+layout_mode = 0
+offset_top = 24.0
+offset_right = 832.0
+offset_bottom = 40.0
+
+[node name="ConsoleInputLine" type="LineEdit" parent="MainMenuDebugMenu"]
+layout_mode = 0
+offset_top = 352.0
+offset_right = 832.0
+offset_bottom = 383.0
+placeholder_text = "Type a command!"
+
+[node name="ConsoleTextLabel" type="RichTextLabel" parent="MainMenuDebugMenu"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 40.0
+offset_right = 832.0
+offset_bottom = 352.0
+text = "Console Ready!"
+scroll_following = true
+
+[node name="SpawnCharacterDebugMenu" type="ColorRect" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 840.0
+offset_right = 1344.0
+offset_bottom = 256.0
+color = Color(0, 0, 0, 0.956863)
+
+[node name="Label" type="Label" parent="SpawnCharacterDebugMenu"]
+layout_mode = 0
+offset_left = 8.0
+offset_right = 70.0
+offset_bottom = 32.0
+text = "Spawn Character Menu"
+vertical_alignment = 1
+
+[node name="ExitButton" type="Button" parent="SpawnCharacterDebugMenu"]
+layout_mode = 0
+offset_left = 472.0
+offset_right = 504.0
+offset_bottom = 31.0
+text = "X"
+
+[node name="HSeparator" type="HSeparator" parent="SpawnCharacterDebugMenu"]
+layout_mode = 0
+offset_top = 24.0
+offset_right = 504.0
+offset_bottom = 40.0
+
+[node name="SpawnCharacterConfirmButton" type="Button" parent="SpawnCharacterDebugMenu"]
+layout_mode = 0
+offset_left = 424.0
+offset_top = 216.0
+offset_right = 495.0
+offset_bottom = 247.0
+text = "Confirm"
+
+[node name="SpawnCharacterFilePathLine" type="LineEdit" parent="SpawnCharacterDebugMenu"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 40.0
+offset_right = 496.0
+offset_bottom = 80.0
+placeholder_text = "File Path of Character (I.E. res://)"
+
+[node name="Control2" type="Control" parent="SpawnCharacterDebugMenu"]
+anchors_preset = 0
+offset_right = 16.0
+offset_bottom = 16.0
+
+[node name="OptionButton" type="OptionButton" parent="SpawnCharacterDebugMenu/Control2"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 128.0
+offset_right = 184.0
+offset_bottom = 168.0
+item_count = 2
+selected = 0
+popup/item_0/text = "Friendly Party"
+popup/item_0/id = 0
+popup/item_1/text = "Enemy Party"
+popup/item_1/id = 1
+
+[node name="Label" type="Label" parent="SpawnCharacterDebugMenu/Control2"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 102.0
+offset_right = 176.0
+offset_bottom = 128.0
+text = "Which Party?"
+
+[node name="Control3" type="Control" parent="SpawnCharacterDebugMenu"]
+anchors_preset = 0
+offset_right = 16.0
+offset_bottom = 16.0
+
+[node name="SpinBox" type="SpinBox" parent="SpawnCharacterDebugMenu/Control3"]
+layout_mode = 0
+offset_left = 248.0
+offset_top = 128.0
+offset_right = 496.0
+offset_bottom = 168.0
+max_value = 999999.0
+
+[node name="Label" type="Label" parent="SpawnCharacterDebugMenu/Control3"]
+layout_mode = 0
+offset_left = 248.0
+offset_top = 102.0
+offset_right = 496.0
+offset_bottom = 128.0
+text = "Experience"
+
+[node name="SpawnBehaviorDebugMenu" type="ColorRect" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 840.0
+offset_top = 264.0
+offset_right = 1344.0
+offset_bottom = 704.0
+color = Color(0, 0, 0, 0.956863)
+
+[node name="Label" type="Label" parent="SpawnBehaviorDebugMenu"]
+layout_mode = 0
+offset_left = 8.0
+offset_right = 70.0
+offset_bottom = 32.0
+text = "Spawn Behavior Menu"
+vertical_alignment = 1
+
+[node name="ExitButton" type="Button" parent="SpawnBehaviorDebugMenu"]
+layout_mode = 0
+offset_left = 472.0
+offset_right = 504.0
+offset_bottom = 31.0
+text = "X"
+
+[node name="HSeparator" type="HSeparator" parent="SpawnBehaviorDebugMenu"]
+layout_mode = 0
+offset_top = 24.0
+offset_right = 504.0
+offset_bottom = 40.0
+
+[node name="SpawnBehaviorConfirm" type="Button" parent="SpawnBehaviorDebugMenu"]
+layout_mode = 0
+offset_left = 424.0
+offset_top = 400.0
+offset_right = 495.0
+offset_bottom = 431.0
+text = "Confirm"
+
+[node name="SpawnBehaviorWeights" type="Control" parent="SpawnBehaviorDebugMenu"]
+anchors_preset = 0
+offset_right = 32.0
+offset_bottom = 32.0
+
+[node name="SpawnBehavior" type="Control" parent="SpawnBehaviorDebugMenu/SpawnBehaviorWeights"]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Label" type="Label" parent="SpawnBehaviorDebugMenu/SpawnBehaviorWeights/SpawnBehavior"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 56.0
+offset_right = 320.0
+offset_bottom = 88.0
+text = "Normal Spawn Behavior Weight"
+
+[node name="NormalSpawnBehaviorWeightSpinbox" type="SpinBox" parent="SpawnBehaviorDebugMenu/SpawnBehaviorWeights/SpawnBehavior"]
+layout_mode = 0
+offset_left = 312.0
+offset_top = 56.0
+offset_right = 496.0
+offset_bottom = 87.0
+max_value = 9999.0
+step = 0.01
+
+[node name="SpawnBehavior2" type="Control" parent="SpawnBehaviorDebugMenu/SpawnBehaviorWeights"]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Label" type="Label" parent="SpawnBehaviorDebugMenu/SpawnBehaviorWeights/SpawnBehavior2"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 96.0
+offset_right = 320.0
+offset_bottom = 128.0
+text = "Horde Spawn Behavior Weight"
+
+[node name="HordeSpawnBehaviorWeightSpinbox" type="SpinBox" parent="SpawnBehaviorDebugMenu/SpawnBehaviorWeights/SpawnBehavior2"]
+layout_mode = 0
+offset_left = 312.0
+offset_top = 96.0
+offset_right = 496.0
+offset_bottom = 127.0
+max_value = 9999.0
+step = 0.01
+
+[node name="SpawnBehavior3" type="Control" parent="SpawnBehaviorDebugMenu/SpawnBehaviorWeights"]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Label" type="Label" parent="SpawnBehaviorDebugMenu/SpawnBehaviorWeights/SpawnBehavior3"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 136.0
+offset_right = 320.0
+offset_bottom = 168.0
+text = "Elite Spawn Behavior Weight"
+
+[node name="EliteSpawnBehaviorWeightSpinbox" type="SpinBox" parent="SpawnBehaviorDebugMenu/SpawnBehaviorWeights/SpawnBehavior3"]
+layout_mode = 0
+offset_left = 312.0
+offset_top = 136.0
+offset_right = 496.0
+offset_bottom = 167.0
+max_value = 9999.0
+step = 0.01
+
+[node name="SpawnBehavior4" type="Control" parent="SpawnBehaviorDebugMenu/SpawnBehaviorWeights"]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Label" type="Label" parent="SpawnBehaviorDebugMenu/SpawnBehaviorWeights/SpawnBehavior4"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 176.0
+offset_right = 320.0
+offset_bottom = 208.0
+text = "Legendary Spawn Behavior Weight"
+
+[node name="LegendarySpawnBehaviorWeightSpinbox" type="SpinBox" parent="SpawnBehaviorDebugMenu/SpawnBehaviorWeights/SpawnBehavior4"]
+layout_mode = 0
+offset_left = 312.0
+offset_top = 176.0
+offset_right = 496.0
+offset_bottom = 207.0
+max_value = 9999.0
+step = 0.01
+
+[node name="SpawnBehavior5" type="Control" parent="SpawnBehaviorDebugMenu/SpawnBehaviorWeights"]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Label" type="Label" parent="SpawnBehaviorDebugMenu/SpawnBehaviorWeights/SpawnBehavior5"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 216.0
+offset_right = 320.0
+offset_bottom = 248.0
+text = "Mythical Spawn Behavior Weight"
+
+[node name="MythicalSpawnBehaviorWeightSpinbox" type="SpinBox" parent="SpawnBehaviorDebugMenu/SpawnBehaviorWeights/SpawnBehavior5"]
+layout_mode = 0
+offset_left = 312.0
+offset_top = 216.0
+offset_right = 496.0
+offset_bottom = 247.0
+max_value = 9999.0
+step = 0.01
+
+[node name="SpawnBehavior6" type="Control" parent="SpawnBehaviorDebugMenu/SpawnBehaviorWeights"]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Label" type="Label" parent="SpawnBehaviorDebugMenu/SpawnBehaviorWeights/SpawnBehavior6"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 256.0
+offset_right = 320.0
+offset_bottom = 288.0
+text = "God Spawn Behavior Weight"
+
+[node name="GodSpawnBehaviorWeightSpinbox" type="SpinBox" parent="SpawnBehaviorDebugMenu/SpawnBehaviorWeights/SpawnBehavior6"]
+layout_mode = 0
+offset_left = 312.0
+offset_top = 256.0
+offset_right = 496.0
+offset_bottom = 287.0
+max_value = 9999.0
+step = 0.01
+
+[node name="HSeparator2" type="HSeparator" parent="SpawnBehaviorDebugMenu"]
+layout_mode = 0
+offset_top = 296.0
+offset_right = 504.0
+offset_bottom = 312.0
+
+[node name="Label2" type="Label" parent="SpawnBehaviorDebugMenu"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 312.0
+offset_right = 496.0
+offset_bottom = 344.0
+text = "Guarantee Next Spawn Behavior"
+
+[node name="SpawnBehaviorOptionButton" type="OptionButton" parent="SpawnBehaviorDebugMenu"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 344.0
+offset_right = 312.0
+offset_bottom = 376.0
+item_count = 7
+selected = 0
+popup/item_0/text = "None"
+popup/item_0/id = 0
+popup/item_1/text = "Normal"
+popup/item_1/id = 1
+popup/item_2/text = "Horde"
+popup/item_2/id = 2
+popup/item_3/text = "Elite"
+popup/item_3/id = 3
+popup/item_4/text = "Legendary"
+popup/item_4/id = 4
+popup/item_5/text = "Mythical"
+popup/item_5/id = 5
+popup/item_6/text = "God"
+popup/item_6/id = 6
+
+[node name="SpawnItemDebugMenu" type="ColorRect" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 1352.0
+offset_top = 184.0
+offset_right = 1920.0
+offset_bottom = 360.0
+color = Color(0, 0, 0, 0.956863)
+
+[node name="Label" type="Label" parent="SpawnItemDebugMenu"]
+layout_mode = 0
+offset_left = 8.0
+offset_right = 70.0
+offset_bottom = 32.0
+text = "Spawn Item Menu"
+vertical_alignment = 1
+
+[node name="ExitButton" type="Button" parent="SpawnItemDebugMenu"]
+layout_mode = 0
+offset_left = 536.0
+offset_right = 568.0
+offset_bottom = 31.0
+text = "X"
+
+[node name="HSeparator" type="HSeparator" parent="SpawnItemDebugMenu"]
+layout_mode = 0
+offset_top = 24.0
+offset_right = 568.0
+offset_bottom = 40.0
+
+[node name="SpawnItemFilePathLine" type="LineEdit" parent="SpawnItemDebugMenu"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 40.0
+offset_right = 560.0
+offset_bottom = 80.0
+placeholder_text = "File Path of Item (I.E. res://)"
+
+[node name="Label2" type="Label" parent="SpawnItemDebugMenu"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 88.0
+offset_right = 256.0
+offset_bottom = 114.0
+text = "Amount"
+
+[node name="ItemAmountSpinBox" type="SpinBox" parent="SpawnItemDebugMenu"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 114.0
+offset_right = 256.0
+offset_bottom = 154.0
+max_value = 999999.0
+
+[node name="SpawnItemConfirmButton" type="Button" parent="SpawnItemDebugMenu"]
+layout_mode = 0
+offset_left = 488.0
+offset_top = 136.0
+offset_right = 559.0
+offset_bottom = 167.0
+text = "Confirm"
+
+[connection signal="pressed" from="MainMenuDebugMenu/ExitButton" to="." method="ConsoleExitButtonPressed"]
+[connection signal="text_submitted" from="MainMenuDebugMenu/ConsoleInputLine" to="." method="ConsoleInputLineSubmitted"]
+[connection signal="pressed" from="SpawnCharacterDebugMenu/ExitButton" to="." method="SpawnCharacterMenuExitButtonPressed"]
+[connection signal="pressed" from="SpawnCharacterDebugMenu/SpawnCharacterConfirmButton" to="." method="SpawnCharacterConfirmButtonPressed"]
+[connection signal="pressed" from="SpawnBehaviorDebugMenu/ExitButton" to="." method="SpawnBehaviorExitButtonPressed"]
+[connection signal="pressed" from="SpawnBehaviorDebugMenu/SpawnBehaviorConfirm" to="." method="SpawnBehaviorConfirmButton"]
+[connection signal="value_changed" from="SpawnBehaviorDebugMenu/SpawnBehaviorWeights/SpawnBehavior/NormalSpawnBehaviorWeightSpinbox" to="." method="NormalSpawnBehaviorWeightSpinboxChanged"]
+[connection signal="value_changed" from="SpawnBehaviorDebugMenu/SpawnBehaviorWeights/SpawnBehavior2/HordeSpawnBehaviorWeightSpinbox" to="." method="HordeSpawnBehaviorWeightSpinboxChanged"]
+[connection signal="value_changed" from="SpawnBehaviorDebugMenu/SpawnBehaviorWeights/SpawnBehavior3/EliteSpawnBehaviorWeightSpinbox" to="." method="EliteSpawnBehaviorWeightSpinboxChanged"]
+[connection signal="value_changed" from="SpawnBehaviorDebugMenu/SpawnBehaviorWeights/SpawnBehavior4/LegendarySpawnBehaviorWeightSpinbox" to="." method="LegendarySpawnBehaviorWeightSpinboxChanged"]
+[connection signal="value_changed" from="SpawnBehaviorDebugMenu/SpawnBehaviorWeights/SpawnBehavior5/MythicalSpawnBehaviorWeightSpinbox" to="." method="MythicalSpawnBehaviorWeightSpinboxChanged"]
+[connection signal="value_changed" from="SpawnBehaviorDebugMenu/SpawnBehaviorWeights/SpawnBehavior6/GodSpawnBehaviorWeightSpinbox" to="." method="GodSpawnBehaviorWeightSpinboxChanged"]
+[connection signal="pressed" from="SpawnItemDebugMenu/ExitButton" to="." method="SpawnItemMenuExitButtonPressed"]
+[connection signal="pressed" from="SpawnItemDebugMenu/SpawnItemConfirmButton" to="." method="SpawnItemConfirmButton"]

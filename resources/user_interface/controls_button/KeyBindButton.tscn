@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://dmd1wm2cnkb4l"]
+
+[ext_resource type="Script" path="res://resources/user_interface/controls_button/KeyBindButton.gd" id="1_apmde"]
+
+[node name="KeybindButton" type="Button"]
+custom_minimum_size = Vector2(60, 0)
+text = "K"
+script = ExtResource("1_apmde")

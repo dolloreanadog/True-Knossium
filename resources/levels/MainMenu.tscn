@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://bxih4r4v0j83h"]
 
 [ext_resource type="Script" path="res://resources/levels/MainMenu.gd" id="1_4owyw"]
-[ext_resource type="PackedScene" uid="uid://cxanc31p5n85d" path="res://resources/user_interface/settings_menu/SettingsMenu.tscn" id="2_fa2k7"]
+[ext_resource type="AudioStream" uid="uid://bi4omexge72c7" path="res://assets/audio/music/dev/SyureliaAndesine.mp3" id="3_ro8dp"]
 
 [node name="MainMenu" type="Node2D"]
 script = ExtResource("1_4owyw")
@@ -83,18 +83,18 @@ horizontal_alignment = 1
 
 [node name="NewGameYes" type="Button" parent="Control/NewGameWarning"]
 layout_mode = 2
-offset_left = 224.0
-offset_top = 64.0
-offset_right = 336.0
-offset_bottom = 96.0
+offset_left = 32.0
+offset_top = 60.0
+offset_right = 144.0
+offset_bottom = 92.0
 text = "Yes"
 
 [node name="NewGameNo" type="Button" parent="Control/NewGameWarning"]
 layout_mode = 2
-offset_left = 32.0
-offset_top = 64.0
-offset_right = 144.0
-offset_bottom = 95.0
+offset_left = 224.0
+offset_top = 60.0
+offset_right = 336.0
+offset_bottom = 91.0
 text = "No"
 
 [node name="Control2" type="Control" parent="."]
@@ -121,26 +121,25 @@ color = Color(0.219608, 0.219608, 0.219608, 1)
 
 [node name="Label" type="Label" parent="Control2/ClearGlobalProgressionWarning"]
 layout_mode = 0
-offset_left = 8.0
-offset_right = 360.0
+offset_right = 368.0
 offset_bottom = 26.0
-text = "Are you sure you want to start a new game?"
+text = "Do you want to clear your progression?"
 horizontal_alignment = 1
 
 [node name="ClearProgressionYes" type="Button" parent="Control2/ClearGlobalProgressionWarning"]
 layout_mode = 2
-offset_left = 224.0
-offset_top = 64.0
-offset_right = 336.0
-offset_bottom = 96.0
+offset_left = 32.0
+offset_top = 60.0
+offset_right = 144.0
+offset_bottom = 92.0
 text = "Yes"
 
 [node name="ClearProgressionNo" type="Button" parent="Control2/ClearGlobalProgressionWarning"]
 layout_mode = 2
-offset_left = 32.0
-offset_top = 64.0
-offset_right = 144.0
-offset_bottom = 95.0
+offset_left = 224.0
+offset_top = 60.0
+offset_right = 336.0
+offset_bottom = 91.0
 text = "No"
 
 [node name="Label" type="Label" parent="."]
@@ -157,8 +156,9 @@ text = "Works! (Some Minor Issues Though) -->"
 horizontal_alignment = 2
 vertical_alignment = 1
 
-[node name="SettingsMenu" parent="." instance=ExtResource("2_fa2k7")]
-visible = false
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_ro8dp")
+bus = &"Music"
 
 [connection signal="pressed" from="VBoxContainer/NewGameButton" to="." method="_on_new_game_button_pressed"]
 [connection signal="pressed" from="VBoxContainer/ContinueButton" to="." method="_on_continue_button_pressed"]

@@ -33,8 +33,7 @@ stats = NodePath("StatComponent")
 ResourceNeeded = ExtResource("3_qwr47")
 ResourceNeededNumber = 7
 ResourceDrop = ExtResource("3_qwr47")
-ResourceDropChance = 0.885
-ResourceDropAmount = 50
+ResourceMaxDropAmount = 30
 levelUpFX = NodePath("DefaultLevelUpFX")
 healthDeathFX = NodePath("HealthDeathFX")
 defenseDeathFX = NodePath("DefenseDeathFX")
@@ -92,19 +91,23 @@ health = 4.0
 defense = 0.5
 attack = 0.1
 morale = 0.1
-accuracy = 2
+accuracy = 0.7
 description = "A strong hit is all that matters. Kill them before they fight back."
 
 [node name="DefaultLevelUpFX" parent="." instance=ExtResource("8_07rvp")]
 
 [node name="HealthDeathFX" parent="." node_paths=PackedStringArray("sprite") instance=ExtResource("9_b6hfg")]
 sprite = NodePath("../AnimatedSprite2D")
+animationName = "death"
 
 [node name="DefenseDeathFX" parent="." instance=ExtResource("10_td3hk")]
+animationName = "active"
 
 [node name="AttackDeathFX" parent="." instance=ExtResource("11_250bw")]
+animationName = "active"
 
 [node name="DefaultMoraleDeathFX" parent="." instance=ExtResource("12_7i6fk")]
+animationName = "active"
 
 [node name="DefaultMaxHealth" parent="." instance=ExtResource("13_hrkw7")]
 

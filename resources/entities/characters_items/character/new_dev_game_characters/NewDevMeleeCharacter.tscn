@@ -33,8 +33,7 @@ stats = NodePath("StatComponent")
 ResourceNeeded = ExtResource("3_d472f")
 ResourceNeededNumber = 1
 ResourceDrop = ExtResource("3_d472f")
-ResourceDropChance = 0.785
-ResourceDropAmount = 2
+ResourceMaxDropAmount = 15
 levelUpFX = NodePath("DefaultLevelUpFX")
 healthDeathFX = NodePath("HealthDeathFX")
 defenseDeathFX = NodePath("DefenseDeathFX")
@@ -93,7 +92,7 @@ health = 4.0
 defense = 0.5
 attack = 0.1
 morale = 0.1
-accuracy = 2
+accuracy = 0.8
 description = "A strong hit is all that matters. Kill them before they fight back."
 
 [node name="DefaultLevelUpFX" parent="." instance=ExtResource("8_udb74")]

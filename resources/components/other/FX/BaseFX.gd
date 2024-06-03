@@ -17,6 +17,7 @@ class_name BaseFX
 
 @export var audioStreamPlayer: AudioStreamPlayer2D
 @onready var character: BaseCharacter = get_parent()
+@export var animationName: String
 
 # These are not final, should be changed for each character
 # An outline, for the final FX

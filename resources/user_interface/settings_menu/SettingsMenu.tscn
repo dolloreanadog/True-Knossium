@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://cxanc31p5n85d"]
+[gd_scene load_steps=3 format=3 uid="uid://cxanc31p5n85d"]
 
 [ext_resource type="Script" path="res://resources/user_interface/settings_menu/SettingsMenu.gd" id="1_mdwnf"]
+[ext_resource type="Script" path="res://resources/user_interface/controls_button/KeyBindButton.gd" id="2_qvbu0"]
 
 [node name="SettingsMenu" type="Control"]
 layout_mode = 3
@@ -119,16 +120,14 @@ offset_left = 144.0
 offset_top = 72.0
 offset_right = 353.0
 offset_bottom = 104.0
-item_count = 4
+item_count = 3
 allow_reselect = true
 popup/item_0/text = "Fullscreen"
 popup/item_0/id = 0
 popup/item_1/text = "Windowed"
 popup/item_1/id = 1
-popup/item_2/text = "Borderless Fullscreen"
+popup/item_2/text = "Borderless Window"
 popup/item_2/id = 2
-popup/item_3/text = "Borderless Window"
-popup/item_3/id = 3
 
 [node name="Control3" type="Control" parent="ColorRect/DisplayPanel"]
 anchors_preset = 0
@@ -162,6 +161,29 @@ popup/item_3/text = "Spanish"
 popup/item_3/id = 3
 popup/item_4/text = "French"
 popup/item_4/id = 4
+
+[node name="Control4" type="Control" parent="ColorRect/DisplayPanel"]
+anchors_preset = 0
+offset_right = 8.0
+offset_bottom = 8.0
+
+[node name="Label3" type="Label" parent="ColorRect/DisplayPanel/Control4"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 152.0
+offset_right = 136.0
+offset_bottom = 184.0
+text = "Monitor Display"
+vertical_alignment = 1
+
+[node name="MonitorDisplayOptions" type="OptionButton" parent="ColorRect/DisplayPanel/Control4"]
+layout_mode = 0
+offset_left = 192.0
+offset_top = 152.0
+offset_right = 353.0
+offset_bottom = 184.0
+fit_to_longest_item = false
+allow_reselect = true
 
 [node name="AudioPanel" type="Panel" parent="ColorRect"]
 layout_mode = 2
@@ -197,7 +219,8 @@ offset_left = 248.0
 offset_top = 32.0
 offset_right = 376.0
 offset_bottom = 64.0
-rounded = true
+max_value = 1.0
+step = 0.01
 
 [node name="MasterVolSpinbox" type="SpinBox" parent="ColorRect/AudioPanel/Control"]
 layout_mode = 0
@@ -205,8 +228,7 @@ offset_left = 272.0
 offset_top = 64.0
 offset_right = 360.0
 offset_bottom = 95.0
-value = 100.0
-rounded = true
+suffix = "%"
 
 [node name="Control2" type="Control" parent="ColorRect/AudioPanel"]
 anchors_preset = 0
@@ -228,7 +250,8 @@ offset_left = 248.0
 offset_top = 112.0
 offset_right = 376.0
 offset_bottom = 144.0
-rounded = true
+max_value = 1.0
+step = 0.01
 
 [node name="MusicVolSpinbox" type="SpinBox" parent="ColorRect/AudioPanel/Control2"]
 layout_mode = 0
@@ -236,8 +259,7 @@ offset_left = 272.0
 offset_top = 144.0
 offset_right = 360.0
 offset_bottom = 175.0
-value = 100.0
-rounded = true
+suffix = "%"
 
 [node name="Control3" type="Control" parent="ColorRect/AudioPanel"]
 anchors_preset = 0
@@ -259,7 +281,8 @@ offset_left = 248.0
 offset_top = 200.0
 offset_right = 376.0
 offset_bottom = 232.0
-rounded = true
+max_value = 1.0
+step = 0.01
 
 [node name="CharacterVolSpinbox" type="SpinBox" parent="ColorRect/AudioPanel/Control3"]
 layout_mode = 0
@@ -267,8 +290,7 @@ offset_left = 272.0
 offset_top = 232.0
 offset_right = 360.0
 offset_bottom = 263.0
-value = 100.0
-rounded = true
+suffix = "%"
 
 [node name="Control4" type="Control" parent="ColorRect/AudioPanel"]
 anchors_preset = 0
@@ -290,7 +312,8 @@ offset_left = 248.0
 offset_top = 280.0
 offset_right = 376.0
 offset_bottom = 312.0
-rounded = true
+max_value = 1.0
+step = 0.01
 
 [node name="SFXSpinboxSpinbox" type="SpinBox" parent="ColorRect/AudioPanel/Control4"]
 layout_mode = 0
@@ -298,22 +321,586 @@ offset_left = 272.0
 offset_top = 312.0
 offset_right = 360.0
 offset_bottom = 343.0
-value = 100.0
-rounded = true
+suffix = "%"
 
 [node name="KeybindsPanel" type="Panel" parent="ColorRect"]
 layout_mode = 2
 offset_left = 1376.0
 offset_top = 64.0
-offset_right = 1728.0
+offset_right = 1856.0
 offset_bottom = 896.0
 
 [node name="Label" type="Label" parent="ColorRect/KeybindsPanel"]
 layout_mode = 0
-offset_right = 352.0
+offset_right = 480.0
 offset_bottom = 26.0
 text = "Keybinds"
 horizontal_alignment = 1
+
+[node name="KeybindInstructionLabel" type="Label" parent="ColorRect/KeybindsPanel"]
+visible = false
+layout_mode = 0
+offset_top = 24.0
+offset_right = 480.0
+offset_bottom = 64.0
+text = "Choose New Keybind!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ScrollContainer" type="ScrollContainer" parent="ColorRect/KeybindsPanel"]
+layout_mode = 0
+offset_top = 64.0
+offset_right = 480.0
+offset_bottom = 832.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ColorRect/KeybindsPanel/ScrollContainer"]
+custom_minimum_size = Vector2(480, 768)
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="KeybindContainer1" type="HBoxContainer" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_stretch_ratio = 0.0
+alignment = 1
+
+[node name="KeybindLabelContainer" type="HBoxContainer" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer1"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Spacer" type="Label" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer1/KeybindLabelContainer"]
+layout_mode = 2
+text = "  "
+
+[node name="KeybindLabel" type="Label" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer1/KeybindLabelContainer"]
+layout_mode = 2
+text = "Toggle Enemy AOE Visibility"
+horizontal_alignment = 1
+
+[node name="KeybindButtonContainer" type="HBoxContainer" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer1"]
+layout_mode = 2
+size_flags_horizontal = 3
+alignment = 2
+
+[node name="KeybindButton" type="Button" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer1/KeybindButtonContainer"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+text = "Error"
+script = ExtResource("2_qvbu0")
+inputAction = "ToggleVisibilityAOEEnemy"
+
+[node name="Spacer" type="Label" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer1/KeybindButtonContainer"]
+layout_mode = 2
+text = "  "
+
+[node name="KeybindContainer2" type="HBoxContainer" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_stretch_ratio = 0.0
+alignment = 1
+
+[node name="KeybindLabelContainer" type="HBoxContainer" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Spacer" type="Label" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer2/KeybindLabelContainer"]
+layout_mode = 2
+text = "  "
+
+[node name="KeybindLabel" type="Label" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer2/KeybindLabelContainer"]
+layout_mode = 2
+text = "Toggle Friendly AOE Visibility"
+horizontal_alignment = 1
+
+[node name="KeybindButtonContainer" type="HBoxContainer" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+alignment = 2
+
+[node name="KeybindButton" type="Button" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer2/KeybindButtonContainer"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+text = "Error"
+script = ExtResource("2_qvbu0")
+inputAction = "ToggleVisibilityAOEFriendly"
+
+[node name="Spacer" type="Label" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer2/KeybindButtonContainer"]
+layout_mode = 2
+text = "  "
+
+[node name="KeybindContainer3" type="HBoxContainer" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_stretch_ratio = 0.0
+alignment = 1
+
+[node name="KeybindLabelContainer" type="HBoxContainer" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer3"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Spacer" type="Label" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer3/KeybindLabelContainer"]
+layout_mode = 2
+text = "  "
+
+[node name="KeybindLabel" type="Label" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer3/KeybindLabelContainer"]
+layout_mode = 2
+text = "Toggle Support AOE Visibility"
+horizontal_alignment = 1
+
+[node name="KeybindButtonContainer" type="HBoxContainer" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer3"]
+layout_mode = 2
+size_flags_horizontal = 3
+alignment = 2
+
+[node name="KeybindButton" type="Button" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer3/KeybindButtonContainer"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+text = "Error"
+script = ExtResource("2_qvbu0")
+inputAction = "ToggleVisibilityAOESupport"
+
+[node name="Spacer" type="Label" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer3/KeybindButtonContainer"]
+layout_mode = 2
+text = "  "
+
+[node name="KeybindContainer4" type="HBoxContainer" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_stretch_ratio = 0.0
+alignment = 1
+
+[node name="KeybindLabelContainer" type="HBoxContainer" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer4"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Spacer" type="Label" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer4/KeybindLabelContainer"]
+layout_mode = 2
+text = "  "
+
+[node name="KeybindLabel" type="Label" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer4/KeybindLabelContainer"]
+layout_mode = 2
+text = "Toggle Offensive AOE Visibility"
+horizontal_alignment = 1
+
+[node name="KeybindButtonContainer" type="HBoxContainer" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer4"]
+layout_mode = 2
+size_flags_horizontal = 3
+alignment = 2
+
+[node name="KeybindButton" type="Button" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer4/KeybindButtonContainer"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+text = "Error"
+script = ExtResource("2_qvbu0")
+inputAction = "ToggleVisibilityAOEOffensive"
+
+[node name="Spacer" type="Label" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer4/KeybindButtonContainer"]
+layout_mode = 2
+text = "  "
+
+[node name="KeybindContainer5" type="HBoxContainer" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_stretch_ratio = 0.0
+alignment = 1
+
+[node name="KeybindLabelContainer" type="HBoxContainer" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer5"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Spacer" type="Label" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer5/KeybindLabelContainer"]
+layout_mode = 2
+text = "  "
+
+[node name="KeybindLabel" type="Label" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer5/KeybindLabelContainer"]
+layout_mode = 2
+text = "Toggle Draggable AOE Visibility"
+horizontal_alignment = 1
+
+[node name="KeybindButtonContainer" type="HBoxContainer" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer5"]
+layout_mode = 2
+size_flags_horizontal = 3
+alignment = 2
+
+[node name="KeybindButton" type="Button" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer5/KeybindButtonContainer"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+text = "Error"
+script = ExtResource("2_qvbu0")
+inputAction = "ToggleVisibilityAOENonDraggable"
+
+[node name="Spacer" type="Label" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer5/KeybindButtonContainer"]
+layout_mode = 2
+text = "  "
+
+[node name="KeybindContainer16" type="HBoxContainer" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_stretch_ratio = 0.0
+alignment = 1
+
+[node name="KeybindLabelContainer" type="HBoxContainer" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer16"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Spacer" type="Label" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer16/KeybindLabelContainer"]
+layout_mode = 2
+text = "  "
+
+[node name="KeybindLabel" type="Label" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer16/KeybindLabelContainer"]
+layout_mode = 2
+text = "End Turn"
+horizontal_alignment = 1
+
+[node name="KeybindButtonContainer" type="HBoxContainer" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer16"]
+layout_mode = 2
+size_flags_horizontal = 3
+alignment = 2
+
+[node name="KeybindButton" type="Button" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer16/KeybindButtonContainer"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+text = "Error"
+script = ExtResource("2_qvbu0")
+inputAction = "EndTurn"
+
+[node name="Spacer" type="Label" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer16/KeybindButtonContainer"]
+layout_mode = 2
+text = "  "
+
+[node name="KeybindContainer6" type="HBoxContainer" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_stretch_ratio = 0.0
+alignment = 1
+
+[node name="KeybindLabelContainer" type="HBoxContainer" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer6"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Spacer" type="Label" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer6/KeybindLabelContainer"]
+layout_mode = 2
+text = "  "
+
+[node name="KeybindLabel" type="Label" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer6/KeybindLabelContainer"]
+layout_mode = 2
+text = "Show Party"
+horizontal_alignment = 1
+
+[node name="KeybindButtonContainer" type="HBoxContainer" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer6"]
+layout_mode = 2
+size_flags_horizontal = 3
+alignment = 2
+
+[node name="KeybindButton" type="Button" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer6/KeybindButtonContainer"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+text = "Error"
+script = ExtResource("2_qvbu0")
+inputAction = "ShowParty"
+
+[node name="Spacer" type="Label" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer6/KeybindButtonContainer"]
+layout_mode = 2
+text = "  "
+
+[node name="KeybindContainer7" type="HBoxContainer" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_stretch_ratio = 0.0
+alignment = 1
+
+[node name="KeybindLabelContainer" type="HBoxContainer" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer7"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Spacer" type="Label" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer7/KeybindLabelContainer"]
+layout_mode = 2
+text = "  "
+
+[node name="KeybindLabel" type="Label" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer7/KeybindLabelContainer"]
+layout_mode = 2
+text = "Show Inventory"
+horizontal_alignment = 1
+
+[node name="KeybindButtonContainer" type="HBoxContainer" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer7"]
+layout_mode = 2
+size_flags_horizontal = 3
+alignment = 2
+
+[node name="KeybindButton" type="Button" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer7/KeybindButtonContainer"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+text = "Error"
+script = ExtResource("2_qvbu0")
+inputAction = "ShowInventory"
+
+[node name="Spacer" type="Label" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer7/KeybindButtonContainer"]
+layout_mode = 2
+text = "  "
+
+[node name="KeybindContainer8" type="HBoxContainer" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_stretch_ratio = 0.0
+alignment = 1
+
+[node name="KeybindLabelContainer" type="HBoxContainer" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer8"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Spacer" type="Label" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer8/KeybindLabelContainer"]
+layout_mode = 2
+text = "  "
+
+[node name="KeybindLabel" type="Label" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer8/KeybindLabelContainer"]
+layout_mode = 2
+text = "Show Ingame Menu"
+horizontal_alignment = 1
+
+[node name="KeybindButtonContainer" type="HBoxContainer" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer8"]
+layout_mode = 2
+size_flags_horizontal = 3
+alignment = 2
+
+[node name="KeybindButton" type="Button" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer8/KeybindButtonContainer"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+text = "Error"
+script = ExtResource("2_qvbu0")
+inputAction = "ShowIngameMenu"
+
+[node name="Spacer" type="Label" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer8/KeybindButtonContainer"]
+layout_mode = 2
+text = "  "
+
+[node name="KeybindContainer9" type="HBoxContainer" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_stretch_ratio = 0.0
+alignment = 1
+
+[node name="KeybindLabelContainer" type="HBoxContainer" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer9"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Spacer" type="Label" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer9/KeybindLabelContainer"]
+layout_mode = 2
+text = "  "
+
+[node name="KeybindLabel" type="Label" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer9/KeybindLabelContainer"]
+layout_mode = 2
+text = "Auto-place AOE"
+horizontal_alignment = 1
+
+[node name="KeybindButtonContainer" type="HBoxContainer" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer9"]
+layout_mode = 2
+size_flags_horizontal = 3
+alignment = 2
+
+[node name="KeybindButton" type="Button" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer9/KeybindButtonContainer"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+text = "Error"
+script = ExtResource("2_qvbu0")
+inputAction = "AutoPlaceAOE"
+
+[node name="Spacer" type="Label" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer9/KeybindButtonContainer"]
+layout_mode = 2
+text = "  "
+
+[node name="KeybindContainer10" type="HBoxContainer" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_stretch_ratio = 0.0
+alignment = 1
+
+[node name="KeybindLabelContainer" type="HBoxContainer" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer10"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Spacer" type="Label" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer10/KeybindLabelContainer"]
+layout_mode = 2
+text = "  "
+
+[node name="KeybindLabel" type="Label" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer10/KeybindLabelContainer"]
+layout_mode = 2
+text = "View Normal Stats"
+horizontal_alignment = 1
+
+[node name="KeybindButtonContainer" type="HBoxContainer" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer10"]
+layout_mode = 2
+size_flags_horizontal = 3
+alignment = 2
+
+[node name="KeybindButton" type="Button" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer10/KeybindButtonContainer"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+text = "Error"
+script = ExtResource("2_qvbu0")
+inputAction = "ViewStatsNormal"
+
+[node name="Spacer" type="Label" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer10/KeybindButtonContainer"]
+layout_mode = 2
+text = "  "
+
+[node name="KeybindContainer11" type="HBoxContainer" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_stretch_ratio = 0.0
+alignment = 1
+
+[node name="KeybindLabelContainer" type="HBoxContainer" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer11"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Spacer" type="Label" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer11/KeybindLabelContainer"]
+layout_mode = 2
+text = "  "
+
+[node name="KeybindLabel" type="Label" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer11/KeybindLabelContainer"]
+layout_mode = 2
+text = "View Health Stats"
+horizontal_alignment = 1
+
+[node name="KeybindButtonContainer" type="HBoxContainer" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer11"]
+layout_mode = 2
+size_flags_horizontal = 3
+alignment = 2
+
+[node name="KeybindButton" type="Button" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer11/KeybindButtonContainer"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+text = "Error"
+script = ExtResource("2_qvbu0")
+inputAction = "ViewStatsHealth"
+
+[node name="Spacer" type="Label" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer11/KeybindButtonContainer"]
+layout_mode = 2
+text = "  "
+
+[node name="KeybindContainer12" type="HBoxContainer" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_stretch_ratio = 0.0
+alignment = 1
+
+[node name="KeybindLabelContainer" type="HBoxContainer" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer12"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Spacer" type="Label" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer12/KeybindLabelContainer"]
+layout_mode = 2
+text = "  "
+
+[node name="KeybindLabel" type="Label" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer12/KeybindLabelContainer"]
+layout_mode = 2
+text = "View Defense Stats"
+horizontal_alignment = 1
+
+[node name="KeybindButtonContainer" type="HBoxContainer" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer12"]
+layout_mode = 2
+size_flags_horizontal = 3
+alignment = 2
+
+[node name="KeybindButton" type="Button" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer12/KeybindButtonContainer"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+text = "Error"
+script = ExtResource("2_qvbu0")
+inputAction = "ViewStatsDefense"
+
+[node name="Spacer" type="Label" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer12/KeybindButtonContainer"]
+layout_mode = 2
+text = "  "
+
+[node name="KeybindContainer13" type="HBoxContainer" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_stretch_ratio = 0.0
+alignment = 1
+
+[node name="KeybindLabelContainer" type="HBoxContainer" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer13"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Spacer" type="Label" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer13/KeybindLabelContainer"]
+layout_mode = 2
+text = "  "
+
+[node name="KeybindLabel" type="Label" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer13/KeybindLabelContainer"]
+layout_mode = 2
+text = "View Attack Stats"
+horizontal_alignment = 1
+
+[node name="KeybindButtonContainer" type="HBoxContainer" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer13"]
+layout_mode = 2
+size_flags_horizontal = 3
+alignment = 2
+
+[node name="KeybindButton" type="Button" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer13/KeybindButtonContainer"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+text = "Error"
+script = ExtResource("2_qvbu0")
+inputAction = "ViewStatsAttack"
+
+[node name="Spacer" type="Label" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer13/KeybindButtonContainer"]
+layout_mode = 2
+text = "  "
+
+[node name="KeybindContainer14" type="HBoxContainer" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_stretch_ratio = 0.0
+alignment = 1
+
+[node name="KeybindLabelContainer" type="HBoxContainer" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer14"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Spacer" type="Label" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer14/KeybindLabelContainer"]
+layout_mode = 2
+text = "  "
+
+[node name="KeybindLabel" type="Label" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer14/KeybindLabelContainer"]
+layout_mode = 2
+text = "View Morale Stats"
+horizontal_alignment = 1
+
+[node name="KeybindButtonContainer" type="HBoxContainer" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer14"]
+layout_mode = 2
+size_flags_horizontal = 3
+alignment = 2
+
+[node name="KeybindButton" type="Button" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer14/KeybindButtonContainer"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+text = "Error"
+script = ExtResource("2_qvbu0")
+inputAction = "ViewStatsMorale"
+
+[node name="Spacer" type="Label" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer14/KeybindButtonContainer"]
+layout_mode = 2
+text = "  "
+
+[node name="KeybindContainer15" type="HBoxContainer" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_stretch_ratio = 0.0
+alignment = 1
+
+[node name="KeybindLabelContainer" type="HBoxContainer" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer15"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Spacer" type="Label" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer15/KeybindLabelContainer"]
+layout_mode = 2
+text = "  "
+
+[node name="KeybindLabel" type="Label" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer15/KeybindLabelContainer"]
+layout_mode = 2
+text = "View Level Stats"
+horizontal_alignment = 1
+
+[node name="KeybindButtonContainer" type="HBoxContainer" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer15"]
+layout_mode = 2
+size_flags_horizontal = 3
+alignment = 2
+
+[node name="KeybindButton" type="Button" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer15/KeybindButtonContainer"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+text = "Error"
+script = ExtResource("2_qvbu0")
+inputAction = "ViewStatsLevel"
+
+[node name="Spacer" type="Label" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer15/KeybindButtonContainer"]
+layout_mode = 2
+text = "  "
 
 [node name="Exit" type="Button" parent="ColorRect"]
 layout_mode = 0
@@ -360,6 +947,7 @@ horizontal_alignment = 1
 [connection signal="item_selected" from="ColorRect/DisplayPanel/Control/ResolutionOptions" to="." method="ResolutionOptionItemSelected"]
 [connection signal="item_selected" from="ColorRect/DisplayPanel/Control2/WindowModeOptions" to="." method="WindowModeOptionItemSelected"]
 [connection signal="item_selected" from="ColorRect/DisplayPanel/Control3/LanguageOptions" to="." method="LanguageOptionItemSelected"]
+[connection signal="item_selected" from="ColorRect/DisplayPanel/Control4/MonitorDisplayOptions" to="." method="MonitorDisplayOptionItemsSelected"]
 [connection signal="value_changed" from="ColorRect/AudioPanel/Control/MasterVolSlider" to="." method="MasterVolSliderChanged"]
 [connection signal="value_changed" from="ColorRect/AudioPanel/Control/MasterVolSpinbox" to="." method="MasterVolSpinboxChanged"]
 [connection signal="value_changed" from="ColorRect/AudioPanel/Control2/MusicVolSlider" to="." method="MusicVolSliderChanged"]

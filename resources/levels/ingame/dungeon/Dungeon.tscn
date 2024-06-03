@@ -1,16 +1,13 @@
-[gd_scene load_steps=34 format=3 uid="uid://dmviuwgk6nssk"]
+[gd_scene load_steps=47 format=3 uid="uid://dmviuwgk6nssk"]
 
-[ext_resource type="Script" path="res://resources/levels/ingame/dungeon/Dungeon.gd" id="1_et2wr"]
+[ext_resource type="Script" path="res://resources/levels/ingame/BaseLevel.gd" id="1_c7s3k"]
 [ext_resource type="PackedScene" uid="uid://2067o3jclptt" path="res://resources/user_interface/console/Console.tscn" id="2_1f5g3"]
 [ext_resource type="PackedScene" uid="uid://j6e4b1w1e5u4" path="res://resources/entities/party_container/enemy_party_container/EnemyPartyContainer.tscn" id="2_4hbul"]
-[ext_resource type="Resource" uid="uid://bjlgar33m6xrh" path="res://resources/entities/inventory_items/dev_items/ExperiencePotion.tres" id="2_6wpjb"]
 [ext_resource type="Script" path="res://resources/entities/spawn_area/BaseSpawnArea.gd" id="2_uqu12"]
 [ext_resource type="PackedScene" uid="uid://cm1bg68as3a8x" path="res://resources/entities/party_container/friendly_party_container/FriendlyPartyContainer.tscn" id="3_ku5su"]
 [ext_resource type="PackedScene" uid="uid://lhqa1mj5r0xq" path="res://resources/user_interface/debug_info/debug_info.tscn" id="3_mejaj"]
-[ext_resource type="Resource" uid="uid://3i41wk26jwk2" path="res://resources/entities/inventory_items/dev_items/DevGold.tres" id="3_ruh8k"]
 [ext_resource type="Script" path="res://resources/levels/ingame/dungeon/AOEAutoPlacementButton.gd" id="3_yl18b"]
 [ext_resource type="Script" path="res://resources/levels/ingame/dungeon/StatPoints.gd" id="4_1bug0"]
-[ext_resource type="Script" path="res://resources/levels/ingame/dungeon/DisplayArrayScript.gd" id="4_2n833"]
 [ext_resource type="PackedScene" uid="uid://ci3j4o0qfk5qa" path="res://resources/user_interface/inventory_menu/inventoryMenu.tscn" id="4_fae0k"]
 [ext_resource type="Script" path="res://resources/components/other/AOEAutoPlacementButton/AutoPlacementAOEComponent.gd" id="4_jr0a1"]
 [ext_resource type="PackedScene" uid="uid://cmupnt3ig0bql" path="res://resources/user_interface/party_menu/PartyMenu.tscn" id="5_6i2q5"]
@@ -24,7 +21,11 @@
 [ext_resource type="Script" path="res://resources/entities/inventory_system/InventorySystem.gd" id="16_w5ag0"]
 [ext_resource type="PackedScene" uid="uid://dacl7cdqcmb3c" path="res://resources/entities/button_invisibility/ButtonInvisibilityToggles.tscn" id="19_vyova"]
 [ext_resource type="PackedScene" uid="uid://b8c08cwk8od7q" path="res://resources/user_interface/ingame_menu/InGameMenu.tscn" id="21_7nwil"]
-[ext_resource type="PackedScene" uid="uid://cxanc31p5n85d" path="res://resources/user_interface/settings_menu/SettingsMenu.tscn" id="25_k42gu"]
+[ext_resource type="Script" path="res://resources/entities/music_player/DungeonMusicPlayer.gd" id="26_1r80j"]
+[ext_resource type="AudioStream" uid="uid://dxufjrff8jslf" path="res://assets/audio/music/dev/LifillFeryquitous.mp3" id="27_cokja"]
+[ext_resource type="AudioStream" uid="uid://5vawwlwftcwx" path="res://assets/audio/music/dev/TheLastWorldISaw.mp3" id="28_4f54h"]
+[ext_resource type="AudioStream" uid="uid://btiylovgh3asi" path="res://assets/audio/music/dev/DeemoRecollections.mp3" id="29_erg55"]
+[ext_resource type="Script" path="res://resources/entities/battle_status_bar/BattleStatusBar.gd" id="30_h3q2n"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_q1uww"]
 size = Vector2(1920, 1152)
@@ -38,6 +39,42 @@ size = Vector2(1920, 1288)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pmviw"]
 size = Vector2(1344, 3328)
 
+[sub_resource type="InputEventAction" id="InputEventAction_x7j3b"]
+action = &"ShowIngameMenu"
+
+[sub_resource type="Shortcut" id="Shortcut_0o4dk"]
+events = [SubResource("InputEventAction_x7j3b")]
+
+[sub_resource type="InputEventAction" id="InputEventAction_npk70"]
+action = &"ShowParty"
+
+[sub_resource type="Shortcut" id="Shortcut_jp7du"]
+events = [SubResource("InputEventAction_npk70")]
+
+[sub_resource type="InputEventAction" id="InputEventAction_cabtc"]
+action = &"ShowInventory"
+
+[sub_resource type="Shortcut" id="Shortcut_u4mpx"]
+events = [SubResource("InputEventAction_cabtc")]
+
+[sub_resource type="InputEventAction" id="InputEventAction_ewkie"]
+action = &"AutoPlaceAOE"
+
+[sub_resource type="Shortcut" id="Shortcut_g6opn"]
+events = [SubResource("InputEventAction_ewkie")]
+
+[sub_resource type="InputEventAction" id="InputEventAction_fr3qc"]
+action = &"EndTurn"
+
+[sub_resource type="Shortcut" id="Shortcut_h1j2k"]
+events = [SubResource("InputEventAction_fr3qc")]
+
+[sub_resource type="InputEventAction" id="InputEventAction_q2xk3"]
+action = &"OpenConsole"
+
+[sub_resource type="Shortcut" id="Shortcut_3cdmy"]
+events = [SubResource("InputEventAction_q2xk3")]
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ohrkm"]
 size = Vector2(320, 640)
 
@@ -50,20 +87,40 @@ size = Vector2(320, 640)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4dgf2"]
 size = Vector2(320, 640)
 
-[node name="Dungeon" type="Node2D" node_paths=PackedStringArray("stopControl", "warningLabel")]
-script = ExtResource("1_et2wr")
-startingItem = ExtResource("2_6wpjb")
-GoldItem = ExtResource("3_ruh8k")
+[node name="Dungeon" type="Node2D" node_paths=PackedStringArray("turnsLabel", "battlesLabel", "friendlyPartyContainer", "enemyPartyContainer", "battleStatusBar", "stopControl", "stopControl2", "musicPlayer", "statButtonGroup", "specialWindowContainer", "knossiumConsole", "endTurnButton", "showMenuButton", "autoPlaceButton", "inventoryButton", "partyButton", "friendlyAOEAttack", "friendlyAOESupport", "enemyAttackAOE", "enemySupportAOE", "warningLabel", "SaveWarningLabel")]
+script = ExtResource("1_c7s3k")
+turnsLabel = NodePath("Labels/TurnsLabel")
+battlesLabel = NodePath("Labels/BattlesLabel")
+friendlyPartyContainer = NodePath("PartyContainers/FriendlyPartyContainer")
+enemyPartyContainer = NodePath("PartyContainers/EnemyPartyContainer")
+battleStatusBar = NodePath("BattleStatusBar")
 stopControl = NodePath("StopControl")
-warningLabel = NodePath("Display/WarningLabel")
+stopControl2 = NodePath("StopControl2")
+musicPlayer = NodePath("DungeonMusicPlayer")
+statButtonGroup = NodePath("ButtonsContainer/VisibilityToggles")
+specialWindowContainer = NodePath("SpecialWindowContainer")
+knossiumConsole = NodePath("Console")
+endTurnButton = NodePath("ButtonsContainer/EndTurn")
+showMenuButton = NodePath("ButtonsContainer/ShowMenuButton")
+autoPlaceButton = NodePath("ButtonsContainer/AOEAutoPlacementButton")
+inventoryButton = NodePath("ButtonsContainer/ShowInventoryButton")
+partyButton = NodePath("ButtonsContainer/ShowPartyButton")
+friendlyAOEAttack = NodePath("AOEContainers/AOESpawnAreaAttack")
+friendlyAOESupport = NodePath("AOEContainers/AOESpawnAreaSupport")
+enemyAttackAOE = NodePath("AOEContainers/EnemyAOEContainerAttack")
+enemySupportAOE = NodePath("AOEContainers/EnemyAOEContainerSupport")
+warningLabel = NodePath("Labels/WarningLabel")
+SaveWarningLabel = NodePath("Labels/SaveWarningLabel")
 
 [node name="Visuals" type="Node2D" parent="."]
 
 [node name="Node2D" type="Node2D" parent="Visuals"]
 
 [node name="ColorRect" type="ColorRect" parent="Visuals/Node2D"]
-offset_right = 1920.0
-offset_bottom = 1080.0
+offset_left = -8.0
+offset_top = -8.0
+offset_right = 1928.0
+offset_bottom = 1088.0
 color = Color(0.25098, 0.215686, 0.0156863, 1)
 
 [node name="OutOfBoundsAOEDenial" type="Area2D" parent="."]
@@ -85,22 +142,21 @@ shape = SubResource("RectangleShape2D_tibo5")
 position = Vector2(2592, 704)
 shape = SubResource("RectangleShape2D_pmviw")
 
-[node name="Notes" type="Control" parent="."]
+[node name="Labels" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="Label" type="Label" parent="Notes"]
+[node name="Label" type="Label" parent="Labels"]
 layout_mode = 0
-offset_top = -112.0
-offset_right = 1152.0
-text = "We're doing small resolution for testing, when finalizing switch to higher resolution.
-Once finished we will put everything working into dungeon_finalized, will also remove the testing bloat of this current scene.
-We Should a special kind of area denial outside the viewable area just in case the player is dumb enough to put it there.
-Put an invisible colorRect on z_index = 2, to block player ability to touch stuff"
+offset_left = 1480.0
+offset_top = 8.0
+offset_right = 1576.0
+offset_bottom = 34.0
+text = "Upkeep List"
 
-[node name="Label2" type="Label" parent="Notes"]
+[node name="Label2" type="Label" parent="Labels"]
 layout_mode = 0
 offset_left = 896.0
 offset_top = 896.0
@@ -108,154 +164,51 @@ offset_right = 1024.0
 offset_bottom = 922.0
 text = "AOE Spawn Area"
 
-[node name="Label3" type="Label" parent="Notes"]
+[node name="SaveWarningLabel" type="Label" parent="Labels"]
+visible = false
 layout_mode = 0
-offset_left = 48.0
-offset_top = 1168.0
-offset_right = 210.0
-offset_bottom = 1194.0
-text = "Friendly Spawn Area"
+offset_left = 1696.0
+offset_top = 8.0
+offset_right = 1913.0
+offset_bottom = 34.0
+text = "SAVING GAME, PLEASE WAIT"
 
-[node name="Label4" type="Label" parent="Notes"]
+[node name="TurnsLabel" type="Label" parent="Labels"]
 layout_mode = 0
-offset_left = 1080.0
-offset_top = 1160.0
-offset_right = 1232.0
-offset_bottom = 1186.0
-text = "Enemy Spawn Area"
-
-[node name="Label5" type="Label" parent="Notes"]
-layout_mode = 0
-offset_left = 1536.0
-offset_top = 112.0
-offset_right = 1632.0
-offset_bottom = 138.0
+offset_left = 1600.0
+offset_top = 32.0
+offset_right = 1696.0
+offset_bottom = 58.0
 text = "Turns: x"
 
-[node name="Label6" type="Label" parent="Notes"]
+[node name="BattlesLabel" type="Label" parent="Labels"]
 layout_mode = 0
-offset_left = 1536.0
-offset_top = 88.0
-offset_right = 1632.0
-offset_bottom = 114.0
+offset_left = 1600.0
+offset_top = 8.0
+offset_right = 1696.0
+offset_bottom = 34.0
 text = "Battles: x"
 
-[node name="Display" type="Control" parent="."]
-layout_mode = 3
-anchors_preset = 0
-offset_right = 8.0
-offset_bottom = 8.0
-
-[node name="DisplayFriendlyArray" type="RichTextLabel" parent="Display" node_paths=PackedStringArray("PartyContainer")]
+[node name="StatPoints" type="Label" parent="Labels" node_paths=PackedStringArray("partyContainer")]
 layout_mode = 0
-offset_left = -320.0
-offset_top = -960.0
-offset_bottom = -768.0
-script = ExtResource("4_2n833")
-PartyContainer = NodePath("../../FriendlyPartyContainer")
-
-[node name="DisplayTankArray" type="RichTextLabel" parent="Display" node_paths=PackedStringArray("PartyContainer")]
-layout_mode = 0
-offset_left = -320.0
-offset_top = -768.0
-offset_bottom = -576.0
-script = ExtResource("4_2n833")
-PartyContainer = NodePath("../../FriendlyPartyContainer")
-wantedInfo = 1
-
-[node name="DisplayMeleeArray" type="RichTextLabel" parent="Display" node_paths=PackedStringArray("PartyContainer")]
-layout_mode = 0
-offset_left = -320.0
-offset_top = -576.0
-offset_bottom = -384.0
-script = ExtResource("4_2n833")
-PartyContainer = NodePath("../../FriendlyPartyContainer")
-wantedInfo = 2
-
-[node name="DisplayRangedArray" type="RichTextLabel" parent="Display" node_paths=PackedStringArray("PartyContainer")]
-layout_mode = 0
-offset_left = -320.0
-offset_top = -384.0
-offset_bottom = -192.0
-script = ExtResource("4_2n833")
-PartyContainer = NodePath("../../FriendlyPartyContainer")
-wantedInfo = 3
-
-[node name="DisplaySupportArray" type="RichTextLabel" parent="Display" node_paths=PackedStringArray("PartyContainer")]
-layout_mode = 0
-offset_left = -320.0
-offset_top = -192.0
-script = ExtResource("4_2n833")
-PartyContainer = NodePath("../../FriendlyPartyContainer")
-wantedInfo = 4
-
-[node name="DisplayEnemyArray" type="RichTextLabel" parent="Display" node_paths=PackedStringArray("PartyContainer")]
-layout_mode = 0
-offset_left = 1280.0
-offset_top = -960.0
-offset_right = 1600.0
-offset_bottom = -768.0
-script = ExtResource("4_2n833")
-PartyContainer = NodePath("../../EnemyPartyContainer")
-
-[node name="DisplayTankArray2" type="RichTextLabel" parent="Display" node_paths=PackedStringArray("PartyContainer")]
-layout_mode = 0
-offset_left = 1920.0
-offset_top = -768.0
-offset_right = 2240.0
-offset_bottom = -576.0
-script = ExtResource("4_2n833")
-PartyContainer = NodePath("../../EnemyPartyContainer")
-wantedInfo = 1
-
-[node name="DisplayMeleeArray2" type="RichTextLabel" parent="Display" node_paths=PackedStringArray("PartyContainer")]
-layout_mode = 0
-offset_left = 1920.0
-offset_top = -576.0
-offset_right = 2240.0
-offset_bottom = -384.0
-script = ExtResource("4_2n833")
-PartyContainer = NodePath("../../EnemyPartyContainer")
-wantedInfo = 2
-
-[node name="DisplayRangedArray2" type="RichTextLabel" parent="Display" node_paths=PackedStringArray("PartyContainer")]
-layout_mode = 0
-offset_left = 1920.0
-offset_top = -384.0
-offset_right = 2240.0
-offset_bottom = -192.0
-script = ExtResource("4_2n833")
-PartyContainer = NodePath("../../EnemyPartyContainer")
-wantedInfo = 3
-
-[node name="DisplaySupportArray2" type="RichTextLabel" parent="Display" node_paths=PackedStringArray("PartyContainer")]
-layout_mode = 0
-offset_left = 1920.0
-offset_top = -192.0
-offset_right = 2240.0
-script = ExtResource("4_2n833")
-PartyContainer = NodePath("../../EnemyPartyContainer")
-wantedInfo = 4
-
-[node name="StatPoints" type="Label" parent="Display" node_paths=PackedStringArray("partyContainer")]
-layout_mode = 0
-offset_top = 168.0
-offset_right = 128.0
-offset_bottom = 191.0
-script = ExtResource("4_1bug0")
-partyContainer = NodePath("../../FriendlyPartyContainer")
-
-[node name="StatPoints2" type="Label" parent="Display" node_paths=PackedStringArray("partyContainer")]
-layout_mode = 0
-offset_left = 1088.0
-offset_top = 168.0
-offset_right = 1280.0
+offset_left = 312.0
+offset_top = 160.0
+offset_right = 632.0
 offset_bottom = 191.0
 horizontal_alignment = 2
 script = ExtResource("4_1bug0")
-partyContainer = NodePath("../../EnemyPartyContainer")
+partyContainer = NodePath("../../PartyContainers/FriendlyPartyContainer")
 
-[node name="WarningLabel" type="Label" parent="Display"]
+[node name="StatPoints2" type="Label" parent="Labels" node_paths=PackedStringArray("partyContainer")]
+layout_mode = 0
+offset_left = 1288.0
+offset_top = 160.0
+offset_right = 1608.0
+offset_bottom = 191.0
+script = ExtResource("4_1bug0")
+partyContainer = NodePath("../../PartyContainers/EnemyPartyContainer")
+
+[node name="WarningLabel" type="Label" parent="Labels"]
 modulate = Color(0.956863, 0, 0, 1)
 layout_mode = 0
 offset_left = 728.0
@@ -265,163 +218,94 @@ offset_bottom = 232.0
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="TestingButtons" type="Control" parent="."]
+[node name="ButtonsContainer" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="FriendlySpawner" type="Control" parent="TestingButtons"]
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="SpawnFriendlyHealer" type="Button" parent="TestingButtons/FriendlySpawner"]
+[node name="ShowMenuButton" type="Button" parent="ButtonsContainer"]
 layout_mode = 0
-offset_left = 128.0
-offset_top = 1136.0
-offset_right = 248.0
-offset_bottom = 1168.0
-text = "Spawn Healer"
+offset_left = 1792.0
+offset_top = 64.0
+offset_right = 1920.0
+offset_bottom = 95.0
+shortcut = SubResource("Shortcut_0o4dk")
+text = "Show Menu"
 
-[node name="SpawnFriendlyTank" type="Button" parent="TestingButtons/FriendlySpawner"]
+[node name="ShowPartyButton" type="Button" parent="ButtonsContainer"]
 layout_mode = 0
-offset_top = 1104.0
-offset_right = 128.0
-offset_bottom = 1136.0
-text = "Spawn Tank"
+offset_left = 1600.0
+offset_top = 64.0
+offset_right = 1728.0
+offset_bottom = 95.0
+shortcut = SubResource("Shortcut_jp7du")
+text = "Show Party"
 
-[node name="SpawnFriendRanged" type="Button" parent="TestingButtons/FriendlySpawner"]
+[node name="ShowInventoryButton" type="Button" parent="ButtonsContainer"]
 layout_mode = 0
-offset_left = 128.0
-offset_top = 1104.0
-offset_right = 256.0
-offset_bottom = 1136.0
-text = "Spawn Ranged"
+offset_left = 1600.0
+offset_top = 112.0
+offset_right = 1729.0
+offset_bottom = 144.0
+shortcut = SubResource("Shortcut_u4mpx")
+text = "Show Inventory"
 
-[node name="SpawnFriendMelee" type="Button" parent="TestingButtons/FriendlySpawner"]
-layout_mode = 0
-offset_left = 8.0
-offset_top = 1136.0
-offset_right = 128.0
-offset_bottom = 1168.0
-text = "Spawn Melee"
-
-[node name="EnemySpawner" type="Control" parent="TestingButtons"]
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="SpawnEnemyHealer" type="Button" parent="TestingButtons/EnemySpawner"]
-layout_mode = 0
+[node name="VisibilityToggles" parent="ButtonsContainer" instance=ExtResource("14_8cna0")]
+layout_mode = 1
 offset_left = 1152.0
-offset_top = 1128.0
-offset_right = 1267.0
-offset_bottom = 1159.0
-text = "Spawn Healer"
-
-[node name="SpawnEnemyTank" type="Button" parent="TestingButtons/EnemySpawner"]
-layout_mode = 0
-offset_left = 1024.0
-offset_top = 1096.0
+offset_top = 8.0
 offset_right = 1152.0
-offset_bottom = 1128.0
-text = "Spawn Tank"
+offset_bottom = 8.0
 
-[node name="SpawnEnemyRanged" type="Button" parent="TestingButtons/EnemySpawner"]
-layout_mode = 0
-offset_left = 1152.0
-offset_top = 1096.0
-offset_right = 1280.0
-offset_bottom = 1128.0
-text = "Spawn Ranged"
+[node name="ButtonInvisibilityToggles" parent="ButtonsContainer" node_paths=PackedStringArray("EnemyAOEContainerOffensive", "EnemyAOEContainerSupport", "FriendlyAOEContainerOffensive", "FriendlyAOEContainerSupport") instance=ExtResource("19_vyova")]
+layout_mode = 1
+offset_left = 872.0
+offset_right = 1072.0
+offset_bottom = 104.0
+EnemyAOEContainerOffensive = NodePath("../../AOEContainers/EnemyAOEContainerAttack")
+EnemyAOEContainerSupport = NodePath("../../AOEContainers/EnemyAOEContainerSupport")
+FriendlyAOEContainerOffensive = NodePath("../../AOEContainers/AOESpawnAreaAttack")
+FriendlyAOEContainerSupport = NodePath("../../AOEContainers/AOESpawnAreaSupport")
 
-[node name="SpawnEnemyMelee" type="Button" parent="TestingButtons/EnemySpawner"]
+[node name="AOEAutoPlacementButton" type="Button" parent="ButtonsContainer"]
 layout_mode = 0
-offset_left = 1040.0
-offset_top = 1128.0
-offset_right = 1152.0
-offset_bottom = 1159.0
-text = "Spawn Melee"
-
-[node name="EndTurn" type="Button" parent="TestingButtons"]
-layout_mode = 0
-offset_left = 1832.0
-offset_top = 40.0
-offset_right = 1910.0
-offset_bottom = 71.0
-action_mode = 0
-text = "End Turn"
-script = ExtResource("13_gxjjo")
-
-[node name="EndBattle" type="Button" parent="TestingButtons"]
-layout_mode = 0
-offset_left = 920.0
-offset_top = 1096.0
-offset_right = 1008.0
-offset_bottom = 1127.0
-text = "End Battle"
-
-[node name="AOEAutoPlacementButton" type="Button" parent="TestingButtons"]
-layout_mode = 0
-offset_left = 1784.0
-offset_top = 136.0
-offset_right = 1911.0
-offset_bottom = 167.0
+offset_left = 1792.0
+offset_top = 112.0
+offset_right = 1919.0
+offset_bottom = 143.0
+shortcut = SubResource("Shortcut_g6opn")
 text = "Auto-Place AOE"
 script = ExtResource("3_yl18b")
 
-[node name="AutoPlaceOffensiveAOE" type="Node" parent="TestingButtons/AOEAutoPlacementButton" node_paths=PackedStringArray("AOEContainer", "targetPartyContainer")]
+[node name="AutoPlaceOffensiveAOE" type="Node" parent="ButtonsContainer/AOEAutoPlacementButton" node_paths=PackedStringArray("AOEContainer", "targetPartyContainer")]
 script = ExtResource("4_jr0a1")
-AOEContainer = NodePath("../../../AOESpawnAreaAttack")
-targetPartyContainer = NodePath("../../../EnemyPartyContainer")
+AOEContainer = NodePath("../../../AOEContainers/AOESpawnAreaAttack")
+targetPartyContainer = NodePath("../../../PartyContainers/EnemyPartyContainer")
 
-[node name="AutoPlaceSupportAOE" type="Node" parent="TestingButtons/AOEAutoPlacementButton" node_paths=PackedStringArray("AOEContainer", "targetPartyContainer")]
+[node name="AutoPlaceSupportAOE" type="Node" parent="ButtonsContainer/AOEAutoPlacementButton" node_paths=PackedStringArray("AOEContainer", "targetPartyContainer")]
 script = ExtResource("4_jr0a1")
-AOEContainer = NodePath("../../../AOESpawnAreaSupport")
-targetPartyContainer = NodePath("../../../FriendlyPartyContainer")
+AOEContainer = NodePath("../../../AOEContainers/AOESpawnAreaSupport")
+targetPartyContainer = NodePath("../../../PartyContainers/FriendlyPartyContainer")
 isAOESupportContainer = true
 
-[node name="GetAttackAOEContainerNodes" type="Button" parent="TestingButtons"]
+[node name="EndTurn" type="Button" parent="ButtonsContainer"]
 layout_mode = 0
-offset_left = 460.0
-offset_top = 1104.0
-offset_right = 637.0
-offset_bottom = 1136.0
-text = "Get Attack AOE nodes
-"
+offset_left = 1792.0
+offset_right = 1918.0
+offset_bottom = 63.0
+action_mode = 0
+shortcut = SubResource("Shortcut_h1j2k")
+text = "End Turn"
+script = ExtResource("13_gxjjo")
 
-[node name="GetSupportAOEContainerNodes" type="Button" parent="TestingButtons"]
+[node name="OpenConsoleButton" type="Button" parent="ButtonsContainer"]
 layout_mode = 0
-offset_left = 448.0
-offset_top = 1136.0
-offset_right = 637.0
-offset_bottom = 1167.0
-text = "Get Support AOE nodes"
-
-[node name="GetEnemyContainerNodes" type="Button" parent="TestingButtons"]
-layout_mode = 0
-offset_left = 637.0
-offset_top = 1136.0
-offset_right = 829.0
-offset_bottom = 1167.0
-text = "Get Enemy Party nodes"
-
-[node name="GetFriendlyContainerNodes" type="Button" parent="TestingButtons"]
-layout_mode = 0
-offset_left = 637.0
-offset_top = 1105.0
-offset_right = 835.0
-offset_bottom = 1136.0
-text = "Get Friendly Party nodes"
-
-[node name="ButtonInvisibilityToggles" parent="." node_paths=PackedStringArray("EnemyAOEContainerOffensive", "EnemyAOEContainerSupport", "FriendlyAOEContainerOffensive", "FriendlyAOEContainerSupport") instance=ExtResource("19_vyova")]
-offset_left = 896.0
-offset_right = 896.0
-EnemyAOEContainerOffensive = NodePath("../EnemyAOEContainerAttack")
-EnemyAOEContainerSupport = NodePath("../EnemyAOEContainerSupport")
-FriendlyAOEContainerOffensive = NodePath("../AOESpawnAreaAttack")
-FriendlyAOEContainerSupport = NodePath("../AOESpawnAreaSupport")
+offset_top = -128.0
+offset_right = 128.0
+offset_bottom = -64.0
+shortcut = SubResource("Shortcut_3cdmy")
+text = "Open Console"
 
 [node name="AOEInfoBox" parent="." instance=ExtResource("8_fg2bo")]
 anchors_preset = 12
@@ -433,25 +317,21 @@ offset_bottom = 144.0
 grow_horizontal = 2
 metadata/_edit_use_anchors_ = true
 
-[node name="ShowInventoryButton" type="Button" parent="."]
-offset_left = 1536.0
-offset_right = 1665.0
-offset_bottom = 32.0
-text = "Show Inventory"
-
-[node name="ShowPartyButton" type="Button" parent="."]
-offset_left = 1536.0
+[node name="UpkeepList" type="ItemList" parent="."]
+offset_left = 1152.0
 offset_top = 48.0
-offset_right = 1664.0
-offset_bottom = 79.0
-text = "Show Party"
+offset_right = 1584.0
+offset_bottom = 144.0
+fixed_icon_size = Vector2i(28, 28)
 
-[node name="ShowMenuButton" type="Button" parent="."]
-offset_left = 1784.0
-offset_top = 88.0
-offset_right = 1912.0
-offset_bottom = 119.0
-text = "Show Menu"
+[node name="BattleStatusBar" type="ProgressBar" parent="."]
+offset_left = 640.0
+offset_top = 160.0
+offset_right = 1280.0
+offset_bottom = 192.0
+show_percentage = false
+script = ExtResource("30_h3q2n")
+metadata/_edit_use_anchors_ = true
 
 [node name="EnemySpawnArea" type="Control" parent="."]
 layout_mode = 3
@@ -515,144 +395,152 @@ offset_right = 256.0
 offset_bottom = 832.0
 script = ExtResource("2_uqu12")
 
-[node name="EnemyPartyContainer" parent="." node_paths=PackedStringArray("system", "otherPartyContainer", "CQCSpawnArea", "DPSRangedSpawnArea", "SupportSpawnArea", "AOEDenialRanged", "AOEDenialSupport") instance=ExtResource("2_4hbul")]
-system = NodePath("../TurnSystem")
-otherPartyContainer = NodePath("../FriendlyPartyContainer")
-CQCSpawnArea = NodePath("../EnemySpawnArea/MeleeSpawnArea")
-DPSRangedSpawnArea = NodePath("../EnemySpawnArea/RangedSpawnArea")
-SupportSpawnArea = NodePath("../EnemySpawnArea/SupportSpawnArea")
-AOEDenialRanged = NodePath("../EnemyAOEDenialRanged")
-AOEDenialSupport = NodePath("../EnemyAOEDenialSupport")
+[node name="PartyContainers" type="Node2D" parent="."]
+position = Vector2(0, -64)
 
-[node name="FriendlyPartyContainer" parent="." node_paths=PackedStringArray("system", "otherPartyContainer", "CQCSpawnArea", "DPSRangedSpawnArea", "SupportSpawnArea", "AOEDenialRanged", "AOEDenialSupport") instance=ExtResource("3_ku5su")]
-system = NodePath("../TurnSystem")
+[node name="EnemyPartyContainer" parent="PartyContainers" node_paths=PackedStringArray("system", "otherPartyContainer", "CQCSpawnArea", "DPSRangedSpawnArea", "SupportSpawnArea", "AOEDenialRanged", "AOEDenialSupport") instance=ExtResource("2_4hbul")]
+position = Vector2(0, 64)
+system = NodePath("../../TurnSystem")
+otherPartyContainer = NodePath("../FriendlyPartyContainer")
+CQCSpawnArea = NodePath("../../EnemySpawnArea/MeleeSpawnArea")
+DPSRangedSpawnArea = NodePath("../../EnemySpawnArea/RangedSpawnArea")
+SupportSpawnArea = NodePath("../../EnemySpawnArea/SupportSpawnArea")
+AOEDenialRanged = NodePath("../../AOEContainers/EnemyAOEDenialRanged")
+AOEDenialSupport = NodePath("../../AOEContainers/EnemyAOEDenialSupport")
+
+[node name="FriendlyPartyContainer" parent="PartyContainers" node_paths=PackedStringArray("system", "otherPartyContainer", "CQCSpawnArea", "DPSRangedSpawnArea", "SupportSpawnArea", "AOEDenialRanged", "AOEDenialSupport") instance=ExtResource("3_ku5su")]
+position = Vector2(0, 64)
+system = NodePath("../../TurnSystem")
 otherPartyContainer = NodePath("../EnemyPartyContainer")
-CQCSpawnArea = NodePath("../FriendlySpawnArea/MeleeSpawnArea")
-DPSRangedSpawnArea = NodePath("../FriendlySpawnArea/RangedSpawnArea")
-SupportSpawnArea = NodePath("../FriendlySpawnArea/SupportSpawnArea")
-AOEDenialRanged = NodePath("../FriendlyAOEDenialRanged")
-AOEDenialSupport = NodePath("../FriendlyAOEDenialSupport")
+CQCSpawnArea = NodePath("../../FriendlySpawnArea/MeleeSpawnArea")
+DPSRangedSpawnArea = NodePath("../../FriendlySpawnArea/RangedSpawnArea")
+SupportSpawnArea = NodePath("../../FriendlySpawnArea/SupportSpawnArea")
+AOEDenialRanged = NodePath("../../AOEContainers/FriendlyAOEDenialRanged")
+AOEDenialSupport = NodePath("../../AOEContainers/FriendlyAOEDenialSupport")
 isFriendly = true
 
-[node name="EnemyAOEDenialRanged" type="Area2D" parent="." node_paths=PackedStringArray("visibility")]
+[node name="AOEContainers" type="Node2D" parent="."]
+
+[node name="EnemyAOEDenialRanged" type="Area2D" parent="AOEContainers" node_paths=PackedStringArray("visibility")]
 position = Vector2(0, -64)
 script = ExtResource("7_7xw1c")
 visibility = NodePath("ColorRect")
 blocker = 1
 
-[node name="ColorRect" type="ColorRect" parent="EnemyAOEDenialRanged"]
+[node name="ColorRect" type="ColorRect" parent="AOEContainers/EnemyAOEDenialRanged"]
 offset_left = 1280.0
 offset_top = 256.0
 offset_right = 1600.0
 offset_bottom = 896.0
 color = Color(0.32549, 0.694118, 0.835294, 0.278431)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="EnemyAOEDenialRanged"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AOEContainers/EnemyAOEDenialRanged"]
 visible = false
 position = Vector2(1440, 576)
 shape = SubResource("RectangleShape2D_ohrkm")
 
-[node name="EnemyAOEDenialSupport" type="Area2D" parent="." node_paths=PackedStringArray("visibility")]
+[node name="EnemyAOEDenialSupport" type="Area2D" parent="AOEContainers" node_paths=PackedStringArray("visibility")]
 position = Vector2(0, -64)
 script = ExtResource("7_7xw1c")
 visibility = NodePath("ColorRect")
 blocker = 1
 
-[node name="ColorRect" type="ColorRect" parent="EnemyAOEDenialSupport"]
+[node name="ColorRect" type="ColorRect" parent="AOEContainers/EnemyAOEDenialSupport"]
 offset_left = 1600.0
 offset_top = 256.0
 offset_right = 1920.0
 offset_bottom = 896.0
 color = Color(0.32549, 0.694118, 0.835294, 0.278431)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="EnemyAOEDenialSupport"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AOEContainers/EnemyAOEDenialSupport"]
 visible = false
 position = Vector2(1760, 576)
 shape = SubResource("RectangleShape2D_434v7")
 
-[node name="FriendlyAOEDenialRanged" type="Area2D" parent="." node_paths=PackedStringArray("visibility")]
+[node name="FriendlyAOEDenialRanged" type="Area2D" parent="AOEContainers" node_paths=PackedStringArray("visibility")]
 position = Vector2(0, -64)
 script = ExtResource("7_7xw1c")
 visibility = NodePath("ColorRect")
 blocker = 1
 
-[node name="ColorRect" type="ColorRect" parent="FriendlyAOEDenialRanged"]
+[node name="ColorRect" type="ColorRect" parent="AOEContainers/FriendlyAOEDenialRanged"]
 offset_left = 320.0
 offset_top = 256.0
 offset_right = 640.0
 offset_bottom = 896.0
 color = Color(0.32549, 0.694118, 0.835294, 0.278431)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="FriendlyAOEDenialRanged"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AOEContainers/FriendlyAOEDenialRanged"]
 visible = false
 position = Vector2(480, 576)
 shape = SubResource("RectangleShape2D_y8f62")
 
-[node name="FriendlyAOEDenialSupport" type="Area2D" parent="." node_paths=PackedStringArray("visibility")]
+[node name="FriendlyAOEDenialSupport" type="Area2D" parent="AOEContainers" node_paths=PackedStringArray("visibility")]
 position = Vector2(0, -64)
 script = ExtResource("7_7xw1c")
 visibility = NodePath("ColorRect")
 blocker = 1
 
-[node name="ColorRect" type="ColorRect" parent="FriendlyAOEDenialSupport"]
+[node name="ColorRect" type="ColorRect" parent="AOEContainers/FriendlyAOEDenialSupport"]
 offset_top = 256.0
 offset_right = 320.0
 offset_bottom = 896.0
 color = Color(0.32549, 0.694118, 0.835294, 0.278431)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="FriendlyAOEDenialSupport"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AOEContainers/FriendlyAOEDenialSupport"]
 visible = false
 position = Vector2(160, 576)
 shape = SubResource("RectangleShape2D_4dgf2")
 
-[node name="EnemyAOEContainerAttack" type="Node2D" parent="." node_paths=PackedStringArray("system", "targetPartyContainer")]
+[node name="EnemyAOEContainerAttack" type="Node2D" parent="AOEContainers" node_paths=PackedStringArray("system", "targetPartyContainer")]
 position = Vector2(704, -192)
 script = ExtResource("15_oeev1")
-system = NodePath("../TurnSystem")
-targetPartyContainer = NodePath("../FriendlyPartyContainer")
+system = NodePath("../../TurnSystem")
+targetPartyContainer = NodePath("../../PartyContainers/FriendlyPartyContainer")
 
-[node name="EnemyAOEContainerSupport" type="Node2D" parent="." node_paths=PackedStringArray("system", "targetPartyContainer")]
+[node name="EnemyAOEContainerSupport" type="Node2D" parent="AOEContainers" node_paths=PackedStringArray("system", "targetPartyContainer")]
 position = Vector2(640, -192)
 script = ExtResource("15_oeev1")
-system = NodePath("../TurnSystem")
-targetPartyContainer = NodePath("../EnemyPartyContainer")
+system = NodePath("../../TurnSystem")
+targetPartyContainer = NodePath("../../PartyContainers/EnemyPartyContainer")
 isAOESupportContainer = true
 
-[node name="AOESpawnAreaAttack" type="ReferenceRect" parent="."]
-offset_left = 960.0
+[node name="AOESpawnAreaAttack" type="ReferenceRect" parent="AOEContainers"]
+offset_left = 1024.0
 offset_top = 928.0
-offset_right = 1920.0
-offset_bottom = 1080.0
+offset_right = 1472.0
+offset_bottom = 1024.0
 mouse_filter = 2
 border_width = 3.0
 script = ExtResource("2_uqu12")
 
-[node name="AOESpawnAreaSupport" type="ReferenceRect" parent="."]
+[node name="AOESpawnAreaSupport" type="ReferenceRect" parent="AOEContainers"]
 z_as_relative = false
+offset_left = 448.0
 offset_top = 928.0
-offset_right = 960.0
-offset_bottom = 1080.0
+offset_right = 896.0
+offset_bottom = 1024.0
 mouse_filter = 2
 border_width = 3.0
 script = ExtResource("2_uqu12")
 
-[node name="TurnSystem" type="Node" parent="." node_paths=PackedStringArray("FriendlyPartyContainer", "EnemyPartyContainer")]
+[node name="TurnSystem" type="Node" parent="." node_paths=PackedStringArray("dungeon", "FriendlyPartyContainer", "EnemyPartyContainer")]
 script = ExtResource("6_y4pct")
-FriendlyPartyContainer = NodePath("../FriendlyPartyContainer")
-EnemyPartyContainer = NodePath("../EnemyPartyContainer")
+dungeon = NodePath("..")
+FriendlyPartyContainer = NodePath("../PartyContainers/FriendlyPartyContainer")
+EnemyPartyContainer = NodePath("../PartyContainers/EnemyPartyContainer")
 
 [node name="difficultySystem" type="Node" parent="." node_paths=PackedStringArray("friendlyPartyContainer", "enemyPartyContainer", "system")]
 script = ExtResource("15_dmc50")
-friendlyPartyContainer = NodePath("../FriendlyPartyContainer")
-enemyPartyContainer = NodePath("../EnemyPartyContainer")
+friendlyPartyContainer = NodePath("../PartyContainers/FriendlyPartyContainer")
+enemyPartyContainer = NodePath("../PartyContainers/EnemyPartyContainer")
 system = NodePath("../TurnSystem")
 
 [node name="InventorySystem" type="Node" parent="."]
 script = ExtResource("16_w5ag0")
 
-[node name="VisibilityToggles" parent="." instance=ExtResource("14_8cna0")]
-offset_left = 1088.0
-offset_right = 1088.0
+[node name="UpkeepInventorySystem" type="Node" parent="."]
+script = ExtResource("16_w5ag0")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(960, 540)
@@ -662,14 +550,6 @@ visible = false
 
 [node name="debug_info" parent="Camera2D" instance=ExtResource("3_mejaj")]
 visible = false
-
-[node name="SaveWarningLabel" type="Label" parent="."]
-visible = false
-offset_left = 1696.0
-offset_top = 8.0
-offset_right = 1913.0
-offset_bottom = 34.0
-text = "SAVING GAME, PLEASE WAIT"
 
 [node name="StopControl" type="Control" parent="."]
 editor_description = "Prevents Player From Touching"
@@ -683,11 +563,35 @@ offset_bottom = 1080.0
 [node name="Control" type="Control" parent="StopControl"]
 layout_mode = 1
 anchors_preset = 0
-offset_left = 1680.0
+offset_left = 1776.0
 offset_top = -192.0
 offset_right = 1920.0
 
-[node name="InventoryMenu" parent="." node_paths=PackedStringArray("inventorySystem", "spawnArea") instance=ExtResource("4_fae0k")]
+[node name="StopControl2" type="Control" parent="."]
+editor_description = "Prevents Player From Touching"
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_top = 192.0
+offset_right = 1920.0
+offset_bottom = 1080.0
+
+[node name="Control" type="Control" parent="StopControl2"]
+layout_mode = 1
+anchors_preset = 0
+offset_left = 1776.0
+offset_top = -192.0
+offset_right = 1920.0
+
+[node name="DungeonMusicPlayer" type="AudioStreamPlayer" parent="." node_paths=PackedStringArray("dungeon")]
+bus = &"Music"
+script = ExtResource("26_1r80j")
+dungeon = NodePath("..")
+DefaultMusic = ExtResource("27_cokja")
+winningMusic = ExtResource("28_4f54h")
+losingMusic = ExtResource("29_erg55")
+
+[node name="InventoryMenu" parent="." node_paths=PackedStringArray("inventorySystem", "spawnAreaSupport", "spawnAreaOffensive") instance=ExtResource("4_fae0k")]
 visible = false
 z_index = 1
 anchors_preset = 8
@@ -700,12 +604,13 @@ offset_top = 540.0
 offset_right = 960.0
 offset_bottom = 540.0
 inventorySystem = NodePath("../InventorySystem")
-spawnArea = NodePath("../AOESpawnAreaSupport")
+spawnAreaSupport = NodePath("../AOEContainers/AOESpawnAreaSupport")
+spawnAreaOffensive = NodePath("../AOEContainers/AOESpawnAreaAttack")
 
 [node name="PartyMenu" parent="." node_paths=PackedStringArray("partyContainer") instance=ExtResource("5_6i2q5")]
 visible = false
 z_index = 1
-partyContainer = NodePath("../FriendlyPartyContainer")
+partyContainer = NodePath("../PartyContainers/FriendlyPartyContainer")
 
 [node name="InGameMenu" parent="." instance=ExtResource("21_7nwil")]
 visible = false
@@ -715,27 +620,22 @@ offset_top = 540.0
 offset_right = 960.0
 offset_bottom = 540.0
 
-[node name="SettingsMenu" parent="." instance=ExtResource("25_k42gu")]
-visible = false
-z_index = 2
+[node name="SpecialWindowContainer" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
 
-[connection signal="AOEQueueFinished" from="." to="ButtonInvisibilityToggles" method="_on_dungeon_aoe_queue_finished"]
-[connection signal="pressed" from="TestingButtons/FriendlySpawner/SpawnFriendlyHealer" to="." method="_on_spawn_friendly_healer_pressed"]
-[connection signal="pressed" from="TestingButtons/FriendlySpawner/SpawnFriendlyTank" to="." method="_on_spawn_friendly_tank_pressed"]
-[connection signal="pressed" from="TestingButtons/FriendlySpawner/SpawnFriendRanged" to="." method="_on_spawn_friend_ranged_pressed"]
-[connection signal="pressed" from="TestingButtons/FriendlySpawner/SpawnFriendMelee" to="." method="_on_spawn_friend_melee_pressed"]
-[connection signal="pressed" from="TestingButtons/EnemySpawner/SpawnEnemyHealer" to="." method="_on_spawn_enemy_healer_pressed"]
-[connection signal="pressed" from="TestingButtons/EnemySpawner/SpawnEnemyTank" to="." method="_on_spawn_enemy_tank_pressed"]
-[connection signal="pressed" from="TestingButtons/EnemySpawner/SpawnEnemyRanged" to="." method="_on_spawn_enemy_ranged_pressed"]
-[connection signal="pressed" from="TestingButtons/EnemySpawner/SpawnEnemyMelee" to="." method="_on_spawn_enemy_melee_pressed"]
-[connection signal="pressed" from="TestingButtons/EndTurn" to="TestingButtons/EndTurn" method="_on_pressed"]
-[connection signal="pressed" from="TestingButtons/AOEAutoPlacementButton" to="TestingButtons/AOEAutoPlacementButton" method="onPressed"]
-[connection signal="pressed" from="TestingButtons/GetAttackAOEContainerNodes" to="." method="_on_get_attack_aoe_container_nodes_pressed"]
-[connection signal="pressed" from="TestingButtons/GetSupportAOEContainerNodes" to="." method="_on_get_support_aoe_container_nodes_pressed"]
-[connection signal="pressed" from="TestingButtons/GetEnemyContainerNodes" to="." method="_on_get_enemy_container_nodes_pressed"]
-[connection signal="pressed" from="TestingButtons/GetFriendlyContainerNodes" to="." method="_on_get_friendly_container_nodes_pressed"]
-[connection signal="pressed" from="ShowInventoryButton" to="." method="_on_show_inventory_button_pressed"]
-[connection signal="pressed" from="ShowPartyButton" to="." method="_on_show_party_button_pressed"]
-[connection signal="pressed" from="ShowMenuButton" to="." method="_on_show_menu_button_pressed"]
+[node name="Console" parent="." instance=ExtResource("2_1f5g3")]
+visible = false
+
+[connection signal="AOEQueueFinished" from="." to="ButtonsContainer/ButtonInvisibilityToggles" method="_on_dungeon_aoe_queue_finished"]
+[connection signal="pressed" from="ButtonsContainer/ShowMenuButton" to="." method="_on_show_menu_button_pressed"]
+[connection signal="pressed" from="ButtonsContainer/ShowPartyButton" to="." method="_on_show_party_button_pressed"]
+[connection signal="pressed" from="ButtonsContainer/ShowInventoryButton" to="." method="_on_show_inventory_button_pressed"]
+[connection signal="pressed" from="ButtonsContainer/AOEAutoPlacementButton" to="ButtonsContainer/AOEAutoPlacementButton" method="onPressed"]
+[connection signal="pressed" from="ButtonsContainer/EndTurn" to="ButtonsContainer/EndTurn" method="_on_pressed"]
+[connection signal="pressed" from="ButtonsContainer/OpenConsoleButton" to="." method="OpenConsoleButtonPressed"]
 [connection signal="OnNewTurn" from="TurnSystem" to="." method="_on_turn_system_on_new_turn"]
-[connection signal="OnNewTurn" from="TurnSystem" to="ButtonInvisibilityToggles" method="inTurn"]
+[connection signal="OnNewTurn" from="TurnSystem" to="ButtonsContainer/ButtonInvisibilityToggles" method="inTurn"]
+[connection signal="SpawningIsOver" from="difficultySystem" to="." method="updateValueOfStatusBar"]

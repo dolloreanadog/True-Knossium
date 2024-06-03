@@ -14,7 +14,8 @@ script = ExtResource("1_53gfj")
 
 [node name="Control" type="Control" parent="."]
 anchors_preset = 0
-offset_right = 1920.0
+offset_top = 960.0
+offset_right = 448.0
 offset_bottom = 1080.0
 
 [node name="ColorRect" type="ColorRect" parent="."]
@@ -40,6 +41,16 @@ offset_top = 960.0
 offset_right = 440.0
 offset_bottom = 986.0
 text = "Character Name - Character Name Charac"
+horizontal_alignment = 1
+text_overrun_behavior = 1
+
+[node name="LevelLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 128.0
+offset_top = 984.0
+offset_right = 440.0
+offset_bottom = 1010.0
+text = "Level"
 text_overrun_behavior = 1
 
 [node name="Message" type="Label" parent="."]

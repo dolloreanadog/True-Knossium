@@ -4,6 +4,7 @@ extends Node2D
 @onready var filedCharacterUnlocked: Array
 @onready var filedItemUnlocked: Array
 
+
 @onready var loadedCharacterUnlocked: Array
 @onready var loadedItemUnlocked: Array
 
@@ -18,17 +19,24 @@ extends Node2D
 var unlockedListArray: Array
 
 func _ready() -> void:
+	Global.StartLoadingScreen(false)
 	loadSaveData()
 	
 	loadFiledCharacters()
 	loadFiledItems()
+	visualizeUnlockedList()
 	
 	SaveSystem.clearSaveThroughEmptying()
 	SaveSystem.clearSaveThroughDeletion()
+	Global.EndLoadingScreen()
 
 func _on_go_to_menu_pressed() -> void:
+	Global.StartLoadingScreen(true)
+	Global.clearNewProgressThroughDeletion()
+	Global.clearNewProgressionDict()
 	SaveSystem.clearSaveThroughEmptying()
 	SaveSystem.clearSaveThroughDeletion()
+	
 	await get_tree().create_timer(1).timeout
 	get_tree().change_scene_to_file("res://resources/levels/MainMenu.tscn")
 
@@ -41,7 +49,17 @@ func loadSaveData() -> void:
 	PeakTotalStatPointsLabel.text = "Peak Total Stat Points: " + str(SaveSystem.GameInfoDict.PeakTotalStatPoints)
 
 func visualizeUnlockedList() -> void:
-	pass
+	UnlockedList.clear()
+	for i in loadedCharacterUnlocked.size():
+		var Lcharacter: BaseCharacter = loadedCharacterUnlocked[i]
+		UnlockedList.add_item(Lcharacter.id, Lcharacter.profilePicture)
+		UnlockedList.set_item_tooltip(i, Lcharacter.characterDescription)
+		await get_tree().create_timer(0.01).timeout
+	
+	for i in loadedItemUnlocked.size():
+		var Litem: BaseInventoryItem = loadedItemUnlocked[i]
+		UnlockedList.add_item(Litem.itemName, Litem.image)
+		UnlockedList.set_item_tooltip(i, Litem.itemDesciption)
 
 func loadFiledCharacters() -> void:
 	var LCharacterUnlocked: Array = Global.newlyUnlockedCharacters

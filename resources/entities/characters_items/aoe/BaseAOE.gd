@@ -14,12 +14,13 @@ var ownerActionDescription: String
 var ownerCharacterPFP: Texture2D
 var ownerCharacterAnimation: String
 
-#--[ dungeon ]--
-@onready var dungeon: BaseLevel = get_parent().get_parent()
+# Move those @onready to the ready()
 
+#--[ dungeon ]--
+var dungeon: BaseLevel
 
 #--[ Turn System ]--
-@onready var system: TurnSystem
+var system: TurnSystem
 
 #--[ Child Nodes ]--
 @export var spriteAnimations: AnimatedSprite2D
@@ -29,7 +30,7 @@ var ownerCharacterAnimation: String
 @export var isDynamicColor: bool = true
 var mainColor: Color
 #--[ Other Nodes]--
-@onready var dungeonAOEInfoBox: AOEInfoBox = get_parent().get_parent().get_node("AOEInfoBox")
+var dungeonAOEInfoBox
 
 #--[ Stats ]--
 
@@ -40,7 +41,7 @@ var morale: float
 # Determine if attack lands or not
 ## The lower the number, the more accurate it is
 var experience: float
-var accuracy: int
+var accuracy: float = 1
 
 
 #--[ Status ]--
@@ -66,18 +67,36 @@ var dragging = false
 var currentPosition = Vector2(0, 0)
 var lastPosition: Vector2
 
+signal gotItems
+
+
 #--[ Base Functions ]--
 func _ready():
-	system = get_parent().get_parent().get_node("TurnSystem")
+#	if get_parent().get_parent().get_node("TurnSystem") is TurnSystem:
+#		system = get_parent().get_parent().get_node("TurnSystem")
+#		system.connect("OnNewBattle", inBattle)
+	
+	if get_parent().get_parent().get_parent() is BaseLevel:
+		dungeon = get_parent().get_parent().get_parent()
+	
+	if get_parent().get_parent().get_parent().get_node("AOEInfoBox") is AOEInfoBox:
+		dungeonAOEInfoBox = get_parent().get_parent().get_parent().get_node("AOEInfoBox")
+	
+	if dungeon is BaseLevel:
+		system = dungeon.system
+	
+	
+	
 	mainColor = collisionVisualizer.modulate
 	#system.connect("OnNewTurn", NewTurnSignaled)
-	system.connect("OnNewBattle", inBattle)
+	
+	
 	self.z_index = 1
 
 func _process(_delta):
 	if draggable:
 		if dragging:
-			self.global_position = get_global_mouse_position() - currentPosition
+			self.global_position = get_global_mouse_position()
 		
 	
 
@@ -85,24 +104,25 @@ func _process(_delta):
 # Make sure to connect these functions to the button
 func _on_button_pressed():
 	print(str(self) + ": Pressed")
-	
-	if SettingsSystem.getAOEMovement():
-		if dragging:
-			dungeon.setDisabledAllAOE(true)
-			dragging = false
-			collisionVisualizer.modulate = mainColor
-			await get_tree().create_timer(0.1).timeout
-			getItemsInside()
-			areaOverlapCharacter(false)
-			areaOverlapIsBadArea()
-		else:
-			button.mouse_filter = Control.MOUSE_FILTER_STOP
-			dragging = true
-			collisionVisualizer.modulate = Color(1, 1, 1, 0.2)
-			currentPosition = get_global_mouse_position() - self.global_position
-			lastPosition = self.global_position 
-			dungeon.setDisabledAllAOE(false)
-			button.visible = true
+	if draggable:
+		if SettingsSystem.getAOEMovement():
+			if dragging:
+				dungeon.setDisabledAllAOE(true)
+				dragging = false
+				collisionVisualizer.modulate = mainColor
+				await get_tree().create_timer(0.1).timeout
+				await getItemsInside()
+#				call_deferred("getItemsInside")
+#				await gotItems
+				areaOverlapCharacter(false)
+				areaOverlapIsBadArea()
+			else:
+				button.mouse_filter = Control.MOUSE_FILTER_STOP
+				dragging = true
+				collisionVisualizer.modulate = Color(1, 1, 1, 0.2)
+				lastPosition = self.global_position 
+				dungeon.setDisabledAllAOE(false)
+				button.visible = true
 	
 	dungeonAOEInfoBox.characterPFP = ownerCharacterPFP
 	dungeonAOEInfoBox.characterName = ownerCharacterName
@@ -120,27 +140,30 @@ func _on_button_pressed():
 
 func _on_button_button_up():
 	# When Up should whether its in an area it's not suppose to be in
-	if SettingsSystem.getAOEMovement():
-		pass
-	else:
-		dragging = false
-		collisionVisualizer.modulate = mainColor
-		await get_tree().create_timer(0.1).timeout
-		getItemsInside()
-		areaOverlapCharacter(false)
-		areaOverlapIsBadArea()
+	if draggable:
+		if SettingsSystem.getAOEMovement():
+			pass
+		else:
+			dragging = false
+			collisionVisualizer.modulate = mainColor
+			await get_tree().create_timer(0.1).timeout
+#			call_deferred("getItemsInside")
+#			await gotItems
+			await getItemsInside()
+			areaOverlapCharacter(false)
+			areaOverlapIsBadArea()
 	
 
 func _on_button_button_down():
-	if SettingsSystem.getAOEMovement():
-		pass
-	else:
-		dragging = true
-		#if isDynamicColor:
-		collisionVisualizer.modulate = Color(1, 1, 1, 0.2)
-		currentPosition = get_global_mouse_position() - self.global_position
-		lastPosition = self.global_position 
-		print(str(self) + ": Global Position:" + str(lastPosition))
+	if draggable:
+		if SettingsSystem.getAOEMovement():
+			pass
+		else:
+			dragging = true
+			#if isDynamicColor:
+			collisionVisualizer.modulate = Color(1, 1, 1, 0.2)
+			lastPosition = self.global_position 
+			print(str(self) + ": Global Position:" + str(lastPosition))
 
 # When you place it in an area you're not suppose to
 func returnToLastPosition():
@@ -165,6 +188,10 @@ func returnToLastPosition():
 	draggable = true
 	button.disabled = false
 	
+	await get_tree().create_timer(0.05).timeout
+	await getItemsInside()
+	areaOverlapCharacter(false)
+	
 	await get_tree().create_timer(1).timeout
 	
 	warningLabel.queue_free()
@@ -174,9 +201,10 @@ func returnToLastPosition():
 func areaOverlapIsBadArea():
 	# The plan to remove the area is to set the position somewhere else
 	print(str(self) + ": Start Overlap Area Check")
-	
+	overlappingAreaArray = get_overlapping_areas()
+#	await get_tree().create_timer(0.01).timeout
 	var overlappingAreaArrayCount = overlappingAreaArray.size()
-	print("overlapping Areas: " + str(overlappingAreaArray))
+#	print("overlapping Areas: " + str(overlappingAreaArray))
 	for i in overlappingAreaArrayCount:
 		var target = overlappingAreaArray.pop_front()
 		if target is BaseAreaAOEDenial && target.active == true:
@@ -195,8 +223,10 @@ func areaOverlapIsBadArea():
 
 #When it overlaps character should put into an array
 func areaOverlapCharacter(ActiveAttack: bool):
-	print(str(self) + ": Start Overlap Character Check (overlap)")
-	print(str(self) + ": (overlap) Start Overlap Character Check " + str(overlappingBodiesArray.size()))
+#	print(str(self) + ": Start Overlap Character Check (overlap)")
+#	print(str(self) + ": (overlap) Start Overlap Character Check " + str(overlappingBodiesArray.size()))
+	overlappingBodiesArray = get_overlapping_bodies()
+#	await get_tree().create_timer(0.01).timeout
 	if overlappingBodiesArray.size() != 0:
 		for i in overlappingBodiesArray.size():
 			var target = overlappingBodiesArray.pop_front()
@@ -209,21 +239,23 @@ func areaOverlapCharacter(ActiveAttack: bool):
 	else:
 		collisionVisualizer.modulate = mainColor
 
-func getItemsInside():
+func getItemsInside() -> bool:
 	# We Should make a Temporary Array in here, if we're going to use every turn
 	# If not temporary array, it will run out
-	overlappingAreaArray = get_overlapping_areas()
-	overlappingBodiesArray = get_overlapping_bodies()
-	print(str(self) + ": Overlapping Bodies Array: " + str(overlappingBodiesArray))
-	print(str(self) + ": Overlapping Areas Array:" + str(overlappingAreaArray))
-	
+#	overlappingAreaArray = get_overlapping_areas()
+#	overlappingBodiesArray = get_overlapping_bodies()
+	await get_tree().create_timer(0.001).timeout
+#	print(str(self) + ": Overlapping Bodies Array: " + str(overlappingBodiesArray))
+#	print(str(self) + ": Overlapping Areas Array:" + str(overlappingAreaArray))
+	emit_signal("gotItems") # connect both areaOverlapCharacter & areaOverlapIsBadArea, or put them in their own functions
+	return true
 
 #--[ Action Functions ]--
 # When there are no more turns activate
 func lastTurn():
-	print(str(self) + ": Activate last turn")
+#	print(str(self) + ": Activate last turn")
 	if activateLastTurn:
-		getItemsInside()
+		await getItemsInside()
 		areaOverlapCharacter(true)
 
 # Every time a turn is done something happens
@@ -233,7 +265,7 @@ func InTurn():
 	draggable = false
 	statusActive = true
 	if activateEveryTurn:
-		getItemsInside()
+		await getItemsInside()
 		areaOverlapCharacter(true)
 		if animationActivateOn == animationActivation.EVERYTURN:
 			animationActivate()
@@ -267,18 +299,17 @@ func firstTurn():
 	print(str(self) + ": Activate first turn")
 
 func attackStats(body: BaseCharacter):
-	var checkArray: Array = [true, true, true]
-	print(str(self) + ": Attacking " + str(body))
+#	var checkArray: Array = [true, true, true]
+#	print(str(self) + ": Attacking " + str(body))
+#	# Adds as many false into the array
+#	for i in accuracy:
+#		checkArray.append(false)
+#		checkArray.shuffle()
+#
+#	print(str(self) + ": Shuffle is " + str(checkArray))
+#	var target = checkArray.pop_front()
 	
-	# Adds as many false into the array
-	for i in accuracy:
-		checkArray.append(false)
-		checkArray.shuffle()
-	
-	print(str(self) + ": Shuffle is " + str(checkArray))
-	var target = checkArray.pop_front()
-	
-	if target:
+	if randf_range(0, 1) <= accuracy:
 		print(str(self) + ": Target Has Been hit ")
 		body.damageStats(health, defense, attack, morale)
 		body.stats.changeEXP(experience)

@@ -20,11 +20,11 @@ var isAllOffensiveAOEVisible: bool = true
 var isAllDraggableAOEVisible: bool = true
 
 func _ready():
-	$EnemyAOEInvisible.button_pressed = isAllEnemyAOEVisible
-	$FriendlyAOEInvisible.button_pressed = isAllFriendlyAOEVisible
-	$SupportAOEInvisible.button_pressed = isAllSupportAOEVisible
-	$OffensiveAOEInvisible.button_pressed = isAllOffensiveAOEVisible
-	$DraggableAOEInvisible.button_pressed = isAllDraggableAOEVisible
+	$VBoxContainer/EnemyAOEInvisible.button_pressed = isAllEnemyAOEVisible
+	$VBoxContainer/FriendlyAOEInvisible.button_pressed = isAllFriendlyAOEVisible
+	$VBoxContainer/SupportAOEInvisible.button_pressed = isAllSupportAOEVisible
+	$VBoxContainer/OffensiveAOEInvisible.button_pressed = isAllOffensiveAOEVisible
+	$VBoxContainer/DraggableAOEInvisible.button_pressed = isAllDraggableAOEVisible
 	
 
 func _on_dungeon_aoe_queue_finished():
@@ -121,8 +121,8 @@ func setAllAOEVisibility():
 			if isAllFriendlyAOEVisible:
 				finalTargetAOEArray += FriendlyAOEContainerOffensiveChildren
 		
-		print("finalTargetAOEArray: " + str(finalTargetAOEArray))
-		print("finalTargetAOEArrayFiltered: " + str(finalTargetAOEArray.filter(filterDraggable)))
+#		print("finalTargetAOEArray: " + str(finalTargetAOEArray))
+#		print("finalTargetAOEArrayFiltered: " + str(finalTargetAOEArray.filter(filterDraggable)))
 		
 		setTargetAOEVisiblity(finalTargetAOEArray.filter(filterDraggable), isAllDraggableAOEVisible)
 	
@@ -154,8 +154,8 @@ func inTurn():
 	setTargetAOEVisiblity(targetAOEArray, false)
 
 func setTargetAOEVisiblity(targetAOEArray: Array, boolean: bool):
-	print(str(self) + ": We keep doing it?")
-	print(str(self) + ": (setTargetAOEVisiblity) targetAOEArray: " + str(targetAOEArray))
+#	print(str(self) + ": We keep doing it?")
+#	print(str(self) + ": (setTargetAOEVisiblity) targetAOEArray: " + str(targetAOEArray))
 	while targetAOEArray.size() != 0:
 		var targetAOE = targetAOEArray.pop_back()
 		targetAOE.setVisbility(boolean)

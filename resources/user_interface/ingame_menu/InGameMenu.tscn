@@ -9,64 +9,147 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+size_flags_vertical = 4
 script = ExtResource("1_d84wg")
 
-[node name="ColorRect" type="ColorRect" parent="."]
+[node name="MenuWindow" type="ColorRect" parent="."]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -96.0
-offset_top = -176.0
-offset_right = 96.0
-offset_bottom = 176.0
+offset_left = -240.0
+offset_top = -180.0
+offset_right = 240.0
+offset_bottom = 180.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.333333, 0.333333, 0.333333, 1)
 
-[node name="VBoxContainer" type="VBoxContainer" parent="ColorRect"]
-layout_mode = 0
-offset_left = 8.0
+[node name="VBoxContainer" type="VBoxContainer" parent="MenuWindow"]
+layout_mode = 2
+offset_left = 16.0
 offset_top = 8.0
-offset_right = 184.0
-offset_bottom = 344.0
+offset_right = 224.0
+offset_bottom = 296.0
 
-[node name="BackToGameButton" type="Button" parent="ColorRect/VBoxContainer"]
+[node name="BackToGameButton" type="Button" parent="MenuWindow/VBoxContainer"]
 layout_mode = 2
 action_mode = 0
 text = "Back To Game"
 
-[node name="SettingsButton" type="Button" parent="ColorRect/VBoxContainer"]
+[node name="SettingsButton" type="Button" parent="MenuWindow/VBoxContainer"]
 layout_mode = 2
 action_mode = 0
 text = "Settings
 "
 
-[node name="SaveButton" type="Button" parent="ColorRect/VBoxContainer"]
+[node name="SaveButton" type="Button" parent="MenuWindow/VBoxContainer"]
 layout_mode = 2
 action_mode = 0
 text = "Save"
 
-[node name="GoToMenuButton" type="Button" parent="ColorRect/VBoxContainer"]
+[node name="HSeparator" type="HSeparator" parent="MenuWindow/VBoxContainer"]
 layout_mode = 2
-action_mode = 0
-text = "Go To Menu"
 
-[node name="QuitGameButton" type="Button" parent="ColorRect/VBoxContainer"]
+[node name="Label" type="Label" parent="MenuWindow"]
+layout_mode = 2
+offset_left = 256.0
+offset_top = 8.0
+offset_right = 464.0
+offset_bottom = 64.0
+text = "Make sure to save before leaving!"
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="MenuWindow"]
+layout_mode = 2
+offset_left = 256.0
+offset_top = 88.0
+offset_right = 464.0
+offset_bottom = 232.0
+
+[node name="QuitGameButton" type="Button" parent="MenuWindow/VBoxContainer2"]
 layout_mode = 2
 action_mode = 0
 text = "Quit Game"
 
-[node name="EndGameButton" type="Button" parent="ColorRect/VBoxContainer"]
+[node name="GoToMenuButton" type="Button" parent="MenuWindow/VBoxContainer2"]
 layout_mode = 2
+action_mode = 0
+text = "Go To Menu"
+
+[node name="HSeparator" type="HSeparator" parent="MenuWindow/VBoxContainer2"]
+layout_mode = 2
+
+[node name="EndGameButton" type="Button" parent="MenuWindow"]
+layout_mode = 2
+offset_left = 336.0
+offset_top = 312.0
+offset_right = 456.0
+offset_bottom = 343.0
 action_mode = 0
 text = "End Game"
 
-[connection signal="pressed" from="ColorRect/VBoxContainer/BackToGameButton" to="." method="_on_back_to_game_button_pressed"]
-[connection signal="pressed" from="ColorRect/VBoxContainer/SettingsButton" to="." method="_on_settings_button_pressed"]
-[connection signal="pressed" from="ColorRect/VBoxContainer/SaveButton" to="." method="_on_save_button_pressed"]
-[connection signal="pressed" from="ColorRect/VBoxContainer/GoToMenuButton" to="." method="_on_go_to_menu_button_pressed"]
-[connection signal="pressed" from="ColorRect/VBoxContainer/QuitGameButton" to="." method="_on_quit_game_button_pressed"]
-[connection signal="pressed" from="ColorRect/VBoxContainer/EndGameButton" to="." method="_on_end_game_button_pressed"]
+[node name="ConfirmationControl" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -960.0
+offset_top = -540.0
+offset_right = 960.0
+offset_bottom = 540.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ConfirmationWindow" type="ColorRect" parent="ConfirmationControl"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -184.0
+offset_top = -72.0
+offset_right = 184.0
+offset_bottom = 72.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.219608, 0.219608, 0.219608, 1)
+
+[node name="Label" type="Label" parent="ConfirmationControl/ConfirmationWindow"]
+layout_mode = 0
+offset_right = 368.0
+offset_bottom = 26.0
+text = "Are you sure you want to do this?"
+horizontal_alignment = 1
+
+[node name="ConfirmYes" type="Button" parent="ConfirmationControl/ConfirmationWindow"]
+layout_mode = 2
+offset_left = 32.0
+offset_top = 60.0
+offset_right = 144.0
+offset_bottom = 92.0
+text = "Yes"
+
+[node name="ConfirmNo" type="Button" parent="ConfirmationControl/ConfirmationWindow"]
+layout_mode = 2
+offset_left = 224.0
+offset_top = 60.0
+offset_right = 336.0
+offset_bottom = 91.0
+text = "No"
+
+[connection signal="pressed" from="MenuWindow/VBoxContainer/BackToGameButton" to="." method="_on_back_to_game_button_pressed"]
+[connection signal="pressed" from="MenuWindow/VBoxContainer/SettingsButton" to="." method="_on_settings_button_pressed"]
+[connection signal="pressed" from="MenuWindow/VBoxContainer/SaveButton" to="." method="_on_save_button_pressed"]
+[connection signal="pressed" from="MenuWindow/VBoxContainer2/QuitGameButton" to="." method="_on_quit_game_button_pressed"]
+[connection signal="pressed" from="MenuWindow/VBoxContainer2/GoToMenuButton" to="." method="_on_go_to_menu_button_pressed"]
+[connection signal="pressed" from="MenuWindow/EndGameButton" to="." method="_on_end_game_button_pressed"]
+[connection signal="pressed" from="ConfirmationControl/ConfirmationWindow/ConfirmYes" to="." method="ConfirmationYesButtonPressed"]
+[connection signal="pressed" from="ConfirmationControl/ConfirmationWindow/ConfirmNo" to="." method="ConfirmationNoButtonPressed"]

@@ -112,8 +112,9 @@ func changeEXP(amount: float) -> void:
 	while experience >= maxEXP:
 		experience -= maxEXP
 		level += 1
-		maxEXP *= 1.02
-		worthEXP *= 1.25
+		maxEXP *= 1.05
+		worthEXP *= 1.025
+		characterBody.ResourceMaxDropAmount += 2
 		
 		changeHealth(potentialHealthGain)
 		changeDefense(potentialDefenseGain)
@@ -146,10 +147,9 @@ func healthDeath() -> void:
 				characterBody.playhealthDeathFX()
 			else:
 				push_warning("There's no health death effect")
-			alreadyDied = false
+			alreadyDied = true
 			characterBody.dungeon.totalCharactersDied += 1
-			if characterBody.ResourceDropChance >= randf_range(0, 1) && characterBody.ResourceDropChance != 0:
-				characterBody.inventory.addToInventory(characterBody.ResourceDrop, characterBody.ResourceDropAmount)
+			characterBody.inventory.addToInventory(characterBody.ResourceDrop, randi_range(0, characterBody.ResourceMaxDropAmount))
 			#emit_signal("death", worthEXP, characterBody) # Moving this FX, some issues having it not there
 	else:
 		print(str(self) + ": It already died")
@@ -214,25 +214,25 @@ func overMaxMorale() -> void:
 
 func changeHealth(amount: float) -> void:
 	health += amount
-	print(str(self) + ": health changed = " + str(amount))
+#	print(str(self) + ": health changed = " + str(amount))
 	emit_signal("statChanged")
 	emit_signal("healthChanged")
 
 func changeDefense(amount: float) -> void:
 	defense += amount
-	print(str(self) + ": defense changed = " + str(amount))
+#	print(str(self) + ": defense changed = " + str(amount))
 	emit_signal("statChanged")
 	emit_signal("defenseChanged")
 
 func changeAttack(amount: float) -> void:
 	attack += amount
-	print(str(self) + ": attack changed = " + str(amount))
+#	print(str(self) + ": attack changed = " + str(amount))
 	emit_signal("statChanged")
 	emit_signal("attackChanged")
 
 func changeMorale(amount: float) -> void:
 	morale += amount
-	print(str(self) + ": morale changed = " + str(amount))
+#	print(str(self) + ": morale changed = " + str(amount))
 	emit_signal("statChanged")
 	emit_signal("moraleChanged")
 
@@ -312,7 +312,7 @@ func setCurrentExperience(amount: float) -> void:
 		experience -= maxEXP
 		level += 1
 		maxEXP *= 1.02
-		worthEXP *= 1.25
+		worthEXP *= 1.02
 		
 		changeHealth(potentialHealthGain)
 		changeDefense(potentialDefenseGain)

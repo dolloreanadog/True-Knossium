@@ -1,6 +1,7 @@
 extends Node
 class_name TurnSystem
 
+@export var dungeon: BaseLevel
 @export var FriendlyPartyContainer: BasePartyContainer
 @export var EnemyPartyContainer: BasePartyContainer
 
@@ -28,7 +29,9 @@ func newTurn():
 
 func newBattle():
 	battle += 1
+	dungeon.difficulty.onBattleNew()
 	print(str(self) + ": battles = " + str(battle))
+	
 	emit_signal("OnNewBattle")
 	print("Battle Changed")
 

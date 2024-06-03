@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="BaseInventoryItem" load_steps=4 format=3 uid="uid://dryysfxtlsypl"]
+
+[ext_resource type="Script" path="res://resources/entities/inventory_items/BaseInventoryItem.gd" id="1_2h8ih"]
+[ext_resource type="PackedScene" uid="uid://bj14duh8edtjs" path="res://resources/entities/characters_items/aoe/item_aoe/experience_1_aoe/Experience1AOE.tscn" id="1_j2210"]
+[ext_resource type="Texture2D" uid="uid://bnfhr5gna7rs0" path="res://assets/art/item_icon/experience1potion.png" id="2_v8c30"]
+
+[resource]
+script = ExtResource("1_2h8ih")
+globalFilePath = "res://resources/entities/inventory_items/dev_items/ExperiencePotion2.tres"
+image = ExtResource("2_v8c30")
+itemName = "Experience II Potion"
+itemDesciption = "This potion will a really good portion of experience"
+amount = 0
+value = 30.0
+doesValueChange = false
+isInteractable = true
+isOffensive = false
+AOE = ExtResource("1_j2210")
+AOEHealthGain = 0.0
+AOEDefenseGain = 0.0
+AOEAttackGain = 0.0
+AOEMoraleGain = 0.0
+AOEExpGain = 30.0
+AOEAccuracy = 1.0

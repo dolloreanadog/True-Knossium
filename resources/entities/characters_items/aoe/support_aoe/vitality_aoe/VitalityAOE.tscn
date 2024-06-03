@@ -17,7 +17,7 @@ isDynamicColor = false
 animationActivateOn = 2
 
 [node name="MeshInstance2D" type="MeshInstance2D" parent="."]
-modulate = Color(0, 1, 0, 0.117647)
+modulate = Color(1, 1, 1, 0.117647)
 scale = Vector2(64, 64)
 mesh = SubResource("BoxMesh_pilgc")
 

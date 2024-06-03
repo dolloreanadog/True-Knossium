@@ -1,8 +1,13 @@
 extends Node
 ## This script will persist between scenes
 
+@onready var loadedLoadingScreen := preload("res://resources/levels/menu/LoadingMenu/LoadingMenu.tscn")
+var loadingScreen: LoadingScreen
+var previousScene: String
+
 var filePathForProgressionData := "user://ProgressionData.save"
 var filePathForNewProgressionData := "user://NewProgressionData.save"
+var gameProgressionVersion: String = "0.81.1"
 
 # Things to bring into the in game through new game start menu
 var newGameCharacterInfo: Array
@@ -13,15 +18,17 @@ var newlyUnlockedCharacters: Array
 var newlyUnlockedItems: Array
 var BattlesWon: int
 
-signal saved
+signal loaded
+signal Saved
 
 var newProgressionDict: Dictionary = {
 	"CharactersUnlocked": [],
 	"ItemsUnlocked": [],
-	"BattlesWon": 1, # In a single game
+	"BattlesWon": 0, # In a single game
 }
 
 var progressionDict: Dictionary = {
+	"ProgressionGameVersion": gameProgressionVersion,
 	"CharactersUnlocked": ["res://resources/entities/characters_items/character/new_dev_game_characters/NewDevArcherCharacter.tscn", "res://resources/entities/characters_items/character/new_dev_game_characters/NewDevMeleeCharacter.tscn", "res://resources/entities/characters_items/character/new_dev_game_characters/NewDevSupportCharacter.tscn", "res://resources/entities/characters_items/character/new_dev_game_characters/NewDevTankCharacter.tscn"],
 	"ItemsUnlocked": ["res://resources/entities/inventory_items/dev_items/DevGold.tres", "res://resources/entities/inventory_items/dev_items/ExperiencePotion.tres"],
 	"BattlesWon": 0, # In a single game
@@ -30,8 +37,31 @@ var progressionDict: Dictionary = {
 func _ready() -> void:
 	if checkGlobalDataFileExists():
 		loadAllData()
+		checkProgressionVersion()
 	else:
 		clearProgressionDict()
+		clearNewProgressionDict()
+
+func StartLoadingScreen(smoothStart: bool) -> void:
+	print("Loading")
+	if !(smoothStart):
+		loadingScreen = loadedLoadingScreen.instantiate()
+		loadingScreen.z_index = 10
+		get_tree().get_current_scene().add_child(loadingScreen)
+		loadingScreen.set_position(Vector2(0, 0))
+		print("Loading Works: SmoothStart false")
+	else:
+		loadingScreen = loadedLoadingScreen.instantiate()
+		loadingScreen.z_index = 10
+		get_tree().get_current_scene().add_child(loadingScreen)
+		loadingScreen.set_position(Vector2(0, 0))
+		loadingScreen.smoothStartLoadingMenu()
+		print("Loading Works: SmoothStart true")
+	
+
+func EndLoadingScreen() -> void:
+	loadingScreen.RemoveLoadingMenu()
+
 
 #--[ Unlocking ]--
 
@@ -62,11 +92,13 @@ func unlockWhenMostBattles(amount: int) -> void:
 
 func clearProgressionDict() -> void:
 	progressionDict = {
+		"ProgressionGameVersion": gameProgressionVersion,
 		"CharactersUnlocked": ["res://resources/entities/characters_items/character/new_dev_game_characters/NewDevArcherCharacter.tscn", "res://resources/entities/characters_items/character/new_dev_game_characters/NewDevMeleeCharacter.tscn", "res://resources/entities/characters_items/character/new_dev_game_characters/NewDevSupportCharacter.tscn", "res://resources/entities/characters_items/character/new_dev_game_characters/NewDevTankCharacter.tscn"],
 		"ItemsUnlocked": ["res://resources/entities/inventory_items/dev_items/DevGold.tres", "res://resources/entities/inventory_items/dev_items/ExperiencePotion.tres"],
-		"BattlesWon": 1, # In a single game
+		"BattlesWon": 0, # In a single game
 	}
-	
+
+func clearNewProgressionDict() -> void:
 	newProgressionDict = {
 		"CharactersUnlocked": [],
 		"ItemsUnlocked": [],
@@ -76,24 +108,30 @@ func clearProgressionDict() -> void:
 func clearProgressThroughDeletion() -> void:
 	if checkGlobalDataFileExists():
 		DirAccess.remove_absolute("user://ProgressionData.save")
+
+func clearNewProgressThroughDeletion() -> void:
 	if checkNewProgressionDataFileExists():
 		DirAccess.remove_absolute("user://NewProgressionData.save")
 		
+
+
 #--[ Save & Load Dict]--
 
-func saveAllData() -> void:
+func saveAllData() -> bool:
+	print("Progression Data Saved")
 	var file := FileAccess.open_encrypted_with_pass(filePathForProgressionData, FileAccess.WRITE, "Platy1ium")
 	var file1 := FileAccess.open_encrypted_with_pass(filePathForNewProgressionData, FileAccess.WRITE, "Platy1ium")
 	file.store_var(progressionDict)
 	file1.store_var(newProgressionDict)
 	file.close()
 	file1.close()
-	emit_signal("saved")
+	emit_signal("Saved")
+	return true
 
 # On ready like in menu or in this script, load all data
 func loadAllData() -> void:
 	var file := FileAccess.open_encrypted_with_pass(filePathForProgressionData, FileAccess.READ, "Platy1ium") 
-	var file1 := FileAccess.open_encrypted_with_pass(filePathForNewProgressionData, FileAccess.WRITE, "Platy1ium")
+	var file1 := FileAccess.open_encrypted_with_pass(filePathForNewProgressionData, FileAccess.READ, "Platy1ium")
 	if not FileAccess.file_exists(filePathForProgressionData):
 		print("No Previous Global Data")
 	else:
@@ -101,12 +139,13 @@ func loadAllData() -> void:
 		progressionDict = file.get_var()
 		print(progressionDict)
 		
-#	if not FileAccess.file_exists(filePathForNewProgressionData):
-#		print("No Previous Global Data")
-#	else:
-#		print("Global Data Exists!")
-#		newProgressionDict = file.get_var()
-#		print(progressionDict)
+	if not FileAccess.file_exists(filePathForNewProgressionData):
+		print("No Previous Global Data")
+	else:
+		print("Global Data Exists!")
+		newProgressionDict = file1.get_var()
+		print(progressionDict)
+	emit_signal("loaded")
 
 func checkGlobalDataFileExists() -> bool:
 	if FileAccess.file_exists(filePathForProgressionData):
@@ -120,6 +159,35 @@ func checkNewProgressionDataFileExists() -> bool:
 	else:
 		return false
 
+func checkProgressionVersion() -> bool:
+	print("checking the save version")
+#	print("current Dict: " + str(GameInfoDict))
+	if progressionDict.find_key("gameProgressionVersion") != "":
+		if progressionDict.ProgressionGameVersion != gameProgressionVersion:
+			push_error("Incompatible Progression Version, Current is " + str(gameProgressionVersion) + ", Your Version is " + str(progressionDict.ProgressionGameVersion))
+			SaveSystem.clearSaveThroughDeletion()
+			SaveSystem.clearSaveThroughEmptying()
+			clearProgressThroughDeletion()
+			clearNewProgressThroughDeletion()
+			clearNewProgressionDict()
+			clearProgressionDict()
+			saveAllData()
+			return false
+		else:
+			print("Compatible Progression Version, Current is " + str(gameProgressionVersion) + ", Your Version is " + str(progressionDict.ProgressionGameVersion))
+			return true
+	else:
+		push_error("The Key ProgressionVersion doesn't exist")
+		SaveSystem.clearSaveThroughDeletion()
+		SaveSystem.clearSaveThroughEmptying()
+		clearProgressThroughDeletion()
+		clearNewProgressThroughDeletion()
+		clearNewProgressionDict()
+		clearProgressionDict()
+		saveAllData()
+		progressionDict.ProgressionGameVersion = gameProgressionVersion
+		print("Progression " + str(progressionDict))
+		return false
 #--[ Get Info from Dict ]--
 
 func checkMaxValue() -> float:
@@ -142,4 +210,6 @@ func getDictItemsUnlocked() -> Array:
 
 func getBattlesWon() -> int:
 	return progressionDict.BattlesWon
+
+#--[ Other Functions ]--
 

@@ -1,10 +1,22 @@
-[gd_scene load_steps=2 format=3 uid="uid://y244ci3gm7os"]
+[gd_scene load_steps=3 format=3 uid="uid://y244ci3gm7os"]
 
-[ext_resource type="Script" path="res://resources/levels/menu/NewGameStartMenu/NewGameStartMenu.gd" id="1_7i7pn"]
+[ext_resource type="Script" path="res://resources/levels/menu/NewGameStartMenu/NewStartMenu.gd" id="1_bba4k"]
+[ext_resource type="Script" path="res://resources/entities/inventory_system/InventorySystem.gd" id="2_l8k1b"]
 
-[node name="NewGameStartMenu" type="Node2D"]
-script = ExtResource("1_7i7pn")
-maxValue = 500.0
+[node name="NewGameStartMenu" type="Node2D" node_paths=PackedStringArray("warningLabel", "characterAmountSelector", "characterAmountSelectorLabel", "characterAmountSlider", "characterAmountSpinbox", "itemAmountSelector", "itemAmountSelectorLabel", "itemAmountSlider", "itemAmountSpinbox", "choosingInventorySystem", "finalInventorySystem", "upkeepInventorySystem")]
+script = ExtResource("1_bba4k")
+warningLabel = NodePath("WarningLabel")
+characterAmountSelector = NodePath("CharacterAmountSelector")
+characterAmountSelectorLabel = NodePath("CharacterAmountSelector/AmountSelecterLabel")
+characterAmountSlider = NodePath("CharacterAmountSelector/AmountSlider")
+characterAmountSpinbox = NodePath("CharacterAmountSelector/AmountSpinBox")
+itemAmountSelector = NodePath("ItemAmountSelector")
+itemAmountSelectorLabel = NodePath("ItemAmountSelector/AmountSelecterLabel")
+itemAmountSlider = NodePath("ItemAmountSelector/AmountSlider")
+itemAmountSpinbox = NodePath("ItemAmountSelector/AmountSpinBox")
+choosingInventorySystem = NodePath("ChoosingInventorySystem")
+finalInventorySystem = NodePath("FinalInventorySystem")
+upkeepInventorySystem = NodePath("UpkeepInventorySystem")
 
 [node name="Viusal" type="Control" parent="."]
 layout_mode = 3
@@ -40,7 +52,7 @@ offset_bottom = 1024.0
 allow_reselect = true
 fixed_icon_size = Vector2i(28, 28)
 
-[node name="ChooseInventoryrList" type="ItemList" parent="Lists"]
+[node name="ChooseInventoryList" type="ItemList" parent="Lists"]
 layout_mode = 0
 offset_left = 448.0
 offset_top = 128.0
@@ -145,36 +157,36 @@ text = "Back To Menu"
 [node name="Label" type="Label" parent="MiddleInfo"]
 layout_mode = 0
 offset_left = 832.0
-offset_top = 448.0
+offset_top = 808.0
 offset_right = 1088.0
-offset_bottom = 474.0
+offset_bottom = 834.0
 text = "Max Value"
 horizontal_alignment = 1
 
 [node name="MaxValueLabel" type="Label" parent="MiddleInfo"]
 layout_mode = 0
 offset_left = 832.0
-offset_top = 480.0
+offset_top = 840.0
 offset_right = 1088.0
-offset_bottom = 506.0
+offset_bottom = 866.0
 text = "99999"
 horizontal_alignment = 1
 
 [node name="CurrentValueLabel" type="Label" parent="MiddleInfo"]
 layout_mode = 0
 offset_left = 832.0
-offset_top = 552.0
+offset_top = 912.0
 offset_right = 1088.0
-offset_bottom = 578.0
+offset_bottom = 938.0
 text = "9999999"
 horizontal_alignment = 1
 
 [node name="Label2" type="Label" parent="MiddleInfo"]
 layout_mode = 0
 offset_left = 832.0
-offset_top = 520.0
+offset_top = 880.0
 offset_right = 1088.0
-offset_bottom = 546.0
+offset_bottom = 906.0
 text = "Current Value"
 horizontal_alignment = 1
 
@@ -225,114 +237,136 @@ offset_bottom = 802.0
 text = "Upkeep Per Turn"
 horizontal_alignment = 1
 
-[node name="CharacterSelection" type="Panel" parent="."]
-offset_left = 832.0
-offset_top = 832.0
-offset_right = 1088.0
-offset_bottom = 1000.0
+[node name="StopControl" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1920.0
+offset_bottom = 1080.0
 
-[node name="CharacterAmountWanted" type="SpinBox" parent="CharacterSelection"]
-layout_mode = 0
-offset_left = 152.0
-offset_top = 91.0
-offset_right = 248.0
-offset_bottom = 122.0
-max_value = 0.0
+[node name="CharacterAmountSelector" type="ColorRect" parent="."]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 704.0
+offset_top = 504.0
+offset_right = 1216.0
+offset_bottom = 600.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+color = Color(0.227451, 0.227451, 0.227451, 1)
 
-[node name="Label" type="Label" parent="CharacterSelection"]
+[node name="AmountSelecterLabel" type="Label" parent="CharacterAmountSelector"]
 layout_mode = 0
-offset_left = 8.0
-offset_top = 88.0
-offset_right = 152.0
-offset_bottom = 120.0
-text = "amount:"
-vertical_alignment = 1
+offset_right = 512.0
+offset_bottom = 23.0
+text = "Amount"
+horizontal_alignment = 1
 
-[node name="ConfirmCharacterSelectedAmount" type="Button" parent="CharacterSelection"]
+[node name="AmountSlider" type="HSlider" parent="CharacterAmountSelector"]
 layout_mode = 0
-offset_left = 72.0
-offset_top = 128.0
-offset_right = 184.0
-offset_bottom = 160.0
+offset_left = 16.0
+offset_top = 32.0
+offset_right = 400.0
+offset_bottom = 48.0
+
+[node name="AmountSpinBox" type="SpinBox" parent="CharacterAmountSelector"]
+layout_mode = 0
+offset_left = 408.0
+offset_top = 24.0
+offset_right = 496.0
+offset_bottom = 55.0
+
+[node name="AmountConfirmButton" type="Button" parent="CharacterAmountSelector"]
+layout_mode = 0
+offset_left = 192.0
+offset_top = 56.0
+offset_right = 320.0
+offset_bottom = 87.0
 text = "Confirm"
 
-[node name="SelectedCharacterName" type="Label" parent="CharacterSelection"]
+[node name="ItemAmountSelector" type="ColorRect" parent="."]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 704.0
+offset_top = 504.0
+offset_right = 1216.0
+offset_bottom = 600.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+color = Color(0.227451, 0.227451, 0.227451, 1)
+
+[node name="AmountSelecterLabel" type="Label" parent="ItemAmountSelector"]
 layout_mode = 0
+offset_right = 512.0
+offset_bottom = 23.0
+text = "Amount"
+horizontal_alignment = 1
+
+[node name="AmountSlider" type="HSlider" parent="ItemAmountSelector"]
+layout_mode = 0
+offset_left = 16.0
 offset_top = 32.0
-offset_right = 256.0
-offset_bottom = 88.0
-text = "Choose a Character"
-horizontal_alignment = 1
-vertical_alignment = 1
+offset_right = 400.0
+offset_bottom = 48.0
 
-[node name="Label2" type="Label" parent="CharacterSelection"]
+[node name="AmountSpinBox" type="SpinBox" parent="ItemAmountSelector"]
 layout_mode = 0
-offset_right = 256.0
-offset_bottom = 26.0
-text = "Add Selected Character Amount"
-horizontal_alignment = 1
-vertical_alignment = 1
-autowrap_mode = 2
+offset_left = 408.0
+offset_top = 24.0
+offset_right = 496.0
+offset_bottom = 55.0
 
-[node name="ItemSelection" type="Panel" parent="."]
-offset_left = 832.0
-offset_top = 624.0
-offset_right = 1088.0
-offset_bottom = 792.0
-
-[node name="ItemAmountWanted" type="SpinBox" parent="ItemSelection"]
+[node name="AmountConfirmButton" type="Button" parent="ItemAmountSelector"]
 layout_mode = 0
-offset_left = 152.0
-offset_top = 91.0
-offset_right = 248.0
-offset_bottom = 122.0
-
-[node name="Label" type="Label" parent="ItemSelection"]
-layout_mode = 0
-offset_left = 8.0
-offset_top = 88.0
-offset_right = 152.0
-offset_bottom = 120.0
-text = "amount:"
-vertical_alignment = 1
-
-[node name="ConfirmItemSelectedAmount" type="Button" parent="ItemSelection"]
-layout_mode = 0
-offset_left = 72.0
-offset_top = 128.0
-offset_right = 184.0
-offset_bottom = 160.0
+offset_left = 192.0
+offset_top = 56.0
+offset_right = 320.0
+offset_bottom = 87.0
 text = "Confirm"
-
-[node name="SelectedItemName" type="Label" parent="ItemSelection"]
-layout_mode = 0
-offset_top = 32.0
-offset_right = 256.0
-offset_bottom = 80.0
-text = "Choose an item"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Label2" type="Label" parent="ItemSelection"]
-layout_mode = 0
-offset_right = 256.0
-offset_bottom = 26.0
-text = "Add Selected Item Amount"
-horizontal_alignment = 1
-vertical_alignment = 1
-autowrap_mode = 2
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(960, 540)
 
-[connection signal="item_selected" from="Lists/ChooseCharacterList" to="." method="_on_choose_character_list_item_selected"]
-[connection signal="item_selected" from="Lists/ChooseInventoryrList" to="." method="_on_choose_inventoryr_list_item_selected"]
-[connection signal="item_selected" from="Lists/FinalCharacterList" to="." method="_on_final_character_list_item_selected"]
-[connection signal="item_selected" from="Lists/FinalInventoryList" to="." method="_on_final_inventory_list_item_selected"]
-[connection signal="pressed" from="MiddleInfo/StartGameButton" to="." method="_on_start_game_button_pressed"]
-[connection signal="pressed" from="MiddleInfo/ResetListsButton" to="." method="_on_reset_lists_button_pressed"]
-[connection signal="pressed" from="MiddleInfo/BackToMenuButton" to="." method="_on_back_to_menu_button_pressed"]
-[connection signal="value_changed" from="CharacterSelection/CharacterAmountWanted" to="." method="_on_character_amount_wanted_value_changed"]
-[connection signal="pressed" from="CharacterSelection/ConfirmCharacterSelectedAmount" to="." method="_on_confirm_character_selected_amount_pressed"]
-[connection signal="value_changed" from="ItemSelection/ItemAmountWanted" to="." method="_on_item_amount_wanted_value_changed"]
-[connection signal="pressed" from="ItemSelection/ConfirmItemSelectedAmount" to="." method="_on_confirm_item_selected_amount_pressed"]
+[node name="ChoosingInventorySystem" type="Node" parent="."]
+script = ExtResource("2_l8k1b")
+
+[node name="FinalInventorySystem" type="Node" parent="."]
+script = ExtResource("2_l8k1b")
+
+[node name="UpkeepInventorySystem" type="Node" parent="."]
+script = ExtResource("2_l8k1b")
+
+[node name="WarningLabel" type="Label" parent="."]
+modulate = Color(1, 0, 0, 1)
+offset_left = 832.0
+offset_top = 280.0
+offset_right = 1088.0
+offset_bottom = 306.0
+text = "No Character!"
+horizontal_alignment = 1
+
+[connection signal="item_selected" from="Lists/ChooseCharacterList" to="." method="OnChooseCharacterListItemSelected"]
+[connection signal="item_selected" from="Lists/ChooseInventoryList" to="." method="OnChooseInventoryListItemSelected"]
+[connection signal="item_selected" from="Lists/FinalCharacterList" to="." method="OnFinalCharacterListItemSelected"]
+[connection signal="item_selected" from="Lists/FinalInventoryList" to="." method="OnFinalInventoryListItemSelected"]
+[connection signal="pressed" from="MiddleInfo/StartGameButton" to="." method="StartGameButtonPressed"]
+[connection signal="pressed" from="MiddleInfo/ResetListsButton" to="." method="ResetListsButtonPressed"]
+[connection signal="pressed" from="MiddleInfo/BackToMenuButton" to="." method="BackToMenuButtonPressed"]
+[connection signal="value_changed" from="CharacterAmountSelector/AmountSlider" to="." method="CharacterAmountSliderValueChanged"]
+[connection signal="value_changed" from="CharacterAmountSelector/AmountSpinBox" to="." method="CharacterAmountSpinBoxValueChanged"]
+[connection signal="pressed" from="CharacterAmountSelector/AmountConfirmButton" to="." method="CharacterAmountSelectorConfirmButtonPressed"]
+[connection signal="value_changed" from="ItemAmountSelector/AmountSlider" to="." method="ItemAmountSliderValueChanged"]
+[connection signal="value_changed" from="ItemAmountSelector/AmountSpinBox" to="." method="ItemAmountSpinBoxValueChanged"]
+[connection signal="pressed" from="ItemAmountSelector/AmountConfirmButton" to="." method="ItemAmountSelectorConfirmButtonPressed"]

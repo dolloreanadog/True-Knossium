@@ -355,14 +355,6 @@ offset_right = 1176.0
 offset_bottom = 34.0
 text = "x9999"
 
-[node name="DropsChance" type="Label" parent="ColorRect/Panel/DropPanel"]
-layout_mode = 0
-offset_left = 984.0
-offset_top = 8.0
-offset_right = 1064.0
-offset_bottom = 34.0
-text = "100.00%"
-
 [node name="DescriptionPanel" type="Panel" parent="ColorRect/Panel"]
 layout_mode = 0
 offset_left = 16.0

@@ -1,0 +1,26 @@
+[gd_scene load_steps=2 format=3 uid="uid://b0ed8700t6wgx"]
+
+[ext_resource type="Script" path="res://resources/levels/menu/LoadingMenu/LoadingMenu.gd" id="1_076rc"]
+
+[node name="LoadingMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_076rc")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 0
+offset_left = -8.0
+offset_top = -8.0
+offset_right = 1928.0
+offset_bottom = 1088.0
+color = Color(0.0901961, 0.0901961, 0.0901961, 1)
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_right = 128.0
+offset_bottom = 23.0
+text = "Loading..."

@@ -1,8 +1,29 @@
-[gd_scene load_steps=2 format=3 uid="uid://bwmi2u27htu4s"]
+[gd_scene load_steps=9 format=3 uid="uid://bwmi2u27htu4s"]
 
 [ext_resource type="Script" path="res://resources/entities/visibility_toggles/VisibilityToggles.gd" id="1_2traf"]
 
-[node name="VisibilityToggles" type="Control"]
+[sub_resource type="InputEventAction" id="InputEventAction_jlqxd"]
+action = &"ViewStatsNormal"
+
+[sub_resource type="InputEventAction" id="InputEventAction_ykiol"]
+action = &"ViewStatsHealth"
+
+[sub_resource type="InputEventAction" id="InputEventAction_i51tw"]
+action = &"ViewStatsDefense"
+
+[sub_resource type="InputEventAction" id="InputEventAction_em5cr"]
+action = &"ViewStatsAttack"
+
+[sub_resource type="InputEventAction" id="InputEventAction_k10uc"]
+action = &"ViewStatsMorale"
+
+[sub_resource type="InputEventAction" id="InputEventAction_ags6m"]
+action = &"ViewStatsLevel"
+
+[sub_resource type="Shortcut" id="Shortcut_c5kp0"]
+events = [SubResource("InputEventAction_jlqxd"), SubResource("InputEventAction_ykiol"), SubResource("InputEventAction_i51tw"), SubResource("InputEventAction_em5cr"), SubResource("InputEventAction_k10uc"), SubResource("InputEventAction_ags6m")]
+
+[node name="VisibilityToggles" type="Control" node_paths=PackedStringArray("optionButton")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -10,45 +31,27 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_2traf")
+optionButton = NodePath("OptionButton")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="."]
+[node name="OptionButton" type="OptionButton" parent="."]
 layout_mode = 0
-offset_right = 402.0
-offset_bottom = 64.0
+offset_right = 192.0
+offset_bottom = 31.0
+shortcut = SubResource("Shortcut_c5kp0")
+item_count = 6
+selected = 0
+popup/item_0/text = "Viewing Normal"
+popup/item_0/id = 0
+popup/item_1/text = "Viewing Health"
+popup/item_1/id = 1
+popup/item_2/text = "Viewing Defense"
+popup/item_2/id = 2
+popup/item_3/text = "Viewing Attack"
+popup/item_3/id = 3
+popup/item_4/text = "Viewing Morale"
+popup/item_4/id = 4
+popup/item_5/text = "Viewing Level"
+popup/item_5/id = 5
 
-[node name="ViewNormal" type="Button" parent="HBoxContainer"]
-layout_mode = 2
-text = "View
-Normal"
-
-[node name="ViewHealth" type="Button" parent="HBoxContainer"]
-layout_mode = 2
-text = "View
-Health"
-
-[node name="ViewDefense" type="Button" parent="HBoxContainer"]
-layout_mode = 2
-text = "View
-Defense"
-
-[node name="ViewAttack" type="Button" parent="HBoxContainer"]
-layout_mode = 2
-text = "View
-Attack"
-
-[node name="ViewMorale" type="Button" parent="HBoxContainer"]
-layout_mode = 2
-text = "View
-Morale"
-
-[node name="ViewLevel" type="Button" parent="HBoxContainer"]
-layout_mode = 2
-text = "View
-Level"
-
-[connection signal="pressed" from="HBoxContainer/ViewNormal" to="." method="_on_view_normal_pressed"]
-[connection signal="pressed" from="HBoxContainer/ViewHealth" to="." method="_on_view_health_pressed"]
-[connection signal="pressed" from="HBoxContainer/ViewDefense" to="." method="_on_view_defense_pressed"]
-[connection signal="pressed" from="HBoxContainer/ViewAttack" to="." method="_on_view_attack_pressed"]
-[connection signal="pressed" from="HBoxContainer/ViewMorale" to="." method="_on_view_morale_pressed"]
-[connection signal="pressed" from="HBoxContainer/ViewLevel" to="." method="_on_view_level_pressed"]
+[connection signal="item_selected" from="OptionButton" to="." method="VisibilityToggleSelectionSelected"]
+[connection signal="pressed" from="OptionButton" to="." method="OptionButtonPressed"]

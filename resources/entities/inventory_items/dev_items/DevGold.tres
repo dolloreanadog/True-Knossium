@@ -5,6 +5,7 @@
 
 [resource]
 script = ExtResource("1_afl1x")
+globalFilePath = "res://resources/entities/inventory_items/dev_items/DevGold.tres"
 image = ExtResource("1_1qw7e")
 itemName = "Dev Gold Coin"
 itemDesciption = "This is a staple currency in Knossium."
@@ -12,8 +13,10 @@ amount = 0
 value = 1.0
 doesValueChange = false
 isInteractable = false
+isOffensive = false
 AOEHealthGain = 0.0
 AOEDefenseGain = 0.0
 AOEAttackGain = 0.0
 AOEMoraleGain = 0.0
 AOEExpGain = 0.0
+AOEAccuracy = 1.0

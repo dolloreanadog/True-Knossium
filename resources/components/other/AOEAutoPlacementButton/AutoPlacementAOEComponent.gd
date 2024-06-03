@@ -262,8 +262,10 @@ func positionAOE(targetAOE: BaseAOE, targetCharacter: BaseCharacter):
 			print("Placed")
 			await get_tree().create_timer(0.03).timeout
 			if !(isAOESupportContainer):
-				targetAOE.getItemsInside()
-				targetAOE.areaOverlapCharacter(false)
+				@warning_ignore("redundant_await")
+				var itemGot: bool = await targetAOE.getItemsInside()
+				if itemGot:
+					targetAOE.areaOverlapCharacter(false)
 
 
 #--[ Sorting ]--

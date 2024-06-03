@@ -33,8 +33,7 @@ stats = NodePath("StatComponent")
 ResourceNeeded = ExtResource("3_ijmb7")
 ResourceNeededNumber = 1
 ResourceDrop = ExtResource("3_ijmb7")
-ResourceDropChance = 1.0
-ResourceDropAmount = 5
+ResourceMaxDropAmount = 20
 levelUpFX = NodePath("DefaultLevelUpFX")
 healthDeathFX = NodePath("HealthDeathFX")
 defenseDeathFX = NodePath("DefenseDeathFX")
@@ -91,7 +90,7 @@ health = 3.0
 defense = 0.25
 attack = 0.5
 morale = 5.0
-accuracy = 3
+accuracy = 0.65
 description = "When the pitiful soldiers on the front can't take out the units at the back."
 
 [node name="DefaultLevelUpFX" parent="." instance=ExtResource("8_ndbhd")]

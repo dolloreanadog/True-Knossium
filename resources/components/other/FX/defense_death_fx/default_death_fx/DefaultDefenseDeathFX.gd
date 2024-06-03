@@ -1,5 +1,7 @@
 extends BaseFX
 
+
+
 func playFX():
 	character.stats.currentDefense = 1
 	#playSFX()

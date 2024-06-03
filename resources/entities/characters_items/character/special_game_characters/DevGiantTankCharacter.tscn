@@ -34,8 +34,7 @@ stats = NodePath("StatComponent")
 ResourceNeeded = ExtResource("3_lpl2y")
 ResourceNeededNumber = 10
 ResourceDrop = ExtResource("3_lpl2y")
-ResourceDropChance = 1.0
-ResourceDropAmount = 100
+ResourceMaxDropAmount = 100
 levelUpFX = NodePath("DefaultLevelUpFX")
 healthDeathFX = NodePath("HealthDeathFX")
 defenseDeathFX = NodePath("DefenseDeathFX")
@@ -94,7 +93,7 @@ health = 2.5
 defense = 1.5
 attack = 2.0
 morale = 3.0
-accuracy = 1
+accuracy = 0.4
 description = "An attack where when swung on an enemy, devastatingly damages their defenses."
 
 [node name="Action2Component" type="Node" parent="." node_paths=PackedStringArray("stats")]
@@ -108,6 +107,7 @@ isOffensive = false
 health = 1.0
 defense = 1.5
 morale = 5.0
+accuracy = 1.0
 description = "This creates a Shields for any character caught within its radius."
 
 [node name="DefaultLevelUpFX" parent="." instance=ExtResource("9_wbdog")]

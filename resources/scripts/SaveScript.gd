@@ -1,6 +1,8 @@
 extends Node
 
 var filePathForSaveData := "user://SaveData.save"
+var gameSaveVersion: String = "0.82"
+var placeholderDictionary: Dictionary
 
 signal Saved
 signal Loaded
@@ -8,17 +10,21 @@ signal Loaded
 #--[ Save Information]--
 
 @export var GameInfoDict: Dictionary = {
+	"SaveVersion": gameSaveVersion,
 	"PeakTotalStatPoints": 0,
 	"CharactersDied": 0,
 	"CharactersSurrendered": 0,
 	"Battles": 0,
 	"Turns": 0,
 	
+	"SpawnBehaviorWeights": placeholderDictionary,
 	"Inventory": [], # Store all itemInfoDicts Here
 	"FriendlyCharactersList": [], # Store all CharacterInfoDicts Here
 	"EnemyCharactersList": [], # Store all CharacterInfoDicts Here
-	"AOEList": [], # Store all AOEInfoDicts Here
-	# ^ Going to replace this with more specific to prevent save errors
+	
+	"AOEList": [], # <- Deprecated, using AOE below.
+	"SupportAOEList": [],
+	"OffensiveAOEList": [],
 }
 
 @export var ItemInfoDict: Dictionary = {
@@ -45,15 +51,16 @@ signal Loaded
 	"AOEFilePath": "Resource.new()",
 	"AOEName": "name",
 	"AOEColor": Color(1, 1, 1, 1),
-	"AOEOwnerCharacterPFP": ImageTexture.new(),
+	"AOEOwnerCharacterPFP": "Resource.new()",
 	"AOEOwnerName": "OwnerName",
 	"AOEDescription": "description",
+	"AOEIsSpriteFlipped": false,
 	"AOEPosition": Vector2(0, 0),
 	"AOEIsDynamicColor": false, 
 	"AOEIsDraggable": false,
 	"AOEStatusActive": false,
 	"AOEIsMelee": false,
-	"AOEAccuracy": 0,
+	"AOEAccuracy": 0.0,
 	"AOEHealthDamage": 0.0,
 	"AOEDefenseDamage": 0.0,
 	"AOEAttackDamage": 0.0,
@@ -67,11 +74,13 @@ signal Loaded
 
 #----[ Saving ]----
 
-func saveAllData() -> void:
+func saveAllData() -> bool:
+	GameInfoDict.SaveVersion = gameSaveVersion
 	var file := FileAccess.open_encrypted_with_pass(filePathForSaveData, FileAccess.WRITE, "Platy1ium")
 	file.store_var(GameInfoDict)
 	file.close()
 	emit_signal("Saved")
+	return true
 
 #----[ Loading ]----
 # Loading may be done by BaseLevel, idk
@@ -83,7 +92,7 @@ func loadAllData() -> void:
 	else:
 		print("Save Data Exists!")
 		GameInfoDict = file.get_var()
-		print(GameInfoDict)
+#		print(GameInfoDict)
 		emit_signal("Loaded")
 
 func loadGeneralInformation() -> void:
@@ -118,8 +127,10 @@ func loadAOE() -> void:
 
 func checkSaveFileExists() -> bool:
 	if FileAccess.file_exists(filePathForSaveData):
+#		print("Does Exist, current Dict: " + str(GameInfoDict))
 		return true
 	else:
+#		print("Doesn't Exist, current Dict: " + str(GameInfoDict))
 		return false
 
 func clearSaveThroughDeletion() -> void:
@@ -130,6 +141,7 @@ func clearSaveThroughDeletion() -> void:
 ## Do Not Use This!
 func clearSaveThroughEmptying() -> void:
 	GameInfoDict = {
+	"SaveVersion": gameSaveVersion,
 	"PeakTotalStatPoints": 0,
 	"CharactersDied": 0,
 	"CharactersSurrendered": 0,
@@ -140,5 +152,27 @@ func clearSaveThroughEmptying() -> void:
 	"FriendlyCharactersList": [], # Store all CharacterInfoDicts Here
 	"EnemyCharactersList": [], # Store all CharacterInfoDicts Here
 	"AOEList": [], # Store all AOEInfoDicts Here
+	"SupportAOEList": [],
+	"OffensiveAOEList": [],
 	}
 	# clears all contents in GameInfoDict, really intended for ingame saving
+
+func checkSaveVersion() -> bool:
+	print("checking the save version")
+#	print("current Dict: " + str(GameInfoDict))
+	if GameInfoDict.find_key("SaveVersion") != "":
+		if GameInfoDict.SaveVersion != gameSaveVersion:
+			push_error("Incompatible Save Version, Current is " + str(SaveSystem.gameSaveVersion) + ", Your Version is " + str(SaveSystem.GameInfoDict.SaveVersion))
+			clearSaveThroughDeletion()
+			clearSaveThroughEmptying()
+			return false
+		else:
+			print("Compatible Save Version, Current is " + str(SaveSystem.gameSaveVersion) + ", Your Version is " + str(SaveSystem.GameInfoDict.SaveVersion))
+			return true
+	else:
+		push_warning("The Key SaveVersion doesn't exist")
+		clearSaveThroughDeletion()
+		clearSaveThroughEmptying()
+		GameInfoDict.SaveVersion = gameSaveVersion
+		print("Save " + str(GameInfoDict))
+		return false

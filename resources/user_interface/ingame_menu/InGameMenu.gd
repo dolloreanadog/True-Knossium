@@ -1,40 +1,70 @@
 extends Control
 class_name IngameMenu
-@onready var dungeon: levelDungeon = get_parent()
-@onready var settingsMenu := dungeon.get_node("SettingsMenu")
+@onready var dungeon: BaseLevel = get_parent()
+
+# Confirmation Window
+enum confirmationType {QUITTODESKTOP, QUITTOMENU, ENDGAME}
+var confirmType: confirmationType
 
 
 func _on_back_to_game_button_pressed() -> void:
-	dungeon.stopControl.hide()
+	if !(dungeon.isCharactersActive) && dungeon.specialWindowContainer.get_child_count() == 0 && dungeon.difficulty.isCharactersSpawningIn != true && dungeon.knossiumConsole.visible == false:
+		dungeon.stopControlVisible(false, 1)
+		dungeon.stopControlVisible(false, 2)
+#	dungeon.stopControl.hide()
 	self.hide()
+#	dungeon.checkSpecialWindowContainer()
 
 
 func _on_settings_button_pressed() -> void:
-	settingsMenu.show()
+	Global.StartLoadingScreen(true)
+	Global.previousScene = get_tree().get_current_scene().scene_file_path
+	await dungeon.saveToSaveSystem()
+	get_tree().change_scene_to_file("res://resources/user_interface/settings_menu/SettingsMenu.tscn")
 
 
 func _on_save_button_pressed() -> void:
-	dungeon.saveToSaveSystem()
+	await dungeon.saveToSaveSystem()
 
-
+# Sometimes friendly characters are not saved?
+# on like the second time you go into menu characters are not saved!
 func _on_go_to_menu_button_pressed() -> void:
-	dungeon.saveToSaveSystem()
-	await SaveSystem.Saved
-#	await get_tree().create_timer(3).timeout
-	get_tree().change_scene_to_file("res://resources/levels/MainMenu.tscn")
+	confirmType = confirmationType.QUITTOMENU
+	$ConfirmationControl.show()
 
 
+# ^ issue as above
 func _on_quit_game_button_pressed() -> void:
-	dungeon.saveToSaveSystem()
-	await SaveSystem.Saved
-#	await get_tree().create_timer(3).timeout
-	get_tree().quit()
+	confirmType = confirmationType.QUITTODESKTOP
+	$ConfirmationControl.show()
+
 
 
 func _on_end_game_button_pressed() -> void:
-	dungeon.get_node("StopControl").show()
-	dungeon.saveToSaveSystem()
-	await SaveSystem.Saved
-#	await get_tree().create_timer(3).timeout
-	dungeon.queue_free()
-	get_tree().change_scene_to_file("res://resources/levels/menu/GameOverMenu/GameOverMenu.tscn")
+	confirmType = confirmationType.ENDGAME
+	$ConfirmationControl.show()
+
+
+
+func ConfirmationYesButtonPressed() -> void:
+	Global.StartLoadingScreen(true)
+	match confirmType:
+		confirmationType.QUITTODESKTOP:
+			await dungeon.saveToSaveSystem()
+			get_tree().quit()
+		confirmationType.QUITTOMENU:
+			await dungeon.saveToSaveSystem()
+			get_tree().change_scene_to_file("res://resources/levels/MainMenu.tscn")
+		confirmationType.ENDGAME:
+			dungeon.stopControlVisible(true, 1)
+#			dungeon.get_node("StopControl").show()
+			await dungeon.saveToSaveSystem()
+			await get_tree().create_timer(2).timeout
+			dungeon.queue_free()
+			get_tree().change_scene_to_file("res://resources/levels/menu/GameOverMenu/GameOverMenu.tscn")
+	
+	$ConfirmationControl.hide()
+
+
+func ConfirmationNoButtonPressed() -> void:
+	$ConfirmationControl.hide()

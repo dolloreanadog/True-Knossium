@@ -1,0 +1,252 @@
+[gd_scene load_steps=4 format=3 uid="uid://cwv7aynovn0t5"]
+
+[ext_resource type="Script" path="res://resources/levels/ingame/shop/ShopLevel.gd" id="1_6062v"]
+[ext_resource type="Texture2D" uid="uid://dm7h3arv4m30g" path="res://assets/art/character_profile_picture/dev/placeholder.png" id="2_v2fy6"]
+[ext_resource type="Script" path="res://resources/entities/inventory_system/InventorySystem.gd" id="3_f4rnc"]
+
+[node name="ShopLevel" type="Node2D" node_paths=PackedStringArray("stopControl", "playerInventory", "playerBarterInventory", "upkeepInventory", "shopInventory", "shopBarterInventory", "upkeepList", "inventoryList", "shopList", "playerBarterList", "shopBarterList", "playerBarterValueLabel", "shopBarterValueLabel", "acceptanceValueLabel", "itemDescriptionLabel", "shopPersonalityLabel", "amountSelectorLabel", "amountSelector", "amountSlider", "amountSpinbox")]
+script = ExtResource("1_6062v")
+stopControl = NodePath("StopControl")
+playerInventory = NodePath("PlayerInventorySystem")
+playerBarterInventory = NodePath("PlayerBarterInventorySystem")
+upkeepInventory = NodePath("UpkeepInventorySytem")
+shopInventory = NodePath("ShopInventorySystem")
+shopBarterInventory = NodePath("ShopBarterInventorySystem")
+upkeepList = NodePath("UpkeepList")
+inventoryList = NodePath("InventoryList")
+shopList = NodePath("ShopList")
+playerBarterList = NodePath("PlayerBarterList")
+shopBarterList = NodePath("ShopBarterList")
+playerBarterValueLabel = NodePath("PlayerBarterValue")
+shopBarterValueLabel = NodePath("ShopBarterValue")
+acceptanceValueLabel = NodePath("AcceptanceValueLabel")
+itemDescriptionLabel = NodePath("ItemDescriptionPanel/ItemDescriptionLabel")
+shopPersonalityLabel = NodePath("ShopPersonalityLabel")
+amountSelectorLabel = NodePath("AmountSelector/AmountSelecterLabel")
+amountSelector = NodePath("AmountSelector")
+amountSlider = NodePath("AmountSelector/AmountSlider")
+amountSpinbox = NodePath("AmountSelector/AmountSpinBox")
+
+[node name="UpkeepList" type="ItemList" parent="."]
+editor_description = "What Items are needed for upkeep"
+offset_left = 16.0
+offset_top = 24.0
+offset_right = 320.0
+offset_bottom = 320.0
+allow_reselect = true
+fixed_icon_size = Vector2i(28, 28)
+
+[node name="InventoryList" type="ItemList" parent="."]
+offset_left = 16.0
+offset_top = 336.0
+offset_right = 320.0
+offset_bottom = 1072.0
+allow_reselect = true
+fixed_icon_size = Vector2i(28, 28)
+
+[node name="ShopList" type="ItemList" parent="."]
+offset_left = 1600.0
+offset_top = 16.0
+offset_right = 1896.0
+offset_bottom = 1072.0
+allow_reselect = true
+fixed_icon_size = Vector2i(28, 28)
+
+[node name="PlayerBarterList" type="ItemList" parent="."]
+offset_left = 336.0
+offset_top = 24.0
+offset_right = 640.0
+offset_bottom = 856.0
+fixed_icon_size = Vector2i(28, 28)
+
+[node name="ShopBarterList" type="ItemList" parent="."]
+offset_left = 1280.0
+offset_top = 16.0
+offset_right = 1584.0
+offset_bottom = 856.0
+fixed_icon_size = Vector2i(28, 28)
+
+[node name="EndShoppingButton" type="Button" parent="."]
+offset_left = 856.0
+offset_top = 16.0
+offset_right = 1064.0
+offset_bottom = 56.0
+text = "End Shopping"
+
+[node name="ConfirmBarterButton" type="Button" parent="."]
+offset_left = 832.0
+offset_top = 784.0
+offset_right = 1088.0
+offset_bottom = 832.0
+text = "Confirm Barter"
+
+[node name="ItemDescriptionPanel" type="Panel" parent="."]
+offset_left = 336.0
+offset_top = 872.0
+offset_right = 1584.0
+offset_bottom = 1072.0
+
+[node name="ItemDescriptionLabel" type="Label" parent="ItemDescriptionPanel"]
+layout_mode = 0
+offset_left = 8.0
+offset_right = 1248.0
+offset_bottom = 192.0
+autowrap_mode = 2
+
+[node name="PlayerBarterValue" type="Label" parent="."]
+offset_left = 704.0
+offset_top = 704.0
+offset_right = 832.0
+offset_bottom = 744.0
+text = "£0
+"
+horizontal_alignment = 1
+
+[node name="ShopBarterValue" type="Label" parent="."]
+offset_left = 1088.0
+offset_top = 704.0
+offset_right = 1216.0
+offset_bottom = 744.0
+text = "£0
+"
+horizontal_alignment = 1
+
+[node name="AcceptanceValueLabel" type="Label" parent="."]
+offset_left = 832.0
+offset_top = 752.0
+offset_right = 1088.0
+offset_bottom = 784.0
+text = "0"
+horizontal_alignment = 1
+
+[node name="ShopPersonalityLabel" type="Label" parent="."]
+offset_left = 800.0
+offset_top = 448.0
+offset_right = 1120.0
+offset_bottom = 474.0
+text = "Personality"
+
+[node name="StopControl" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1920.0
+offset_bottom = 1080.0
+
+[node name="AmountSelector" type="ColorRect" parent="."]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 704.0
+offset_top = 504.0
+offset_right = 1216.0
+offset_bottom = 600.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+color = Color(0.227451, 0.227451, 0.227451, 1)
+
+[node name="AmountSelecterLabel" type="Label" parent="AmountSelector"]
+layout_mode = 0
+offset_right = 512.0
+offset_bottom = 23.0
+text = "Amount"
+horizontal_alignment = 1
+
+[node name="AmountSlider" type="HSlider" parent="AmountSelector"]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 32.0
+offset_right = 400.0
+offset_bottom = 48.0
+
+[node name="AmountSpinBox" type="SpinBox" parent="AmountSelector"]
+layout_mode = 0
+offset_left = 408.0
+offset_top = 24.0
+offset_right = 496.0
+offset_bottom = 55.0
+
+[node name="AmountConfirmButton" type="Button" parent="AmountSelector"]
+layout_mode = 0
+offset_left = 192.0
+offset_top = 56.0
+offset_right = 320.0
+offset_bottom = 87.0
+text = "Confirm"
+
+[node name="ShopTimeLeftTimer" type="Timer" parent="."]
+wait_time = 60.0
+autostart = true
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(960, 540)
+
+[node name="MerchantPFP" type="TextureRect" parent="."]
+offset_left = 800.0
+offset_top = 128.0
+offset_right = 1120.0
+offset_bottom = 448.0
+texture = ExtResource("2_v2fy6")
+expand_mode = 1
+
+[node name="Label3" type="Label" parent="."]
+offset_left = 680.0
+offset_top = 672.0
+offset_right = 856.0
+offset_bottom = 704.0
+text = "Player Barter Value"
+horizontal_alignment = 1
+
+[node name="Label4" type="Label" parent="."]
+offset_left = 872.0
+offset_top = 720.0
+offset_right = 1048.0
+offset_bottom = 752.0
+text = "Acceptance Value"
+horizontal_alignment = 1
+
+[node name="Label5" type="Label" parent="."]
+offset_left = 1064.0
+offset_top = 672.0
+offset_right = 1240.0
+offset_bottom = 704.0
+text = "Merchant Barter Value"
+horizontal_alignment = 1
+
+[node name="TimeLeftLabel" type="Label" parent="."]
+offset_left = 1072.0
+offset_top = 16.0
+offset_right = 1272.0
+offset_bottom = 56.0
+text = "120 seconds"
+vertical_alignment = 1
+
+[node name="PlayerInventorySystem" type="Node" parent="."]
+script = ExtResource("3_f4rnc")
+
+[node name="PlayerBarterInventorySystem" type="Node" parent="."]
+script = ExtResource("3_f4rnc")
+
+[node name="UpkeepInventorySytem" type="Node" parent="."]
+script = ExtResource("3_f4rnc")
+
+[node name="ShopInventorySystem" type="Node" parent="."]
+script = ExtResource("3_f4rnc")
+
+[node name="ShopBarterInventorySystem" type="Node" parent="."]
+script = ExtResource("3_f4rnc")
+
+[connection signal="item_selected" from="UpkeepList" to="." method="UpkeepListItemSelected"]
+[connection signal="item_selected" from="InventoryList" to="." method="InventoryListItemSelected"]
+[connection signal="item_selected" from="ShopList" to="." method="ShopListItemSelected"]
+[connection signal="item_selected" from="PlayerBarterList" to="." method="PlayerBarterListItemSelected"]
+[connection signal="item_selected" from="ShopBarterList" to="." method="ShopBarterListItemSelected"]
+[connection signal="value_changed" from="AmountSelector/AmountSlider" to="." method="OnAmountSliderValueChanged"]
+[connection signal="value_changed" from="AmountSelector/AmountSpinBox" to="." method="OnAmountSpinboxValueChanged"]
+[connection signal="pressed" from="AmountSelector/AmountConfirmButton" to="." method="OnAmountConfirmedButtonPressed"]
+[connection signal="timeout" from="ShopTimeLeftTimer" to="." method="OnShopTimeLeftTimerTimeout"]

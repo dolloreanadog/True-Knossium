@@ -62,6 +62,9 @@ var totalCharactersSurrendered: int
 @export var warningLabel: Label
 @export var SaveWarningLabel: Label
 
+#--[ Other ]--
+var highlightEndTurn: bool
+
 #--[ Surrender Window ]--
 var surrenderWindow = preload("res://resources/entities/surrender_window/surrender_window.tscn")
 var shopWindow = preload("res://resources/entities/shop_confirmation_window/ShopConfirmationWindow.tscn")
@@ -72,30 +75,66 @@ var loadCheck: int
 
 #--[ Signal ]--
 signal AOEQueueFinished
-signal SaveChecked
+
+# Save Signals
+signal SaveFinished
+signal SavedFriendlyCharacters
+signal SavedEnemyCharacters
+signal SavedItems
+signal SavedAOE
+
+
+# Load Signals
+signal LoadFinished
+signal LoadCharacters
+signal LoadItems
+signal LoadAOE
+
 
 #--[ Functions ]--
 func _ready():
+	var confirmed: bool
 	print("is stopControl Visible: " + str(stopControl.visible))
 	print("is stopControl2 Visible: " + str(stopControl2.visible))
 	Global.StartLoadingScreen(false)
 	stopControlVisible(true, 1)
 	if SaveSystem.checkSaveFileExists():
 		loadSave()
+		confirmed = await loadConfirmation()
 	else:
 		system.newTurn()
 		system.newBattle()
 		
 		addNewGameCharacters()
 		addNewGameItems()
+		confirmed = true
+		EndTurnButtonHighlight(true)
 	
-	
-	await get_tree().create_timer(1.5).timeout
-	updateValueOfStatusBar()
-	Global.EndLoadingScreen()
-	stopControlVisible(false, 1)
-	checkSpecialWindowContainer()
-	SaveWarningLabel.hide()
+#	await loadConfirmation()
+	if confirmed:
+		updateValueOfStatusBar()
+		Global.EndLoadingScreen()
+		stopControlVisible(false, 1)
+		checkSpecialWindowContainer()
+		friendlyPartyContainer.onAllCharactersDead()
+		SaveWarningLabel.hide()
+
+func saveConfirmation() -> bool:
+	await SaveFinished
+	return true
+
+func loadConfirmation() -> bool:
+	await LoadFinished
+	return true
+
+func EndTurnButtonHighlight(boolean: bool) -> void:
+	highlightEndTurn = boolean
+	while highlightEndTurn:
+		await create_tween().tween_property(endTurnButton, "modulate", Color(1, 0, 0), 1).finished
+		await create_tween().tween_property(endTurnButton, "modulate", Color(1, 1, 1), 1).finished
+		await get_tree().create_timer(2).timeout
+	await create_tween().tween_property(endTurnButton, "modulate", Color(1, 1, 1), 1).finished
+
 
 # When user exits unintentionally
 func _notification(what: int) -> void:
@@ -186,12 +225,14 @@ func loadSave() -> bool:
 	difficulty.SpawnBehaviors = SaveSystem.GameInfoDict.SpawnBehaviorWeights
 	print("Loaded Spawn Behavior Weights: " + str(difficulty.SpawnBehaviors))
 	
-	call_deferred("loadCharacters")
+	loadCharacters()
+	loadAOE()
+#	call_deferred("loadCharacters")
 	if Global.newGameInventoryInfo.is_empty():
 		call_deferred("loadItems")
 	else:
 		addNewGameItems()
-	call_deferred("loadAOE")
+#	call_deferred("loadAOE")
 #	print("GameInfoDict PeakTotalStatPoints: " + str(SaveSystem.GameInfoDict.PeakTotalStatPoints))
 #	await get_tree().create_timer(0.05).timeout
 #	print("GameInfoDict CharactersDied: " + str(SaveSystem.GameInfoDict.CharactersDied))
@@ -202,8 +243,8 @@ func loadSave() -> bool:
 #	await get_tree().create_timer(0.05).timeout
 #	print("GameInfoDict Turns: " + str(SaveSystem.GameInfoDict.Turns))
 #	await get_tree().create_timer(0.05).timeout
-#	print("GameInfoDict FriendlyCharactersList: " + str(SaveSystem.GameInfoDict.FriendlyCharactersList))
-#	await get_tree().create_timer(0.05).timeout
+	print("GameInfoDict FriendlyCharactersList: " + str(SaveSystem.GameInfoDict.FriendlyCharactersList))
+	await get_tree().create_timer(0.05).timeout
 #	print("GameInfoDict EnemyCharactersList: " + str(SaveSystem.GameInfoDict.EnemyCharactersList))
 #	await get_tree().create_timer(0.05).timeout
 #	print("GameInfoDict Inventory: " + str(SaveSystem.GameInfoDict.Inventory))
@@ -213,6 +254,7 @@ func loadSave() -> bool:
 	friendlyPartyContainer.getCharactersInfo()
 	turnsLabel.set_text("Turns: " + str(system.turn))
 	getBattle()
+	emit_signal("LoadFinished")
 	return true
 
 func loadCharacters() -> void:
@@ -268,7 +310,7 @@ func loadCharacters() -> void:
 	setIsCharactersActive(false)
 	friendlyPartyContainer.getCharactersInfo()
 	enemyPartyContainer.getCharactersInfo()
-	updateUpkeepList()
+	partyUI.updateUpkeepList()
 
 func loadItems() -> void:
 	var savedInventory: Array = SaveSystem.GameInfoDict.Inventory
@@ -350,7 +392,7 @@ func loadAOE() -> void:
 
 #-- Save
 
-func saveToSaveSystem() -> bool:
+func saveToSaveSystem() -> void:
 	SaveWarningLabel.show()
 	SaveSystem.clearSaveThroughEmptying()
 	SaveSystem.clearSaveThroughDeletion()
@@ -383,13 +425,23 @@ func saveToSaveSystem() -> bool:
 		Global.progressionDict.BattlesWon = system.battle
 	
 	saveFriendlyCharacters()
+	await SavedFriendlyCharacters
+	print("Saved Friendly Characters Passed")
 	saveEnemyCharacters()
+	await SavedEnemyCharacters
+	print("Saved Enemy Characters Passed")
 	saveItems()
+	await SavedItems
+	print("Saved Items Passed")
 	saveAOE()
+	await SavedAOE
+	print("Saved AOE Passed")
 	Global.call_deferred("saveAllData")
+	await Global.Saved
+	print("Saved Global Data Passed")
 	SaveSystem.call_deferred("saveAllData")
-	@warning_ignore("redundant_await")
-	var gameSaveConfirmed = await SaveSystem.saveAllData()
+	await SaveSystem.Saved
+	print("Saved All Game Data Passed")
 #	print("GameInfoDict PeakTotalStatPoints: " + str(SaveSystem.GameInfoDict.PeakTotalStatPoints))
 #	await get_tree().create_timer(0.05).timeout
 #	print("GameInfoDict CharactersDied: " + str(SaveSystem.GameInfoDict.CharactersDied))
@@ -400,16 +452,15 @@ func saveToSaveSystem() -> bool:
 #	await get_tree().create_timer(0.05).timeout
 #	print("GameInfoDict Turns: " + str(SaveSystem.GameInfoDict.Turns))
 #	await get_tree().create_timer(0.05).timeout
-#	print("GameInfoDict FriendlyCharactersList: " + str(SaveSystem.GameInfoDict.FriendlyCharactersList))
-#	await get_tree().create_timer(0.05).timeout
+	print("GameInfoDict FriendlyCharactersList: " + str(SaveSystem.GameInfoDict.FriendlyCharactersList))
+	await get_tree().create_timer(0.05).timeout
 #	print("GameInfoDict EnemyCharactersList: " + str(SaveSystem.GameInfoDict.EnemyCharactersList))
 	await get_tree().create_timer(0.05).timeout
 	print("GameInfoDict Inventory: " + str(SaveSystem.GameInfoDict.Inventory))
 	await get_tree().create_timer(0.05).timeout
 	print("Saved GameInfoDict SupportAOEList: " + str(SaveSystem.GameInfoDict.SupportAOEList))
-	if gameSaveConfirmed:
-		SaveWarningLabel.hide()
-	return true
+	SaveWarningLabel.hide()
+	emit_signal("SaveFinished")
 
 func saveFriendlyCharacters() -> void:
 	friendlyPartyContainer.getCharactersInfo()
@@ -435,6 +486,8 @@ func saveFriendlyCharacters() -> void:
 			newSavedCharacterData.CharacterCurrentMorale = friendlyPartyContainer.characters[i].stats.currentMorale
 			SaveSystem.GameInfoDict.FriendlyCharactersList.push_back(newSavedCharacterData)
 			await get_tree().create_timer(0.001).timeout
+	
+	SavedFriendlyCharacters.emit()
 
 func saveEnemyCharacters() -> void:
 	enemyPartyContainer.getCharactersInfo()
@@ -460,6 +513,8 @@ func saveEnemyCharacters() -> void:
 			newSavedCharacterData.CharacterCurrentMorale = enemyPartyContainer.characters[i].stats.currentMorale
 			SaveSystem.GameInfoDict.EnemyCharactersList.push_back(newSavedCharacterData)
 			await get_tree().create_timer(0.001).timeout
+			
+	SavedEnemyCharacters.emit()
 
 func saveItems() -> void:
 	for i in inventory.storedItems.size():
@@ -468,6 +523,7 @@ func saveItems() -> void:
 		newSavedItemData.ItemAmount = inventory.storedItems[i].amount
 		SaveSystem.GameInfoDict.Inventory.push_back(newSavedItemData)
 		await get_tree().create_timer(0.001).timeout
+	SavedItems.emit()
 
 func saveAOE() -> void:
 	var allSupportAOEList: Array = friendlyAOESupport.get_children() + enemySupportAOE.get_children()
@@ -524,7 +580,8 @@ func saveAOE() -> void:
 		newSavedAOEData.AOEExperienceGain = allOffensiveAOEList[i].experience
 		SaveSystem.GameInfoDict.OffensiveAOEList.push_back(newSavedAOEData)
 		await get_tree().create_timer(0.001).timeout
-		
+	
+	SavedAOE.emit()
 
 func setDisabledAllAOE(boolean: bool) -> void:
 	for i in grabAllAOE().size():
@@ -555,7 +612,6 @@ func goThroughQueuedAOEArray() -> void:
 				targetAOE.InTurn()
 				
 	while friendlyAOEAttack.get_child_count() != 0 && enemyAttackAOE.get_child_count() != 0 && friendlyAOESupport.get_child_count() != 0 && enemySupportAOE.get_child_count() != 0:
-#friendlyAOEAttack.get_children() + enemyAttackAOE.get_children() + friendlyAOESupport.get_children() + enemySupportAOE.get_children()
 		print("AOE has no finished yet!")
 		await get_tree().create_timer(0.1).timeout
 	# Spawn Our Friendly AOE Here
@@ -565,21 +621,24 @@ func goThroughQueuedAOEArray() -> void:
 	updateValueOfStatusBar()
 	await get_tree().create_timer(1).timeout
 	setIsCharactersActive(false)
+	
+	saveToSaveSystem()
 	stopControlVisible(true, 1)
-#	stopControl.visible = true
-	var isSavingDone: bool = await saveToSaveSystem()
-	if isSavingDone:
-		stopControlVisible(false, 1)
-#		stopControl.visible = false
-		musicPlayer.updateDangerLevel()
+	var confirm: bool = await saveConfirmation()
+	
+	musicPlayer.updateDangerLevel()
+	
+	if confirm:
 		if system.battle >= 2:
 			if randi_range(0, 10) == 0:
 				stopControlVisible(true, 1)
-#				stopControl.visible = true
 				await get_tree().create_timer(0.5).timeout
 				GotoShop()
-	
-	updateUpkeepList()
+			else:
+				checkSpecialWindowContainer()
+		else:
+			checkSpecialWindowContainer()
+		stopControlVisible(false, 1)
 
 func grabAllAOE() -> Array:
 	var AOEGrabbed: Array = friendlyAOEAttack.get_children() + enemyAttackAOE.get_children() + friendlyAOESupport.get_children() + enemySupportAOE.get_children()

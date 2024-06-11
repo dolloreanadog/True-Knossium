@@ -45,6 +45,7 @@ func _on_button_no_pressed() -> void:
 	character.stats.setCurrentHealth(-1)
 	if dungeon.specialWindowContainer.get_child_count() != 0:
 		dungeon.stopControlVisible(false, 2)
+		dungeon.friendlyPartyContainer.onAllCharactersDead()
 #	dungeon.stopControl2.hide()
 #	remove_child(self)
 #	dungeon.call_deferred("checkSpecialWindowContainer")

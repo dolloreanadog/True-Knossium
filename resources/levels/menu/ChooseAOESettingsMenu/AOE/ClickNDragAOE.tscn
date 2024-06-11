@@ -37,6 +37,14 @@ scale = Vector2(1, 1.125)
 sprite_frames = ExtResource("3_3plke")
 animation = &"inactive"
 
+[node name="Label" type="Label" parent="."]
+offset_left = -88.0
+offset_top = -104.0
+offset_right = 88.0
+offset_bottom = -78.0
+text = "Click & Drag AOE"
+horizontal_alignment = 1
+
 [connection signal="button_down" from="Button" to="." method="_on_button_button_down"]
 [connection signal="button_up" from="Button" to="." method="_on_button_button_up"]
 [connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

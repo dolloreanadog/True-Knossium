@@ -78,6 +78,8 @@ func _on_clear_global_progression_pressed() -> void:
 
 
 func _on_clear_progression_yes_pressed() -> void:
+	SaveSystem.clearSaveThroughDeletion()
+	$VBoxContainer/ContinueButton.disabled = true
 	Global.clearProgressThroughDeletion()
 	Global.clearProgressionDict()
 	$Control2.hide()

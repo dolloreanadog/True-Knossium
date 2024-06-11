@@ -19,12 +19,14 @@ func _on_back_to_game_button_pressed() -> void:
 func _on_settings_button_pressed() -> void:
 	Global.StartLoadingScreen(true)
 	Global.previousScene = get_tree().get_current_scene().scene_file_path
-	await dungeon.saveToSaveSystem()
-	get_tree().change_scene_to_file("res://resources/user_interface/settings_menu/SettingsMenu.tscn")
+	dungeon.saveToSaveSystem()
+	var confirm: bool = await dungeon.saveConfirmation()
+	if confirm:
+		get_tree().change_scene_to_file("res://resources/user_interface/settings_menu/SettingsMenu.tscn")
 
 
 func _on_save_button_pressed() -> void:
-	await dungeon.saveToSaveSystem()
+	dungeon.saveToSaveSystem()
 
 # Sometimes friendly characters are not saved?
 # on like the second time you go into menu characters are not saved!
@@ -48,20 +50,18 @@ func _on_end_game_button_pressed() -> void:
 
 func ConfirmationYesButtonPressed() -> void:
 	Global.StartLoadingScreen(true)
-	match confirmType:
-		confirmationType.QUITTODESKTOP:
-			await dungeon.saveToSaveSystem()
-			get_tree().quit()
-		confirmationType.QUITTOMENU:
-			await dungeon.saveToSaveSystem()
-			get_tree().change_scene_to_file("res://resources/levels/MainMenu.tscn")
-		confirmationType.ENDGAME:
-			dungeon.stopControlVisible(true, 1)
-#			dungeon.get_node("StopControl").show()
-			await dungeon.saveToSaveSystem()
-			await get_tree().create_timer(2).timeout
-			dungeon.queue_free()
-			get_tree().change_scene_to_file("res://resources/levels/menu/GameOverMenu/GameOverMenu.tscn")
+	dungeon.saveToSaveSystem()
+	var confirm: bool = await dungeon.saveConfirmation()
+	if confirm:
+		match confirmType:
+			confirmationType.QUITTODESKTOP:
+				get_tree().quit()
+			confirmationType.QUITTOMENU:
+				get_tree().change_scene_to_file("res://resources/levels/MainMenu.tscn")
+			confirmationType.ENDGAME:
+				dungeon.stopControlVisible(true, 1)
+				dungeon.queue_free()
+				get_tree().change_scene_to_file("res://resources/levels/menu/GameOverMenu/GameOverMenu.tscn")
 	
 	$ConfirmationControl.hide()
 

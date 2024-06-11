@@ -160,12 +160,12 @@ func addCharacter(character: BaseCharacter, startingExperience: float, giveDiffi
 func onAllCharactersDead():
 #	print(str(self) + ": Checking if characters are dead")
 #	print(str(self) + ": Checking if characters are dead List: " + str(characters))
-	if charactersAmount <= 0:
+	if charactersAmount <= 0 && dungeon.specialWindowContainer.get_child_count() == 0:
 		print(str(self) + ": All Characters Died")
 		if isFriendly:
-			dungeon.get_node("StopControl").show()
+			dungeon.stopControlVisible(true, 1)
 			dungeon.saveToSaveSystem()
-			await SaveSystem.Saved
+			await dungeon.SaveFinished
 			await get_tree().create_timer(2).timeout
 			Global.StartLoadingScreen(false)
 			dungeon.queue_free()

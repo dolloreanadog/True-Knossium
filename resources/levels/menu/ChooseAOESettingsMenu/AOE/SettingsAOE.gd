@@ -1,8 +1,11 @@
 extends BaseAOE
+class_name SettingsAOE
 #SettingsAOEMovement
 # False = Click & Click
 # True = Click & Drag
 @export var AOEMovement: bool = false
+
+signal placed
 
 func _process(_delta):
 	if draggable:

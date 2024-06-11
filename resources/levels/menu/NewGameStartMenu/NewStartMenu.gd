@@ -50,6 +50,7 @@ var finalCharacterListArray: Array
 @onready var characterNameLabel: Label = get_node("Panel/CharacterNameLabel")
 @onready var upkeepLabel: Label = get_node("Panel/UpkeepLabel")
 
+
 #---[ File Loading ]---
 var filedCharactersArray: Array
 var loadedCharactersArray: Array
@@ -84,7 +85,7 @@ func _ready() -> void:
 	CheckIfForCharacters()
 	characterNameLabel.text = "nobody"
 	upkeepLabel.text = "Upkeep: " + "0" + " x" + "0"
-	maxValue = (Global.getBattlesWon() * 50) + 100
+	maxValue = (Global.getBattlesWon() * 25) + 150
 	maxValueLabel.text = str(maxValue)
 	currentValueLabel.text = str(currentValue)
 	
@@ -343,7 +344,6 @@ func CharacterAmountSelectorConfirmButtonPressed() -> void:
 	for i in characterAmountSlider.value:
 		finalCharacterListArray.push_back(selectorCharacter)
 		UpdateCharacterFinalListVisual()
-	
 	
 	characterAmountSlider.value = 0
 	selectorCurrentValue = 0

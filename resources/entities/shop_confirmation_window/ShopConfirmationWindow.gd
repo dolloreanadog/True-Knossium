@@ -5,8 +5,10 @@ class_name ShopConfirmationWindow
 
 func YesButtonPressed() -> void:
 	Global.StartLoadingScreen(true)
-	await dungeon.saveToSaveSystem()
-	get_tree().change_scene_to_file("res://resources/levels/ingame/shop/ShopLevel.tscn")
+	dungeon.saveToSaveSystem()
+	var confirm: bool = await dungeon.saveConfirmation()
+	if confirm:
+		get_tree().change_scene_to_file("res://resources/levels/ingame/shop/ShopLevel.tscn")
 
 func NoButtonPressed() -> void:
 	if dungeon.specialWindowContainer.get_child_count() != 0:

@@ -30,6 +30,7 @@ func newTurn():
 func newBattle():
 	battle += 1
 	dungeon.difficulty.onBattleNew()
+	dungeon.EndTurnButtonHighlight(true)
 	print(str(self) + ": battles = " + str(battle))
 	
 	emit_signal("OnNewBattle")

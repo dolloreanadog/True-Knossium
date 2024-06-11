@@ -139,29 +139,36 @@ func updateCharacterList() -> void:
 
 func updateUpkeepList() -> void:
 	print("Updating Upkeep List")
-	upkeepListArray.clear()
+#	upkeepListArray.clear()
+#	upkeepList.clear()
+	
 	upkeepList.clear()
-		
-	for i in partyContainer.characters.size():
-		var Litem: BaseInventoryItem = partyContainer.characters[i].ResourceNeeded.duplicate(true)
-		Litem.amount = partyContainer.characters[i].ResourceNeededNumber
-		
-		if upkeepListArray.size() != 0:
-			for index in upkeepListArray.size():
-				print("does exist")
-				if upkeepListArray[index].itemName == Litem.itemName:
-					print("Old Amount: " + str(upkeepListArray[index].amount))
-					upkeepListArray[index].amount += Litem.amount
-					print("New Amount: " + str(upkeepListArray[index].amount))
-					break
-				else:
-					print("doesn't exist yet")
-					Litem.amount = Litem.amount
-					upkeepListArray.push_back(Litem)
-		else:
-			print("count is 0")
-			Litem.amount = Litem.amount
-			upkeepListArray.push_back(Litem)
+	for i in dungeon.upkeepInventory.storedItems.size():
+		var Litem: BaseInventoryItem = dungeon.upkeepInventory.storedItems[i]
+		upkeepList.add_item(Litem.itemName + "  x" + str(Litem.amount), Litem.image)
+		upkeepList.set_item_tooltip(i, Litem.itemDesciption)
+	dungeon.updateUpkeepList()
+#	for i in partyContainer.characters.size():
+#		var Litem: BaseInventoryItem = partyContainer.characters[i].ResourceNeeded.duplicate(true)
+#		Litem.amount = partyContainer.characters[i].ResourceNeededNumber
+#
+#		if upkeepListArray.size() != 0:
+#			for index in upkeepListArray.size():
+#				print("does exist")
+#				if upkeepListArray[index].itemName == Litem.itemName:
+#					print("Old Amount: " + str(upkeepListArray[index].amount))
+#					upkeepListArray[index].amount += Litem.amount
+#					print("New Amount: " + str(upkeepListArray[index].amount))
+#					break
+#				else:
+#					print("doesn't exist yet")
+#					Litem.amount = Litem.amount
+#					upkeepListArray.push_back(Litem)
+#		else:
+#			print("count is 0")
+#			Litem.amount = Litem.amount
+#			upkeepListArray.push_back(Litem)
+	
 
 #	print("Upkeep List " + str(upkeepListArray))
 

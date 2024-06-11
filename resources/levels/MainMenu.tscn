@@ -147,15 +147,6 @@ offset_right = 40.0
 offset_bottom = 23.0
 text = "Early Version Expect Some Stuff to be Missing or Broken"
 
-[node name="Label2" type="Label" parent="."]
-offset_left = 1224.0
-offset_top = 104.0
-offset_right = 1592.0
-offset_bottom = 136.0
-text = "Works! (Some Minor Issues Though) -->"
-horizontal_alignment = 2
-vertical_alignment = 1
-
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("3_ro8dp")
 bus = &"Music"

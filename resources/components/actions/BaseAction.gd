@@ -46,8 +46,8 @@ var CurrentMorale: float
 
 func _ready() -> void:
 	# All things we'll automatically get
-	if get_parent().get_parent().get_parent().get_parent() != null:
-		dungeon = get_parent().get_parent().get_parent().get_parent()
+	if get_tree().get_current_scene() is BaseLevel:
+		dungeon = get_tree().get_current_scene()
 		
 		if dungeon.friendlyAOEAttack != null:
 			spawnAreaAttack = dungeon.friendlyAOEAttack

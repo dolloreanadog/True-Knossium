@@ -21,7 +21,7 @@ var inputsLoaded: bool = false
 var SettingsDict: Dictionary = {
 	"SettingsAOEMovement": false,
 	"SettingsTranslation": language.ENGLISH,
-	"SettingsScreenSize": screenSize.L,
+	"SettingsScreenSize": screenSize.AUTOMATIC,
 	"SettingsScreenDisplay": 0,
 	"SettingsWindowedMode": windowMode.FULLSCREEN,
 	"SettingsMasterVolume": 1.0,
@@ -110,8 +110,8 @@ func CenterWindow() -> void:
 func resetSettings() -> void:
 	setAOEMovement(true)
 	setTranslation(language.ENGLISH)
-	setScreenSize(screenSize.T)
-	setWindowedMode(windowMode.WINDOWED)
+	setScreenSize(screenSize.AUTOMATIC)
+	setWindowedMode(windowMode.FULLSCREEN)
 	setMasterVolume(1)
 	setMusicVolume(0.25)
 	setCharacterVolume(1)

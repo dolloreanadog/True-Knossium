@@ -1,4 +1,4 @@
-[gd_scene load_steps=47 format=3 uid="uid://ubqjl7xo4jo1"]
+[gd_scene load_steps=62 format=3 uid="uid://ubqjl7xo4jo1"]
 
 [ext_resource type="Script" path="res://resources/levels/ingame/tutorial_levels/CombatTutorialDungeon.gd" id="1_mmmgc"]
 [ext_resource type="Script" path="res://resources/entities/AreaAOEDenial/BaseAreaAOEDenial.gd" id="2_57bap"]
@@ -26,6 +26,15 @@
 [ext_resource type="PackedScene" uid="uid://ci3j4o0qfk5qa" path="res://resources/user_interface/inventory_menu/inventoryMenu.tscn" id="24_f1ghq"]
 [ext_resource type="PackedScene" uid="uid://cmupnt3ig0bql" path="res://resources/user_interface/party_menu/PartyMenu.tscn" id="25_wjsot"]
 [ext_resource type="PackedScene" uid="uid://b8c08cwk8od7q" path="res://resources/user_interface/ingame_menu/InGameMenu.tscn" id="26_g6rwu"]
+[ext_resource type="Script" path="res://resources/levels/ingame/tutorial_levels/scripts/Intro.gd" id="27_ix8v6"]
+[ext_resource type="Script" path="res://resources/levels/ingame/tutorial_levels/scripts/Inventory.gd" id="28_82f8d"]
+[ext_resource type="Script" path="res://resources/levels/ingame/tutorial_levels/scripts/Party.gd" id="29_yrv01"]
+[ext_resource type="Script" path="res://resources/levels/ingame/tutorial_levels/scripts/Upkeep.gd" id="30_0p60b"]
+[ext_resource type="Script" path="res://resources/levels/ingame/tutorial_levels/scripts/EndTurn.gd" id="31_3uy3x"]
+[ext_resource type="Script" path="res://resources/levels/ingame/tutorial_levels/scripts/Dragging.gd" id="32_rlxah"]
+[ext_resource type="Script" path="res://resources/levels/ingame/tutorial_levels/AOEVisibility.gd" id="33_jmpi4"]
+[ext_resource type="Script" path="res://resources/levels/ingame/tutorial_levels/scripts/CharacterStatVisibility.gd" id="34_h57n0"]
+[ext_resource type="Script" path="res://resources/levels/ingame/tutorial_levels/scripts/Surrender.gd" id="35_pj01h"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_q1uww"]
 size = Vector2(1920, 1152)
@@ -69,12 +78,6 @@ action = &"EndTurn"
 [sub_resource type="Shortcut" id="Shortcut_h1j2k"]
 events = [SubResource("InputEventAction_fr3qc")]
 
-[sub_resource type="InputEventAction" id="InputEventAction_q2xk3"]
-action = &"OpenConsole"
-
-[sub_resource type="Shortcut" id="Shortcut_3cdmy"]
-events = [SubResource("InputEventAction_q2xk3")]
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ohrkm"]
 size = Vector2(320, 640)
 
@@ -86,6 +89,30 @@ size = Vector2(320, 640)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4dgf2"]
 size = Vector2(320, 640)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3b3ot"]
+bg_color = Color(1, 0.176471, 0, 0.537255)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ibsa3"]
+bg_color = Color(1, 0.176471, 0, 0.537255)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_suyc7"]
+bg_color = Color(1, 0.176471, 0, 0.537255)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_avjsi"]
+size = Vector2(433, 96)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_o7ci7"]
+bg_color = Color(1, 0.176471, 0, 0.537255)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nug06"]
+bg_color = Color(1, 0.176471, 0, 0.537255)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dpxn1"]
+bg_color = Color(1, 0.176471, 0, 0.537255)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5arox"]
+bg_color = Color(1, 0.176471, 0, 0.537255)
 
 [node name="Dungeon" type="Node2D" node_paths=PackedStringArray("turnsLabel", "battlesLabel", "friendlyPartyContainer", "enemyPartyContainer", "battleStatusBar", "stopControl", "stopControl2", "musicPlayer", "statButtonGroup", "specialWindowContainer", "knossiumConsole", "endTurnButton", "showMenuButton", "autoPlaceButton", "inventoryButton", "partyButton", "friendlyAOEAttack", "friendlyAOESupport", "enemyAttackAOE", "enemySupportAOE", "warningLabel", "SaveWarningLabel")]
 script = ExtResource("1_mmmgc")
@@ -306,7 +333,6 @@ layout_mode = 0
 offset_top = -128.0
 offset_right = 128.0
 offset_bottom = -64.0
-shortcut = SubResource("Shortcut_3cdmy")
 text = "Open Console"
 
 [node name="AOEInfoBox" parent="." instance=ExtResource("9_ffpdq")]
@@ -625,13 +651,890 @@ offset_bottom = 40.0
 [node name="Console" parent="." instance=ExtResource("18_wi3a0")]
 visible = false
 
+[node name="TutorialContainer" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Intro" type="Control" parent="TutorialContainer"]
+visible = false
+anchors_preset = 0
+offset_right = 1928.0
+offset_bottom = 1088.0
+script = ExtResource("27_ix8v6")
+
+[node name="Part1" type="Control" parent="TutorialContainer/Intro"]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="ColorRect" type="ColorRect" parent="TutorialContainer/Intro/Part1"]
+layout_mode = 0
+offset_right = 1928.0
+offset_bottom = 1088.0
+color = Color(0, 0, 0, 0.737255)
+
+[node name="Label" type="Label" parent="TutorialContainer/Intro/Part1"]
+layout_mode = 0
+offset_left = 640.0
+offset_top = 192.0
+offset_right = 1280.0
+offset_bottom = 832.0
+text = "Welcome to Knossium (not final)
+
+In 15 sections of this course, you'll have basic understanding of Knossium & maybe even venture even deeper than most. As it is pretty ruthless to those that command these parties. Many will die & defect, but it can happen the same way to them. Take advantage & go far, don't grow affection to your characters."
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="Button" type="Button" parent="TutorialContainer/Intro/Part1"]
+layout_mode = 0
+offset_left = 832.0
+offset_top = 640.0
+offset_right = 1088.0
+offset_bottom = 671.0
+theme_override_styles/normal = SubResource("StyleBoxFlat_3b3ot")
+text = "Press this to continue..."
+
+[node name="Part2" type="Control" parent="TutorialContainer/Intro"]
+visible = false
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="ColorRect" type="ColorRect" parent="TutorialContainer/Intro/Part2"]
+layout_mode = 0
+offset_top = 832.0
+offset_right = 1928.0
+offset_bottom = 1088.0
+color = Color(0, 0, 0, 0.737255)
+
+[node name="ColorRect2" type="ColorRect" parent="TutorialContainer/Intro/Part2"]
+layout_mode = 0
+offset_right = 1928.0
+offset_bottom = 232.0
+color = Color(0, 0, 0, 0.737255)
+
+[node name="ColorRect3" type="ColorRect" parent="TutorialContainer/Intro/Part2"]
+layout_mode = 0
+offset_left = 896.0
+offset_top = 232.0
+offset_right = 1024.0
+offset_bottom = 832.0
+color = Color(0, 0, 0, 0.737255)
+
+[node name="Label" type="Label" parent="TutorialContainer/Intro/Part2"]
+layout_mode = 0
+offset_left = -8.0
+offset_top = 144.0
+offset_right = 896.0
+offset_bottom = 192.0
+theme_override_font_sizes/font_size = 25
+text = "This side contains all our friendly characters!"
+horizontal_alignment = 1
+vertical_alignment = 2
+
+[node name="Label2" type="Label" parent="TutorialContainer/Intro/Part2"]
+layout_mode = 0
+offset_left = 1024.0
+offset_top = 144.0
+offset_right = 1928.0
+offset_bottom = 192.0
+theme_override_font_sizes/font_size = 25
+text = "This side contains all our enemy characters!"
+horizontal_alignment = 1
+vertical_alignment = 2
+
+[node name="Button" type="Button" parent="TutorialContainer/Intro/Part2"]
+layout_mode = 0
+offset_left = 832.0
+offset_top = 192.0
+offset_right = 1088.0
+offset_bottom = 223.0
+theme_override_styles/normal = SubResource("StyleBoxFlat_ibsa3")
+text = "Press this to continue..."
+
+[node name="Inventory" type="Control" parent="TutorialContainer"]
+visible = false
+anchors_preset = 0
+offset_right = 120.0
+offset_bottom = 120.0
+script = ExtResource("28_82f8d")
+
+[node name="Part1" type="Control" parent="TutorialContainer/Inventory"]
+visible = false
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="ColorRect" type="ColorRect" parent="TutorialContainer/Inventory/Part1"]
+layout_mode = 0
+offset_top = 152.0
+offset_right = 1592.0
+offset_bottom = 1088.0
+color = Color(0, 0, 0, 0.737255)
+
+[node name="ColorRect2" type="ColorRect" parent="TutorialContainer/Inventory/Part1"]
+layout_mode = 0
+offset_left = 1736.0
+offset_top = -8.0
+offset_right = 1928.0
+offset_bottom = 152.0
+color = Color(0, 0, 0, 0.737255)
+
+[node name="ColorRect5" type="ColorRect" parent="TutorialContainer/Inventory/Part1"]
+layout_mode = 0
+offset_left = 1592.0
+offset_top = -8.0
+offset_right = 1736.0
+offset_bottom = 104.0
+color = Color(0, 0, 0, 0.737255)
+
+[node name="ColorRect3" type="ColorRect" parent="TutorialContainer/Inventory/Part1"]
+layout_mode = 0
+offset_top = -8.0
+offset_right = 1592.0
+offset_bottom = 152.0
+color = Color(0, 0, 0, 0.737255)
+
+[node name="ColorRect4" type="ColorRect" parent="TutorialContainer/Inventory/Part1"]
+layout_mode = 0
+offset_left = 1592.0
+offset_top = 152.0
+offset_right = 1928.0
+offset_bottom = 1088.0
+color = Color(0, 0, 0, 0.737255)
+
+[node name="Label" type="Label" parent="TutorialContainer/Inventory/Part1"]
+layout_mode = 0
+offset_left = 1488.0
+offset_top = 160.0
+offset_right = 1840.0
+offset_bottom = 186.0
+text = "Click this button to open the Inventory Menu
+
+Press it to continue..."
+horizontal_alignment = 1
+
+[node name="Part2" type="Control" parent="TutorialContainer/Inventory"]
+visible = false
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="ColorRect" type="ColorRect" parent="TutorialContainer/Inventory/Part2"]
+layout_mode = 0
+offset_top = -8.0
+offset_right = 528.0
+offset_bottom = 1088.0
+color = Color(0, 0, 0, 0.737255)
+
+[node name="ColorRect2" type="ColorRect" parent="TutorialContainer/Inventory/Part2"]
+layout_mode = 0
+offset_left = 528.0
+offset_top = 840.0
+offset_right = 1392.0
+offset_bottom = 1088.0
+color = Color(0, 0, 0, 0.737255)
+
+[node name="ColorRect3" type="ColorRect" parent="TutorialContainer/Inventory/Part2"]
+layout_mode = 0
+offset_left = 528.0
+offset_top = -8.0
+offset_right = 1392.0
+offset_bottom = 248.0
+color = Color(0, 0, 0, 0.737255)
+
+[node name="ColorRect4" type="ColorRect" parent="TutorialContainer/Inventory/Part2"]
+layout_mode = 0
+offset_left = 1392.0
+offset_top = -8.0
+offset_right = 1928.0
+offset_bottom = 1088.0
+color = Color(0, 0, 0, 0.737255)
+
+[node name="Label" type="Label" parent="TutorialContainer/Inventory/Part2"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 256.0
+offset_right = 525.0
+offset_bottom = 320.0
+text = "This is a list containing all our items.
+Can click on them to see more information & possibly use them. -->"
+
+[node name="Label2" type="Label" parent="TutorialContainer/Inventory/Part2"]
+layout_mode = 0
+offset_left = 1400.0
+offset_top = 344.0
+offset_right = 1752.0
+offset_bottom = 370.0
+text = "<-- Our Name, amount, & value each item."
+
+[node name="Label3" type="Label" parent="TutorialContainer/Inventory/Part2"]
+layout_mode = 0
+offset_left = 1400.0
+offset_top = 432.0
+offset_right = 1766.0
+offset_bottom = 458.0
+text = "<-- Our two button where you can use the item."
+
+[node name="Label4" type="Label" parent="TutorialContainer/Inventory/Part2"]
+layout_mode = 0
+offset_left = 1400.0
+offset_top = 656.0
+offset_right = 1766.0
+offset_bottom = 682.0
+text = "<-- The description of the item"
+
+[node name="Label5" type="Label" parent="TutorialContainer/Inventory/Part2"]
+layout_mode = 0
+offset_left = 1400.0
+offset_top = 264.0
+offset_right = 1766.0
+offset_bottom = 290.0
+text = "<-- Press exit button to continue."
+
+[node name="Party" type="Control" parent="TutorialContainer"]
+visible = false
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("29_yrv01")
+
+[node name="Part1" type="Control" parent="TutorialContainer/Party"]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="ColorRect" type="ColorRect" parent="TutorialContainer/Party/Part1"]
+layout_mode = 0
+offset_top = 152.0
+offset_right = 1592.0
+offset_bottom = 1088.0
+color = Color(0, 0, 0, 0.737255)
+
+[node name="ColorRect2" type="ColorRect" parent="TutorialContainer/Party/Part1"]
+layout_mode = 0
+offset_left = 1736.0
+offset_top = -8.0
+offset_right = 1928.0
+offset_bottom = 104.0
+color = Color(0, 0, 0, 0.737255)
+
+[node name="ColorRect5" type="ColorRect" parent="TutorialContainer/Party/Part1"]
+layout_mode = 0
+offset_left = 1592.0
+offset_top = -8.0
+offset_right = 1736.0
+offset_bottom = 56.0
+color = Color(0, 0, 0, 0.737255)
+
+[node name="ColorRect3" type="ColorRect" parent="TutorialContainer/Party/Part1"]
+layout_mode = 0
+offset_top = -8.0
+offset_right = 1592.0
+offset_bottom = 152.0
+color = Color(0, 0, 0, 0.737255)
+
+[node name="ColorRect4" type="ColorRect" parent="TutorialContainer/Party/Part1"]
+layout_mode = 0
+offset_left = 1592.0
+offset_top = 104.0
+offset_right = 1928.0
+offset_bottom = 1088.0
+color = Color(0, 0, 0, 0.737255)
+
+[node name="Label" type="Label" parent="TutorialContainer/Party/Part1"]
+layout_mode = 0
+offset_left = 1488.0
+offset_top = 112.0
+offset_right = 1840.0
+offset_bottom = 190.0
+text = "Click this button to open the Party Menu
+
+Press it to continue..."
+horizontal_alignment = 1
+
+[node name="Part2" type="Control" parent="TutorialContainer/Party"]
+visible = false
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="ColorRect" type="ColorRect" parent="TutorialContainer/Party/Part2"]
+layout_mode = 0
+offset_top = -8.0
+offset_right = 56.0
+offset_bottom = 1088.0
+color = Color(0, 0, 0, 0.737255)
+
+[node name="ColorRect2" type="ColorRect" parent="TutorialContainer/Party/Part2"]
+layout_mode = 0
+offset_left = 56.0
+offset_top = 1032.0
+offset_right = 1864.0
+offset_bottom = 1088.0
+color = Color(0, 0, 0, 0.737255)
+
+[node name="ColorRect3" type="ColorRect" parent="TutorialContainer/Party/Part2"]
+layout_mode = 0
+offset_left = 56.0
+offset_top = -8.0
+offset_right = 1864.0
+offset_bottom = 56.0
+color = Color(0, 0, 0, 0.737255)
+
+[node name="ColorRect4" type="ColorRect" parent="TutorialContainer/Party/Part2"]
+layout_mode = 0
+offset_left = 1864.0
+offset_top = -8.0
+offset_right = 1928.0
+offset_bottom = 1088.0
+color = Color(0, 0, 0, 0.737255)
+
+[node name="TextBackground" type="ColorRect" parent="TutorialContainer/Party/Part2"]
+z_index = 2
+layout_mode = 0
+offset_left = 80.0
+offset_top = 416.0
+offset_right = 568.0
+offset_bottom = 512.0
+color = Color(0, 0, 0, 0.737255)
+
+[node name="TextBackground2" type="ColorRect" parent="TutorialContainer/Party/Part2"]
+z_index = 2
+layout_mode = 0
+offset_left = 80.0
+offset_top = 808.0
+offset_right = 568.0
+offset_bottom = 896.0
+color = Color(0, 0, 0, 0.737255)
+
+[node name="TextBackground3" type="ColorRect" parent="TutorialContainer/Party/Part2"]
+z_index = 2
+layout_mode = 0
+offset_left = 1040.0
+offset_top = 816.0
+offset_right = 1456.0
+offset_bottom = 880.0
+color = Color(0, 0, 0, 0.737255)
+
+[node name="TextBackground4" type="ColorRect" parent="TutorialContainer/Party/Part2"]
+z_index = 2
+layout_mode = 0
+offset_left = 960.0
+offset_top = 592.0
+offset_right = 1672.0
+offset_bottom = 664.0
+color = Color(0, 0, 0, 0.737255)
+
+[node name="TextBackground5" type="ColorRect" parent="TutorialContainer/Party/Part2"]
+z_index = 2
+layout_mode = 0
+offset_left = 1472.0
+offset_top = 384.0
+offset_right = 1832.0
+offset_bottom = 576.0
+color = Color(0, 0, 0, 0.737255)
+
+[node name="TextBackground6" type="ColorRect" parent="TutorialContainer/Party/Part2"]
+z_index = 2
+layout_mode = 0
+offset_left = 1472.0
+offset_top = 280.0
+offset_right = 1832.0
+offset_bottom = 376.0
+color = Color(0, 0, 0, 0.737255)
+
+[node name="TextBackground7" type="ColorRect" parent="TutorialContainer/Party/Part2"]
+z_index = 2
+layout_mode = 0
+offset_left = 1152.0
+offset_top = 104.0
+offset_right = 1544.0
+offset_bottom = 232.0
+color = Color(0, 0, 0, 0.737255)
+
+[node name="TextBackground8" type="ColorRect" parent="TutorialContainer/Party/Part2"]
+z_index = 2
+layout_mode = 0
+offset_left = 1592.0
+offset_top = 120.0
+offset_right = 1848.0
+offset_bottom = 240.0
+color = Color(0, 0, 0, 0.737255)
+
+[node name="Label" type="Label" parent="TutorialContainer/Party/Part2"]
+z_index = 2
+layout_mode = 0
+offset_left = 80.0
+offset_top = 256.0
+offset_right = 576.0
+offset_bottom = 680.0
+theme_override_font_sizes/font_size = 25
+text = "This will contain a list of all characters.
+Can click on them to see information"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label2" type="Label" parent="TutorialContainer/Party/Part2"]
+z_index = 2
+layout_mode = 0
+offset_left = 80.0
+offset_top = 704.0
+offset_right = 576.0
+offset_bottom = 1008.0
+theme_override_font_sizes/font_size = 25
+text = "Pay attention to your party's upkeep, a lack of items will result to defections."
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="Label3" type="Label" parent="TutorialContainer/Party/Part2"]
+z_index = 2
+layout_mode = 0
+offset_left = 656.0
+offset_top = 704.0
+offset_right = 1832.0
+offset_bottom = 992.0
+theme_override_font_sizes/font_size = 25
+text = "Some cool information here!"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="Label4" type="Label" parent="TutorialContainer/Party/Part2"]
+z_index = 2
+layout_mode = 0
+offset_left = 960.0
+offset_top = 584.0
+offset_right = 1664.0
+offset_bottom = 672.0
+theme_override_font_sizes/font_size = 25
+text = "Find how much they can drop max & how much they cost to upkeep per turn."
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="Label5" type="Label" parent="TutorialContainer/Party/Part2"]
+z_index = 2
+layout_mode = 0
+offset_left = 1472.0
+offset_top = 384.0
+offset_right = 1832.0
+offset_bottom = 576.0
+theme_override_font_sizes/font_size = 25
+text = "Find out how much damage an attack does to a certain stat."
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="Label6" type="Label" parent="TutorialContainer/Party/Part2"]
+z_index = 2
+layout_mode = 0
+offset_left = 1472.0
+offset_top = 280.0
+offset_right = 1832.0
+offset_bottom = 376.0
+theme_override_font_sizes/font_size = 25
+text = "Your Character's Stats."
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="Label7" type="Label" parent="TutorialContainer/Party/Part2"]
+z_index = 2
+layout_mode = 0
+offset_left = 1152.0
+offset_top = 72.0
+offset_right = 1536.0
+offset_bottom = 256.0
+theme_override_font_sizes/font_size = 25
+text = "Can see their class, experience until level up, levels, & name here."
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="Label8" type="Label" parent="TutorialContainer/Party/Part2"]
+z_index = 2
+layout_mode = 0
+offset_left = 1600.0
+offset_top = 120.0
+offset_right = 1840.0
+offset_bottom = 240.0
+theme_override_font_sizes/font_size = 25
+text = "Press Exit button to leave & next chapter of tutorial."
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="Upkeep" type="Control" parent="TutorialContainer"]
+visible = false
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("30_0p60b")
+
+[node name="Control" type="Control" parent="TutorialContainer/Upkeep"]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="ColorRect" type="ColorRect" parent="TutorialContainer/Upkeep/Control"]
+layout_mode = 0
+offset_top = 152.0
+offset_right = 1592.0
+offset_bottom = 1088.0
+color = Color(0, 0, 0, 0.737255)
+
+[node name="ColorRect2" type="ColorRect" parent="TutorialContainer/Upkeep/Control"]
+layout_mode = 0
+offset_left = 1592.0
+offset_top = -8.0
+offset_right = 1928.0
+offset_bottom = 152.0
+color = Color(0, 0, 0, 0.737255)
+
+[node name="ColorRect5" type="ColorRect" parent="TutorialContainer/Upkeep/Control"]
+layout_mode = 0
+offset_left = 1144.0
+offset_top = -8.0
+offset_right = 1464.0
+offset_bottom = 40.0
+color = Color(0, 0, 0, 0.737255)
+
+[node name="ColorRect3" type="ColorRect" parent="TutorialContainer/Upkeep/Control"]
+layout_mode = 0
+offset_top = -8.0
+offset_right = 1144.0
+offset_bottom = 152.0
+color = Color(0, 0, 0, 0.737255)
+
+[node name="ColorRect4" type="ColorRect" parent="TutorialContainer/Upkeep/Control"]
+layout_mode = 0
+offset_left = 1592.0
+offset_top = 152.0
+offset_right = 1928.0
+offset_bottom = 1088.0
+color = Color(0, 0, 0, 0.737255)
+
+[node name="Label" type="Label" parent="TutorialContainer/Upkeep/Control"]
+layout_mode = 0
+offset_left = 1144.0
+offset_top = 160.0
+offset_right = 1592.0
+offset_bottom = 240.0
+text = "Every turn upkeep will take items from your inventory, if none left in your inventory. The character has a chance of defecting if their needs are not being met."
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="Button" type="Button" parent="TutorialContainer/Upkeep/Control"]
+layout_mode = 0
+offset_left = 1216.0
+offset_top = 256.0
+offset_right = 1472.0
+offset_bottom = 287.0
+theme_override_styles/normal = SubResource("StyleBoxFlat_suyc7")
+text = "Press this to continue..."
+
+[node name="EndTurn" type="Control" parent="TutorialContainer"]
+visible = false
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("31_3uy3x")
+
+[node name="ColorRect" type="ColorRect" parent="TutorialContainer/EndTurn"]
+layout_mode = 0
+offset_top = 64.0
+offset_right = 1928.0
+offset_bottom = 1088.0
+color = Color(0, 0, 0, 0.737255)
+
+[node name="ColorRect3" type="ColorRect" parent="TutorialContainer/EndTurn"]
+layout_mode = 0
+offset_top = -8.0
+offset_right = 1792.0
+offset_bottom = 64.0
+color = Color(0, 0, 0, 0.737255)
+
+[node name="Label" type="Label" parent="TutorialContainer/EndTurn"]
+layout_mode = 0
+offset_left = 1744.0
+offset_top = 72.0
+offset_right = 1919.0
+offset_bottom = 98.0
+text = "Click this to continue..."
+
+[node name="Label2" type="RichTextLabel" parent="TutorialContainer/EndTurn"]
+layout_mode = 0
+offset_left = 1280.0
+offset_top = 8.0
+offset_right = 1720.0
+offset_bottom = 504.0
+bbcode_enabled = true
+text = "Press this when you have nothing left to do or when there's no AOE. When pressing [b]ALL[/b] AOE will be used. Upkeep will also come into effect as well."
+
+[node name="Dragging" type="Control" parent="TutorialContainer"]
+visible = false
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("32_rlxah")
+
+[node name="ColorRect3" type="ColorRect" parent="TutorialContainer/Dragging"]
+layout_mode = 0
+offset_left = 856.0
+offset_top = -8.0
+offset_right = 1784.0
+offset_bottom = 192.0
+color = Color(0, 0, 0, 0.737255)
+
+[node name="ColorRect4" type="ColorRect" parent="TutorialContainer/Dragging"]
+layout_mode = 0
+offset_left = 1784.0
+offset_top = -8.0
+offset_right = 1928.0
+offset_bottom = 104.0
+color = Color(0, 0, 0, 0.737255)
+
+[node name="ColorRect5" type="ColorRect" parent="TutorialContainer/Dragging"]
+layout_mode = 0
+offset_left = 1480.0
+offset_top = 928.0
+offset_right = 1912.0
+offset_bottom = 1024.0
+color = Color(0, 0, 0, 0.737255)
+
+[node name="ColorRect6" type="ColorRect" parent="TutorialContainer/Dragging"]
+layout_mode = 0
+offset_left = -8.0
+offset_top = 928.0
+offset_right = 432.0
+offset_bottom = 1024.0
+color = Color(0, 0, 0, 0.737255)
+
+[node name="ColorRect7" type="ColorRect" parent="TutorialContainer/Dragging"]
+layout_mode = 0
+offset_left = 480.0
+offset_top = 88.0
+offset_right = 856.0
+offset_bottom = 192.0
+color = Color(0, 0, 0, 0.737255)
+
+[node name="Label" type="Label" parent="TutorialContainer/Dragging"]
+layout_mode = 0
+offset_left = 1120.0
+offset_top = 112.0
+offset_right = 1600.0
+offset_bottom = 192.0
+text = "Your AOEs spawn in the bottom, try moving like how you set in the beginning. Alternatively can use the \"Auto-Place AOE\" button on the right, to set AOE Automatically"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="Label2" type="Label" parent="TutorialContainer/Dragging"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 936.0
+offset_right = 432.0
+offset_bottom = 1014.0
+text = "This is where your support AOE spawn. They're used on your friendly characters. Try moving it on your character on thee left"
+autowrap_mode = 3
+
+[node name="Label3" type="Label" parent="TutorialContainer/Dragging"]
+layout_mode = 0
+offset_left = 1488.0
+offset_top = 936.0
+offset_right = 1912.0
+offset_bottom = 988.0
+text = "This is where your offensive AOE spawn. They're used on your enemy characters. Try moving it to a character on the right"
+autowrap_mode = 3
+
+[node name="BaseAreaAOEDenial" type="Area2D" parent="TutorialContainer/Dragging"]
+script = ExtResource("2_57bap")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TutorialContainer/Dragging/BaseAreaAOEDenial"]
+position = Vector2(216, 976)
+shape = SubResource("RectangleShape2D_avjsi")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="TutorialContainer/Dragging/BaseAreaAOEDenial"]
+position = Vector2(1696, 976)
+shape = SubResource("RectangleShape2D_avjsi")
+
+[node name="Label4" type="Label" parent="TutorialContainer/Dragging"]
+layout_mode = 0
+offset_left = 480.0
+offset_top = 88.0
+offset_right = 896.0
+offset_bottom = 192.0
+text = "Take a look in this box to see some important info whenever you click on an AOE. Some pieces of information is if it's a melee attack or ranged attack. Can also see if it's movable or not here as well."
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="Button" type="Button" parent="TutorialContainer/Dragging"]
+layout_mode = 0
+offset_left = 1216.0
+offset_top = 72.0
+offset_right = 1472.0
+offset_bottom = 103.0
+theme_override_styles/normal = SubResource("StyleBoxFlat_o7ci7")
+text = "Press this to continue..."
+
+[node name="AOEVisibility" type="Control" parent="TutorialContainer"]
+visible = false
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("33_jmpi4")
+
+[node name="ColorRect" type="ColorRect" parent="TutorialContainer/AOEVisibility"]
+layout_mode = 0
+offset_left = 1136.0
+offset_top = -8.0
+offset_right = 1928.0
+offset_bottom = 192.0
+color = Color(0, 0, 0, 0.737255)
+
+[node name="ColorRect3" type="ColorRect" parent="TutorialContainer/AOEVisibility"]
+layout_mode = 0
+offset_top = -8.0
+offset_right = 864.0
+offset_bottom = 192.0
+color = Color(0, 0, 0, 0.737255)
+
+[node name="Label" type="Label" parent="TutorialContainer/AOEVisibility"]
+layout_mode = 0
+offset_left = 1152.0
+offset_top = 80.0
+offset_right = 1576.0
+offset_bottom = 106.0
+text = "These can toggle the visibility of certain AOE."
+autowrap_mode = 3
+
+[node name="Button" type="Button" parent="TutorialContainer/AOEVisibility"]
+layout_mode = 0
+offset_left = 1200.0
+offset_top = 120.0
+offset_right = 1456.0
+offset_bottom = 151.0
+theme_override_styles/normal = SubResource("StyleBoxFlat_nug06")
+text = "Press this to continue..."
+
+[node name="CharacterStatVisibility" type="Control" parent="TutorialContainer"]
+visible = false
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("34_h57n0")
+
+[node name="ColorRect" type="ColorRect" parent="TutorialContainer/CharacterStatVisibility"]
+layout_mode = 0
+offset_left = 1352.0
+offset_top = -8.0
+offset_right = 1928.0
+offset_bottom = 192.0
+color = Color(0, 0, 0, 0.737255)
+
+[node name="ColorRect2" type="ColorRect" parent="TutorialContainer/CharacterStatVisibility"]
+layout_mode = 0
+offset_left = 1144.0
+offset_top = 48.0
+offset_right = 1352.0
+offset_bottom = 192.0
+color = Color(0, 0, 0, 0.737255)
+
+[node name="ColorRect3" type="ColorRect" parent="TutorialContainer/CharacterStatVisibility"]
+layout_mode = 0
+offset_top = -8.0
+offset_right = 1144.0
+offset_bottom = 192.0
+color = Color(0, 0, 0, 0.737255)
+
+[node name="Label" type="Label" parent="TutorialContainer/CharacterStatVisibility"]
+layout_mode = 0
+offset_left = 1096.0
+offset_top = 56.0
+offset_right = 1432.0
+offset_bottom = 160.0
+text = "Use this to see character's on the field's specific stats.
+Green (Best) -> Yellow (Okay) -> Red (Bad)
+Blue (Best) -> Purple (Okay) -> Red (Bad)"
+autowrap_mode = 3
+
+[node name="Button" type="Button" parent="TutorialContainer/CharacterStatVisibility"]
+layout_mode = 0
+offset_left = 1128.0
+offset_top = 160.0
+offset_right = 1384.0
+offset_bottom = 191.0
+theme_override_styles/normal = SubResource("StyleBoxFlat_dpxn1")
+text = "Press this to continue..."
+
+[node name="Surrender" type="Control" parent="TutorialContainer"]
+visible = false
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("35_pj01h")
+
+[node name="ColorRect" type="ColorRect" parent="TutorialContainer/Surrender"]
+layout_mode = 0
+offset_top = 824.0
+offset_right = 448.0
+offset_bottom = 960.0
+color = Color(0, 0, 0, 0.737255)
+
+[node name="ColorRect2" type="ColorRect" parent="TutorialContainer/Surrender"]
+layout_mode = 0
+offset_left = 448.0
+offset_top = 824.0
+offset_right = 728.0
+offset_bottom = 888.0
+color = Color(0, 0, 0, 0.737255)
+
+[node name="Label" type="Label" parent="TutorialContainer/Surrender"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 824.0
+offset_right = 448.0
+offset_bottom = 954.0
+text = "When Surrendering you have a choice of either picking yes or no.
+Yes: The character will defect to your side.
+No: The character will die & give experience.
+However as it can happen to them, it can happen to you."
+autowrap_mode = 3
+
+[node name="Button" type="Button" parent="TutorialContainer/Surrender"]
+layout_mode = 0
+offset_left = 456.0
+offset_top = 840.0
+offset_right = 712.0
+offset_bottom = 871.0
+theme_override_styles/normal = SubResource("StyleBoxFlat_5arox")
+text = "Press this to continue..."
+
 [connection signal="AOEQueueFinished" from="." to="ButtonsContainer/ButtonInvisibilityToggles" method="_on_dungeon_aoe_queue_finished"]
 [connection signal="pressed" from="ButtonsContainer/ShowMenuButton" to="." method="_on_show_menu_button_pressed"]
 [connection signal="pressed" from="ButtonsContainer/ShowPartyButton" to="." method="_on_show_party_button_pressed"]
+[connection signal="pressed" from="ButtonsContainer/ShowPartyButton" to="TutorialContainer/Party" method="_on_show_party_button_pressed"]
 [connection signal="pressed" from="ButtonsContainer/ShowInventoryButton" to="." method="_on_show_inventory_button_pressed"]
+[connection signal="pressed" from="ButtonsContainer/ShowInventoryButton" to="TutorialContainer/Inventory" method="_on_show_inventory_button_pressed"]
 [connection signal="pressed" from="ButtonsContainer/AOEAutoPlacementButton" to="ButtonsContainer/AOEAutoPlacementButton" method="onPressed"]
 [connection signal="pressed" from="ButtonsContainer/EndTurn" to="ButtonsContainer/EndTurn" method="_on_pressed"]
+[connection signal="pressed" from="ButtonsContainer/EndTurn" to="TutorialContainer/EndTurn" method="_on_end_turn_pressed"]
+[connection signal="pressed" from="ButtonsContainer/EndTurn" to="TutorialContainer/Surrender" method="_on_end_turn_pressed"]
 [connection signal="pressed" from="ButtonsContainer/OpenConsoleButton" to="." method="OpenConsoleButtonPressed"]
 [connection signal="OnNewTurn" from="TurnSystem" to="." method="_on_turn_system_on_new_turn"]
 [connection signal="OnNewTurn" from="TurnSystem" to="ButtonsContainer/ButtonInvisibilityToggles" method="inTurn"]
 [connection signal="SpawningIsOver" from="difficultySystem" to="." method="updateValueOfStatusBar"]
+[connection signal="pressed" from="TutorialContainer/Intro/Part1/Button" to="TutorialContainer/Intro" method="_on_button_pressed"]
+[connection signal="pressed" from="TutorialContainer/Intro/Part2/Button" to="TutorialContainer/Intro" method="_on_button_pressed"]
+[connection signal="pressed" from="TutorialContainer/Upkeep/Control/Button" to="TutorialContainer/Upkeep" method="_on_button_pressed"]
+[connection signal="pressed" from="TutorialContainer/Dragging/Button" to="TutorialContainer/Dragging" method="_on_button_pressed"]
+[connection signal="pressed" from="TutorialContainer/AOEVisibility/Button" to="TutorialContainer/AOEVisibility" method="_on_button_pressed"]
+[connection signal="pressed" from="TutorialContainer/CharacterStatVisibility/Button" to="TutorialContainer/CharacterStatVisibility" method="_on_button_pressed"]
+[connection signal="pressed" from="TutorialContainer/CharacterStatVisibility/Button" to="TutorialContainer/Surrender" method="_on_button_pressed"]
+[connection signal="pressed" from="TutorialContainer/Surrender/Button" to="TutorialContainer/Surrender" method="_on_button_pressed"]

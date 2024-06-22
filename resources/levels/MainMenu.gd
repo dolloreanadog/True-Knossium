@@ -2,7 +2,6 @@ extends Node2D
 
 func _ready() -> void:
 	Global.StartLoadingScreen(false)
-	$VBoxContainer/TutorialButton.disabled = true
 	if !(SaveSystem.checkSaveFileExists()):
 		print("Save File Doesn't Exist!")
 		$VBoxContainer/ContinueButton.disabled = true
@@ -41,7 +40,9 @@ func _on_continue_button_pressed() -> void:
 		push_error("There is no Save")
 
 func _on_tutorial_button_pressed() -> void:
-	pass
+	Global.StartLoadingScreen(true)
+	await create_tween().tween_property($AudioStreamPlayer, "volume_db", -80, 1).finished
+	get_tree().change_scene_to_file("res://resources/levels/ingame/tutorial_levels/CombatTutorialDungeon.tscn")
 
 func _on_credits_button_pressed() -> void:
 	Global.StartLoadingScreen(true)

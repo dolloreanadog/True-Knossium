@@ -83,7 +83,7 @@ text_overrun_behavior = 3
 
 [node name="StatPanel" type="Panel" parent="ColorRect/Panel"]
 layout_mode = 0
-offset_left = 24.0
+offset_left = 16.0
 offset_top = 208.0
 offset_right = 1192.0
 offset_bottom = 304.0
@@ -164,7 +164,6 @@ offset_bottom = 504.0
 
 [node name="Label" type="Label" parent="ColorRect/Panel/ActionPanel"]
 layout_mode = 0
-offset_left = 8.0
 offset_top = -2.0
 offset_right = 1176.0
 offset_bottom = 24.0
@@ -311,7 +310,7 @@ text = "Morale"
 
 [node name="UpkeepPanel" type="Panel" parent="ColorRect/Panel"]
 layout_mode = 0
-offset_left = 8.0
+offset_left = 16.0
 offset_top = 512.0
 offset_right = 1192.0
 offset_bottom = 552.0
@@ -334,7 +333,7 @@ text = "x9999"
 
 [node name="DropPanel" type="Panel" parent="ColorRect/Panel"]
 layout_mode = 0
-offset_left = 8.0
+offset_left = 16.0
 offset_top = 560.0
 offset_right = 1192.0
 offset_bottom = 600.0

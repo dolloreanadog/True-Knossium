@@ -1,4 +1,5 @@
 extends BaseLevel
+class_name TutorialLevel
 
 # Add these to the level for the tutorial
 @export var debugCharacterFileName: String
@@ -30,58 +31,46 @@ func _ready():
 #	await loadConfirmation()
 	if confirmed:
 		updateValueOfStatusBar()
-		Global.EndLoadingScreen()
-		stopControlVisible(false, 1)
-		checkSpecialWindowContainer()
 		friendlyPartyContainer.onAllCharactersDead()
 		SaveWarningLabel.hide()
-		SwitchTutorialStep(tutorialSteps.NONE)
+		await get_tree().create_timer(1.5).timeout
+		Global.EndLoadingScreen()
+		stopControlVisible(false, 1)
+		SwitchTutorialStep(tutorialSteps.INTRO)
 
 func SwitchTutorialStep(step: tutorialSteps):
-	stopControlVisible(true, 1)
-	stopControlVisible(true, 2)
+
+	# Have each tutorial thingy done in each node themslves?
 	match step:
 		tutorialSteps.NONE:
 			stopControlVisible(false, 1)
 			stopControlVisible(false, 2)
 		tutorialSteps.INTRO: # Introduce Player to Knossium
-			pass
+			stopControlVisible(true, 1)
+			stopControlVisible(true, 2)
+			$TutorialContainer/Intro.show()
 		tutorialSteps.INVENTORY: # Open Inventory & show pointers to certain parts of the inventory
-			pass
+			$TutorialContainer/Inventory.show()
 		tutorialSteps.PARTY: # Open Party & show pointers to certain parts of the party
-			pass
+			$TutorialContainer/Party.show()
 		tutorialSteps.UPKEEP: # Show the upkeep list in the main area & explain upkeep in dialogue
-			pass
+			$TutorialContainer/Upkeep.show()
 		tutorialSteps.ENDTURN: # Have the player end turn, explain that every turn your AOE might spawn, if no AOE hit end turn
-			pass
+			$TutorialContainer/EndTurn.show()
 		tutorialSteps.DRAGGING: # Ask the player to move the AOE to their spots.
-			pass
-		tutorialSteps.AUTOPLACE: # Ask the player to press the button
-			pass
-		tutorialSteps.OFFENSIVEAOE: # Tells about the offensive AOE, why it's white & why it turns blue
-			pass
-		tutorialSteps.SUPPORTAOE: # Tells about the support AOE, why it's white & why it turns blue
-			pass
-		tutorialSteps.AOEINFOBOX: 
-			# Explain the information, either these work
-			# put numbers in circles & match information
-			# show a duplicate on screen & use pointers
-			pass
-		tutorialSteps.MELEEMECHANIC:
-			# Reiterate on the melee mechanic
-			pass
+			$TutorialContainer/Dragging.show()
 		tutorialSteps.AOEVISIBILITY:
 			# Explain how AOE Visibility work
-			pass
+			$TutorialContainer/AOEVisibility.show()
 		tutorialSteps.CHARACTERSTATVISIBILITY:
 			# Explain character Visibility work
-			pass
+			$TutorialContainer/CharacterStatVisibility.show()
 		tutorialSteps.SURRENDER:
 			# Showcase surrendering by setting all characters on the other team by -999 morale
-			pass
+			$TutorialContainer/Surrender.show()
 		tutorialSteps.SHOP:
 			# Introduce the shop on new battle guaranteed, don't go to confirmation window
-			pass
+			get_tree().change_scene_to_file("res://resources/levels/ingame/tutorial_levels/TutorialShopLevel.tscn")
 		_:
 			push_error("Not a valid step.")
 
@@ -155,3 +144,4 @@ func saveToSaveSystem() -> void:
 #	print("Saved GameInfoDict SupportAOEList: " + str(SaveSystem.GameInfoDict.SupportAOEList))
 #	SaveWarningLabel.hide()
 	emit_signal("SaveFinished")
+

@@ -4,6 +4,7 @@ class_name TutorialLevel
 # Add these to the level for the tutorial
 @export var debugCharacterFileName: String
 @export var debugItem: BaseInventoryItem
+@export var debugItem1: BaseInventoryItem
 
 # This will decide what step we are in the tutorial process
 enum tutorialSteps {NONE, INTRO, INVENTORY, PARTY, UPKEEP, ENDTURN, DRAGGING, AUTOPLACE, OFFENSIVEAOE, SUPPORTAOE, AOEINFOBOX, MELEEMECHANIC, AOEVISIBILITY, CHARACTERSTATVISIBILITY, SURRENDER, SHOP}
@@ -23,6 +24,7 @@ func _ready():
 	instantiateDebugCharacter.stats.setCurrentHealth(999)
 	
 	inventory.addToInventory(debugItem, 9999)
+	inventory.addToInventory(debugItem1, 2)
 	
 	system.newTurn()
 	system.newBattle()

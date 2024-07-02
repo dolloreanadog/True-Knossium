@@ -1,4 +1,4 @@
-[gd_scene load_steps=46 format=3 uid="uid://dmviuwgk6nssk"]
+[gd_scene load_steps=48 format=3 uid="uid://dmviuwgk6nssk"]
 
 [ext_resource type="Script" path="res://resources/levels/ingame/BaseLevel.gd" id="1_c7s3k"]
 [ext_resource type="PackedScene" uid="uid://2067o3jclptt" path="res://resources/user_interface/console/Console.tscn" id="2_1f5g3"]
@@ -37,6 +37,12 @@ size = Vector2(1920, 1288)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pmviw"]
 size = Vector2(1344, 3328)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_nckn1"]
+size = Vector2(448, 96)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ulchn"]
+size = Vector2(448, 96)
 
 [sub_resource type="InputEventAction" id="InputEventAction_x7j3b"]
 action = &"ShowIngameMenu"
@@ -86,7 +92,7 @@ size = Vector2(320, 640)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4dgf2"]
 size = Vector2(320, 640)
 
-[node name="Dungeon" type="Node2D" node_paths=PackedStringArray("turnsLabel", "battlesLabel", "friendlyPartyContainer", "enemyPartyContainer", "battleStatusBar", "stopControl", "stopControl2", "musicPlayer", "statButtonGroup", "specialWindowContainer", "knossiumConsole", "endTurnButton", "showMenuButton", "autoPlaceButton", "inventoryButton", "partyButton", "friendlyAOEAttack", "friendlyAOESupport", "enemyAttackAOE", "enemySupportAOE", "warningLabel", "SaveWarningLabel")]
+[node name="Dungeon" type="Node2D" node_paths=PackedStringArray("turnsLabel", "battlesLabel", "friendlyPartyContainer", "enemyPartyContainer", "battleStatusBar", "stopControl", "stopControl2", "musicPlayer", "statButtonGroup", "specialWindowContainer", "knossiumConsole", "AOECheck", "endTurnButton", "showMenuButton", "autoPlaceButton", "inventoryButton", "partyButton", "friendlyAOEAttack", "friendlyAOESupport", "enemyAttackAOE", "enemySupportAOE", "warningLabel", "SaveWarningLabel")]
 script = ExtResource("1_c7s3k")
 turnsLabel = NodePath("Labels/TurnsLabel")
 battlesLabel = NodePath("Labels/BattlesLabel")
@@ -99,6 +105,7 @@ musicPlayer = NodePath("DungeonMusicPlayer")
 statButtonGroup = NodePath("ButtonsContainer/VisibilityToggles")
 specialWindowContainer = NodePath("SpecialWindowContainer")
 knossiumConsole = NodePath("Console")
+AOECheck = NodePath("AOECheck")
 endTurnButton = NodePath("ButtonsContainer/EndTurn")
 showMenuButton = NodePath("ButtonsContainer/ShowMenuButton")
 autoPlaceButton = NodePath("ButtonsContainer/AOEAutoPlacementButton")
@@ -140,6 +147,16 @@ shape = SubResource("RectangleShape2D_tibo5")
 [node name="CollisionShape2D4" type="CollisionShape2D" parent="OutOfBoundsAOEDenial"]
 position = Vector2(2592, 704)
 shape = SubResource("RectangleShape2D_pmviw")
+
+[node name="AOECheck" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AOECheck"]
+position = Vector2(672, 976)
+shape = SubResource("RectangleShape2D_nckn1")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="AOECheck"]
+position = Vector2(1248, 976)
+shape = SubResource("RectangleShape2D_ulchn")
 
 [node name="Labels" type="Control" parent="."]
 layout_mode = 3

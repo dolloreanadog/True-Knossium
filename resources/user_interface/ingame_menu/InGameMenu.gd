@@ -5,6 +5,7 @@ class_name IngameMenu
 # Confirmation Window
 enum confirmationType {QUITTODESKTOP, QUITTOMENU, ENDGAME}
 var confirmType: confirmationType
+@onready var confirmationBox: ConfirmationBox = get_node("ConfirmationControl")
 
 
 func _on_back_to_game_button_pressed() -> void:
@@ -32,19 +33,22 @@ func _on_save_button_pressed() -> void:
 # on like the second time you go into menu characters are not saved!
 func _on_go_to_menu_button_pressed() -> void:
 	confirmType = confirmationType.QUITTOMENU
-	$ConfirmationControl.show()
+	confirmationBox.show()
+	confirmationBox.setLabel("Are you sure you want to go to menu?")
 
 
 # ^ issue as above
 func _on_quit_game_button_pressed() -> void:
 	confirmType = confirmationType.QUITTODESKTOP
-	$ConfirmationControl.show()
+	confirmationBox.show()
+	confirmationBox.setLabel("Are you sure you want to go to desktop?")
 
 
 
 func _on_end_game_button_pressed() -> void:
 	confirmType = confirmationType.ENDGAME
-	$ConfirmationControl.show()
+	confirmationBox.show()
+	confirmationBox.setLabel("Are you sure you want to end the game?")
 
 
 
@@ -63,8 +67,8 @@ func ConfirmationYesButtonPressed() -> void:
 				dungeon.queue_free()
 				get_tree().change_scene_to_file("res://resources/levels/menu/GameOverMenu/GameOverMenu.tscn")
 	
-	$ConfirmationControl.hide()
+	confirmationBox.hide()
 
 
 func ConfirmationNoButtonPressed() -> void:
-	$ConfirmationControl.hide()
+	confirmationBox.hide()

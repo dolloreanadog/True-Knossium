@@ -13,7 +13,7 @@ var upkeepListArray: Array
 
 #--[ Important Character Info ]--
 @onready var characterPFPHolder: TextureRect = get_node("ColorRect/Panel/CharacterPFPHolder")
-@onready var characterNameLabel: Label = get_node("ColorRect/Panel/CharacterNameLabel")
+@onready var characterNameLabel: LineEdit = get_node("ColorRect/Panel/CharacterNameLabelEdit")
 @onready var characterLevelLabel: Label = get_node("ColorRect/Panel/LevelLabel")
 @onready var characterExperienceLabel: Label = get_node("ColorRect/Panel/ExperienceLabel")
 @onready var characterClassLabel: Label = get_node("ColorRect/Panel/ClassLabel")
@@ -123,6 +123,7 @@ func _on_exit_button_pressed() -> void:
 
 
 func _on_character_list_item_selected(index: int) -> void:
+	$ColorRect/Panel/CharacterNameLabelEdit.editable = true
 	targetCharacter = partyContainer.characters[index]
 	updateCharacterInfo()
 
@@ -131,9 +132,10 @@ func _on_character_list_item_selected(index: int) -> void:
 ## Updates the ItemList (CharacterList) to current
 func updateCharacterList() -> void:
 	characterList.clear()
+	$ColorRect/Panel/CharacterNameLabelEdit.editable = false
 	for i in partyContainer.characters.size():
 		var Lcharacter: BaseCharacter = partyContainer.characters[i]
-		characterList.add_item(Lcharacter.id, Lcharacter.profilePicture)
+		characterList.add_item(Lcharacter.characterName, Lcharacter.profilePicture)
 		await get_tree().create_timer(0.01).timeout
 	updateUpkeepList()
 
@@ -181,7 +183,7 @@ func updateUpkeepList() -> void:
 ## When clicking on item in itemlist show info here
 func updateCharacterInfo() -> void:
 	characterPFPHolder.texture = targetCharacter.profilePicture
-	characterNameLabel.text = targetCharacter.id
+	characterNameLabel.text = targetCharacter.characterName
 	characterLevelLabel.text = "Level: " + str(targetCharacter.stats.level)
 	characterExperienceLabel.text = "Experience: " + str(snapped(targetCharacter.stats.experience, 0.01)) + "/" + str(snapped(targetCharacter.stats.maxEXP, 0.01))
 	match targetCharacter.stats.role:
@@ -205,10 +207,10 @@ func updateCharacterInfo() -> void:
 	
 	if is_instance_valid(targetCharacter.action1):
 		Action1NameLabel.text = targetCharacter.action1.ActionName
-		Action1HealthLabel.text = str(snapped(targetCharacter.action1.health, 0.01))
-		Action1DefenseLabel.text = str(snapped(targetCharacter.action1.defense, 0.01))
-		Action1AttackLabel.text = str(snapped(targetCharacter.action1.attack, 0.01))
-		Action1MoraleLabel.text = str(snapped(targetCharacter.action1.morale, 0.01))
+		Action1HealthLabel.text = str(snapped(targetCharacter.action1.currentHealth, 0.01))
+		Action1DefenseLabel.text = str(snapped(targetCharacter.action1.CurrentDefense, 0.01))
+		Action1AttackLabel.text = str(snapped(targetCharacter.action1.CurrentAttack, 0.01))
+		Action1MoraleLabel.text = str(snapped(targetCharacter.action1.CurrentMorale, 0.01))
 	else:
 		Action1NameLabel.text = ""
 		Action1HealthLabel.text = ""
@@ -218,10 +220,10 @@ func updateCharacterInfo() -> void:
 	
 	if is_instance_valid(targetCharacter.action2):
 		Action2NameLabel.text = targetCharacter.action2.ActionName
-		Action2HealthLabel.text = str(snapped(targetCharacter.action2.health, 0.01))
-		Action2DefenseLabel.text = str(snapped(targetCharacter.action2.defense, 0.01))
-		Action2AttackLabel.text = str(snapped(targetCharacter.action2.attack, 0.01))
-		Action2MoraleLabel.text = str(snapped(targetCharacter.action2.morale, 0.01))
+		Action2HealthLabel.text = str(snapped(targetCharacter.action2.currentHealth, 0.01))
+		Action2DefenseLabel.text = str(snapped(targetCharacter.action2.CurrentDefense, 0.01))
+		Action2AttackLabel.text = str(snapped(targetCharacter.action2.CurrentAttack, 0.01))
+		Action2MoraleLabel.text = str(snapped(targetCharacter.action2.CurrentMorale, 0.01))
 	else:
 		Action2NameLabel.text = ""
 		Action2HealthLabel.text = ""
@@ -231,10 +233,10 @@ func updateCharacterInfo() -> void:
 	
 	if is_instance_valid(targetCharacter.action3):
 		Action3NameLabel.text = targetCharacter.action3.ActionName
-		Action3HealthLabel.text = str(snapped(targetCharacter.action3.health, 0.01))
-		Action3DefenseLabel.text = str(snapped(targetCharacter.action3.defense, 0.01))
-		Action3AttackLabel.text = str(snapped(targetCharacter.action3.attack, 0.01))
-		Action3MoraleLabel.text = str(snapped(targetCharacter.action3.morale, 0.01))
+		Action3HealthLabel.text = str(snapped(targetCharacter.action3.currentHealth, 0.01))
+		Action3DefenseLabel.text = str(snapped(targetCharacter.action3.CurrentDefense, 0.01))
+		Action3AttackLabel.text = str(snapped(targetCharacter.action3.CurrentAttack, 0.01))
+		Action3MoraleLabel.text = str(snapped(targetCharacter.action3.CurrentMorale, 0.01))
 	else:
 		Action3NameLabel.text = ""
 		Action3HealthLabel.text = ""
@@ -244,10 +246,10 @@ func updateCharacterInfo() -> void:
 	
 	if is_instance_valid(targetCharacter.action4):
 		Action4NameLabel.text = targetCharacter.action4.ActionName
-		Action4HealthLabel.text = str(snapped(targetCharacter.action4.health, 0.01))
-		Action4DefenseLabel.text = str(snapped(targetCharacter.action4.defense, 0.01))
-		Action4AttackLabel.text = str(snapped(targetCharacter.action4.attack, 0.01))
-		Action4MoraleLabel.text = str(snapped(targetCharacter.action4.morale, 0.01))
+		Action4HealthLabel.text = str(snapped(targetCharacter.action4.currentHealth, 0.01))
+		Action4DefenseLabel.text = str(snapped(targetCharacter.action4.CurrentDefense, 0.01))
+		Action4AttackLabel.text = str(snapped(targetCharacter.action4.CurrentAttack, 0.01))
+		Action4MoraleLabel.text = str(snapped(targetCharacter.action4.CurrentMorale, 0.01))
 	else:
 		Action4NameLabel.text = ""
 		Action4HealthLabel.text = ""
@@ -261,3 +263,9 @@ func updateCharacterInfo() -> void:
 	DropAmount.text = "x" + str(targetCharacter.ResourceMaxDropAmount)
 	
 	characterDescription.text = targetCharacter.characterDescription
+
+
+func CharacterNameLabelTextSet(new_text: String) -> void:
+	if targetCharacter != null:
+		targetCharacter.characterName = new_text
+		updateCharacterList()

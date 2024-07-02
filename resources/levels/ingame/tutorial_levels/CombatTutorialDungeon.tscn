@@ -1,8 +1,9 @@
-[gd_scene load_steps=62 format=3 uid="uid://ubqjl7xo4jo1"]
+[gd_scene load_steps=65 format=3 uid="uid://ubqjl7xo4jo1"]
 
 [ext_resource type="Script" path="res://resources/levels/ingame/tutorial_levels/CombatTutorialDungeon.gd" id="1_mmmgc"]
 [ext_resource type="Script" path="res://resources/entities/AreaAOEDenial/BaseAreaAOEDenial.gd" id="2_57bap"]
 [ext_resource type="Resource" uid="uid://3i41wk26jwk2" path="res://resources/entities/inventory_items/dev_items/DevGold.tres" id="2_sxysn"]
+[ext_resource type="Resource" uid="uid://bjlgar33m6xrh" path="res://resources/entities/inventory_items/dev_items/ExperiencePotion.tres" id="3_ue40e"]
 [ext_resource type="Script" path="res://resources/levels/ingame/dungeon/StatPoints.gd" id="3_upymc"]
 [ext_resource type="PackedScene" uid="uid://bwmi2u27htu4s" path="res://resources/entities/visibility_toggles/VisibilityToggles.tscn" id="4_wo2ys"]
 [ext_resource type="PackedScene" uid="uid://dacl7cdqcmb3c" path="res://resources/entities/button_invisibility/ButtonInvisibilityToggles.tscn" id="5_sd2mv"]
@@ -47,6 +48,12 @@ size = Vector2(1920, 1288)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pmviw"]
 size = Vector2(1344, 3328)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_u1vti"]
+size = Vector2(448, 96)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hc7k6"]
+size = Vector2(448, 96)
 
 [sub_resource type="InputEventAction" id="InputEventAction_x7j3b"]
 action = &"ShowIngameMenu"
@@ -100,7 +107,7 @@ bg_color = Color(1, 0.176471, 0, 0.537255)
 bg_color = Color(1, 0.176471, 0, 0.537255)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_avjsi"]
-size = Vector2(433, 96)
+size = Vector2(424, 104)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_o7ci7"]
 bg_color = Color(1, 0.176471, 0, 0.537255)
@@ -114,10 +121,11 @@ bg_color = Color(1, 0.176471, 0, 0.537255)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5arox"]
 bg_color = Color(1, 0.176471, 0, 0.537255)
 
-[node name="Dungeon" type="Node2D" node_paths=PackedStringArray("turnsLabel", "battlesLabel", "friendlyPartyContainer", "enemyPartyContainer", "battleStatusBar", "stopControl", "stopControl2", "musicPlayer", "statButtonGroup", "specialWindowContainer", "knossiumConsole", "endTurnButton", "showMenuButton", "autoPlaceButton", "inventoryButton", "partyButton", "friendlyAOEAttack", "friendlyAOESupport", "enemyAttackAOE", "enemySupportAOE", "warningLabel", "SaveWarningLabel")]
+[node name="Dungeon" type="Node2D" node_paths=PackedStringArray("turnsLabel", "battlesLabel", "friendlyPartyContainer", "enemyPartyContainer", "battleStatusBar", "stopControl", "stopControl2", "musicPlayer", "statButtonGroup", "specialWindowContainer", "knossiumConsole", "AOECheck", "endTurnButton", "showMenuButton", "autoPlaceButton", "inventoryButton", "partyButton", "friendlyAOEAttack", "friendlyAOESupport", "enemyAttackAOE", "enemySupportAOE", "warningLabel", "SaveWarningLabel")]
 script = ExtResource("1_mmmgc")
 debugCharacterFileName = "res://resources/entities/characters_items/character/new_dev_game_characters/NewDevTankCharacter.tscn"
 debugItem = ExtResource("2_sxysn")
+debugItem1 = ExtResource("3_ue40e")
 turnsLabel = NodePath("Labels/TurnsLabel")
 battlesLabel = NodePath("Labels/BattlesLabel")
 friendlyPartyContainer = NodePath("PartyContainers/FriendlyPartyContainer")
@@ -129,6 +137,7 @@ musicPlayer = NodePath("DungeonMusicPlayer")
 statButtonGroup = NodePath("ButtonsContainer/VisibilityToggles")
 specialWindowContainer = NodePath("SpecialWindowContainer")
 knossiumConsole = NodePath("Console")
+AOECheck = NodePath("AOECheck")
 endTurnButton = NodePath("ButtonsContainer/EndTurn")
 showMenuButton = NodePath("ButtonsContainer/ShowMenuButton")
 autoPlaceButton = NodePath("ButtonsContainer/AOEAutoPlacementButton")
@@ -170,6 +179,16 @@ shape = SubResource("RectangleShape2D_tibo5")
 [node name="CollisionShape2D4" type="CollisionShape2D" parent="OutOfBoundsAOEDenial"]
 position = Vector2(2592, 704)
 shape = SubResource("RectangleShape2D_pmviw")
+
+[node name="AOECheck" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AOECheck"]
+position = Vector2(672, 976)
+shape = SubResource("RectangleShape2D_u1vti")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="AOECheck"]
+position = Vector2(1248, 976)
+shape = SubResource("RectangleShape2D_hc7k6")
 
 [node name="Labels" type="Control" parent="."]
 layout_mode = 3
@@ -683,7 +702,7 @@ offset_right = 1280.0
 offset_bottom = 832.0
 text = "Welcome to Knossium (not final)
 
-In 15 sections of this course, you'll have basic understanding of Knossium & maybe even venture even deeper than most. As it is pretty ruthless to those that command these parties. Many will die & defect, but it can happen the same way to them. Take advantage & go far, don't grow affection to your characters."
+In 15 sections of this interactive course, you'll have basic understanding of Knossium & maybe even venture even deeper than most. As it is pretty ruthless to those that command these parties. Many will die & defect, but it can happen the same way to them. Take advantage & go far, don't grow affection to your characters."
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 3
@@ -1044,7 +1063,7 @@ color = Color(0, 0, 0, 0.737255)
 z_index = 2
 layout_mode = 0
 offset_left = 1472.0
-offset_top = 280.0
+offset_top = 248.0
 offset_right = 1832.0
 offset_bottom = 376.0
 color = Color(0, 0, 0, 0.737255)
@@ -1136,11 +1155,14 @@ autowrap_mode = 3
 z_index = 2
 layout_mode = 0
 offset_left = 1472.0
-offset_top = 280.0
+offset_top = 248.0
 offset_right = 1832.0
-offset_bottom = 376.0
-theme_override_font_sizes/font_size = 25
-text = "Your Character's Stats."
+offset_bottom = 378.0
+text = "Your Character's Stats.
+Health: When 0, character dies
+Defense: Determines how less damage taken.
+Attack: Determines how much damage to.
+Morale: When 0, character surrenders"
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 3
@@ -1319,18 +1341,26 @@ color = Color(0, 0, 0, 0.737255)
 
 [node name="ColorRect7" type="ColorRect" parent="TutorialContainer/Dragging"]
 layout_mode = 0
-offset_left = 480.0
-offset_top = 88.0
-offset_right = 856.0
-offset_bottom = 192.0
+offset_left = 168.0
+offset_top = 192.0
+offset_right = 592.0
+offset_bottom = 296.0
+color = Color(0, 0, 0, 0.737255)
+
+[node name="ColorRect8" type="ColorRect" parent="TutorialContainer/Dragging"]
+layout_mode = 0
+offset_left = 1288.0
+offset_top = 192.0
+offset_right = 1712.0
+offset_bottom = 296.0
 color = Color(0, 0, 0, 0.737255)
 
 [node name="Label" type="Label" parent="TutorialContainer/Dragging"]
 layout_mode = 0
-offset_left = 1120.0
-offset_top = 112.0
-offset_right = 1600.0
-offset_bottom = 192.0
+offset_left = 1288.0
+offset_top = 192.0
+offset_right = 1712.0
+offset_bottom = 296.0
 text = "Your AOEs spawn in the bottom, try moving like how you set in the beginning. Alternatively can use the \"Auto-Place AOE\" button on the right, to set AOE Automatically"
 horizontal_alignment = 1
 autowrap_mode = 3
@@ -1341,7 +1371,7 @@ offset_left = 8.0
 offset_top = 936.0
 offset_right = 432.0
 offset_bottom = 1014.0
-text = "This is where your support AOE spawn. They're used on your friendly characters. Try moving it on your character on thee left"
+text = "This is where your support AOE spawn. They're used on your friendly characters. They're green."
 autowrap_mode = 3
 
 [node name="Label3" type="Label" parent="TutorialContainer/Dragging"]
@@ -1364,22 +1394,30 @@ shape = SubResource("RectangleShape2D_avjsi")
 position = Vector2(1696, 976)
 shape = SubResource("RectangleShape2D_avjsi")
 
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="TutorialContainer/Dragging/BaseAreaAOEDenial"]
+position = Vector2(1499.75, 244)
+shape = SubResource("RectangleShape2D_avjsi")
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="TutorialContainer/Dragging/BaseAreaAOEDenial"]
+position = Vector2(380, 244)
+shape = SubResource("RectangleShape2D_avjsi")
+
 [node name="Label4" type="Label" parent="TutorialContainer/Dragging"]
 layout_mode = 0
-offset_left = 480.0
-offset_top = 88.0
-offset_right = 896.0
-offset_bottom = 192.0
+offset_left = 168.0
+offset_top = 192.0
+offset_right = 592.0
+offset_bottom = 296.0
 text = "Take a look in this box to see some important info whenever you click on an AOE. Some pieces of information is if it's a melee attack or ranged attack. Can also see if it's movable or not here as well."
 horizontal_alignment = 1
 autowrap_mode = 3
 
 [node name="Button" type="Button" parent="TutorialContainer/Dragging"]
 layout_mode = 0
-offset_left = 1216.0
-offset_top = 72.0
-offset_right = 1472.0
-offset_bottom = 103.0
+offset_left = 1368.0
+offset_top = 152.0
+offset_right = 1624.0
+offset_bottom = 183.0
 theme_override_styles/normal = SubResource("StyleBoxFlat_o7ci7")
 text = "Press this to continue..."
 
@@ -1482,7 +1520,7 @@ script = ExtResource("35_pj01h")
 
 [node name="ColorRect" type="ColorRect" parent="TutorialContainer/Surrender"]
 layout_mode = 0
-offset_top = 824.0
+offset_top = 800.0
 offset_right = 448.0
 offset_bottom = 960.0
 color = Color(0, 0, 0, 0.737255)
@@ -1498,10 +1536,11 @@ color = Color(0, 0, 0, 0.737255)
 [node name="Label" type="Label" parent="TutorialContainer/Surrender"]
 layout_mode = 0
 offset_left = 8.0
-offset_top = 824.0
+offset_top = 798.0
 offset_right = 448.0
 offset_bottom = 954.0
-text = "When Surrendering you have a choice of either picking yes or no.
+text = "When a character's morale hits 0 they surrender.
+When an enemy character surrenders you have a choice of either picking yes or no.
 Yes: The character will defect to your side.
 No: The character will die & give experience.
 However as it can happen to them, it can happen to you."

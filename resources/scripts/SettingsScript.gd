@@ -142,6 +142,7 @@ func applySettings() -> void:
 			DisplayServer.window_set_flag(DisplayServer.WINDOW_FLAG_BORDERLESS, true)
 #			get_window().borderless = true
 	
+	await get_tree().create_timer(0.05).timeout
 	match SettingsDict.SettingsScreenSize:
 		screenSize.S:
 			get_viewport().size = Vector2(1366, 768)

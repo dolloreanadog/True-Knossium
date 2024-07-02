@@ -10,7 +10,7 @@ class_name LevelShop
 # 4 TODO : Player Barter List
 # 5 TODO : upkeep
 
-# Important variables
+# Important nodes
 @export var stopControl: Control
 @export var playerInventory: InventorySystem
 @export var playerBarterInventory: InventorySystem
@@ -44,6 +44,7 @@ var shopItemFilePaths: Array
 @export var buttonCooldownTime: float
 @export var buttonCooldownLabel: Label
 @export var shopLeftTime: float
+@export var isTimeLocked: bool = false
 @export var shopTimeLeftLabel: Label
 # Amount Selector
 @export var amountSelectorLabel: Label
@@ -65,6 +66,9 @@ var selectorInventory: InventorySystem
 # Shop Personality
 enum shopPersonality {NAIVE, INEXPERIENCED, NEUTRAL, SMART, GREEDY}
 var personality: shopPersonality
+## 0 - 36, check randomizePersonality to see what value activate what
+@export_range(0, 36) var personalityValue: int
+@export var isDebugPersonality: bool
 var merchantPFP: TextureRect
 
 # When failing a trade raise a strike, if it's max, boot off shop
@@ -72,6 +76,7 @@ var strikes: int
 var maxStrikes: int = 10
 
 # Bartering Values
+var barterActionAvailable: bool = true
 var initialValue: float
 
 var playerTotalValue: float
@@ -169,38 +174,51 @@ func setPlayerBarterValue(amount: float) -> float:
 func randomizeShopPersonality() -> void:
 	var value: int = randi_range(0, 36)
 	
-	if value <= 2:
+	if isDebugPersonality:
+		value = personalityValue
+	
+	if value <= 1: # 2
 		personality = shopPersonality.NAIVE
-		minimumAcceptanceValue = randf_range(-25, -50)
-		guaranteedAcceptanceValue = 0
+		minimumAcceptanceValue = randf_range(-10, -20)
+		if !isTimeLocked:
+			shopLeftTime = 25
+#		guaranteedAcceptanceValue = 0
 		shopPersonalityLabel.text = "Personality: Naive"
 		maxStrikes = 10
 		strikesLabel.text = "Strikes: " + str(strikes) + "/" + str(maxStrikes)
-	elif value >= 3 && value <= 6:
+	elif value >= 2 && value <= 4: # 3
 		personality = shopPersonality.INEXPERIENCED
-		minimumAcceptanceValue = randf_range(-10, -40)
-		guaranteedAcceptanceValue = 50
+		minimumAcceptanceValue = randf_range(0, -10)
+		if !isTimeLocked:
+			shopLeftTime = 45
+#		guaranteedAcceptanceValue = 100
 		shopPersonalityLabel.text = "Personality: Inexperienced"
 		maxStrikes = 8
 		strikesLabel.text = "Strikes: " + str(strikes) + "/" + str(maxStrikes)
-	elif value >= 7 && value <= 26:
+	elif value >= 5 && value <= 26: # 22
 		personality = shopPersonality.NEUTRAL
-		minimumAcceptanceValue = randf_range(0, -5)
-		guaranteedAcceptanceValue = 75
+		minimumAcceptanceValue = randf_range(5, -5)
+		if !isTimeLocked:
+			shopLeftTime = 120
+#		guaranteedAcceptanceValue = 175
 		shopPersonalityLabel.text = "Personality: Neutral"
 		maxStrikes = 6
 		strikesLabel.text = "Strikes: " + str(strikes) + "/" + str(maxStrikes)
-	elif value >= 27 && value <= 32:
+	elif value >= 27 && value <= 32: # 6
 		personality = shopPersonality.SMART
-		minimumAcceptanceValue = randf_range(5, 0)
-		guaranteedAcceptanceValue = 85
+		minimumAcceptanceValue = randf_range(10, 0)
+		if !isTimeLocked:
+			shopLeftTime = 180
+#		guaranteedAcceptanceValue = 185
 		shopPersonalityLabel.text = "Personality: Smart"
 		maxStrikes = 4
 		strikesLabel.text = "Strikes: " + str(strikes) + "/" + str(maxStrikes)
-	elif value >= 33 && value <= 36:
+	elif value >= 33 && value <= 36: # 4
 		personality = shopPersonality.GREEDY
-		minimumAcceptanceValue = randf_range(10, 0)
-		guaranteedAcceptanceValue = 95
+		minimumAcceptanceValue = randf_range(20, 0)
+		if !isTimeLocked:
+			shopLeftTime = 180
+#		guaranteedAcceptanceValue = 95
 		shopPersonalityLabel.text = "Personality: Greedy"
 		maxStrikes = 3
 		strikesLabel.text = "Strikes: " + str(strikes) + "/" + str(maxStrikes)
@@ -219,15 +237,39 @@ func StartShopTimeLeftTimer() -> void:
 		time -= 1
 		shopTimeLeftLabel.text = str(snappedf(time, 1)) + " seconds left"
 	shopTimeLeftLabel.text = ""
-	ExitShop()
+	barterActionAvailable = false
+#	ExitShop()
 
 # Updates the label visually
 func UpdateAcceptanceValue() -> void:
 	print("playerBarterValue = " + str(playerBarterValue))
 	acceptanceValue = playerBarterValue - shopBarterValue
-#	var value: float = snappedf(((acceptanceValue / (100 + absf(minimumAcceptanceValue)))) * 100, 0.01)
+	match personality:
+		shopPersonality.NAIVE:
+			guaranteedAcceptanceValue = shopBarterValue * 0.25
+		shopPersonality.INEXPERIENCED:
+			guaranteedAcceptanceValue = shopBarterValue * 0.5
+		shopPersonality.NEUTRAL:
+			guaranteedAcceptanceValue = shopBarterValue * 0.75
+		shopPersonality.SMART:
+			guaranteedAcceptanceValue = shopBarterValue * 1
+		shopPersonality.GREEDY:
+			guaranteedAcceptanceValue = shopBarterValue * 1.15
+		_:
+			push_error("Not a valid shop personality.")
 	
-	var value: float = remap(acceptanceValue, minimumAcceptanceValue, guaranteedAcceptanceValue, 0, 1)
+#	var value: float = snappedf(((acceptanceValue / (100 + absf(minimumAcceptanceValue)))) * 100, 0.01)
+	var value: float
+	var Rcoloration
+	var Gcoloration
+	if guaranteedAcceptanceValue > minimumAcceptanceValue:
+		value = remap(acceptanceValue, minimumAcceptanceValue, guaranteedAcceptanceValue, 0, 1)
+		Rcoloration = remap(acceptanceValue, minimumAcceptanceValue, guaranteedAcceptanceValue, 1, 0)
+		Gcoloration = remap(acceptanceValue, minimumAcceptanceValue, guaranteedAcceptanceValue, 0, 1)
+	else:
+		value = remap(acceptanceValue, guaranteedAcceptanceValue, minimumAcceptanceValue, 0, 1)
+		Rcoloration = remap(acceptanceValue, guaranteedAcceptanceValue, minimumAcceptanceValue, 1, 0)
+		Gcoloration = remap(acceptanceValue, guaranteedAcceptanceValue, minimumAcceptanceValue, 0, 1)
 	acceptanceValueLabel.text = str(snappedf(value * 100, 0.01)) + "%"
 	
 	
@@ -235,8 +277,7 @@ func UpdateAcceptanceValue() -> void:
 #	var Rcoloration = OGcoloration - value
 #	var Gcoloration = value
 	
-	var Rcoloration = remap(acceptanceValue, minimumAcceptanceValue, guaranteedAcceptanceValue, 1, 0)
-	var Gcoloration = remap(acceptanceValue, minimumAcceptanceValue, guaranteedAcceptanceValue, 0, 1)
+
 #	var Rcoloration = remap(value, minimumAcceptanceValue, guaranteedAcceptanceValue, 1, 0)
 #	var Gcoloration = remap(value, minimumAcceptanceValue, guaranteedAcceptanceValue, 0, 1)
 	
@@ -257,6 +298,10 @@ func UpdateAcceptanceValue() -> void:
 #		acceptanceValueLabel.set_modulate(Color(1, 0, 0))
 
 func ConfirmTradeButton() -> void:
+	if !(barterActionAvailable):
+		confirmButton.disabled = true
+		await get_tree().create_timer(1).timeout
+		ExitShop()
 	checkForAcceptance()
 
 func tradeItems() -> void: 
@@ -273,6 +318,7 @@ func tradeItems() -> void:
 	
 	playerBarterValue = setPlayerBarterValue(GetTotalInventoryValue(playerBarterInventory))
 	playerBarterValueLabel.text = "£" + str(snappedf(playerBarterValue, 0.01))
+	
 	
 	updateShopBarterListVisual()
 	updatePlayerBarterListVisual()
@@ -337,7 +383,10 @@ func buttonCooldown() -> void:
 		time -= 0.01
 		buttonCooldownLabel.text = str(snappedf(time, 0.01)) + " seconds left"
 	buttonCooldownLabel.text = ""
-	confirmButton.disabled = false
+	if barterActionAvailable:
+		confirmButton.disabled = false
+	else:
+		ExitShop()
 
 
 #-- [ Lists ] --
@@ -413,7 +462,7 @@ func shopItemFilePathsToItemInstance() -> void:
 	# Make it look at the upkeep. (Currently it doesn't)
 	for i in temporaryShopArray.size():
 		var shopItem: BaseInventoryItem = temporaryShopArray[i].duplicate(true)
-		shopItem.amount = 999999
+		shopItem.amount = randi_range(10, 5000)
 		
 		for index in upkeepInventory.storedItems.size():
 			if shopItem.itemName == upkeepInventory.storedItems[index].itemName:
@@ -430,7 +479,7 @@ func updateShopListVisual() -> void:
 	shopList.clear()
 	for i in shopInventory.storedItems.size():
 		var Litem: BaseInventoryItem = shopInventory.storedItems[i]
-		shopList.add_item(Litem.itemName + " £" + str(snappedf(Litem.value, 0.01)), Litem.image)
+		shopList.add_item(Litem.itemName + "  x" + str(Litem.amount) + " £" + str(snappedf(Litem.value, 0.01)), Litem.image)
 		shopList.set_item_tooltip(i, Litem.itemDesciption)
 #
 #---
@@ -499,19 +548,31 @@ func OpenAmountSelector(selectedItem: BaseInventoryItem, initialInventory: Inven
 	selectorInitialItemAmount = initialInventory.getNamedItemAmount(selectorItem.itemName)
 	selectorTargetInitialItemAmount = selectedInventoryDestination.getNamedItemAmount(selectorItem.itemName)
 	selectorBarterChangerTo = isChangingValue
-	amountSlider.set_value_no_signal(amountSlider.max_value)
-	amountSpinbox.set_value_no_signal(amountSpinbox.max_value)
 	amountSelectorLabel.text = selectorItem.itemName
 	itemDescriptionLabel.text = selectorItem.itemDesciption
 	# Make sure value is updated
 	
 	setMaxSelectionValueOnItemAmount(selectorItem)
+	#amountSlider.max_value
+
 	
-	print("(check) selectorItem: " + str(selectorItem.itemName))
-	@warning_ignore("narrowing_conversion")
-	selectorInitialInventory.SetAmountInventory(selectorItem, selectorInitialItemAmount - amountSlider.value, false)
-	@warning_ignore("narrowing_conversion")
-	selectorInventory.SetAmountInventory(selectorItem, selectorTargetInitialItemAmount + amountSlider.value, false)
+	if selectorBarterChangerTo:
+		amountSlider.set_value_no_signal(0)
+		amountSpinbox.set_value_no_signal(0)
+		print("(check) selectorItem: " + str(selectorItem.itemName))
+		@warning_ignore("narrowing_conversion")
+		selectorInitialInventory.SetAmountInventory(selectorItem, selectorInitialItemAmount - amountSlider.value, false)
+		@warning_ignore("narrowing_conversion")
+		selectorInventory.SetAmountInventory(selectorItem, selectorTargetInitialItemAmount + amountSlider.value, false)
+	else:
+		amountSlider.set_value_no_signal(amountSlider.max_value)
+		amountSpinbox.set_value_no_signal(amountSlider.max_value)
+		print("(check) selectorItem: " + str(selectorItem.itemName))
+		@warning_ignore("narrowing_conversion")
+		selectorInitialInventory.SetAmountInventory(selectorItem, selectorInitialItemAmount - (selectorInitialItemAmount - amountSlider.value), false)
+		@warning_ignore("narrowing_conversion")
+		selectorInventory.SetAmountInventory(selectorItem, selectorTargetInitialItemAmount + (selectorInitialItemAmount - amountSlider.value), false)
+	
 	
 	# Display Information
 	shopBarterValue = GetTotalInventoryValue(shopBarterInventory)
@@ -528,10 +589,17 @@ func OpenAmountSelector(selectedItem: BaseInventoryItem, initialInventory: Inven
 func OnAmountSliderValueChanged(value: float) -> void:
 	amountSpinbox.value = value
 	
-	@warning_ignore("narrowing_conversion")
-	selectorInitialInventory.SetAmountInventory(selectorItem, selectorInitialItemAmount - amountSlider.value, false)
-	@warning_ignore("narrowing_conversion")
-	selectorInventory.SetAmountInventory(selectorItem, selectorTargetInitialItemAmount + amountSlider.value, false)
+	if selectorBarterChangerTo:
+		@warning_ignore("narrowing_conversion")
+		selectorInitialInventory.SetAmountInventory(selectorItem, selectorInitialItemAmount - amountSlider.value, false)
+		@warning_ignore("narrowing_conversion")
+		selectorInventory.SetAmountInventory(selectorItem, selectorTargetInitialItemAmount + amountSlider.value, false)
+	else:
+		print("(check) selectorItem: " + str(selectorItem.itemName))
+		@warning_ignore("narrowing_conversion")
+		selectorInitialInventory.SetAmountInventory(selectorItem, selectorInitialItemAmount - (selectorInitialItemAmount - amountSlider.value), false)
+		@warning_ignore("narrowing_conversion")
+		selectorInventory.SetAmountInventory(selectorItem, selectorTargetInitialItemAmount + (selectorInitialItemAmount - amountSlider.value), false)
 	
 	# Display Information
 	playerBarterValue = setPlayerBarterValue(GetTotalInventoryValue(playerBarterInventory))
@@ -568,8 +636,7 @@ func OnAmountConfirmedButtonPressed() -> void:
 	resetMaxSelectionValue()
 
 func setMaxSelectionValueOnItemAmount(item: BaseInventoryItem) -> void:
-	var amount: float = item.amount
-	amount = clampf(amount, 0, 999)
+	var amount: int = item.amount
 	print("amount is " + str(amount))
 	amountSlider.max_value = amount
 	amountSpinbox.max_value = amount

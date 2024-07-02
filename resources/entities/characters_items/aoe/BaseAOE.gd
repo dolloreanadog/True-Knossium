@@ -299,23 +299,14 @@ func firstTurn():
 	print(str(self) + ": Activate first turn")
 
 func attackStats(body: BaseCharacter):
-#	var checkArray: Array = [true, true, true]
-#	print(str(self) + ": Attacking " + str(body))
-#	# Adds as many false into the array
-#	for i in accuracy:
-#		checkArray.append(false)
-#		checkArray.shuffle()
-#
-#	print(str(self) + ": Shuffle is " + str(checkArray))
-#	var target = checkArray.pop_front()
 	
-	if randf_range(0, 1) <= accuracy:
-		print(str(self) + ": Target Has Been hit ")
-		body.damageStats(health, defense, attack, morale)
-		body.stats.changeEXP(experience)
-	else:
-		print(str(self) + ": Target Has Been missed ")
-		body.damageStats(0, 0, 0, 0)
+#	if randf_range(0, 1) <= accuracy:
+	print(str(self) + ": Target Has Been hit ")
+	body.damageStats(randf_range(0, health * (1 + accuracy)), randf_range(0, defense * (1 + accuracy)), randf_range(0, attack * (1 + accuracy)), randf_range(0, morale * (1 + accuracy)))
+	body.stats.changeEXP(experience)
+#	else:
+#		print(str(self) + ": Target Has Been missed ")
+#		body.damageStats(0, 0, 0, 0)
 
 func animationActivate():
 	if is_instance_valid(spriteAnimations):

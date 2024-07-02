@@ -39,6 +39,7 @@ func _on_button_yes_pressed() -> void:
 #	remove_child(self)
 #	dungeon.call_deferred("checkSpecialWindowContainer")
 	dungeon.checkSpecialWindowContainer()
+	dungeon.updateUpkeepList()
 	self.queue_free()
 
 func _on_button_no_pressed() -> void:

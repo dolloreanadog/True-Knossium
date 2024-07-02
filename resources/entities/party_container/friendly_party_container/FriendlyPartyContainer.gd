@@ -83,20 +83,8 @@ func getCharactersInfo():
 	else: 
 		AOEDenialSupport.setActive(true)
 	
-#	print(str(self) + ": characters: " + str(characters))
-#	print(str(self) + ": (check) charactersAmount: " + str(charactersAmount))
-	
-	
-#	if isFriendly:
-#		print(str(self) + ": Friendly Total Stat Points = " + str(totalStatPoints))
-#		print(str(self) + ": Turn: " + str(system.turn) + ": Friendly Characters: " + str(characters))
-#		print(str(self) + ": Turn: " + str(system.turn) + ": Friendly Character Amount: " + str(charactersAmount))
-#	else:
-#		print(str(self) + ": Enemy Total Stat Points = " + str(totalStatPoints))
-#		print(str(self) + ": Turn: " + str(system.turn) + ": Enemy Characters" + str(characters))
-#		print(str(self) + ": Turn: " + str(system.turn) + ": Enemy Character Amount: " + str(charactersAmount))
 	emit_signal("charactersUpdated")
-	
+
 @warning_ignore("unused_parameter")
 func addCharacter(character: BaseCharacter, startingExperience: float, giveDifficultyEXP: bool, characterPosition: Vector2):
 	print(str(self) + ": Spawning: " + str(character))

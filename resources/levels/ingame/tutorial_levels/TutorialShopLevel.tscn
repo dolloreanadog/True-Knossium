@@ -33,6 +33,7 @@ strikesLabel = NodePath("StrikesLabel")
 buttonCooldownTime = 2.0
 buttonCooldownLabel = NodePath("ButtonCooldownLabel")
 shopLeftTime = 1e+07
+isTimeLocked = true
 shopTimeLeftLabel = NodePath("TimeLeftLabel")
 amountSelectorLabel = NodePath("AmountSelector/AmountSelecterLabel")
 amountSelector = NodePath("AmountSelector")

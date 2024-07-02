@@ -19,6 +19,7 @@ var stats: StatComponent
 @export var statButtonGroup: StatViewButtonGroup
 @export var specialWindowContainer: Control
 @export var knossiumConsole: KnossiumConsole
+@export var AOECheck: Area2D
 
 #---[ Some Important buttons ]---
 @export_category("Important Buttons")
@@ -64,6 +65,7 @@ var totalCharactersSurrendered: int
 
 #--[ Other ]--
 var highlightEndTurn: bool
+var shopWeight: float = 0.0
 
 #--[ Surrender Window ]--
 var surrenderWindow = preload("res://resources/entities/surrender_window/surrender_window.tscn")
@@ -135,6 +137,8 @@ func EndTurnButtonHighlight(boolean: bool) -> void:
 		await get_tree().create_timer(2).timeout
 	await create_tween().tween_property(endTurnButton, "modulate", Color(1, 1, 1), 1).finished
 
+func AnyAOEStillLeft() -> bool:
+	return AOECheck.has_overlapping_areas()
 
 # When user exits unintentionally
 func _notification(what: int) -> void:
@@ -210,11 +214,15 @@ func addNewGameItems() -> void:
 		print("Target Item Amount: " + str(targetItem.amount))
 		inventory.addToInventory(targetItem, targetItem.amount)
 		#inventory.storedItems.push_back(targetItem)
+		await get_tree().create_timer(0.01).timeout
+	
+	await get_tree().create_timer(0.01).timeout
+	LoadItems.emit()
 
 #--[ Save System ]--
 
 #-- Load
-func loadSave() -> bool:
+func loadSave() -> void:
 	SaveSystem.loadAllData()
 	
 	peakTotalStatPoints = SaveSystem.GameInfoDict.PeakTotalStatPoints
@@ -226,12 +234,15 @@ func loadSave() -> bool:
 	print("Loaded Spawn Behavior Weights: " + str(difficulty.SpawnBehaviors))
 	
 	loadCharacters()
+	await LoadCharacters
 	loadAOE()
+	await LoadAOE
 #	call_deferred("loadCharacters")
 	if Global.newGameInventoryInfo.is_empty():
 		call_deferred("loadItems")
 	else:
 		addNewGameItems()
+	await LoadItems
 #	call_deferred("loadAOE")
 #	print("GameInfoDict PeakTotalStatPoints: " + str(SaveSystem.GameInfoDict.PeakTotalStatPoints))
 #	await get_tree().create_timer(0.05).timeout
@@ -243,19 +254,18 @@ func loadSave() -> bool:
 #	await get_tree().create_timer(0.05).timeout
 #	print("GameInfoDict Turns: " + str(SaveSystem.GameInfoDict.Turns))
 #	await get_tree().create_timer(0.05).timeout
-	print("GameInfoDict FriendlyCharactersList: " + str(SaveSystem.GameInfoDict.FriendlyCharactersList))
-	await get_tree().create_timer(0.05).timeout
+#	print("GameInfoDict FriendlyCharactersList: " + str(SaveSystem.GameInfoDict.FriendlyCharactersList))
+#	await get_tree().create_timer(0.05).timeout
 #	print("GameInfoDict EnemyCharactersList: " + str(SaveSystem.GameInfoDict.EnemyCharactersList))
 #	await get_tree().create_timer(0.05).timeout
 #	print("GameInfoDict Inventory: " + str(SaveSystem.GameInfoDict.Inventory))
 #	await get_tree().create_timer(0.05).timeout
-	print("Loaded GameInfoDict OffensiveAOEList: " + str(SaveSystem.GameInfoDict.OffensiveAOEList))
-	print("Loaded GameInfoDict SupportAOEList: " + str(SaveSystem.GameInfoDict.SupportAOEList))
+#	print("Loaded GameInfoDict OffensiveAOEList: " + str(SaveSystem.GameInfoDict.EnemyOffensiveAOEList))
+#	print("Loaded GameInfoDict SupportAOEList: " + str(SaveSystem.GameInfoDict.FriendlyOffensiveAOEList))
 	friendlyPartyContainer.getCharactersInfo()
 	turnsLabel.set_text("Turns: " + str(system.turn))
 	getBattle()
 	emit_signal("LoadFinished")
-	return true
 
 func loadCharacters() -> void:
 	var savedFriendlyCharactersList: Array = SaveSystem.GameInfoDict.FriendlyCharactersList
@@ -279,13 +289,15 @@ func loadCharacters() -> void:
 		if is_instance_valid(targetCharacterInstance.action4):
 			targetCharacterInstance.action4.currentCastTime = targetCharacterInfo.CharacterAction4CurrentCastTime
 		
+		targetCharacterInstance.characterName = targetCharacterInfo.CharacterName
 		targetCharacterInstance.stats.setCurrentHealth(targetCharacterInfo.CharacterCurrentHealth)
 		targetCharacterInstance.stats.setCurrentDefense(targetCharacterInfo.CharacterCurrentDefense)
 		targetCharacterInstance.stats.setCurrentAttack(targetCharacterInfo.CharacterCurrentAttack)
 		targetCharacterInstance.stats.setCurrentMorale(targetCharacterInfo.CharacterCurrentMorale)
 		
+		await get_tree().create_timer(0.01).timeout
 		# Make sure to do make true -> character.isFriendly
-		
+	
 	for i in savedEnemyCharactersList.size():
 		var targetCharacterInfo: Dictionary = savedEnemyCharactersList.pop_back()
 		
@@ -303,14 +315,20 @@ func loadCharacters() -> void:
 		if is_instance_valid(targetCharacterInstance.action4):
 			targetCharacterInstance.action4.currentCastTime = targetCharacterInfo.CharacterAction4CurrentCastTime
 		
+		targetCharacterInstance.characterName = targetCharacterInfo.CharacterName
 		targetCharacterInstance.stats.setCurrentHealth(targetCharacterInfo.CharacterCurrentHealth)
 		targetCharacterInstance.stats.setCurrentDefense(targetCharacterInfo.CharacterCurrentDefense)
 		targetCharacterInstance.stats.setCurrentAttack(targetCharacterInfo.CharacterCurrentAttack)
 		targetCharacterInstance.stats.setCurrentMorale(targetCharacterInfo.CharacterCurrentMorale)
+		
+		await get_tree().create_timer(0.01).timeout
+	
 	setIsCharactersActive(false)
 	friendlyPartyContainer.getCharactersInfo()
 	enemyPartyContainer.getCharactersInfo()
 	partyUI.updateUpkeepList()
+	await get_tree().create_timer(0.01).timeout
+	LoadCharacters.emit()
 
 func loadItems() -> void:
 	var savedInventory: Array = SaveSystem.GameInfoDict.Inventory
@@ -321,15 +339,24 @@ func loadItems() -> void:
 		#var instanceItem: BaseInventoryItem = instance_from_id(targetItemInfo.ItemPathName.object_id)
 		print(targetItemInfo)
 		inventory.addToInventory(loadedItem, targetItemInfo.ItemAmount)
+		await get_tree().create_timer(0.01).timeout
+	
+	await get_tree().create_timer(0.01).timeout
+	LoadItems.emit()
 
 func loadAOE() -> void:
 	#var savedAOEList: Array = SaveSystem.GameInfoDict.AOEList
-	var savedSupportAOEList: Array = SaveSystem.GameInfoDict.SupportAOEList
-	var savedOffensiveAOEList: Array = SaveSystem.GameInfoDict.OffensiveAOEList
+#	var savedSupportAOEList: Array = SaveSystem.GameInfoDict.SupportAOEList
+#	var savedOffensiveAOEList: Array = SaveSystem.GameInfoDict.OffensiveAOEList
+	
+	var savedFriendlySupportAOEList: Array = SaveSystem.GameInfoDict.FriendlySupportAOEList
+	var savedEnemySupportAOEList: Array = SaveSystem.GameInfoDict.EnemySupportAOEList
+	var savedFriendlyOffensiveAOEList: Array = SaveSystem.GameInfoDict.FriendlyOffensiveAOEList
+	var savedEnemyOffensiveAOEList: Array = SaveSystem.GameInfoDict.EnemyOffensiveAOEList
 	
 #	print("support aoe list size " + str(savedSupportAOEList.size()))
-	for i in savedSupportAOEList.size():
-		var targetAOEInfo: Dictionary = savedSupportAOEList.pop_back()
+	for i in savedFriendlySupportAOEList.size():
+		var targetAOEInfo: Dictionary = savedFriendlySupportAOEList.pop_back()
 		
 		var loadedAOE := load(targetAOEInfo.AOEFilePath)
 		var targetAOEInstance: BaseAOE = loadedAOE.instantiate()
@@ -357,9 +384,41 @@ func loadAOE() -> void:
 		targetAOEInstance.attack = targetAOEInfo.AOEAttackDamage
 		targetAOEInstance.morale = targetAOEInfo.AOEMoraleDamage
 		targetAOEInstance.experience = targetAOEInfo.AOEExperienceGain
+		await get_tree().create_timer(0.01).timeout
+	
+	for i in savedEnemySupportAOEList.size():
+		var targetAOEInfo: Dictionary = savedEnemySupportAOEList.pop_back()
 		
-	for i in savedOffensiveAOEList.size():
-		var targetAOEInfo: Dictionary = savedOffensiveAOEList.pop_back()
+		var loadedAOE := load(targetAOEInfo.AOEFilePath)
+		var targetAOEInstance: BaseAOE = loadedAOE.instantiate()
+		enemySupportAOE.add_child(targetAOEInstance)
+		
+		targetAOEInstance.AOEName = targetAOEInfo.AOEName
+		targetAOEInstance.mainColor = targetAOEInfo.AOEColor
+		targetAOEInstance.get_node("MeshInstance2D").modulate = targetAOEInfo.AOEColor
+#		print("loaded color: " + str(targetAOEInstance.get_node("MeshInstance2D").modulate))
+#		print("(check) loaded owner character pfp: " + str(targetAOEInfo.AOEOwnerCharacterPFP))
+		targetAOEInstance.ownerCharacterPFP = load(targetAOEInfo.AOEOwnerCharacterPFP)
+#		print("(check) owner character pfp: " + str(targetAOEInstance.ownerCharacterPFP))
+		targetAOEInstance.ownerCharacterName = targetAOEInfo.AOEOwnerName
+		targetAOEInstance.spriteAnimations.flip_h = targetAOEInfo.AOEIsSpriteFlipped
+		targetAOEInstance.ownerActionDescription = targetAOEInfo.AOEDescription
+		targetAOEInstance.global_position = targetAOEInfo.AOEPosition
+		targetAOEInstance.isDynamicColor = targetAOEInfo.AOEIsDynamicColor
+#		print(targetAOEInstance.AOEName + ": (dup) loaded DyanmicColor: " + str(targetAOEInstance.isDynamicColor))
+		targetAOEInstance.draggable = targetAOEInfo.AOEIsDraggable
+		targetAOEInstance.statusActive = targetAOEInfo.AOEStatusActive
+		targetAOEInstance.isMelee = targetAOEInfo.AOEIsMelee
+		targetAOEInstance.accuracy = targetAOEInfo.AOEAccuracy
+		targetAOEInstance.health = targetAOEInfo.AOEHealthDamage
+		targetAOEInstance.defense = targetAOEInfo.AOEDefenseDamage
+		targetAOEInstance.attack = targetAOEInfo.AOEAttackDamage
+		targetAOEInstance.morale = targetAOEInfo.AOEMoraleDamage
+		targetAOEInstance.experience = targetAOEInfo.AOEExperienceGain
+		await get_tree().create_timer(0.01).timeout
+	
+	for i in savedFriendlyOffensiveAOEList.size():
+		var targetAOEInfo: Dictionary = savedFriendlyOffensiveAOEList.pop_back()
 		
 		var loadedAOE := load(targetAOEInfo.AOEFilePath)
 		var targetAOEInstance: BaseAOE = loadedAOE.instantiate()
@@ -389,6 +448,43 @@ func loadAOE() -> void:
 		await targetAOEInstance.getItemsInside()
 #		await targetAOEInstance.gotItems
 		targetAOEInstance.areaOverlapCharacter(false)
+		await get_tree().create_timer(0.01).timeout
+	
+	for i in savedEnemyOffensiveAOEList.size():
+		var targetAOEInfo: Dictionary = savedEnemyOffensiveAOEList.pop_back()
+		
+		var loadedAOE := load(targetAOEInfo.AOEFilePath)
+		var targetAOEInstance: BaseAOE = loadedAOE.instantiate()
+		enemyAttackAOE.add_child(targetAOEInstance)
+		
+		targetAOEInstance.AOEName = targetAOEInfo.AOEName
+		targetAOEInstance.mainColor = targetAOEInfo.AOEColor
+		targetAOEInstance.get_node("MeshInstance2D").modulate = targetAOEInfo.AOEColor
+		targetAOEInstance.ownerCharacterPFP = load(targetAOEInfo.AOEOwnerCharacterPFP)
+		targetAOEInstance.ownerCharacterName = targetAOEInfo.AOEOwnerName
+		targetAOEInstance.spriteAnimations.flip_h = targetAOEInfo.AOEIsSpriteFlipped
+		targetAOEInstance.ownerActionDescription = targetAOEInfo.AOEDescription
+		targetAOEInstance.global_position = targetAOEInfo.AOEPosition
+		targetAOEInstance.isDynamicColor = targetAOEInfo.AOEIsDynamicColor
+#		print(targetAOEInstance.AOEName + ": (dup) loaded DyanmicColor: " + str(targetAOEInstance.isDynamicColor))
+		targetAOEInstance.draggable = targetAOEInfo.AOEIsDraggable
+		targetAOEInstance.statusActive = targetAOEInfo.AOEStatusActive
+		targetAOEInstance.isMelee = targetAOEInfo.AOEIsMelee
+		targetAOEInstance.accuracy = targetAOEInfo.AOEAccuracy
+		targetAOEInstance.health = targetAOEInfo.AOEHealthDamage
+		targetAOEInstance.defense = targetAOEInfo.AOEDefenseDamage
+		targetAOEInstance.attack = targetAOEInfo.AOEAttackDamage
+		targetAOEInstance.morale = targetAOEInfo.AOEMoraleDamage
+		targetAOEInstance.experience = targetAOEInfo.AOEExperienceGain
+		await get_tree().create_timer(0.05).timeout
+#		targetAOEInstance.call_deferred("getItemsInside")
+		await targetAOEInstance.getItemsInside()
+#		await targetAOEInstance.gotItems
+		targetAOEInstance.areaOverlapCharacter(false)
+		await get_tree().create_timer(0.01).timeout
+	
+	await get_tree().create_timer(0.01).timeout
+	LoadAOE.emit()
 
 #-- Save
 
@@ -425,6 +521,7 @@ func saveToSaveSystem() -> void:
 		Global.progressionDict.BattlesWon = system.battle
 	
 	saveFriendlyCharacters()
+
 	await SavedFriendlyCharacters
 	print("Saved Friendly Characters Passed")
 	saveEnemyCharacters()
@@ -458,7 +555,8 @@ func saveToSaveSystem() -> void:
 	await get_tree().create_timer(0.05).timeout
 	print("GameInfoDict Inventory: " + str(SaveSystem.GameInfoDict.Inventory))
 	await get_tree().create_timer(0.05).timeout
-	print("Saved GameInfoDict SupportAOEList: " + str(SaveSystem.GameInfoDict.SupportAOEList))
+	print("Saved GameInfoDict SupportAOEList: " + str(SaveSystem.GameInfoDict.FriendlySupportAOEList))
+	print("Saved GameInfoDict SupportAOEList: " + str(SaveSystem.GameInfoDict.EnemySupportAOEList))
 	SaveWarningLabel.hide()
 	emit_signal("SaveFinished")
 
@@ -471,6 +569,7 @@ func saveFriendlyCharacters() -> void:
 		if is_instance_valid(friendlyPartyContainer.characters[i]):
 			newSavedCharacterData.CharacterFilePath = friendlyPartyContainer.characters[i].scene_file_path
 			newSavedCharacterData.CharacterPosition = friendlyPartyContainer.characters[i].trueGlobalPosition
+			newSavedCharacterData.CharacterName = friendlyPartyContainer.characters[i].characterName
 			newSavedCharacterData.CharacterExperience = friendlyPartyContainer.characters[i].stats.totalExperience
 			if is_instance_valid(friendlyPartyContainer.characters[i].action1):
 				newSavedCharacterData.CharacterAction1CurrentCastTime = friendlyPartyContainer.characters[i].action1.currentCastTime
@@ -487,6 +586,7 @@ func saveFriendlyCharacters() -> void:
 			SaveSystem.GameInfoDict.FriendlyCharactersList.push_back(newSavedCharacterData)
 			await get_tree().create_timer(0.001).timeout
 	
+	await get_tree().create_timer(0.05).timeout
 	SavedFriendlyCharacters.emit()
 
 func saveEnemyCharacters() -> void:
@@ -498,6 +598,7 @@ func saveEnemyCharacters() -> void:
 		if is_instance_valid(enemyPartyContainer.characters[i]):
 			newSavedCharacterData.CharacterFilePath = enemyPartyContainer.characters[i].scene_file_path
 			newSavedCharacterData.CharacterPosition = enemyPartyContainer.characters[i].trueGlobalPosition
+			newSavedCharacterData.CharacterName = enemyPartyContainer.characters[i].characterName
 			newSavedCharacterData.CharacterExperience = enemyPartyContainer.characters[i].stats.totalExperience
 			if is_instance_valid(enemyPartyContainer.characters[i].action1):
 				newSavedCharacterData.CharacterAction1CurrentCastTime = enemyPartyContainer.characters[i].action1.currentCastTime
@@ -513,7 +614,8 @@ func saveEnemyCharacters() -> void:
 			newSavedCharacterData.CharacterCurrentMorale = enemyPartyContainer.characters[i].stats.currentMorale
 			SaveSystem.GameInfoDict.EnemyCharactersList.push_back(newSavedCharacterData)
 			await get_tree().create_timer(0.001).timeout
-			
+	
+	await get_tree().create_timer(0.05).timeout
 	SavedEnemyCharacters.emit()
 
 func saveItems() -> void:
@@ -523,64 +625,123 @@ func saveItems() -> void:
 		newSavedItemData.ItemAmount = inventory.storedItems[i].amount
 		SaveSystem.GameInfoDict.Inventory.push_back(newSavedItemData)
 		await get_tree().create_timer(0.001).timeout
+	
+	await get_tree().create_timer(0.05).timeout
 	SavedItems.emit()
 
 func saveAOE() -> void:
-	var allSupportAOEList: Array = friendlyAOESupport.get_children() + enemySupportAOE.get_children()
-	var allOffensiveAOEList: Array = friendlyAOEAttack.get_children() + enemyAttackAOE.get_children()
+#	var allSupportAOEList: Array = friendlyAOESupport.get_children() + enemySupportAOE.get_children()
+#	var allOffensiveAOEList: Array = friendlyAOEAttack.get_children() + enemyAttackAOE.get_children()
 	
-	for i in allSupportAOEList.size():
+	var friendlySupportAOEList: Array = friendlyAOESupport.get_children()
+	var enemySupportAOEList: Array = enemySupportAOE.get_children()
+	var friendlyOffensiveAOEList: Array = friendlyAOEAttack.get_children()
+	var enemyOffensiveAOEList: Array = enemyAttackAOE.get_children()
+	
+	
+	for i in friendlySupportAOEList.size():
 		var newSavedAOEData = SaveSystem.AOEInfoDict.duplicate(true)
-		newSavedAOEData.AOEFilePath = allSupportAOEList[i].scene_file_path
-		newSavedAOEData.AOEName = allSupportAOEList[i].AOEName
-		newSavedAOEData.AOEColor = allSupportAOEList[i].mainColor
-#		print("saved color: " + str(allSupportAOEList[i].get_node("MeshInstance2D").modulate))
-#		print("(check) current owner character pfp: " + str(allSupportAOEList[i].ownerCharacterPFP.resource_path))
-		newSavedAOEData.AOEOwnerCharacterPFP = allSupportAOEList[i].ownerCharacterPFP.resource_path
+		newSavedAOEData.AOEFilePath = friendlySupportAOEList[i].scene_file_path
+		newSavedAOEData.AOEName = friendlySupportAOEList[i].AOEName
+		newSavedAOEData.AOEColor = friendlySupportAOEList[i].mainColor
+#		print("saved color: " + str(friendlySupportAOEList[i].get_node("MeshInstance2D").modulate))
+#		print("(check) current owner character pfp: " + str(friendlySupportAOEList[i].ownerCharacterPFP.resource_path))
+		newSavedAOEData.AOEOwnerCharacterPFP = friendlySupportAOEList[i].ownerCharacterPFP.resource_path
 #		print("(check) saved owner character pfp: " + str(newSavedAOEData.AOEOwnerCharacterPFP))
-		newSavedAOEData.AOEOwnerName = allSupportAOEList[i].ownerCharacterName
-		newSavedAOEData.AOEIsSpriteFlipped = allSupportAOEList[i].spriteAnimations.flip_h
-		newSavedAOEData.AOEDescription = allSupportAOEList[i].ownerActionDescription
-		newSavedAOEData.AOEPosition = allSupportAOEList[i].global_position
-		newSavedAOEData.AOEIsDynamicColor = allSupportAOEList[i].isDynamicColor
-#		print(allSupportAOEList[i].AOEName + ": (dup) saved DyanmicColor: " + str(allSupportAOEList[i].isDynamicColor))
-		newSavedAOEData.AOEIsDraggable = allSupportAOEList[i].draggable
-		newSavedAOEData.AOEStatusActive = allSupportAOEList[i].statusActive
-		newSavedAOEData.AOEIsMelee = allSupportAOEList[i].isMelee
-		newSavedAOEData.AOEAccuracy = allSupportAOEList[i].accuracy
-		newSavedAOEData.AOEHealthDamage = allSupportAOEList[i].health
-		newSavedAOEData.AOEDefenseDamage = allSupportAOEList[i].defense
-		newSavedAOEData.AOEAttackDamage = allSupportAOEList[i].attack
-		newSavedAOEData.AOEMoraleDamage = allSupportAOEList[i].morale
-		newSavedAOEData.AOEExperienceGain = allSupportAOEList[i].experience
-		SaveSystem.GameInfoDict.SupportAOEList.push_back(newSavedAOEData)
+		newSavedAOEData.AOEOwnerName = friendlySupportAOEList[i].ownerCharacterName
+		newSavedAOEData.AOEIsSpriteFlipped = friendlySupportAOEList[i].spriteAnimations.flip_h
+		newSavedAOEData.AOEDescription = friendlySupportAOEList[i].ownerActionDescription
+		newSavedAOEData.AOEPosition = friendlySupportAOEList[i].global_position
+		newSavedAOEData.AOEIsDynamicColor = friendlySupportAOEList[i].isDynamicColor
+#		print(friendlySupportAOEList[i].AOEName + ": (dup) saved DyanmicColor: " + str(friendlySupportAOEList[i].isDynamicColor))
+		newSavedAOEData.AOEIsDraggable = friendlySupportAOEList[i].draggable
+		newSavedAOEData.AOEStatusActive = friendlySupportAOEList[i].statusActive
+		newSavedAOEData.AOEIsMelee = friendlySupportAOEList[i].isMelee
+		newSavedAOEData.AOEAccuracy = friendlySupportAOEList[i].accuracy
+		newSavedAOEData.AOEHealthDamage = friendlySupportAOEList[i].health
+		newSavedAOEData.AOEDefenseDamage = friendlySupportAOEList[i].defense
+		newSavedAOEData.AOEAttackDamage = friendlySupportAOEList[i].attack
+		newSavedAOEData.AOEMoraleDamage = friendlySupportAOEList[i].morale
+		newSavedAOEData.AOEExperienceGain = friendlySupportAOEList[i].experience
+		SaveSystem.GameInfoDict.FriendlySupportAOEList.push_back(newSavedAOEData)
 		await get_tree().create_timer(0.001).timeout
 	
-	
-	for i in allOffensiveAOEList.size():
+	for i in enemySupportAOEList.size():
 		var newSavedAOEData = SaveSystem.AOEInfoDict.duplicate(true)
-		newSavedAOEData.AOEFilePath = allOffensiveAOEList[i].scene_file_path
-		newSavedAOEData.AOEName = allOffensiveAOEList[i].AOEName
-		newSavedAOEData.AOEColor = allOffensiveAOEList[i].mainColor
-		newSavedAOEData.AOEOwnerCharacterPFP = allOffensiveAOEList[i].ownerCharacterPFP.resource_path
-		newSavedAOEData.AOEOwnerName = allOffensiveAOEList[i].ownerCharacterName
-		newSavedAOEData.AOEIsSpriteFlipped = allOffensiveAOEList[i].spriteAnimations.flip_h
-		newSavedAOEData.AOEDescription = allOffensiveAOEList[i].ownerActionDescription
-		newSavedAOEData.AOEPosition = allOffensiveAOEList[i].global_position
-		newSavedAOEData.AOEIsDynamicColor = allOffensiveAOEList[i].isDynamicColor
-#		print(allOffensiveAOEList[i].AOEName + ": (dup) saved DyanmicColor: " + str(allOffensiveAOEList[i].isDynamicColor))
-		newSavedAOEData.AOEIsDraggable = allOffensiveAOEList[i].draggable
-		newSavedAOEData.AOEStatusActive = allOffensiveAOEList[i].statusActive
-		newSavedAOEData.AOEIsMelee = allOffensiveAOEList[i].isMelee
-		newSavedAOEData.AOEAccuracy = allOffensiveAOEList[i].accuracy
-		newSavedAOEData.AOEHealthDamage = allOffensiveAOEList[i].health
-		newSavedAOEData.AOEDefenseDamage = allOffensiveAOEList[i].defense
-		newSavedAOEData.AOEAttackDamage = allOffensiveAOEList[i].attack
-		newSavedAOEData.AOEMoraleDamage = allOffensiveAOEList[i].morale
-		newSavedAOEData.AOEExperienceGain = allOffensiveAOEList[i].experience
-		SaveSystem.GameInfoDict.OffensiveAOEList.push_back(newSavedAOEData)
+		newSavedAOEData.AOEFilePath = enemySupportAOEList[i].scene_file_path
+		newSavedAOEData.AOEName = enemySupportAOEList[i].AOEName
+		newSavedAOEData.AOEColor = enemySupportAOEList[i].mainColor
+#		print("saved color: " + str(enemySupportAOEList[i].get_node("MeshInstance2D").modulate))
+#		print("(check) current owner character pfp: " + str(enemySupportAOEList[i].ownerCharacterPFP.resource_path))
+		newSavedAOEData.AOEOwnerCharacterPFP = enemySupportAOEList[i].ownerCharacterPFP.resource_path
+#		print("(check) saved owner character pfp: " + str(newSavedAOEData.AOEOwnerCharacterPFP))
+		newSavedAOEData.AOEOwnerName = enemySupportAOEList[i].ownerCharacterName
+		newSavedAOEData.AOEIsSpriteFlipped = enemySupportAOEList[i].spriteAnimations.flip_h
+		newSavedAOEData.AOEDescription = enemySupportAOEList[i].ownerActionDescription
+		newSavedAOEData.AOEPosition = enemySupportAOEList[i].global_position
+		newSavedAOEData.AOEIsDynamicColor = enemySupportAOEList[i].isDynamicColor
+#		print(enemySupportAOEList[i].AOEName + ": (dup) saved DyanmicColor: " + str(enemySupportAOEList[i].isDynamicColor))
+		newSavedAOEData.AOEIsDraggable = enemySupportAOEList[i].draggable
+		newSavedAOEData.AOEStatusActive = enemySupportAOEList[i].statusActive
+		newSavedAOEData.AOEIsMelee = enemySupportAOEList[i].isMelee
+		newSavedAOEData.AOEAccuracy = enemySupportAOEList[i].accuracy
+		newSavedAOEData.AOEHealthDamage = enemySupportAOEList[i].health
+		newSavedAOEData.AOEDefenseDamage = enemySupportAOEList[i].defense
+		newSavedAOEData.AOEAttackDamage = enemySupportAOEList[i].attack
+		newSavedAOEData.AOEMoraleDamage = enemySupportAOEList[i].morale
+		newSavedAOEData.AOEExperienceGain = enemySupportAOEList[i].experience
+		SaveSystem.GameInfoDict.EnemySupportAOEList.push_back(newSavedAOEData)
 		await get_tree().create_timer(0.001).timeout
 	
+	for i in friendlyOffensiveAOEList.size():
+		var newSavedAOEData = SaveSystem.AOEInfoDict.duplicate(true)
+		newSavedAOEData.AOEFilePath = friendlyOffensiveAOEList[i].scene_file_path
+		newSavedAOEData.AOEName = friendlyOffensiveAOEList[i].AOEName
+		newSavedAOEData.AOEColor = friendlyOffensiveAOEList[i].mainColor
+		newSavedAOEData.AOEOwnerCharacterPFP = friendlyOffensiveAOEList[i].ownerCharacterPFP.resource_path
+		newSavedAOEData.AOEOwnerName = friendlyOffensiveAOEList[i].ownerCharacterName
+		newSavedAOEData.AOEIsSpriteFlipped = friendlyOffensiveAOEList[i].spriteAnimations.flip_h
+		newSavedAOEData.AOEDescription = friendlyOffensiveAOEList[i].ownerActionDescription
+		newSavedAOEData.AOEPosition = friendlyOffensiveAOEList[i].global_position
+		newSavedAOEData.AOEIsDynamicColor = friendlyOffensiveAOEList[i].isDynamicColor
+#		print(friendlyOffensiveAOEList[i].AOEName + ": (dup) saved DyanmicColor: " + str(friendlyOffensiveAOEList[i].isDynamicColor))
+		newSavedAOEData.AOEIsDraggable = friendlyOffensiveAOEList[i].draggable
+		newSavedAOEData.AOEStatusActive = friendlyOffensiveAOEList[i].statusActive
+		newSavedAOEData.AOEIsMelee = friendlyOffensiveAOEList[i].isMelee
+		newSavedAOEData.AOEAccuracy = friendlyOffensiveAOEList[i].accuracy
+		newSavedAOEData.AOEHealthDamage = friendlyOffensiveAOEList[i].health
+		newSavedAOEData.AOEDefenseDamage = friendlyOffensiveAOEList[i].defense
+		newSavedAOEData.AOEAttackDamage = friendlyOffensiveAOEList[i].attack
+		newSavedAOEData.AOEMoraleDamage = friendlyOffensiveAOEList[i].morale
+		newSavedAOEData.AOEExperienceGain = friendlyOffensiveAOEList[i].experience
+		SaveSystem.GameInfoDict.FriendlyOffensiveAOEList.push_back(newSavedAOEData)
+		await get_tree().create_timer(0.001).timeout
+	
+	for i in enemyOffensiveAOEList.size():
+		var newSavedAOEData = SaveSystem.AOEInfoDict.duplicate(true)
+		newSavedAOEData.AOEFilePath = enemyOffensiveAOEList[i].scene_file_path
+		newSavedAOEData.AOEName = enemyOffensiveAOEList[i].AOEName
+		newSavedAOEData.AOEColor = enemyOffensiveAOEList[i].mainColor
+		newSavedAOEData.AOEOwnerCharacterPFP = enemyOffensiveAOEList[i].ownerCharacterPFP.resource_path
+		newSavedAOEData.AOEOwnerName = enemyOffensiveAOEList[i].ownerCharacterName
+		newSavedAOEData.AOEIsSpriteFlipped = enemyOffensiveAOEList[i].spriteAnimations.flip_h
+		newSavedAOEData.AOEDescription = enemyOffensiveAOEList[i].ownerActionDescription
+		newSavedAOEData.AOEPosition = enemyOffensiveAOEList[i].global_position
+		newSavedAOEData.AOEIsDynamicColor = enemyOffensiveAOEList[i].isDynamicColor
+#		print(enemyOffensiveAOEList[i].AOEName + ": (dup) saved DyanmicColor: " + str(enemyOffensiveAOEList[i].isDynamicColor))
+		newSavedAOEData.AOEIsDraggable = enemyOffensiveAOEList[i].draggable
+		newSavedAOEData.AOEStatusActive = enemyOffensiveAOEList[i].statusActive
+		newSavedAOEData.AOEIsMelee = enemyOffensiveAOEList[i].isMelee
+		newSavedAOEData.AOEAccuracy = enemyOffensiveAOEList[i].accuracy
+		newSavedAOEData.AOEHealthDamage = enemyOffensiveAOEList[i].health
+		newSavedAOEData.AOEDefenseDamage = enemyOffensiveAOEList[i].defense
+		newSavedAOEData.AOEAttackDamage = enemyOffensiveAOEList[i].attack
+		newSavedAOEData.AOEMoraleDamage = enemyOffensiveAOEList[i].morale
+		newSavedAOEData.AOEExperienceGain = enemyOffensiveAOEList[i].experience
+		SaveSystem.GameInfoDict.EnemyOffensiveAOEList.push_back(newSavedAOEData)
+		await get_tree().create_timer(0.001).timeout
+	
+	await get_tree().create_timer(0.05).timeout
 	SavedAOE.emit()
 
 func setDisabledAllAOE(boolean: bool) -> void:
@@ -623,6 +784,7 @@ func goThroughQueuedAOEArray() -> void:
 	setIsCharactersActive(false)
 	
 	saveToSaveSystem()
+	updateUpkeepList()
 	stopControlVisible(true, 1)
 	var confirm: bool = await saveConfirmation()
 	
@@ -630,9 +792,13 @@ func goThroughQueuedAOEArray() -> void:
 	
 	if confirm:
 		if system.battle >= 2:
-			if randi_range(0, 10) == 0:
+			shopWeight += 0.25
+			if randi_range(0, 25) - shopWeight <= 0:
+				shopWeight = 0.0
 				stopControlVisible(true, 1)
 				await get_tree().create_timer(0.5).timeout
+				while difficulty.isCharactersSpawningIn == true:
+					await get_tree().create_timer(0.1).timeout
 				GotoShop()
 			else:
 				checkSpecialWindowContainer()
@@ -671,7 +837,7 @@ func GotoShop() -> void:
 	instance.z_index = 2
 	
 	@warning_ignore("integer_division")
-	instance.set_global_position(Vector2(DisplayServer.screen_get_size().x / 2, DisplayServer.screen_get_size().y / 2))
+	instance.set_global_position(Vector2(DisplayServer.screen_get_size(DisplayServer.window_get_current_screen(0)).x / 2, DisplayServer.screen_get_size(DisplayServer.window_get_current_screen(0)).y / 2))
 	checkSpecialWindowContainer()
 
 func spawnSurrenderWindow(Lcharacter: BaseCharacter, profilePicture: Texture2D, characterName: String, experience: float) -> void:

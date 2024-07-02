@@ -1,7 +1,7 @@
 extends Node
 
 var filePathForSaveData := "user://SaveData.save"
-var gameSaveVersion: String = "0.82"
+var gameSaveVersion: String = "0.83.2"
 var placeholderDictionary: Dictionary
 
 signal Saved
@@ -23,8 +23,12 @@ signal Loaded
 	"EnemyCharactersList": [], # Store all CharacterInfoDicts Here
 	
 	"AOEList": [], # <- Deprecated, using AOE below.
-	"SupportAOEList": [],
-	"OffensiveAOEList": [],
+	"SupportAOEList": [], # <- Deprecated, using AOE below.
+	"OffensiveAOEList": [], # <- Deprecated, using AOE below.
+	"FriendlySupportAOEList": [],
+	"EnemySupportAOEList": [],
+	"FriendlyOffensiveAOEList": [],
+	"EnemyOffensiveAOEList": [],
 }
 
 @export var ItemInfoDict: Dictionary = {
@@ -34,6 +38,7 @@ signal Loaded
 
 @export var CharacterInfoDict: Dictionary = {
 	"CharacterFilePath": "CharacterFilePath",
+	"CharacterName": "Name",
 	"CharacterPosition": Vector2(0, 0),
 #	"CharacterIsDynamicColor": false, 
 	"CharacterExperience": 0.0,
@@ -151,9 +156,10 @@ func clearSaveThroughEmptying() -> void:
 	"Inventory": [], # Store all itemInfoDicts Here
 	"FriendlyCharactersList": [], # Store all CharacterInfoDicts Here
 	"EnemyCharactersList": [], # Store all CharacterInfoDicts Here
-	"AOEList": [], # Store all AOEInfoDicts Here
-	"SupportAOEList": [],
-	"OffensiveAOEList": [],
+	"FriendlySupportAOEList": [],
+	"EnemySupportAOEList": [],
+	"FriendlyOffensiveAOEList": [],
+	"EnemyOffensiveAOEList": [],
 	}
 	# clears all contents in GameInfoDict, really intended for ingame saving
 

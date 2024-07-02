@@ -3,6 +3,7 @@ class_name BaseCharacter
 
 #--[ Some important stuff ]--
 @export var id: String
+var characterName: String
 @export var profilePicture: Texture2D
 @export_multiline var characterDescription: String
 @onready var partyContainer: BasePartyContainer = get_parent()
@@ -56,10 +57,10 @@ var turns: int
 #--[ Signal ]--
 signal characterAnimationFinished
 
-
 #--[ Base Functions ]--
-func _ready():
+func _ready() -> void:
 	print("(check) party container dungeon = " + str(partyContainer.dungeon))
+	characterName = id
 	system = dungeon.system
 	inventory = dungeon.inventory
 	activateLevelLabel(false)

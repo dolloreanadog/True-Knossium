@@ -38,7 +38,7 @@ var debugGuaranteeSpawning: bool = false
 var debugChosenSpawnBehavior: int
 
 @export var SpawnBehaviors: Dictionary = {
-	"Normal Spawn Behavior": 1000,
+	"Normal Spawn Behavior": 750,
 	"Horde Spawn Behavior": 50,
 	"Elite Spawn Behavior": 25,
 	"Legendary Spawn Behavior": 15,
@@ -100,7 +100,7 @@ func chooseSpawnBehavior(spawnBehavior: String):
 			NormalSpawnBehavior()
 			
 			# Change Weight as it was chosen so others get a chance
-			SpawnBehaviors["Normal Spawn Behavior"] -= 30
+			SpawnBehaviors["Normal Spawn Behavior"] -= 50
 			SpawnBehaviors["Horde Spawn Behavior"] += 7.5
 			SpawnBehaviors["Elite Spawn Behavior"] += 7.5
 			SpawnBehaviors["Legendary Spawn Behavior"] += 2.5
@@ -120,7 +120,7 @@ func chooseSpawnBehavior(spawnBehavior: String):
 			EliteSpawnBehavior()
 			
 			# Change Weight as it was chosen so others get a chance
-			SpawnBehaviors["Normal Spawn Behavior"] += 15
+			SpawnBehaviors["Normal Spawn Behavior"] += 25
 			SpawnBehaviors["Horde Spawn Behavior"] += 7.5
 			SpawnBehaviors["Elite Spawn Behavior"] -= 15
 			SpawnBehaviors["Legendary Spawn Behavior"] += 2.5
@@ -230,7 +230,7 @@ func HordeSpawnBehavior() -> void: # <- For some reason this is the most reliabl
 	print(str(self) + ": Horde Spawning Behavior ")
 	var LdifficultyTotal = difficultyTotal * 2
 	print(str(self) + "LdifficultyTotal: " + str(LdifficultyTotal))
-	charityDifficultyEXP *= 0.15
+	charityDifficultyEXP *= 0.2
 	print("(HordeSpawnBehavior) charityDifficultyEXP: " + str(charityDifficultyEXP))
 	enemyPartyContainer.difficultyEXP = charityDifficultyEXP
 	getEnemyStats()
@@ -262,7 +262,7 @@ func EliteSpawnBehavior() -> void:
 	print(str(self) + ": Elite Spawning Behavior")
 #	@warning_ignore("unused_variable")
 	var LdifficultyTotal = difficultyTotal * 0.25
-	charityDifficultyEXP *= 12.5
+	charityDifficultyEXP *= 13.75
 	print(str(self) + " (EliteSpawnBehavior) " + "charityDifficultyEXP: " + str(charityDifficultyEXP))
 	enemyPartyContainer.difficultyEXP = charityDifficultyEXP
 	

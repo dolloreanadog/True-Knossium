@@ -30,3 +30,23 @@ func _ready() -> void:
 
 func ExitShop() -> void:
 	pass
+
+func tradeItems() -> void: 
+	for i in playerBarterInventory.storedItems.size():
+		playerBarterInventory.storedItems.pop_back()
+	
+	for i in shopBarterInventory.storedItems.size():
+		var Litem: BaseInventoryItem = shopBarterInventory.storedItems.pop_back()
+		playerInventory.addToInventory(Litem, Litem.amount)
+	
+	shopBarterValue = GetTotalInventoryValue(shopBarterInventory)
+	shopBarterValueLabel.text = "£" + str(snappedf(shopBarterValue, 0.01))
+	
+	playerBarterValue = setPlayerBarterValue(GetTotalInventoryValue(playerBarterInventory))
+	playerBarterValueLabel.text = "£" + str(snappedf(playerBarterValue, 0.01))
+	
+	updateShopBarterListVisual()
+	updatePlayerBarterListVisual()
+	updateInventoryListVisual()
+	updateShopListVisual()
+	UpdateAcceptanceValue()

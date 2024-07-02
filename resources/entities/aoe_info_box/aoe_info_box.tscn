@@ -109,15 +109,13 @@ offset_bottom = 50.0
 text = "Movable: x"
 horizontal_alignment = 2
 
-[node name="Description" type="Label" parent="."]
+[node name="Description" type="RichTextLabel" parent="."]
 layout_mode = 0
 offset_left = 322.0
 offset_top = 48.0
 offset_right = 858.0
 offset_bottom = 144.0
 text = "200 character limit"
-autowrap_mode = 3
-text_overrun_behavior = 1
 
 [node name="StaticAOEInfoLabel" type="Label" parent="."]
 layout_mode = 0

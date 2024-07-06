@@ -289,11 +289,19 @@ offset_bottom = 55.0
 
 [node name="AmountConfirmButton" type="Button" parent="CharacterAmountSelector"]
 layout_mode = 0
-offset_left = 192.0
+offset_left = 120.0
 offset_top = 56.0
-offset_right = 320.0
+offset_right = 248.0
 offset_bottom = 87.0
 text = "Confirm"
+
+[node name="AmountConfirmButton2" type="Button" parent="CharacterAmountSelector"]
+layout_mode = 0
+offset_left = 264.0
+offset_top = 56.0
+offset_right = 392.0
+offset_bottom = 87.0
+text = "Cancel"
 
 [node name="ItemAmountSelector" type="ColorRect" parent="."]
 visible = false
@@ -335,11 +343,19 @@ offset_bottom = 55.0
 
 [node name="AmountConfirmButton" type="Button" parent="ItemAmountSelector"]
 layout_mode = 0
-offset_left = 192.0
+offset_left = 120.0
 offset_top = 56.0
-offset_right = 320.0
+offset_right = 248.0
 offset_bottom = 87.0
 text = "Confirm"
+
+[node name="AmountConfirmButton2" type="Button" parent="ItemAmountSelector"]
+layout_mode = 0
+offset_left = 264.0
+offset_top = 56.0
+offset_right = 392.0
+offset_bottom = 87.0
+text = "Cancel"
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(960, 540)
@@ -372,6 +388,8 @@ horizontal_alignment = 1
 [connection signal="value_changed" from="CharacterAmountSelector/AmountSlider" to="." method="CharacterAmountSliderValueChanged"]
 [connection signal="value_changed" from="CharacterAmountSelector/AmountSpinBox" to="." method="CharacterAmountSpinBoxValueChanged"]
 [connection signal="pressed" from="CharacterAmountSelector/AmountConfirmButton" to="." method="CharacterAmountSelectorConfirmButtonPressed"]
+[connection signal="pressed" from="CharacterAmountSelector/AmountConfirmButton2" to="." method="CharacterAmountSelectorCancelButtonPressed"]
 [connection signal="value_changed" from="ItemAmountSelector/AmountSlider" to="." method="ItemAmountSliderValueChanged"]
 [connection signal="value_changed" from="ItemAmountSelector/AmountSpinBox" to="." method="ItemAmountSpinBoxValueChanged"]
 [connection signal="pressed" from="ItemAmountSelector/AmountConfirmButton" to="." method="ItemAmountSelectorConfirmButtonPressed"]
+[connection signal="pressed" from="ItemAmountSelector/AmountConfirmButton2" to="." method="ItemAmountSelectorCancelButtonPressed"]

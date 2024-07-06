@@ -130,6 +130,7 @@ func applySettings() -> void:
 	# For Testing
 #	setKeybindThroughKey("ToggleVisibilityAOEEnemy", SettingsDict["ToggleVisibilityAOEEnemy"])
 	
+	await get_tree().create_timer(0.05).timeout
 	match SettingsDict.SettingsWindowedMode:
 		windowMode.FULLSCREEN:
 			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_EXCLUSIVE_FULLSCREEN)

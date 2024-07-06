@@ -13,6 +13,8 @@ config_version=5
 config/name="Knossium"
 run/main_scene="res://resources/levels/MainMenu.tscn"
 config/features=PackedStringArray("4.1", "Forward Plus")
+boot_splash/bg_color=Color(1, 1, 1, 1)
+boot_splash/image="res://assets/art/character_profile_picture/dev/DevCharacterPFP.png"
 config/icon="res://icon.svg"
 
 [audio]
@@ -36,6 +38,8 @@ window/size/viewport_width=1920
 window/size/viewport_height=1080
 window/size/initial_position_type=0
 window/size/resizable=false
+window/size/window_width_override=1280
+window/size/window_height_override=720
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
 

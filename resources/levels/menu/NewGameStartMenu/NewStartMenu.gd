@@ -351,6 +351,16 @@ func CharacterAmountSelectorConfirmButtonPressed() -> void:
 	UpdateUpkeepListArray()
 	CheckIfForCharacters()
 
+func CharacterAmountSelectorCancelButtonPressed() -> void:
+	$StopControl.hide()
+	characterAmountSelector.hide()
+	
+	characterAmountSlider.value = 0
+	selectorCurrentValue = 0
+	UpdateCurrentValue()
+	UpdateUpkeepListArray()
+	CheckIfForCharacters()
+
 
 #-- Item Amount Selector
 func OpenItemAmountSelector(selectedItem: BaseInventoryItem, selectedInventory: InventorySystem, isFinal: bool) -> void:
@@ -363,7 +373,6 @@ func OpenItemAmountSelector(selectedItem: BaseInventoryItem, selectedInventory: 
 	selectorIsFinal = isFinal
 	selectorInitialItemAmount = selectedInventory.getNamedItemAmount(selectorItem.itemName)
 	print("selector Initial Item Amount: " + str(selectorInitialItemAmount))
-	
 	
 	if selectorIsFinal:
 		setMaxSelectorAmountOnAmount(selectorInitialItemAmount)
@@ -397,10 +406,23 @@ func ItemAmountSelectorConfirmButtonPressed() -> void:
 	$StopControl.hide()
 	itemAmountSelector.hide()
 	
-	
 	UpdateCharacterFinalListVisual()
 	finalInventorySystem.removeAllItemsAtZero()
 	itemAmountSlider.set_value_no_signal(0)
 	itemAmountSpinbox.set_value_no_signal(0)
+	UpdateItemFinalListVisual()
+	selectorCurrentValue = 0
+
+func ItemAmountSelectorCancelButtonPressed() -> void:
+	$StopControl.hide()
+	itemAmountSelector.hide()
+	
+	if selectorIsFinal:
+		itemAmountSlider.value = selectorInitialItemAmount
+	
+	UpdateCharacterFinalListVisual()
+	itemAmountSlider.set_value_no_signal(0)
+	itemAmountSpinbox.set_value_no_signal(0)
+	finalInventorySystem.removeAllItemsAtZero()
 	UpdateItemFinalListVisual()
 	selectorCurrentValue = 0

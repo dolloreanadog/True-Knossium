@@ -26,7 +26,6 @@ shopPersonalityLabel = NodePath("ShopPersonalityLabel")
 strikesLabel = NodePath("StrikesLabel")
 buttonCooldownTime = 2.0
 buttonCooldownLabel = NodePath("ButtonCooldownLabel")
-shopLeftTime = 60.0
 shopTimeLeftLabel = NodePath("TimeLeftLabel")
 amountSelectorLabel = NodePath("AmountSelector/AmountSelecterLabel")
 amountSelector = NodePath("AmountSelector")
@@ -192,11 +191,19 @@ offset_bottom = 55.0
 
 [node name="AmountConfirmButton" type="Button" parent="AmountSelector"]
 layout_mode = 0
-offset_left = 192.0
+offset_left = 120.0
 offset_top = 56.0
-offset_right = 320.0
+offset_right = 248.0
 offset_bottom = 87.0
 text = "Confirm"
+
+[node name="AmountCancelButton" type="Button" parent="AmountSelector"]
+layout_mode = 0
+offset_left = 264.0
+offset_top = 56.0
+offset_right = 392.0
+offset_bottom = 87.0
+text = "Cancel"
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(960, 540)
@@ -313,3 +320,4 @@ horizontal_alignment = 1
 [connection signal="value_changed" from="AmountSelector/AmountSlider" to="." method="OnAmountSliderValueChanged"]
 [connection signal="value_changed" from="AmountSelector/AmountSpinBox" to="." method="OnAmountSpinboxValueChanged"]
 [connection signal="pressed" from="AmountSelector/AmountConfirmButton" to="." method="OnAmountConfirmedButtonPressed"]
+[connection signal="pressed" from="AmountSelector/AmountCancelButton" to="." method="OnAmountCancelButtonPressed"]

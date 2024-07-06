@@ -43,7 +43,7 @@ var shopItemFilePaths: Array
 @export var strikesLabel: Label
 @export var buttonCooldownTime: float
 @export var buttonCooldownLabel: Label
-@export var shopLeftTime: float
+@export var shopLeftTime: float = 60
 @export var isTimeLocked: bool = false
 @export var shopTimeLeftLabel: Label
 # Amount Selector
@@ -246,13 +246,13 @@ func UpdateAcceptanceValue() -> void:
 	acceptanceValue = playerBarterValue - shopBarterValue
 	match personality:
 		shopPersonality.NAIVE:
-			guaranteedAcceptanceValue = shopBarterValue * 0.25
+			guaranteedAcceptanceValue = shopBarterValue * 0.45
 		shopPersonality.INEXPERIENCED:
-			guaranteedAcceptanceValue = shopBarterValue * 0.5
+			guaranteedAcceptanceValue = shopBarterValue * 0.7
 		shopPersonality.NEUTRAL:
-			guaranteedAcceptanceValue = shopBarterValue * 0.75
-		shopPersonality.SMART:
 			guaranteedAcceptanceValue = shopBarterValue * 1
+		shopPersonality.SMART:
+			guaranteedAcceptanceValue = shopBarterValue * 1.05
 		shopPersonality.GREEDY:
 			guaranteedAcceptanceValue = shopBarterValue * 1.15
 		_:
@@ -305,20 +305,23 @@ func ConfirmTradeButton() -> void:
 	checkForAcceptance()
 
 func tradeItems() -> void: 
-	for i in playerBarterInventory.storedItems.size():
-		playerBarterInventory.storedItems.pop_back()
+#	for i in playerBarterInventory.storedItems.size():
+#		playerBarterInventory.storedItems.pop_back()
 	
 	for i in shopBarterInventory.storedItems.size():
 		var Litem: BaseInventoryItem = shopBarterInventory.storedItems.pop_back()
 		Global.unlockItem(Litem.globalFilePath)
 		playerInventory.addToInventory(Litem, Litem.amount)
 	
+	for i in playerBarterInventory.storedItems.size():
+		var Litem: BaseInventoryItem = playerBarterInventory.storedItems.pop_back()
+		shopInventory.addToInventory(Litem, Litem.amount)
+	
 	shopBarterValue = GetTotalInventoryValue(shopBarterInventory)
 	shopBarterValueLabel.text = "£" + str(snappedf(shopBarterValue, 0.01))
 	
 	playerBarterValue = setPlayerBarterValue(GetTotalInventoryValue(playerBarterInventory))
 	playerBarterValueLabel.text = "£" + str(snappedf(playerBarterValue, 0.01))
-	
 	
 	updateShopBarterListVisual()
 	updatePlayerBarterListVisual()
@@ -327,7 +330,7 @@ func tradeItems() -> void:
 	UpdateAcceptanceValue()
 
 func checkForAcceptance() -> void:
-	var value: float = randf_range(clampf(acceptanceValue, -999999, 100), 100)
+	var value: float = randf_range(acceptanceValue, playerBarterValue)
 	
 	match personality:
 		shopPersonality.NAIVE:
@@ -346,10 +349,16 @@ func checkForAcceptance() -> void:
 				raiseStrike()
 		shopPersonality.NEUTRAL:
 			if value >= guaranteedAcceptanceValue && acceptanceValue >= minimumAcceptanceValue:
-				print("Merchant liked that deal! " + str(value))
+				print("(check1) Merchant liked that deal! " + str(value))
+				print("(check1) Needs to pass: " + str(guaranteedAcceptanceValue))
+				print("(check1) Current Acceptance Value: " + str(acceptanceValue))
+				print("(check1) Current Max Rand (playerBarterValue) Value: " + str(acceptanceValue))
 				tradeItems()
 			else:
-				print("Merchant didn't like that deal! " + str(value))
+				print("(check1) Merchant didn't like that deal! " + str(value))
+				print("(check1) Needs to pass: " + str(guaranteedAcceptanceValue))
+				print("(check1) Current Acceptance Value: " + str(acceptanceValue))
+				print("(check1) Current Max Rand (playerBarterValue) Value: " + str(acceptanceValue))
 				raiseStrike()
 		shopPersonality.SMART:
 			if value >= guaranteedAcceptanceValue && acceptanceValue >= minimumAcceptanceValue:
@@ -631,9 +640,23 @@ func OnAmountConfirmedButtonPressed() -> void:
 	selectorInitialInventory.removeAllItemsAtZero()
 	selectorInventory.removeAllItemsAtZero()
 	updateInventoryListVisual()
+	updateShopListVisual()
 	updatePlayerBarterListVisual()
 	updateShopBarterListVisual()
-	resetMaxSelectionValue()
+#	resetMaxSelectionValue()
+
+func OnAmountCancelButtonPressed() -> void:
+	amountSelector.hide()
+	stopControl.hide()
+	
+#	var Litem: BaseInventoryItem = selectorItem.duplicate(true)
+	selectorInitialInventory.SetAmountInventory(selectorItem, selectorInitialItemAmount, true)
+	selectorInventory.SetAmountInventory(selectorItem, selectorTargetInitialItemAmount, true)
+	
+	updateInventoryListVisual()
+	updateShopListVisual()
+	updatePlayerBarterListVisual()
+	updateShopBarterListVisual()
 
 func setMaxSelectionValueOnItemAmount(item: BaseInventoryItem) -> void:
 	var amount: int = item.amount

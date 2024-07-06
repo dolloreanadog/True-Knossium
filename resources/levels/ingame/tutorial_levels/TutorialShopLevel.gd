@@ -33,7 +33,8 @@ func ExitShop() -> void:
 
 func tradeItems() -> void: 
 	for i in playerBarterInventory.storedItems.size():
-		playerBarterInventory.storedItems.pop_back()
+		var Litem: BaseInventoryItem = playerBarterInventory.storedItems.pop_back()
+		shopInventory.addToInventory(Litem, Litem.amount)
 	
 	for i in shopBarterInventory.storedItems.size():
 		var Litem: BaseInventoryItem = shopBarterInventory.storedItems.pop_back()

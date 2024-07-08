@@ -13,6 +13,8 @@ func _ready() -> void:
 		else:
 			$VBoxContainer/ContinueButton.disabled = true
 	
+	if SettingsSystem.GetIsTutorialNeeded():
+		$TutorialBoxContainer.show()
 	$AudioStreamPlayer.play()
 	Global.EndLoadingScreen()
 
@@ -40,6 +42,9 @@ func _on_continue_button_pressed() -> void:
 		push_error("There is no Save")
 
 func _on_tutorial_button_pressed() -> void:
+	SettingsSystem.SetIsTutorialNeeded(false)
+	SettingsSystem.clearSettingsThroughDeletion()
+	SettingsSystem.saveSettings()
 	Global.StartLoadingScreen(true)
 	await create_tween().tween_property($AudioStreamPlayer, "volume_db", -80, 1).finished
 	get_tree().change_scene_to_file("res://resources/levels/ingame/tutorial_levels/CombatTutorialDungeon.tscn")
@@ -88,3 +93,12 @@ func _on_clear_progression_yes_pressed() -> void:
 
 func _on_clear_progression_no_pressed() -> void:
 	$Control2.hide()
+
+
+func TutorialBoxNoButtonPressed() -> void:
+	$TutorialBoxContainer.hide()
+	print(SettingsSystem.SettingsDict)
+	SettingsSystem.SetIsTutorialNeeded(false)
+	SettingsSystem.clearSettingsThroughDeletion()
+	SettingsSystem.saveSettings()
+	print(SettingsSystem.SettingsDict)

@@ -83,7 +83,7 @@ offset_left = 832.0
 offset_top = 784.0
 offset_right = 1088.0
 offset_bottom = 832.0
-text = "Confirm Barter"
+text = "Confirm Trade"
 
 [node name="ItemDescriptionPanel" type="Panel" parent="."]
 offset_left = 336.0

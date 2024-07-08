@@ -1077,15 +1077,6 @@ offset_right = 1544.0
 offset_bottom = 232.0
 color = Color(0, 0, 0, 0.737255)
 
-[node name="TextBackground8" type="ColorRect" parent="TutorialContainer/Party/Part2"]
-z_index = 2
-layout_mode = 0
-offset_left = 1592.0
-offset_top = 120.0
-offset_right = 1848.0
-offset_bottom = 240.0
-color = Color(0, 0, 0, 0.737255)
-
 [node name="Label" type="Label" parent="TutorialContainer/Party/Part2"]
 z_index = 2
 layout_mode = 0
@@ -1180,7 +1171,58 @@ horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 3
 
-[node name="Label8" type="Label" parent="TutorialContainer/Party/Part2"]
+[node name="Control" type="Control" parent="TutorialContainer/Party/Part2"]
+anchors_preset = 0
+offset_left = 1640.0
+offset_top = 72.0
+offset_right = 1848.0
+offset_bottom = 120.0
+
+[node name="Button" type="Button" parent="TutorialContainer/Party/Part2"]
+z_index = 2
+offset_left = 1560.0
+offset_top = 128.0
+offset_right = 1816.0
+offset_bottom = 159.0
+theme_override_styles/normal = SubResource("StyleBoxFlat_ibsa3")
+text = "Press this to continue..."
+
+[node name="Part3" type="Control" parent="TutorialContainer/Party"]
+editor_description = "Talk about Levels & experience."
+visible = false
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="TextBackground6" type="ColorRect" parent="TutorialContainer/Party/Part3"]
+z_index = 2
+offset_left = 1000.0
+offset_top = 120.0
+offset_right = 1472.0
+offset_bottom = 272.0
+color = Color(0, 0, 0, 0.737255)
+
+[node name="Label6" type="Label" parent="TutorialContainer/Party/Part3"]
+z_index = 2
+offset_left = 1000.0
+offset_top = 120.0
+offset_right = 1472.0
+offset_bottom = 272.0
+text = "Levels are important, the higher the level, the higher each health, defense, attack, & morale stat is. To level up, get experience by killing enemies or other sources. There is no max levels."
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="TextBackground8" type="ColorRect" parent="TutorialContainer/Party/Part3"]
+z_index = 2
+layout_mode = 0
+offset_left = 1592.0
+offset_top = 120.0
+offset_right = 1848.0
+offset_bottom = 240.0
+color = Color(0, 0, 0, 0.737255)
+
+[node name="Label8" type="Label" parent="TutorialContainer/Party/Part3"]
 z_index = 2
 layout_mode = 0
 offset_left = 1600.0
@@ -1571,6 +1613,7 @@ text = "Press this to continue..."
 [connection signal="SpawningIsOver" from="difficultySystem" to="." method="updateValueOfStatusBar"]
 [connection signal="pressed" from="TutorialContainer/Intro/Part1/Button" to="TutorialContainer/Intro" method="_on_button_pressed"]
 [connection signal="pressed" from="TutorialContainer/Intro/Part2/Button" to="TutorialContainer/Intro" method="_on_button_pressed"]
+[connection signal="pressed" from="TutorialContainer/Party/Part2/Button" to="TutorialContainer/Party" method="NextButtonPressed"]
 [connection signal="pressed" from="TutorialContainer/Upkeep/Control/Button" to="TutorialContainer/Upkeep" method="_on_button_pressed"]
 [connection signal="pressed" from="TutorialContainer/Dragging/Button" to="TutorialContainer/Dragging" method="_on_button_pressed"]
 [connection signal="pressed" from="TutorialContainer/AOEVisibility/Button" to="TutorialContainer/AOEVisibility" method="_on_button_pressed"]

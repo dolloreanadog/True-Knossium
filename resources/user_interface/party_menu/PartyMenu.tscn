@@ -169,7 +169,7 @@ layout_mode = 0
 offset_left = 16.0
 offset_top = 312.0
 offset_right = 1192.0
-offset_bottom = 504.0
+offset_bottom = 544.0
 
 [node name="Label" type="Label" parent="ColorRect/Panel/ActionPanel"]
 layout_mode = 0
@@ -216,6 +216,11 @@ layout_mode = 2
 text = "9999/9999"
 horizontal_alignment = 1
 
+[node name="ActionTurnLeftLabel" type="Label" parent="ColorRect/Panel/ActionPanel/HBoxContainer/VboxContainer"]
+layout_mode = 2
+text = "999"
+horizontal_alignment = 1
+
 [node name="VboxContainer2" type="VBoxContainer" parent="ColorRect/Panel/ActionPanel/HBoxContainer"]
 layout_mode = 2
 
@@ -244,6 +249,11 @@ layout_mode = 2
 text = "9999/9999"
 horizontal_alignment = 1
 
+[node name="ActionTurnLeftLabel" type="Label" parent="ColorRect/Panel/ActionPanel/HBoxContainer/VboxContainer2"]
+layout_mode = 2
+text = "999"
+horizontal_alignment = 1
+
 [node name="VboxContainer3" type="VBoxContainer" parent="ColorRect/Panel/ActionPanel/HBoxContainer"]
 layout_mode = 2
 
@@ -267,6 +277,10 @@ horizontal_alignment = 1
 layout_mode = 2
 horizontal_alignment = 1
 
+[node name="ActionTurnLeftLabel" type="Label" parent="ColorRect/Panel/ActionPanel/HBoxContainer/VboxContainer3"]
+layout_mode = 2
+horizontal_alignment = 1
+
 [node name="VboxContainer4" type="VBoxContainer" parent="ColorRect/Panel/ActionPanel/HBoxContainer"]
 layout_mode = 2
 
@@ -287,6 +301,10 @@ layout_mode = 2
 horizontal_alignment = 1
 
 [node name="ActionMoraleLabel" type="Label" parent="ColorRect/Panel/ActionPanel/HBoxContainer/VboxContainer4"]
+layout_mode = 2
+horizontal_alignment = 1
+
+[node name="ActionTurnLeftLabel" type="Label" parent="ColorRect/Panel/ActionPanel/HBoxContainer/VboxContainer4"]
 layout_mode = 2
 horizontal_alignment = 1
 
@@ -317,12 +335,16 @@ text = "Attack"
 layout_mode = 2
 text = "Morale"
 
+[node name="Label6" type="Label" parent="ColorRect/Panel/ActionPanel/VBoxContainer"]
+layout_mode = 2
+text = "Turns Left"
+
 [node name="UpkeepPanel" type="Panel" parent="ColorRect/Panel"]
 layout_mode = 0
 offset_left = 16.0
-offset_top = 512.0
+offset_top = 600.0
 offset_right = 1192.0
-offset_bottom = 552.0
+offset_bottom = 640.0
 
 [node name="UpkeepLabel" type="Label" parent="ColorRect/Panel/UpkeepPanel"]
 layout_mode = 0
@@ -343,9 +365,9 @@ text = "x9999"
 [node name="DropPanel" type="Panel" parent="ColorRect/Panel"]
 layout_mode = 0
 offset_left = 16.0
-offset_top = 560.0
+offset_top = 648.0
 offset_right = 1192.0
-offset_bottom = 600.0
+offset_bottom = 688.0
 
 [node name="DropsLabel" type="Label" parent="ColorRect/Panel/DropPanel"]
 layout_mode = 0
@@ -366,7 +388,7 @@ text = "x9999"
 [node name="DescriptionPanel" type="Panel" parent="ColorRect/Panel"]
 layout_mode = 0
 offset_left = 16.0
-offset_top = 632.0
+offset_top = 696.0
 offset_right = 1192.0
 offset_bottom = 920.0
 
@@ -374,7 +396,7 @@ offset_bottom = 920.0
 layout_mode = 0
 offset_left = 8.0
 offset_right = 1168.0
-offset_bottom = 288.0
+offset_bottom = 224.0
 text = "Description"
 
 [node name="ExitButton" type="Button" parent="ColorRect"]

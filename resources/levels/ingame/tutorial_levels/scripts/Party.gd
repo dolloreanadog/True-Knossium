@@ -16,9 +16,16 @@ func TutorialIndexSwitch() -> void:
 			$Part1.hide()
 			$Part2.show()
 		2:
+			$Part2.hide()
+			$Part3.show()
+		3:
 			dungeon.SwitchTutorialStep(dungeon.tutorialSteps.UPKEEP)
 			self.queue_free()
 
 
 func _on_show_party_button_pressed() -> void:
+	TutorialIndexSwitch()
+
+
+func NextButtonPressed() -> void:
 	TutorialIndexSwitch()

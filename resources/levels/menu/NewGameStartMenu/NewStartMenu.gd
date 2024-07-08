@@ -196,7 +196,7 @@ func UpdateCharacterChooseListVisual() -> void:
 	for i in chooseCharacterListArray.size():
 		var Lcharacter: BaseCharacter = chooseCharacterListArray[i]
 		chooseCharacterList.add_item(Lcharacter.id, Lcharacter.profilePicture)
-		chooseCharacterList.set_item_tooltip(i, Lcharacter.characterDescription)
+		chooseCharacterList.set_item_tooltip(i, Lcharacter.characterDescription + "\n" + "Value: " + str(Lcharacter.stats.totalStatPoints))
 		await get_tree().create_timer(0.01).timeout
 
 func UpdateInventoryChooseListVisual() -> void:
@@ -204,14 +204,14 @@ func UpdateInventoryChooseListVisual() -> void:
 	for i in choosingInventorySystem.storedItems.size():
 		var Litem: BaseInventoryItem = choosingInventorySystem.storedItems[i]
 		chooseInventoryList.add_item(Litem.itemName, Litem.image)
-		chooseInventoryList.set_item_tooltip(i, Litem.itemDesciption)
+		chooseInventoryList.set_item_tooltip(i, Litem.itemDesciption + "\n" + "Value: " + str(Litem.value))
 
 func UpdateCharacterFinalListVisual() -> void:
 	finalCharacterList.clear()
 	for i in finalCharacterListArray.size():
 		var Lcharacter: BaseCharacter = finalCharacterListArray[i]
 		finalCharacterList.add_item(Lcharacter.id, Lcharacter.profilePicture)
-		finalCharacterList.set_item_tooltip(i, Lcharacter.characterDescription)
+		finalCharacterList.set_item_tooltip(i, Lcharacter.characterDescription + "\n" + "Value: " + str(Lcharacter.stats.totalStatPoints))
 	print(finalCharacterListArray)
 
 func UpdateItemFinalListVisual() -> void:
@@ -219,7 +219,7 @@ func UpdateItemFinalListVisual() -> void:
 	for i in finalInventorySystem.storedItems.size():
 		var Litem: BaseInventoryItem = finalInventorySystem.storedItems[i]
 		finalInventoryList.add_item(Litem.itemName + "  x" + str(Litem.amount), Litem.image)
-		finalInventoryList.set_item_tooltip(i, Litem.itemDesciption)
+		finalInventoryList.set_item_tooltip(i, Litem.itemDesciption + "\n" + "Value: " + str(Litem.value))
 
 func UpdateUpkeepList() -> void:
 	finalUpkeepList.clear()

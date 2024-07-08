@@ -166,11 +166,13 @@ offset_bottom = 40.0
 
 [node name="Label" type="Label" parent="Labels"]
 layout_mode = 0
-offset_left = 1480.0
+offset_left = 1424.0
 offset_top = 8.0
-offset_right = 1576.0
-offset_bottom = 34.0
-text = "Upkeep List"
+offset_right = 1582.0
+offset_bottom = 40.0
+text = "Upkeep Per TurnList"
+horizontal_alignment = 2
+vertical_alignment = 1
 
 [node name="Label2" type="Label" parent="Labels"]
 layout_mode = 0

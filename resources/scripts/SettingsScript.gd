@@ -2,7 +2,7 @@ extends Node
 
 const filePathForSettingsData := "user://SettingsData.save"
 const filePathForInputMapData := "user://InputMapData.save"
-var gameSaveVersion: String = "0.86"
+var gameSaveVersion: String = "0.87.1"
 
 # 1920x1080 is L
 # 1280x720 is T
@@ -30,6 +30,7 @@ var SettingsDict: Dictionary = {
 	"SettingsSFXVolume": 1.0,
 	"SettingsVersion": gameSaveVersion,
 	"ChosenAOEMovementYet": false,
+	"IsTutorialNeeded": true,
 }
 
 var InputMapData: Dictionary
@@ -42,6 +43,12 @@ func getChosenAOEMovementYet() -> bool:
 	return SettingsDict.ChosenAOEMovementYet
 func setChosenAOEMovementYet(boolean: bool) -> void:
 	SettingsDict.ChosenAOEMovementYet = boolean
+
+func GetIsTutorialNeeded() -> bool:
+	return SettingsDict.IsTutorialNeeded
+func SetIsTutorialNeeded(boolean: bool) -> void:
+	SettingsDict.IsTutorialNeeded = boolean
+
 
 func getAOEMovement() -> bool:
 	return SettingsDict.SettingsAOEMovement
@@ -118,6 +125,7 @@ func resetSettings() -> void:
 	setSFXVolume(1)
 	SettingsDict.SettingsVersion = gameSaveVersion
 	SettingsDict.ChosenAOEMovementYet = true
+	SetIsTutorialNeeded(true)
 	SettingsDict.SettingsScreenDisplay = 0
 	applySettings()
 
@@ -249,7 +257,6 @@ func loadSettings() -> void:
 	inputsLoaded = true
 
 
-
 func checkSettingsDataExists() -> bool:
 	if FileAccess.file_exists(filePathForSettingsData):
 		return true
@@ -259,14 +266,14 @@ func checkSettingsDataExists() -> bool:
 func checkSettingsVersion() -> bool:
 	if SettingsDict.find_key("SettingsVersion") != "":
 		if SettingsDict.SettingsVersion != gameSaveVersion:
-			push_error("Incompatible Save Version, Current is " + str(gameSaveVersion) + ", Your Version is " + str(SettingsDict.SettingsVersion))
+			push_error("Incompatible Settings Version, Current is " + str(gameSaveVersion) + ", Your Version is " + str(SettingsDict.SettingsVersion))
 			resetSettings()
 			return false
 		else:
 			print("Correct Settings Version")
 			return true
 	else:
-		push_error("The Key SaveVersion doesn't exist")
+		push_error("The Key SettingsVersion doesn't exist")
 		SettingsDict.SettingsVersion = gameSaveVersion
 		resetSettings()
 		saveSettings()

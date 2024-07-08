@@ -236,7 +236,7 @@ func StartShopTimeLeftTimer() -> void:
 		await get_tree().create_timer(1).timeout
 		time -= 1
 		shopTimeLeftLabel.text = str(snappedf(time, 1)) + " seconds left"
-	shopTimeLeftLabel.text = ""
+	shopTimeLeftLabel.text = "No Time! Last chance to trade!"
 	barterActionAvailable = false
 #	ExitShop()
 

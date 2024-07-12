@@ -231,6 +231,7 @@ func loadSave() -> void:
 	system.battle = SaveSystem.GameInfoDict.Battles
 	system.turn = SaveSystem.GameInfoDict.Turns
 	difficulty.SpawnBehaviors = SaveSystem.GameInfoDict.SpawnBehaviorWeights
+	knossiumConsole.unlocked = SaveSystem.GameInfoDict.ConsoleUnlocked
 	print("Loaded Spawn Behavior Weights: " + str(difficulty.SpawnBehaviors))
 	
 	loadCharacters()
@@ -515,6 +516,7 @@ func saveToSaveSystem() -> void:
 	SaveSystem.GameInfoDict.Battles = system.battle
 	SaveSystem.GameInfoDict.Turns = system.turn
 	SaveSystem.GameInfoDict.SpawnBehaviorWeights = difficulty.SpawnBehaviors
+	SaveSystem.GameInfoDict.ConsoleUnlocked = knossiumConsole.unlocked
 	print("Saved Spawn Behavior Weights: " + str(SaveSystem.GameInfoDict.SpawnBehaviorWeights))
 	
 	if Global.getBattlesWon() < system.battle:

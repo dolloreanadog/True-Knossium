@@ -34,6 +34,7 @@ var unlocked: bool = false
 #--[ Misc. Functions ]--
 func _ready() -> void:
 	dungeon = get_tree().get_current_scene()
+	unlocked = SaveSystem.GameInfoDict.ConsoleUnlocked
 	self.z_index = 11
 	spawnBehaviorDebugMenu.z_index = 11
 	spawnCharacterDebugMenu.z_index = 11

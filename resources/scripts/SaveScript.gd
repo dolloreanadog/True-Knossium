@@ -1,7 +1,7 @@
 extends Node
 
 var filePathForSaveData := "user://SaveData.save"
-var gameSaveVersion: String = "0.83.2"
+var gameSaveVersion: String = "0.83.3"
 var placeholderDictionary: Dictionary
 
 signal Saved
@@ -11,6 +11,7 @@ signal Loaded
 
 @export var GameInfoDict: Dictionary = {
 	"SaveVersion": gameSaveVersion,
+	"ConsoleUnlocked": false,
 	"PeakTotalStatPoints": 0,
 	"CharactersDied": 0,
 	"CharactersSurrendered": 0,
@@ -22,9 +23,6 @@ signal Loaded
 	"FriendlyCharactersList": [], # Store all CharacterInfoDicts Here
 	"EnemyCharactersList": [], # Store all CharacterInfoDicts Here
 	
-	"AOEList": [], # <- Deprecated, using AOE below.
-	"SupportAOEList": [], # <- Deprecated, using AOE below.
-	"OffensiveAOEList": [], # <- Deprecated, using AOE below.
 	"FriendlySupportAOEList": [],
 	"EnemySupportAOEList": [],
 	"FriendlyOffensiveAOEList": [],
@@ -147,15 +145,18 @@ func clearSaveThroughDeletion() -> void:
 func clearSaveThroughEmptying() -> void:
 	GameInfoDict = {
 	"SaveVersion": gameSaveVersion,
+	"ConsoleUnlocked": false,
 	"PeakTotalStatPoints": 0,
 	"CharactersDied": 0,
 	"CharactersSurrendered": 0,
 	"Battles": 0,
 	"Turns": 0,
 	
+	"SpawnBehaviorWeights": placeholderDictionary,
 	"Inventory": [], # Store all itemInfoDicts Here
 	"FriendlyCharactersList": [], # Store all CharacterInfoDicts Here
 	"EnemyCharactersList": [], # Store all CharacterInfoDicts Here
+	
 	"FriendlySupportAOEList": [],
 	"EnemySupportAOEList": [],
 	"FriendlyOffensiveAOEList": [],

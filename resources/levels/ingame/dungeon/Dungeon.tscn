@@ -1,4 +1,4 @@
-[gd_scene load_steps=48 format=3 uid="uid://dmviuwgk6nssk"]
+[gd_scene load_steps=56 format=3 uid="uid://dmviuwgk6nssk"]
 
 [ext_resource type="Script" path="res://resources/levels/ingame/BaseLevel.gd" id="1_c7s3k"]
 [ext_resource type="PackedScene" uid="uid://2067o3jclptt" path="res://resources/user_interface/console/Console.tscn" id="2_1f5g3"]
@@ -13,6 +13,8 @@
 [ext_resource type="Script" path="res://resources/entities/turn_system/TurnSystem.gd" id="6_y4pct"]
 [ext_resource type="Script" path="res://resources/entities/AreaAOEDenial/BaseAreaAOEDenial.gd" id="7_7xw1c"]
 [ext_resource type="PackedScene" uid="uid://b8kerqouxqko2" path="res://resources/entities/aoe_info_box/aoe_info_box.tscn" id="8_fg2bo"]
+[ext_resource type="Script" path="res://resources/entities/aoe_attach_button/AOEAttachButton.gd" id="9_0ej02"]
+[ext_resource type="Script" path="res://resources/entities/aoe_attach_button/AttachAOEOffenseButton.gd" id="9_f7xwf"]
 [ext_resource type="Script" path="res://resources/levels/ingame/dungeon/EndTurn.gd" id="13_gxjjo"]
 [ext_resource type="PackedScene" uid="uid://bwmi2u27htu4s" path="res://resources/entities/visibility_toggles/VisibilityToggles.tscn" id="14_8cna0"]
 [ext_resource type="Script" path="res://resources/entities/difficulty_system/DifficultySystem.gd" id="15_dmc50"]
@@ -27,16 +29,16 @@
 [ext_resource type="Script" path="res://resources/entities/battle_status_bar/BattleStatusBar.gd" id="30_h3q2n"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_q1uww"]
-size = Vector2(1920, 1152)
+size = Vector2(1920, 2816)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vhh2q"]
-size = Vector2(1417, 3328)
+size = Vector2(4017, 6224)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tibo5"]
-size = Vector2(1920, 1288)
+size = Vector2(1920, 2536)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pmviw"]
-size = Vector2(1344, 3328)
+size = Vector2(4040, 6240)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nckn1"]
 size = Vector2(448, 96)
@@ -80,6 +82,24 @@ action = &"OpenConsole"
 [sub_resource type="Shortcut" id="Shortcut_3cdmy"]
 events = [SubResource("InputEventAction_q2xk3")]
 
+[sub_resource type="InputEventAction" id="InputEventAction_rcys4"]
+action = &"AttachMeleeAttackAOEToCursor"
+
+[sub_resource type="Shortcut" id="Shortcut_7rao8"]
+events = [SubResource("InputEventAction_rcys4")]
+
+[sub_resource type="InputEventAction" id="InputEventAction_lv5o2"]
+action = &"AttachRangedAttackAOEToCursor"
+
+[sub_resource type="Shortcut" id="Shortcut_6vn20"]
+events = [SubResource("InputEventAction_lv5o2")]
+
+[sub_resource type="InputEventAction" id="InputEventAction_qfjpf"]
+action = &"AttachSupportAOEToCursor"
+
+[sub_resource type="Shortcut" id="Shortcut_btl0h"]
+events = [SubResource("InputEventAction_qfjpf")]
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ohrkm"]
 size = Vector2(320, 640)
 
@@ -92,7 +112,7 @@ size = Vector2(320, 640)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4dgf2"]
 size = Vector2(320, 640)
 
-[node name="Dungeon" type="Node2D" node_paths=PackedStringArray("turnsLabel", "battlesLabel", "friendlyPartyContainer", "enemyPartyContainer", "battleStatusBar", "stopControl", "stopControl2", "musicPlayer", "statButtonGroup", "specialWindowContainer", "knossiumConsole", "AOECheck", "endTurnButton", "showMenuButton", "autoPlaceButton", "inventoryButton", "partyButton", "friendlyAOEAttack", "friendlyAOESupport", "enemyAttackAOE", "enemySupportAOE", "warningLabel", "SaveWarningLabel")]
+[node name="Dungeon" type="Node2D" node_paths=PackedStringArray("turnsLabel", "battlesLabel", "friendlyPartyContainer", "enemyPartyContainer", "battleStatusBar", "stopControl", "stopControl2", "musicPlayer", "statButtonGroup", "specialWindowContainer", "knossiumConsole", "AOECheckSupport", "AOECheckOffense", "endTurnButton", "showMenuButton", "autoPlaceButton", "inventoryButton", "partyButton", "friendlyAOEAttack", "friendlyAOESupport", "enemyAttackAOE", "enemySupportAOE", "warningLabel", "SaveWarningLabel")]
 script = ExtResource("1_c7s3k")
 turnsLabel = NodePath("Labels/TurnsLabel")
 battlesLabel = NodePath("Labels/BattlesLabel")
@@ -105,7 +125,8 @@ musicPlayer = NodePath("DungeonMusicPlayer")
 statButtonGroup = NodePath("ButtonsContainer/VisibilityToggles")
 specialWindowContainer = NodePath("SpecialWindowContainer")
 knossiumConsole = NodePath("Console")
-AOECheck = NodePath("AOECheck")
+AOECheckSupport = NodePath("AOECheckSupport")
+AOECheckOffense = NodePath("AOECheckOffense")
 endTurnButton = NodePath("ButtonsContainer/EndTurn")
 showMenuButton = NodePath("ButtonsContainer/ShowMenuButton")
 autoPlaceButton = NodePath("ButtonsContainer/AOEAutoPlacementButton")
@@ -133,28 +154,30 @@ color = Color(0.25098, 0.215686, 0.0156863, 1)
 script = ExtResource("7_7xw1c")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="OutOfBoundsAOEDenial"]
-position = Vector2(960, -384)
+position = Vector2(960, -1216)
 shape = SubResource("RectangleShape2D_q1uww")
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="OutOfBoundsAOEDenial"]
-position = Vector2(-707.5, 704)
+position = Vector2(-2007.5, 520)
 shape = SubResource("RectangleShape2D_vhh2q")
 
 [node name="CollisionShape2D3" type="CollisionShape2D" parent="OutOfBoundsAOEDenial"]
-position = Vector2(960, 1724)
+position = Vector2(960, 2348)
 shape = SubResource("RectangleShape2D_tibo5")
 
 [node name="CollisionShape2D4" type="CollisionShape2D" parent="OutOfBoundsAOEDenial"]
-position = Vector2(2592, 704)
+position = Vector2(3940, 464)
 shape = SubResource("RectangleShape2D_pmviw")
 
-[node name="AOECheck" type="Area2D" parent="."]
+[node name="AOECheckSupport" type="Area2D" parent="."]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="AOECheck"]
+[node name="SupportAOECollision" type="CollisionShape2D" parent="AOECheckSupport"]
 position = Vector2(672, 976)
 shape = SubResource("RectangleShape2D_nckn1")
 
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="AOECheck"]
+[node name="AOECheckOffense" type="Area2D" parent="."]
+
+[node name="AttackAOECollision" type="CollisionShape2D" parent="AOECheckOffense"]
 position = Vector2(1248, 976)
 shape = SubResource("RectangleShape2D_ulchn")
 
@@ -170,7 +193,7 @@ offset_left = 1424.0
 offset_top = 8.0
 offset_right = 1582.0
 offset_bottom = 40.0
-text = "Upkeep Per TurnList"
+text = "Upkeep Per Turn List"
 horizontal_alignment = 2
 vertical_alignment = 1
 
@@ -324,6 +347,41 @@ offset_right = 128.0
 offset_bottom = -64.0
 shortcut = SubResource("Shortcut_3cdmy")
 text = "Open Console"
+
+[node name="AttachAttackAOEToCursor" type="Button" parent="ButtonsContainer" node_paths=PackedStringArray("area")]
+layout_mode = 0
+offset_left = 144.0
+offset_top = -128.0
+offset_right = 256.0
+offset_bottom = -80.0
+shortcut = SubResource("Shortcut_7rao8")
+text = "Attach Melee Attack AOE To Cursor"
+script = ExtResource("9_f7xwf")
+isMelee = true
+area = NodePath("../../AOECheckOffense")
+
+[node name="AOEOffensiveAttacherButton" type="Button" parent="ButtonsContainer" node_paths=PackedStringArray("area")]
+layout_mode = 0
+offset_left = 144.0
+offset_top = -72.0
+offset_right = 328.0
+offset_bottom = -32.0
+shortcut = SubResource("Shortcut_6vn20")
+text = "Attach Ranged Attack AOE To Cursor"
+script = ExtResource("9_f7xwf")
+area = NodePath("../../AOECheckOffense")
+
+[node name="AttachSupportAOEToCursor" type="Button" parent="ButtonsContainer" node_paths=PackedStringArray("area")]
+layout_mode = 0
+offset_left = 640.0
+offset_top = -128.0
+offset_right = 880.0
+offset_bottom = -80.0
+shortcut = SubResource("Shortcut_btl0h")
+text = "Attach Support AOE To Cursor
+"
+script = ExtResource("9_0ej02")
+area = NodePath("../../AOECheckSupport")
 
 [node name="AOEInfoBox" parent="." instance=ExtResource("8_fg2bo")]
 anchors_preset = 12

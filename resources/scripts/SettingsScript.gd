@@ -2,7 +2,7 @@ extends Node
 
 const filePathForSettingsData := "user://SettingsData.save"
 const filePathForInputMapData := "user://InputMapData.save"
-var gameSaveVersion: String = "0.87.1"
+var gameSaveVersion: String = "0.87.2"
 
 # 1920x1080 is L
 # 1280x720 is T

@@ -27,6 +27,7 @@ var charityDifficultyEXP: float = 1
 @export var characterDirectoryArray: Array = [DirAccess.open("res://resources/entities/characters_items/character/new_dev_game_characters")]
 var dirDev := DirAccess.open("res://resources/entities/characters_items/character/new_dev_game_characters")
 var dirSpecial := DirAccess.open("res://resources/entities/characters_items/character/special_game_characters")
+#var dirSpecial := DirAccess.open("res://resources/entities/characters_items/character/special_game_characters")
 var extension := "tscn"
 
 #--[ character loading ]--

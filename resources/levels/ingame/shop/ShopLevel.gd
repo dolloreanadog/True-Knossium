@@ -89,6 +89,7 @@ var guaranteedAcceptanceValue: float
 
 # Choose a personality on a chance system similar to DifficultySystem
 func _ready() -> void:
+	print("Entering Shop")
 	Global.StartLoadingScreen(false)
 	SaveSystem.loadAllData()
 	resetMaxSelectionValue()
@@ -236,7 +237,7 @@ func StartShopTimeLeftTimer() -> void:
 		await get_tree().create_timer(1).timeout
 		time -= 1
 		shopTimeLeftLabel.text = str(snappedf(time, 1)) + " seconds left"
-	shopTimeLeftLabel.text = "No Time! Last chance to trade!"
+	shopTimeLeftLabel.text = "No Time! \nLast chance to trade!"
 	barterActionAvailable = false
 #	ExitShop()
 
@@ -471,7 +472,7 @@ func shopItemFilePathsToItemInstance() -> void:
 	# Make it look at the upkeep. (Currently it doesn't)
 	for i in temporaryShopArray.size():
 		var shopItem: BaseInventoryItem = temporaryShopArray[i].duplicate(true)
-		shopItem.amount = randi_range(10, 5000)
+		shopItem.amount = randi_range(100, 2500)
 		
 		for index in upkeepInventory.storedItems.size():
 			if shopItem.itemName == upkeepInventory.storedItems[index].itemName:
@@ -560,8 +561,7 @@ func OpenAmountSelector(selectedItem: BaseInventoryItem, initialInventory: Inven
 	amountSelectorLabel.text = selectorItem.itemName
 	itemDescriptionLabel.text = selectorItem.itemDesciption
 	# Make sure value is updated
-	
-	setMaxSelectionValueOnItemAmount(selectorItem)
+	setMaxSelectionValueOnItemAmount(selectedItem)
 	#amountSlider.max_value
 
 	
@@ -660,7 +660,7 @@ func OnAmountCancelButtonPressed() -> void:
 
 func setMaxSelectionValueOnItemAmount(item: BaseInventoryItem) -> void:
 	var amount: int = item.amount
-	print("amount is " + str(amount))
+	print("max amount is " + str(amount) + " for " + str(item.itemName))
 	amountSlider.max_value = amount
 	amountSpinbox.max_value = amount
 

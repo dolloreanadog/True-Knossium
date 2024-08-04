@@ -82,6 +82,7 @@ func saveAllData() -> bool:
 	var file := FileAccess.open_encrypted_with_pass(filePathForSaveData, FileAccess.WRITE, "Platy1ium")
 	file.store_var(GameInfoDict)
 	file.close()
+	await get_tree().create_timer(0.01).timeout
 	emit_signal("Saved")
 	return true
 

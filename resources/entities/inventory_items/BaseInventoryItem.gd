@@ -5,7 +5,7 @@ class_name BaseInventoryItem
 @export var image: Texture2D = ImageTexture.new()
 @export var itemName: String = "name"
 @export_multiline var itemDesciption: String = "Description"
-@export var amount: int = 0
+var amount: int = 0
 @export var value: float = 0
 @export var doesValueChange: bool = false
 var currentValue: float

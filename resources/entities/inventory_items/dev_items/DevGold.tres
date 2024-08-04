@@ -1,15 +1,14 @@
 [gd_resource type="Resource" script_class="BaseInventoryItem" load_steps=3 format=3 uid="uid://3i41wk26jwk2"]
 
-[ext_resource type="Texture2D" uid="uid://dm7h3arv4m30g" path="res://assets/art/character_profile_picture/dev/placeholder.png" id="1_1qw7e"]
+[ext_resource type="Texture2D" uid="uid://dt5uo08k64xc3" path="res://assets/art/item_icon/GoldCoin.png" id="1_32wut"]
 [ext_resource type="Script" path="res://resources/entities/inventory_items/BaseInventoryItem.gd" id="1_afl1x"]
 
 [resource]
 script = ExtResource("1_afl1x")
 globalFilePath = "res://resources/entities/inventory_items/dev_items/DevGold.tres"
-image = ExtResource("1_1qw7e")
-itemName = "Dev Gold Coin"
+image = ExtResource("1_32wut")
+itemName = "Gold Coin"
 itemDesciption = "This is a staple currency in Knossium."
-amount = 0
 value = 1.0
 doesValueChange = false
 isInteractable = false

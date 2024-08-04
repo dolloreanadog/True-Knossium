@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="BaseInventoryItem" load_steps=4 format=3 uid="uid://da06jp32xkh3w"]
+
+[ext_resource type="PackedScene" uid="uid://b0qolcs8r48ye" path="res://resources/entities/characters_items/aoe/item_aoe/health_potion_aoe/Health3AOE.tscn" id="1_nah80"]
+[ext_resource type="Texture2D" uid="uid://bc5gl8tfojiyy" path="res://assets/art/item_icon/HealthPotion.png" id="1_w2ofg"]
+[ext_resource type="Script" path="res://resources/entities/inventory_items/BaseInventoryItem.gd" id="2_75quc"]
+
+[resource]
+script = ExtResource("2_75quc")
+globalFilePath = "res://resources/entities/inventory_items/dev_items/HealthPotion3.tres"
+image = ExtResource("1_w2ofg")
+itemName = "Health III Potion"
+itemDesciption = "This heals a big portion of health."
+value = 20.0
+doesValueChange = false
+isInteractable = true
+isOffensive = false
+AOE = ExtResource("1_nah80")
+AOEHealthGain = 10.0
+AOEDefenseGain = 0.0
+AOEAttackGain = 0.0
+AOEMoraleGain = 0.0
+AOEExpGain = 0.0
+AOEAccuracy = 1.0

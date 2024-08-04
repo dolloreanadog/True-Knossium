@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bnfhr5gna7rs0"
-path="res://.godot/imported/experience1potion.png-8380a5db32a640490907ec49f8f57d14.ctex"
+uid="uid://dt5uo08k64xc3"
+path="res://.godot/imported/GoldCoin.png-62551b9ed8a1fa56c6ff0ae1d3fd21b4.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/art/item_icon/experience1potion.png"
-dest_files=["res://.godot/imported/experience1potion.png-8380a5db32a640490907ec49f8f57d14.ctex"]
+source_file="res://assets/art/item_icon/GoldCoin.png"
+dest_files=["res://.godot/imported/GoldCoin.png-62551b9ed8a1fa56c6ff0ae1d3fd21b4.ctex"]
 
 [params]
 

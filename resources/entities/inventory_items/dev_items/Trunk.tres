@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="BaseInventoryItem" load_steps=3 format=3 uid="uid://bbhq4sf2ipwus"]
+
+[ext_resource type="Script" path="res://resources/entities/inventory_items/BaseInventoryItem.gd" id="1_a0gvg"]
+[ext_resource type="Texture2D" uid="uid://627hoyhuyjxs" path="res://assets/art/item_icon/Trunk.png" id="1_wpx6o"]
+
+[resource]
+script = ExtResource("1_a0gvg")
+globalFilePath = "res://resources/entities/inventory_items/dev_items/Trunk.tres"
+image = ExtResource("1_wpx6o")
+itemName = "Trunk"
+itemDesciption = "A piece of wood"
+value = 30.0
+doesValueChange = false
+isInteractable = false
+isOffensive = false
+AOEHealthGain = 0.0
+AOEDefenseGain = 0.0
+AOEAttackGain = 0.0
+AOEMoraleGain = 0.0
+AOEExpGain = 0.0
+AOEAccuracy = 1.0

@@ -85,7 +85,8 @@ func _ready():
 	if dungeon is BaseLevel:
 		system = dungeon.system
 	
-	
+	if !is_instance_valid(spriteAnimations):
+		push_warning("There is no sprite animation node, might result in save error!")
 	
 	mainColor = collisionVisualizer.modulate
 	#system.connect("OnNewTurn", NewTurnSignaled)
@@ -204,7 +205,7 @@ func areaOverlapIsBadArea():
 	overlappingAreaArray = get_overlapping_areas()
 #	await get_tree().create_timer(0.01).timeout
 	var overlappingAreaArrayCount = overlappingAreaArray.size()
-#	print("overlapping Areas: " + str(overlappingAreaArray))
+	print("overlapping Areas: " + str(overlappingAreaArray))
 	for i in overlappingAreaArrayCount:
 		var target = overlappingAreaArray.pop_front()
 		if target is BaseAreaAOEDenial && target.active == true:
@@ -225,6 +226,7 @@ func areaOverlapIsBadArea():
 func areaOverlapCharacter(ActiveAttack: bool):
 #	print(str(self) + ": Start Overlap Character Check (overlap)")
 #	print(str(self) + ": (overlap) Start Overlap Character Check " + str(overlappingBodiesArray.size()))
+	await get_tree().create_timer(0.001).timeout
 	overlappingBodiesArray = get_overlapping_bodies()
 #	await get_tree().create_timer(0.01).timeout
 	if overlappingBodiesArray.size() != 0:

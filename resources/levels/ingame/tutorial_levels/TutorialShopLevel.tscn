@@ -208,9 +208,9 @@ color = Color(0, 0, 0, 0.737255)
 
 [node name="ColorRect9" type="ColorRect" parent="TutorialContainer/Shop"]
 layout_mode = 0
-offset_left = 704.0
+offset_left = 688.0
 offset_top = 496.0
-offset_right = 1216.0
+offset_right = 1232.0
 offset_bottom = 528.0
 color = Color(0, 0, 0, 0.737255)
 
@@ -288,7 +288,7 @@ offset_left = 344.0
 offset_top = 480.0
 offset_right = 632.0
 offset_bottom = 848.0
-text = "This is the list that will be gone if the trade is successful. Pressing on ana item here will also open a selector to move a certain amount to the Party's Inventory"
+text = "This is the list that will be gone if the trade is successful. Pressing on an item here will also open a selector to move a certain amount to the Party's Inventory"
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 3
@@ -318,11 +318,11 @@ autowrap_mode = 3
 
 [node name="Label8" type="Label" parent="TutorialContainer/Shop"]
 layout_mode = 0
-offset_left = 712.0
+offset_left = 696.0
 offset_top = 496.0
-offset_right = 1208.0
+offset_right = 1224.0
 offset_bottom = 528.0
-text = "When the strike reach max, you will be kicked out of the shop"
+text = "When the strike reach max, you will be able to make one last barter"
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 3

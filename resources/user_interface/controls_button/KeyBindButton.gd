@@ -1,7 +1,7 @@
 extends Button
 class_name KeybindButton
 
-@export_enum("ToggleVisibilityAOEEnemy", "ToggleVisibilityAOEFriendly", "ToggleVisibilityAOESupport", "ToggleVisibilityAOEOffensive", "ToggleVisibilityAOENonDraggable", "ShowParty", "ShowInventory", "EndTurn", "ShowIngameMenu", "AutoPlaceAOE", "ViewStatsNormal", "ViewStatsHealth", "ViewStatsDefense", "ViewStatsAttack", "ViewStatsMorale", "ViewStatsLevel") var inputAction: String
+@export_enum("ToggleVisibilityAOEEnemy", "ToggleVisibilityAOEFriendly", "ToggleVisibilityAOESupport", "ToggleVisibilityAOEOffensive", "ToggleVisibilityAOENonDraggable", "ShowParty", "ShowInventory", "EndTurn", "ShowIngameMenu", "AutoPlaceAOE", "ViewStatsNormal", "ViewStatsHealth", "ViewStatsDefense", "ViewStatsAttack", "ViewStatsMorale", "ViewStatsLevel", "AttachMeleeAttackAOEToCursor", "AttachRangedAttackAOEToCursor", "AttachSupportAOEToCursor") var inputAction: String
 
 func _init() -> void:
 	toggle_mode = true

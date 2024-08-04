@@ -55,7 +55,7 @@ func getAOEInfo():
 	AOEListHighMoraleAttack.clear()
 	
 	AOEList = get_children()
-	AOEList.filter(func(object): return is_instance_valid(object)) # Remove AOE that is null or freed
+	AOEList = AOEList.filter(func(object): return is_instance_valid(object)) # Remove AOE that is null or freed
 	print(str(self) + ": (getAOEInfo) old AOEList: " + str(AOEList))
 	AOEListCount = get_child_count()
 	var targetAOE: BaseAOE
@@ -211,7 +211,7 @@ func findTarget(priority: highAttackIn, targetAOE: BaseAOE):
 		targetArray = targetedMelee + targetedTanks + targetedRanged + targetedSupport
 #		print(str(targetAOE) + "targetAOE isMelee 1 = " + str(targetAOE.isMelee))
 	
-	targetArray.filter(func(object): return is_instance_valid(object))
+	targetArray = targetArray.filter(func(object): return is_instance_valid(object))
 	for i in targetArray.size():
 		var AOEChecked = targetArray.pop_back()
 		if is_instance_valid(AOEChecked):
@@ -247,11 +247,15 @@ func findTarget(priority: highAttackIn, targetAOE: BaseAOE):
 	if targetAOE.isMelee:
 		match checkCurrentSectionAlive():
 			0:
+				pass
 #				print("how are these frontline troops alive? 2")
-				targetArray.filter(func(object): return object.get_node("StatComponent").role == 0 or object.get_node("StatComponent").role == 1 )
+				# This is effectively useless
+#				targetArray.filter(func(object): return object.get_node("StatComponent").role == 0 or object.get_node("StatComponent").role == 1 )
 			1:
+				pass
 #				print("CQC Section has been eliminated! 2")
-				targetArray.filter(func(object): return object.get_node("StatComponent").role == 2)
+#				# This is effectively useless
+#				targetArray.filter(func(object): return object.get_node("StatComponent").role == 2)
 			2:
 				pass
 #				print("All that's left is supports! 2")

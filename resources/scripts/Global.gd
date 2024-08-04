@@ -7,7 +7,7 @@ var previousScene: String
 
 var filePathForProgressionData := "user://ProgressionData.save"
 var filePathForNewProgressionData := "user://NewProgressionData.save"
-var gameProgressionVersion: String = "0.81.1"
+var gameProgressionVersion: String = "0.82"
 
 # Things to bring into the in game through new game start menu
 var newGameCharacterInfo: Array
@@ -125,6 +125,7 @@ func saveAllData() -> bool:
 	file1.store_var(newProgressionDict)
 	file.close()
 	file1.close()
+	await get_tree().create_timer(0.01).timeout
 	emit_signal("Saved")
 	return true
 

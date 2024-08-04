@@ -4,10 +4,11 @@ class_name ShopConfirmationWindow
 @export var dungeon: BaseLevel
 
 func YesButtonPressed() -> void:
-	Global.StartLoadingScreen(true)
+	print("Yes pressed, going to shop.")
 	dungeon.saveToSaveSystem()
 	var confirm: bool = await dungeon.saveConfirmation()
 	if confirm:
+		Global.StartLoadingScreen(true)
 		get_tree().change_scene_to_file("res://resources/levels/ingame/shop/ShopLevel.tscn")
 
 func NoButtonPressed() -> void:

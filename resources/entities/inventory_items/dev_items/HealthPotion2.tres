@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="BaseInventoryItem" load_steps=4 format=3 uid="uid://7j2mmv4mwt1"]
+
+[ext_resource type="PackedScene" uid="uid://tj5rpq5rew3y" path="res://resources/entities/characters_items/aoe/item_aoe/health_potion_aoe/Health2AOE.tscn" id="1_1u54a"]
+[ext_resource type="Texture2D" uid="uid://bc5gl8tfojiyy" path="res://assets/art/item_icon/HealthPotion.png" id="1_b5q5n"]
+[ext_resource type="Script" path="res://resources/entities/inventory_items/BaseInventoryItem.gd" id="2_qi4e8"]
+
+[resource]
+script = ExtResource("2_qi4e8")
+globalFilePath = "res://resources/entities/inventory_items/dev_items/HealthPotion2.tres"
+image = ExtResource("1_b5q5n")
+itemName = "Health II Potion"
+itemDesciption = "This heals a decent portion of health."
+value = 16.0
+doesValueChange = false
+isInteractable = true
+isOffensive = false
+AOE = ExtResource("1_1u54a")
+AOEHealthGain = 5.0
+AOEDefenseGain = 0.0
+AOEAttackGain = 0.0
+AOEMoraleGain = 0.0
+AOEExpGain = 0.0
+AOEAccuracy = 1.0

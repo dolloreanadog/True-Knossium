@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="BaseInventoryItem" load_steps=3 format=3 uid="uid://hi7fjmiglcn2"]
+
+[ext_resource type="Texture2D" uid="uid://1rvev83nq60g" path="res://assets/art/item_icon/AnimalMeat.png" id="1_1eq14"]
+[ext_resource type="Script" path="res://resources/entities/inventory_items/BaseInventoryItem.gd" id="1_oal5r"]
+
+[resource]
+script = ExtResource("1_oal5r")
+globalFilePath = "res://resources/entities/inventory_items/dev_items/AnimalMeat.tres"
+image = ExtResource("1_1eq14")
+itemName = "Animal Meat"
+itemDesciption = "Meat from hunting a normal animal."
+value = 10.0
+doesValueChange = false
+isInteractable = false
+isOffensive = false
+AOEHealthGain = 0.0
+AOEDefenseGain = 0.0
+AOEAttackGain = 0.0
+AOEMoraleGain = 0.0
+AOEExpGain = 0.0
+AOEAccuracy = 1.0

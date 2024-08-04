@@ -1180,6 +1180,7 @@ offset_bottom = 120.0
 
 [node name="Button" type="Button" parent="TutorialContainer/Party/Part2"]
 z_index = 2
+layout_mode = 0
 offset_left = 1560.0
 offset_top = 128.0
 offset_right = 1816.0
@@ -1196,6 +1197,7 @@ offset_bottom = 40.0
 
 [node name="TextBackground6" type="ColorRect" parent="TutorialContainer/Party/Part3"]
 z_index = 2
+layout_mode = 0
 offset_left = 1000.0
 offset_top = 120.0
 offset_right = 1472.0
@@ -1204,6 +1206,7 @@ color = Color(0, 0, 0, 0.737255)
 
 [node name="Label6" type="Label" parent="TutorialContainer/Party/Part3"]
 z_index = 2
+layout_mode = 0
 offset_left = 1000.0
 offset_top = 120.0
 offset_right = 1472.0

@@ -19,7 +19,8 @@ var stats: StatComponent
 @export var statButtonGroup: StatViewButtonGroup
 @export var specialWindowContainer: Control
 @export var knossiumConsole: KnossiumConsole
-@export var AOECheck: Area2D
+@export var AOECheckSupport: Area2D
+@export var AOECheckOffense: Area2D
 
 #---[ Some Important buttons ]---
 @export_category("Important Buttons")
@@ -138,7 +139,10 @@ func EndTurnButtonHighlight(boolean: bool) -> void:
 	await create_tween().tween_property(endTurnButton, "modulate", Color(1, 1, 1), 1).finished
 
 func AnyAOEStillLeft() -> bool:
-	return AOECheck.has_overlapping_areas()
+	if AOECheckSupport.has_overlapping_areas() or AOECheckOffense.has_overlapping_areas():
+		return true
+	else:
+		return false
 
 # When user exits unintentionally
 func _notification(what: int) -> void:
@@ -245,24 +249,24 @@ func loadSave() -> void:
 		addNewGameItems()
 	await LoadItems
 #	call_deferred("loadAOE")
-#	print("GameInfoDict PeakTotalStatPoints: " + str(SaveSystem.GameInfoDict.PeakTotalStatPoints))
-#	await get_tree().create_timer(0.05).timeout
-#	print("GameInfoDict CharactersDied: " + str(SaveSystem.GameInfoDict.CharactersDied))
-#	await get_tree().create_timer(0.05).timeout
-#	print("GameInfoDict CharactersSurrendered: " + str(SaveSystem.GameInfoDict.CharactersSurrendered))
-#	await get_tree().create_timer(0.05).timeout
-#	print("GameInfoDict Battles: " + str(SaveSystem.GameInfoDict.Battles))
-#	await get_tree().create_timer(0.05).timeout
-#	print("GameInfoDict Turns: " + str(SaveSystem.GameInfoDict.Turns))
-#	await get_tree().create_timer(0.05).timeout
-#	print("GameInfoDict FriendlyCharactersList: " + str(SaveSystem.GameInfoDict.FriendlyCharactersList))
-#	await get_tree().create_timer(0.05).timeout
-#	print("GameInfoDict EnemyCharactersList: " + str(SaveSystem.GameInfoDict.EnemyCharactersList))
-#	await get_tree().create_timer(0.05).timeout
-#	print("GameInfoDict Inventory: " + str(SaveSystem.GameInfoDict.Inventory))
-#	await get_tree().create_timer(0.05).timeout
-#	print("Loaded GameInfoDict OffensiveAOEList: " + str(SaveSystem.GameInfoDict.EnemyOffensiveAOEList))
-#	print("Loaded GameInfoDict SupportAOEList: " + str(SaveSystem.GameInfoDict.FriendlyOffensiveAOEList))
+	print("GameInfoDict PeakTotalStatPoints: " + str(SaveSystem.GameInfoDict.PeakTotalStatPoints))
+	await get_tree().create_timer(0.05).timeout
+	print("GameInfoDict CharactersDied: " + str(SaveSystem.GameInfoDict.CharactersDied))
+	await get_tree().create_timer(0.05).timeout
+	print("GameInfoDict CharactersSurrendered: " + str(SaveSystem.GameInfoDict.CharactersSurrendered))
+	await get_tree().create_timer(0.05).timeout
+	print("GameInfoDict Battles: " + str(SaveSystem.GameInfoDict.Battles))
+	await get_tree().create_timer(0.05).timeout
+	print("GameInfoDict Turns: " + str(SaveSystem.GameInfoDict.Turns))
+	await get_tree().create_timer(0.05).timeout
+	print("GameInfoDict FriendlyCharactersList: " + str(SaveSystem.GameInfoDict.FriendlyCharactersList))
+	await get_tree().create_timer(0.05).timeout
+	print("GameInfoDict EnemyCharactersList: " + str(SaveSystem.GameInfoDict.EnemyCharactersList))
+	await get_tree().create_timer(0.05).timeout
+	print("GameInfoDict Inventory: " + str(SaveSystem.GameInfoDict.Inventory))
+	await get_tree().create_timer(0.05).timeout
+	print("Loaded GameInfoDict OffensiveAOEList: " + str(SaveSystem.GameInfoDict.EnemyOffensiveAOEList))
+	print("Loaded GameInfoDict SupportAOEList: " + str(SaveSystem.GameInfoDict.FriendlyOffensiveAOEList))
 	friendlyPartyContainer.getCharactersInfo()
 	turnsLabel.set_text("Turns: " + str(system.turn))
 	getBattle()
@@ -552,6 +556,7 @@ func saveToSaveSystem() -> void:
 #	print("GameInfoDict Turns: " + str(SaveSystem.GameInfoDict.Turns))
 #	await get_tree().create_timer(0.05).timeout
 	print("GameInfoDict FriendlyCharactersList: " + str(SaveSystem.GameInfoDict.FriendlyCharactersList))
+	print("GameInfoDict EnemyCharactersList: " + str(SaveSystem.GameInfoDict.EnemyCharactersList))
 	await get_tree().create_timer(0.05).timeout
 #	print("GameInfoDict EnemyCharactersList: " + str(SaveSystem.GameInfoDict.EnemyCharactersList))
 	await get_tree().create_timer(0.05).timeout

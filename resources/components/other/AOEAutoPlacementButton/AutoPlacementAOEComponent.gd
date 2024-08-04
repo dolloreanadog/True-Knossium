@@ -49,7 +49,7 @@ func getAOEInfo():
 	AOEListHighMoraleAttack.clear()
 	
 	AOEList = AOEContainer.get_children()
-	AOEList.filter(func(object): return is_instance_valid(object)) # Remove AOE that is null or freed
+	AOEList = AOEList.filter(func(object): return is_instance_valid(object)) # Remove AOE that is null or freed
 	print(str(self) + ": (getAOEInfo) old AOEList: " + str(AOEList))
 	AOEListCount = AOEContainer.get_child_count()
 	var targetAOE: BaseAOE
@@ -235,11 +235,15 @@ func findTarget(priority: highAttackIn, targetAOE: BaseAOE):
 		print(str(targetAOE) + "targetAOE isMelee 2 = " + str(targetAOE.isMelee))
 		match checkCurrentSectionAlive():
 			0:
+				pass
 #				print("how are these frontline troops alive? 2")
-				targetArray.filter(func(object): return object.get_node("StatComponent").role == 0 or object.get_node("StatComponent").role == 1 )
+				# Effectively Useless
+#				targetArray.filter(func(object): return object.get_node("StatComponent").role == 0 or object.get_node("StatComponent").role == 1 )
 			1:
+				pass
 #				print("CQC Section has been eliminated! 2")
-				targetArray.filter(func(object): return object.get_node("StatComponent").role == 2)
+				# Effectively Useless
+#				targetArray.filter(func(object): return object.get_node("StatComponent").role == 2)
 			2:
 				pass
 #				print("All that's left is supports! 2")
@@ -262,10 +266,9 @@ func positionAOE(targetAOE: BaseAOE, targetCharacter: BaseCharacter):
 			print("Placed")
 			await get_tree().create_timer(0.03).timeout
 			if !(isAOESupportContainer):
-				@warning_ignore("redundant_await")
-				var itemGot: bool = await targetAOE.getItemsInside()
-				if itemGot:
-					targetAOE.areaOverlapCharacter(false)
+#				var itemGot: bool = await targetAOE.getItemsInside()
+#				if itemGot:
+				targetAOE.areaOverlapCharacter(false)
 
 
 #--[ Sorting ]--

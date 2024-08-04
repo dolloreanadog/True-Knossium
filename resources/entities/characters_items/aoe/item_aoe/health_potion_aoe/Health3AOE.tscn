@@ -1,0 +1,42 @@
+[gd_scene load_steps=6 format=3 uid="uid://b0qolcs8r48ye"]
+
+[ext_resource type="Script" path="res://resources/entities/characters_items/aoe/BaseAOE.gd" id="1_lyqc2"]
+[ext_resource type="Theme" uid="uid://b6csmgk4u4jyg" path="res://resources/theme/AOEButtonTheme.tres" id="2_rl61a"]
+[ext_resource type="SpriteFrames" uid="uid://cnxewbg0i4ubo" path="res://assets/sprites/aoe_vfx/dev/VitalitySprite.tres" id="3_ww3na"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_tivry"]
+rings = 11
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_0ypso"]
+radius = 56.0
+
+[node name="Health3AOE" type="Area2D" node_paths=PackedStringArray("spriteAnimations")]
+script = ExtResource("1_lyqc2")
+AOEName = "Health Pool III"
+spriteAnimations = NodePath("AnimatedSprite2D")
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="."]
+modulate = Color(0, 1, 0, 0.117647)
+position = Vector2(-1.90735e-06, 1.28746e-05)
+scale = Vector2(112, 112)
+mesh = SubResource("SphereMesh_tivry")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_0ypso")
+
+[node name="Button" type="Button" parent="."]
+offset_left = -40.0
+offset_top = -40.0
+offset_right = 40.0
+offset_bottom = 40.0
+theme = ExtResource("2_rl61a")
+theme_override_colors/font_color = Color(0, 1, 0, 1)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+sprite_frames = ExtResource("3_ww3na")
+animation = &"inactive"
+
+[connection signal="button_down" from="Button" to="." method="_on_button_button_down"]
+[connection signal="button_up" from="Button" to="." method="_on_button_button_up"]
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

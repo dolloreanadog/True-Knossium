@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="BaseInventoryItem" load_steps=3 format=3 uid="uid://c6spd4ow8sf4c"]
+
+[ext_resource type="Texture2D" uid="uid://dydmrj53hui57" path="res://assets/art/item_icon/Soul.png" id="1_3wgny"]
+[ext_resource type="Script" path="res://resources/entities/inventory_items/BaseInventoryItem.gd" id="1_fr3th"]
+
+[resource]
+script = ExtResource("1_fr3th")
+globalFilePath = "res://resources/entities/inventory_items/dev_items/Soul.tres"
+image = ExtResource("1_3wgny")
+itemName = "Soul"
+itemDesciption = "An essence that makes up keeps anything alive either organic or inorganic."
+value = 50.0
+doesValueChange = false
+isInteractable = false
+isOffensive = false
+AOEHealthGain = 0.0
+AOEDefenseGain = 0.0
+AOEAttackGain = 0.0
+AOEMoraleGain = 0.0
+AOEExpGain = 0.0
+AOEAccuracy = 1.0

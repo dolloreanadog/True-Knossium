@@ -242,11 +242,11 @@ horizontal_alignment = 1
 
 [node name="TimeLeftLabel" type="Label" parent="."]
 offset_left = 1072.0
-offset_top = 16.0
+offset_top = 24.0
 offset_right = 1272.0
-offset_bottom = 56.0
+offset_bottom = 80.0
 text = "120 seconds"
-vertical_alignment = 1
+autowrap_mode = 3
 
 [node name="PlayerInventorySystem" type="Node" parent="."]
 script = ExtResource("3_f4rnc")

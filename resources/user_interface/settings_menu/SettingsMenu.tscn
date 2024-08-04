@@ -902,6 +902,108 @@ inputAction = "ViewStatsLevel"
 layout_mode = 2
 text = "  "
 
+[node name="KeybindContainer17" type="HBoxContainer" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_stretch_ratio = 0.0
+alignment = 1
+
+[node name="KeybindLabelContainer" type="HBoxContainer" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer17"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Spacer" type="Label" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer17/KeybindLabelContainer"]
+layout_mode = 2
+text = "  "
+
+[node name="KeybindLabel" type="Label" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer17/KeybindLabelContainer"]
+layout_mode = 2
+text = "Attach Melee Attack AOE to Cursor"
+horizontal_alignment = 1
+
+[node name="KeybindButtonContainer" type="HBoxContainer" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer17"]
+layout_mode = 2
+size_flags_horizontal = 3
+alignment = 2
+
+[node name="KeybindButton" type="Button" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer17/KeybindButtonContainer"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+text = "Error"
+script = ExtResource("2_qvbu0")
+inputAction = "AttachMeleeAttackAOEToCursor"
+
+[node name="Spacer" type="Label" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer17/KeybindButtonContainer"]
+layout_mode = 2
+text = "  "
+
+[node name="KeybindContainer18" type="HBoxContainer" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_stretch_ratio = 0.0
+alignment = 1
+
+[node name="KeybindLabelContainer" type="HBoxContainer" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer18"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Spacer" type="Label" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer18/KeybindLabelContainer"]
+layout_mode = 2
+text = "  "
+
+[node name="KeybindLabel" type="Label" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer18/KeybindLabelContainer"]
+layout_mode = 2
+text = "Attach Ranged Attack AOE to Cursor"
+horizontal_alignment = 1
+
+[node name="KeybindButtonContainer" type="HBoxContainer" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer18"]
+layout_mode = 2
+size_flags_horizontal = 3
+alignment = 2
+
+[node name="KeybindButton" type="Button" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer18/KeybindButtonContainer"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+text = "Error"
+script = ExtResource("2_qvbu0")
+inputAction = "AttachRangedAttackAOEToCursor"
+
+[node name="Spacer" type="Label" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer18/KeybindButtonContainer"]
+layout_mode = 2
+text = "  "
+
+[node name="KeybindContainer19" type="HBoxContainer" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_stretch_ratio = 0.0
+alignment = 1
+
+[node name="KeybindLabelContainer" type="HBoxContainer" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer19"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Spacer" type="Label" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer19/KeybindLabelContainer"]
+layout_mode = 2
+text = "  "
+
+[node name="KeybindLabel" type="Label" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer19/KeybindLabelContainer"]
+layout_mode = 2
+text = "Attach Support AOE to Cursor"
+horizontal_alignment = 1
+
+[node name="KeybindButtonContainer" type="HBoxContainer" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer19"]
+layout_mode = 2
+size_flags_horizontal = 3
+alignment = 2
+
+[node name="KeybindButton" type="Button" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer19/KeybindButtonContainer"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+text = "Error"
+script = ExtResource("2_qvbu0")
+inputAction = "AttachSupportAOEToCursor"
+
+[node name="Spacer" type="Label" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer19/KeybindButtonContainer"]
+layout_mode = 2
+text = "  "
+
 [node name="Exit" type="Button" parent="ColorRect"]
 layout_mode = 0
 offset_left = 1576.0

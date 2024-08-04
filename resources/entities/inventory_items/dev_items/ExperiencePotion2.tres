@@ -1,21 +1,20 @@
 [gd_resource type="Resource" script_class="BaseInventoryItem" load_steps=4 format=3 uid="uid://dryysfxtlsypl"]
 
 [ext_resource type="Script" path="res://resources/entities/inventory_items/BaseInventoryItem.gd" id="1_2h8ih"]
-[ext_resource type="PackedScene" uid="uid://bj14duh8edtjs" path="res://resources/entities/characters_items/aoe/item_aoe/experience_1_aoe/Experience1AOE.tscn" id="1_j2210"]
-[ext_resource type="Texture2D" uid="uid://bnfhr5gna7rs0" path="res://assets/art/item_icon/experience1potion.png" id="2_v8c30"]
+[ext_resource type="PackedScene" uid="uid://pqn2ienly7pl" path="res://resources/entities/characters_items/aoe/item_aoe/experience_potion_aoe/Experience2AOE.tscn" id="1_77j32"]
+[ext_resource type="Texture2D" uid="uid://c7q0x14tahbb3" path="res://assets/art/item_icon/ExperiencePotion.png" id="2_p1cjc"]
 
 [resource]
 script = ExtResource("1_2h8ih")
 globalFilePath = "res://resources/entities/inventory_items/dev_items/ExperiencePotion2.tres"
-image = ExtResource("2_v8c30")
+image = ExtResource("2_p1cjc")
 itemName = "Experience II Potion"
 itemDesciption = "This potion will a really good portion of experience"
-amount = 0
-value = 30.0
+value = 20.0
 doesValueChange = false
 isInteractable = true
 isOffensive = false
-AOE = ExtResource("1_j2210")
+AOE = ExtResource("1_77j32")
 AOEHealthGain = 0.0
 AOEDefenseGain = 0.0
 AOEAttackGain = 0.0

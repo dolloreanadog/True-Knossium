@@ -1,0 +1,41 @@
+[gd_scene load_steps=6 format=3 uid="uid://b2w202tlnok4h"]
+
+[ext_resource type="Script" path="res://resources/entities/characters_items/aoe/BaseAOE.gd" id="1_i6lep"]
+[ext_resource type="Theme" uid="uid://b6csmgk4u4jyg" path="res://resources/theme/AOEButtonTheme.tres" id="2_iq6p0"]
+[ext_resource type="SpriteFrames" uid="uid://cnxewbg0i4ubo" path="res://assets/sprites/aoe_vfx/dev/VitalitySprite.tres" id="3_1xmrm"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_kvxde"]
+rings = 11
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_g0ard"]
+radius = 44.0114
+
+[node name="Experience3AOE" type="Area2D" node_paths=PackedStringArray("spriteAnimations")]
+script = ExtResource("1_i6lep")
+AOEName = "Experience Pool III"
+spriteAnimations = NodePath("AnimatedSprite2D")
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="."]
+modulate = Color(0, 1, 0, 0.117647)
+scale = Vector2(88.0546, 88)
+mesh = SubResource("SphereMesh_kvxde")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_g0ard")
+
+[node name="Button" type="Button" parent="."]
+offset_left = -32.0
+offset_top = -32.0
+offset_right = 32.0
+offset_bottom = 32.0
+theme = ExtResource("2_iq6p0")
+theme_override_colors/font_color = Color(0, 1, 0, 1)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+sprite_frames = ExtResource("3_1xmrm")
+animation = &"inactive"
+
+[connection signal="button_down" from="Button" to="." method="_on_button_button_down"]
+[connection signal="button_up" from="Button" to="." method="_on_button_button_up"]
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

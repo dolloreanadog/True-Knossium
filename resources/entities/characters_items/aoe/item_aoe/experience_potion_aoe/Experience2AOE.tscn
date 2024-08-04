@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://bj14duh8edtjs"]
+[gd_scene load_steps=6 format=3 uid="uid://pqn2ienly7pl"]
 
-[ext_resource type="Script" path="res://resources/entities/characters_items/aoe/item_aoe/experience_1_aoe/Experience1AOE.gd" id="1_x5x2c"]
-[ext_resource type="Theme" uid="uid://b6csmgk4u4jyg" path="res://resources/theme/AOEButtonTheme.tres" id="2_3e0ad"]
+[ext_resource type="Script" path="res://resources/entities/characters_items/aoe/BaseAOE.gd" id="1_g5fdr"]
+[ext_resource type="Theme" uid="uid://b6csmgk4u4jyg" path="res://resources/theme/AOEButtonTheme.tres" id="2_1jeqn"]
+[ext_resource type="SpriteFrames" uid="uid://cnxewbg0i4ubo" path="res://assets/sprites/aoe_vfx/dev/VitalitySprite.tres" id="3_k5kx0"]
 
 [sub_resource type="SphereMesh" id="SphereMesh_kvxde"]
 rings = 11
@@ -9,10 +10,10 @@ rings = 11
 [sub_resource type="CircleShape2D" id="CircleShape2D_g0ard"]
 radius = 44.0114
 
-[node name="Experience1AOE" type="Area2D"]
-script = ExtResource("1_x5x2c")
-AOEName = "Experience Pool I"
-isDynamicColor = false
+[node name="Experience2AOE" type="Area2D" node_paths=PackedStringArray("spriteAnimations")]
+script = ExtResource("1_g5fdr")
+AOEName = "Experience Pool II"
+spriteAnimations = NodePath("AnimatedSprite2D")
 
 [node name="MeshInstance2D" type="MeshInstance2D" parent="."]
 modulate = Color(0, 1, 0, 0.117647)
@@ -27,8 +28,13 @@ offset_left = -32.0
 offset_top = -32.0
 offset_right = 32.0
 offset_bottom = 32.0
-theme = ExtResource("2_3e0ad")
+theme = ExtResource("2_1jeqn")
 theme_override_colors/font_color = Color(0, 1, 0, 1)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+sprite_frames = ExtResource("3_k5kx0")
+animation = &"inactive"
 
 [connection signal="button_down" from="Button" to="." method="_on_button_button_down"]
 [connection signal="button_up" from="Button" to="." method="_on_button_button_up"]

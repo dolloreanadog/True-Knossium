@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3 uid="uid://b4p53ijvtpxow"]
+
+[ext_resource type="Script" path="res://resources/entities/characters_items/aoe/BaseAOE.gd" id="1_lfg4r"]
+[ext_resource type="Script" path="res://resources/entities/characters_items/aoe/aoe_component/AOETurnModifier.gd" id="2_f45lm"]
+
+[node name="DevAOE3" type="Area2D"]
+script = ExtResource("1_lfg4r")
+
+[node name="AOETurnModifierComponent" type="Node" parent="."]
+script = ExtResource("2_f45lm")
+
+[connection signal="aoeHasAttack" from="." to="AOETurnModifierComponent" method="AOEHasAttack"]

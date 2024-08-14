@@ -31,7 +31,7 @@ var dirSpecial := DirAccess.open("res://resources/entities/characters_items/char
 var extension := "tscn"
 
 #--[ character loading ]--
-enum characterType {DEV, DUNGEON, GARDEN, FACTORY, LABORATORY, BATTLEFIELD, SPECIAL}
+enum characterType {DEV, DUNGEON, GARDEN, FOREST, FACTORY, LABORATORY, BATTLEFIELD, SPECIAL}
 @export var dungeonType: characterType
 var isCharactersSpawningIn: bool = false
 # This has to with console, make this true if guaranteed

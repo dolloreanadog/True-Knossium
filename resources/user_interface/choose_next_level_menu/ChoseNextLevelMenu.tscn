@@ -1,0 +1,36 @@
+[gd_scene load_steps=2 format=3 uid="uid://co15ms8mrxec8"]
+
+[ext_resource type="Script" path="res://resources/user_interface/choose_next_level_menu/ChoseNextLevelMenu.gd" id="1_dgknf"]
+
+[node name="ChoseNextLevelMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_dgknf")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 0
+offset_left = 832.0
+offset_top = 448.0
+offset_right = 1216.0
+offset_bottom = 640.0
+color = Color(0.32549, 0.32549, 0.32549, 1)
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 0
+offset_left = 1096.0
+offset_top = 576.0
+offset_right = 1184.0
+offset_bottom = 624.0
+text = "Next Area"
+
+[node name="Button2" type="Button" parent="."]
+layout_mode = 0
+offset_left = 888.0
+offset_top = 576.0
+offset_right = 976.0
+offset_bottom = 624.0
+text = "Stay"

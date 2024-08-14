@@ -68,7 +68,7 @@ var currentPosition = Vector2(0, 0)
 var lastPosition: Vector2
 
 signal gotItems
-
+signal aoeHasAttack(character: BaseCharacter)
 
 #--[ Base Functions ]--
 func _ready():
@@ -298,6 +298,8 @@ func inBattle():
 # Example: First Turn, give 5 health. Last Turn, remove 5 health
 # Example: First Turn, give 10 morale. Every Turn, remove 2 morale
 func firstTurn():
+	await getItemsInside()
+	areaOverlapCharacter(true)
 	print(str(self) + ": Activate first turn")
 
 func attackStats(body: BaseCharacter):
@@ -306,6 +308,7 @@ func attackStats(body: BaseCharacter):
 	print(str(self) + ": Target Has Been hit ")
 	body.damageStats(randf_range(0, health * (1 + accuracy)), randf_range(0, defense * (1 + accuracy)), randf_range(0, attack * (1 + accuracy)), randf_range(0, morale * (1 + accuracy)))
 	body.stats.changeEXP(experience)
+	aoeHasAttack.emit(body)
 #	else:
 #		print(str(self) + ": Target Has Been missed ")
 #		body.damageStats(0, 0, 0, 0)

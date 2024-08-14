@@ -52,6 +52,7 @@ var characterDied: bool = false
 
 signal characterChanged
 signal charactersUpdated
+signal characterHasDied
 signal allCharactersDead
 signal totalStatPointsChanged
 
@@ -262,8 +263,9 @@ func onCharacterDeath(EXPWorth, characterBody):
 	# if container is enemy, give the character drop to the inventorySystem
 	await get_tree().create_timer(0.04).timeout
 	print(str(self) + ": (onCharacterDeath) old Character Died " + str(characterBody))
-	characters.filter(func(object): return is_instance_valid(object))
+	characters = characters.filter(func(object): return is_instance_valid(object))
 	print(str(self) + ": (onCharacterDeath) new Character Died" + str(characterBody))
+	characterHasDied.emit()
 	
 	getCharactersInfo()
 	call_deferred("onAllCharactersDead")

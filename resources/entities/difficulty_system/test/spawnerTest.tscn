@@ -1,0 +1,23 @@
+[gd_scene load_steps=3 format=3 uid="uid://c8adry8eu46vl"]
+
+[ext_resource type="Script" path="res://resources/entities/difficulty_system/DifficultySystem.gd" id="1_ynb6v"]
+[ext_resource type="Script" path="res://resources/entities/difficulty_system/components/DevCharacters.gd" id="2_eyjwe"]
+
+[node name="spawnerTest" type="Node"]
+script = ExtResource("1_ynb6v")
+
+[node name="SpawnNormalDevCharacter" type="Node" parent="." node_paths=PackedStringArray("spawner")]
+script = ExtResource("2_eyjwe")
+spawner = NodePath("..")
+
+[node name="SpawnNormalDevCharacter2" type="Node" parent="." node_paths=PackedStringArray("spawner")]
+script = ExtResource("2_eyjwe")
+spawner = NodePath("..")
+
+[node name="SpawnSpecialDevCharacter" type="Node" parent="." node_paths=PackedStringArray("spawner")]
+script = ExtResource("2_eyjwe")
+spawner = NodePath("..")
+
+[connection signal="SpawnNormals" from="." to="SpawnNormalDevCharacter" method="Activate"]
+[connection signal="SpawnNormals" from="." to="SpawnNormalDevCharacter2" method="Activate"]
+[connection signal="SpawnSpecials" from="." to="SpawnSpecialDevCharacter" method="Activate"]

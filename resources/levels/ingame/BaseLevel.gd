@@ -647,106 +647,110 @@ func saveAOE() -> void:
 	
 	
 	for i in friendlySupportAOEList.size():
-		var newSavedAOEData = SaveSystem.AOEInfoDict.duplicate(true)
-		newSavedAOEData.AOEFilePath = friendlySupportAOEList[i].scene_file_path
-		newSavedAOEData.AOEName = friendlySupportAOEList[i].AOEName
-		newSavedAOEData.AOEColor = friendlySupportAOEList[i].mainColor
-#		print("saved color: " + str(friendlySupportAOEList[i].get_node("MeshInstance2D").modulate))
-#		print("(check) current owner character pfp: " + str(friendlySupportAOEList[i].ownerCharacterPFP.resource_path))
-		newSavedAOEData.AOEOwnerCharacterPFP = friendlySupportAOEList[i].ownerCharacterPFP.resource_path
-#		print("(check) saved owner character pfp: " + str(newSavedAOEData.AOEOwnerCharacterPFP))
-		newSavedAOEData.AOEOwnerName = friendlySupportAOEList[i].ownerCharacterName
-		newSavedAOEData.AOEIsSpriteFlipped = friendlySupportAOEList[i].spriteAnimations.flip_h
-		newSavedAOEData.AOEDescription = friendlySupportAOEList[i].ownerActionDescription
-		newSavedAOEData.AOEPosition = friendlySupportAOEList[i].global_position
-		newSavedAOEData.AOEIsDynamicColor = friendlySupportAOEList[i].isDynamicColor
-#		print(friendlySupportAOEList[i].AOEName + ": (dup) saved DyanmicColor: " + str(friendlySupportAOEList[i].isDynamicColor))
-		newSavedAOEData.AOEIsDraggable = friendlySupportAOEList[i].draggable
-		newSavedAOEData.AOEStatusActive = friendlySupportAOEList[i].statusActive
-		newSavedAOEData.AOEIsMelee = friendlySupportAOEList[i].isMelee
-		newSavedAOEData.AOEAccuracy = friendlySupportAOEList[i].accuracy
-		newSavedAOEData.AOEHealthDamage = friendlySupportAOEList[i].health
-		newSavedAOEData.AOEDefenseDamage = friendlySupportAOEList[i].defense
-		newSavedAOEData.AOEAttackDamage = friendlySupportAOEList[i].attack
-		newSavedAOEData.AOEMoraleDamage = friendlySupportAOEList[i].morale
-		newSavedAOEData.AOEExperienceGain = friendlySupportAOEList[i].experience
-		SaveSystem.GameInfoDict.FriendlySupportAOEList.push_back(newSavedAOEData)
-		await get_tree().create_timer(0.001).timeout
+		if is_instance_valid(friendlySupportAOEList[i]):
+			var newSavedAOEData = SaveSystem.AOEInfoDict.duplicate(true)
+			newSavedAOEData.AOEFilePath = friendlySupportAOEList[i].scene_file_path
+			newSavedAOEData.AOEName = friendlySupportAOEList[i].AOEName
+			newSavedAOEData.AOEColor = friendlySupportAOEList[i].mainColor
+	#		print("saved color: " + str(friendlySupportAOEList[i].get_node("MeshInstance2D").modulate))
+	#		print("(check) current owner character pfp: " + str(friendlySupportAOEList[i].ownerCharacterPFP.resource_path))
+			newSavedAOEData.AOEOwnerCharacterPFP = friendlySupportAOEList[i].ownerCharacterPFP.resource_path
+	#		print("(check) saved owner character pfp: " + str(newSavedAOEData.AOEOwnerCharacterPFP))
+			newSavedAOEData.AOEOwnerName = friendlySupportAOEList[i].ownerCharacterName
+			newSavedAOEData.AOEIsSpriteFlipped = friendlySupportAOEList[i].spriteAnimations.flip_h
+			newSavedAOEData.AOEDescription = friendlySupportAOEList[i].ownerActionDescription
+			newSavedAOEData.AOEPosition = friendlySupportAOEList[i].global_position
+			newSavedAOEData.AOEIsDynamicColor = friendlySupportAOEList[i].isDynamicColor
+	#		print(friendlySupportAOEList[i].AOEName + ": (dup) saved DyanmicColor: " + str(friendlySupportAOEList[i].isDynamicColor))
+			newSavedAOEData.AOEIsDraggable = friendlySupportAOEList[i].draggable
+			newSavedAOEData.AOEStatusActive = friendlySupportAOEList[i].statusActive
+			newSavedAOEData.AOEIsMelee = friendlySupportAOEList[i].isMelee
+			newSavedAOEData.AOEAccuracy = friendlySupportAOEList[i].accuracy
+			newSavedAOEData.AOEHealthDamage = friendlySupportAOEList[i].health
+			newSavedAOEData.AOEDefenseDamage = friendlySupportAOEList[i].defense
+			newSavedAOEData.AOEAttackDamage = friendlySupportAOEList[i].attack
+			newSavedAOEData.AOEMoraleDamage = friendlySupportAOEList[i].morale
+			newSavedAOEData.AOEExperienceGain = friendlySupportAOEList[i].experience
+			SaveSystem.GameInfoDict.FriendlySupportAOEList.push_back(newSavedAOEData)
+			await get_tree().create_timer(0.001).timeout
 	
 	for i in enemySupportAOEList.size():
-		var newSavedAOEData = SaveSystem.AOEInfoDict.duplicate(true)
-		newSavedAOEData.AOEFilePath = enemySupportAOEList[i].scene_file_path
-		newSavedAOEData.AOEName = enemySupportAOEList[i].AOEName
-		newSavedAOEData.AOEColor = enemySupportAOEList[i].mainColor
-#		print("saved color: " + str(enemySupportAOEList[i].get_node("MeshInstance2D").modulate))
-#		print("(check) current owner character pfp: " + str(enemySupportAOEList[i].ownerCharacterPFP.resource_path))
-		newSavedAOEData.AOEOwnerCharacterPFP = enemySupportAOEList[i].ownerCharacterPFP.resource_path
-#		print("(check) saved owner character pfp: " + str(newSavedAOEData.AOEOwnerCharacterPFP))
-		newSavedAOEData.AOEOwnerName = enemySupportAOEList[i].ownerCharacterName
-		newSavedAOEData.AOEIsSpriteFlipped = enemySupportAOEList[i].spriteAnimations.flip_h
-		newSavedAOEData.AOEDescription = enemySupportAOEList[i].ownerActionDescription
-		newSavedAOEData.AOEPosition = enemySupportAOEList[i].global_position
-		newSavedAOEData.AOEIsDynamicColor = enemySupportAOEList[i].isDynamicColor
-#		print(enemySupportAOEList[i].AOEName + ": (dup) saved DyanmicColor: " + str(enemySupportAOEList[i].isDynamicColor))
-		newSavedAOEData.AOEIsDraggable = enemySupportAOEList[i].draggable
-		newSavedAOEData.AOEStatusActive = enemySupportAOEList[i].statusActive
-		newSavedAOEData.AOEIsMelee = enemySupportAOEList[i].isMelee
-		newSavedAOEData.AOEAccuracy = enemySupportAOEList[i].accuracy
-		newSavedAOEData.AOEHealthDamage = enemySupportAOEList[i].health
-		newSavedAOEData.AOEDefenseDamage = enemySupportAOEList[i].defense
-		newSavedAOEData.AOEAttackDamage = enemySupportAOEList[i].attack
-		newSavedAOEData.AOEMoraleDamage = enemySupportAOEList[i].morale
-		newSavedAOEData.AOEExperienceGain = enemySupportAOEList[i].experience
-		SaveSystem.GameInfoDict.EnemySupportAOEList.push_back(newSavedAOEData)
-		await get_tree().create_timer(0.001).timeout
+		if is_instance_valid(enemySupportAOEList[i]):
+			var newSavedAOEData = SaveSystem.AOEInfoDict.duplicate(true)
+			newSavedAOEData.AOEFilePath = enemySupportAOEList[i].scene_file_path
+			newSavedAOEData.AOEName = enemySupportAOEList[i].AOEName
+			newSavedAOEData.AOEColor = enemySupportAOEList[i].mainColor
+	#		print("saved color: " + str(enemySupportAOEList[i].get_node("MeshInstance2D").modulate))
+	#		print("(check) current owner character pfp: " + str(enemySupportAOEList[i].ownerCharacterPFP.resource_path))
+			newSavedAOEData.AOEOwnerCharacterPFP = enemySupportAOEList[i].ownerCharacterPFP.resource_path
+	#		print("(check) saved owner character pfp: " + str(newSavedAOEData.AOEOwnerCharacterPFP))
+			newSavedAOEData.AOEOwnerName = enemySupportAOEList[i].ownerCharacterName
+			newSavedAOEData.AOEIsSpriteFlipped = enemySupportAOEList[i].spriteAnimations.flip_h
+			newSavedAOEData.AOEDescription = enemySupportAOEList[i].ownerActionDescription
+			newSavedAOEData.AOEPosition = enemySupportAOEList[i].global_position
+			newSavedAOEData.AOEIsDynamicColor = enemySupportAOEList[i].isDynamicColor
+	#		print(enemySupportAOEList[i].AOEName + ": (dup) saved DyanmicColor: " + str(enemySupportAOEList[i].isDynamicColor))
+			newSavedAOEData.AOEIsDraggable = enemySupportAOEList[i].draggable
+			newSavedAOEData.AOEStatusActive = enemySupportAOEList[i].statusActive
+			newSavedAOEData.AOEIsMelee = enemySupportAOEList[i].isMelee
+			newSavedAOEData.AOEAccuracy = enemySupportAOEList[i].accuracy
+			newSavedAOEData.AOEHealthDamage = enemySupportAOEList[i].health
+			newSavedAOEData.AOEDefenseDamage = enemySupportAOEList[i].defense
+			newSavedAOEData.AOEAttackDamage = enemySupportAOEList[i].attack
+			newSavedAOEData.AOEMoraleDamage = enemySupportAOEList[i].morale
+			newSavedAOEData.AOEExperienceGain = enemySupportAOEList[i].experience
+			SaveSystem.GameInfoDict.EnemySupportAOEList.push_back(newSavedAOEData)
+			await get_tree().create_timer(0.001).timeout
 	
 	for i in friendlyOffensiveAOEList.size():
-		var newSavedAOEData = SaveSystem.AOEInfoDict.duplicate(true)
-		newSavedAOEData.AOEFilePath = friendlyOffensiveAOEList[i].scene_file_path
-		newSavedAOEData.AOEName = friendlyOffensiveAOEList[i].AOEName
-		newSavedAOEData.AOEColor = friendlyOffensiveAOEList[i].mainColor
-		newSavedAOEData.AOEOwnerCharacterPFP = friendlyOffensiveAOEList[i].ownerCharacterPFP.resource_path
-		newSavedAOEData.AOEOwnerName = friendlyOffensiveAOEList[i].ownerCharacterName
-		newSavedAOEData.AOEIsSpriteFlipped = friendlyOffensiveAOEList[i].spriteAnimations.flip_h
-		newSavedAOEData.AOEDescription = friendlyOffensiveAOEList[i].ownerActionDescription
-		newSavedAOEData.AOEPosition = friendlyOffensiveAOEList[i].global_position
-		newSavedAOEData.AOEIsDynamicColor = friendlyOffensiveAOEList[i].isDynamicColor
-#		print(friendlyOffensiveAOEList[i].AOEName + ": (dup) saved DyanmicColor: " + str(friendlyOffensiveAOEList[i].isDynamicColor))
-		newSavedAOEData.AOEIsDraggable = friendlyOffensiveAOEList[i].draggable
-		newSavedAOEData.AOEStatusActive = friendlyOffensiveAOEList[i].statusActive
-		newSavedAOEData.AOEIsMelee = friendlyOffensiveAOEList[i].isMelee
-		newSavedAOEData.AOEAccuracy = friendlyOffensiveAOEList[i].accuracy
-		newSavedAOEData.AOEHealthDamage = friendlyOffensiveAOEList[i].health
-		newSavedAOEData.AOEDefenseDamage = friendlyOffensiveAOEList[i].defense
-		newSavedAOEData.AOEAttackDamage = friendlyOffensiveAOEList[i].attack
-		newSavedAOEData.AOEMoraleDamage = friendlyOffensiveAOEList[i].morale
-		newSavedAOEData.AOEExperienceGain = friendlyOffensiveAOEList[i].experience
-		SaveSystem.GameInfoDict.FriendlyOffensiveAOEList.push_back(newSavedAOEData)
-		await get_tree().create_timer(0.001).timeout
+		if is_instance_valid(friendlyOffensiveAOEList[i]):
+			var newSavedAOEData = SaveSystem.AOEInfoDict.duplicate(true)
+			newSavedAOEData.AOEFilePath = friendlyOffensiveAOEList[i].scene_file_path
+			newSavedAOEData.AOEName = friendlyOffensiveAOEList[i].AOEName
+			newSavedAOEData.AOEColor = friendlyOffensiveAOEList[i].mainColor
+			newSavedAOEData.AOEOwnerCharacterPFP = friendlyOffensiveAOEList[i].ownerCharacterPFP.resource_path
+			newSavedAOEData.AOEOwnerName = friendlyOffensiveAOEList[i].ownerCharacterName
+			newSavedAOEData.AOEIsSpriteFlipped = friendlyOffensiveAOEList[i].spriteAnimations.flip_h
+			newSavedAOEData.AOEDescription = friendlyOffensiveAOEList[i].ownerActionDescription
+			newSavedAOEData.AOEPosition = friendlyOffensiveAOEList[i].global_position
+			newSavedAOEData.AOEIsDynamicColor = friendlyOffensiveAOEList[i].isDynamicColor
+	#		print(friendlyOffensiveAOEList[i].AOEName + ": (dup) saved DyanmicColor: " + str(friendlyOffensiveAOEList[i].isDynamicColor))
+			newSavedAOEData.AOEIsDraggable = friendlyOffensiveAOEList[i].draggable
+			newSavedAOEData.AOEStatusActive = friendlyOffensiveAOEList[i].statusActive
+			newSavedAOEData.AOEIsMelee = friendlyOffensiveAOEList[i].isMelee
+			newSavedAOEData.AOEAccuracy = friendlyOffensiveAOEList[i].accuracy
+			newSavedAOEData.AOEHealthDamage = friendlyOffensiveAOEList[i].health
+			newSavedAOEData.AOEDefenseDamage = friendlyOffensiveAOEList[i].defense
+			newSavedAOEData.AOEAttackDamage = friendlyOffensiveAOEList[i].attack
+			newSavedAOEData.AOEMoraleDamage = friendlyOffensiveAOEList[i].morale
+			newSavedAOEData.AOEExperienceGain = friendlyOffensiveAOEList[i].experience
+			SaveSystem.GameInfoDict.FriendlyOffensiveAOEList.push_back(newSavedAOEData)
+			await get_tree().create_timer(0.001).timeout
 	
 	for i in enemyOffensiveAOEList.size():
-		var newSavedAOEData = SaveSystem.AOEInfoDict.duplicate(true)
-		newSavedAOEData.AOEFilePath = enemyOffensiveAOEList[i].scene_file_path
-		newSavedAOEData.AOEName = enemyOffensiveAOEList[i].AOEName
-		newSavedAOEData.AOEColor = enemyOffensiveAOEList[i].mainColor
-		newSavedAOEData.AOEOwnerCharacterPFP = enemyOffensiveAOEList[i].ownerCharacterPFP.resource_path
-		newSavedAOEData.AOEOwnerName = enemyOffensiveAOEList[i].ownerCharacterName
-		newSavedAOEData.AOEIsSpriteFlipped = enemyOffensiveAOEList[i].spriteAnimations.flip_h
-		newSavedAOEData.AOEDescription = enemyOffensiveAOEList[i].ownerActionDescription
-		newSavedAOEData.AOEPosition = enemyOffensiveAOEList[i].global_position
-		newSavedAOEData.AOEIsDynamicColor = enemyOffensiveAOEList[i].isDynamicColor
-#		print(enemyOffensiveAOEList[i].AOEName + ": (dup) saved DyanmicColor: " + str(enemyOffensiveAOEList[i].isDynamicColor))
-		newSavedAOEData.AOEIsDraggable = enemyOffensiveAOEList[i].draggable
-		newSavedAOEData.AOEStatusActive = enemyOffensiveAOEList[i].statusActive
-		newSavedAOEData.AOEIsMelee = enemyOffensiveAOEList[i].isMelee
-		newSavedAOEData.AOEAccuracy = enemyOffensiveAOEList[i].accuracy
-		newSavedAOEData.AOEHealthDamage = enemyOffensiveAOEList[i].health
-		newSavedAOEData.AOEDefenseDamage = enemyOffensiveAOEList[i].defense
-		newSavedAOEData.AOEAttackDamage = enemyOffensiveAOEList[i].attack
-		newSavedAOEData.AOEMoraleDamage = enemyOffensiveAOEList[i].morale
-		newSavedAOEData.AOEExperienceGain = enemyOffensiveAOEList[i].experience
-		SaveSystem.GameInfoDict.EnemyOffensiveAOEList.push_back(newSavedAOEData)
-		await get_tree().create_timer(0.001).timeout
+		if is_instance_valid(enemyOffensiveAOEList[i]):
+			var newSavedAOEData = SaveSystem.AOEInfoDict.duplicate(true)
+			newSavedAOEData.AOEFilePath = enemyOffensiveAOEList[i].scene_file_path
+			newSavedAOEData.AOEName = enemyOffensiveAOEList[i].AOEName
+			newSavedAOEData.AOEColor = enemyOffensiveAOEList[i].mainColor
+			newSavedAOEData.AOEOwnerCharacterPFP = enemyOffensiveAOEList[i].ownerCharacterPFP.resource_path
+			newSavedAOEData.AOEOwnerName = enemyOffensiveAOEList[i].ownerCharacterName
+			newSavedAOEData.AOEIsSpriteFlipped = enemyOffensiveAOEList[i].spriteAnimations.flip_h
+			newSavedAOEData.AOEDescription = enemyOffensiveAOEList[i].ownerActionDescription
+			newSavedAOEData.AOEPosition = enemyOffensiveAOEList[i].global_position
+			newSavedAOEData.AOEIsDynamicColor = enemyOffensiveAOEList[i].isDynamicColor
+	#		print(enemyOffensiveAOEList[i].AOEName + ": (dup) saved DyanmicColor: " + str(enemyOffensiveAOEList[i].isDynamicColor))
+			newSavedAOEData.AOEIsDraggable = enemyOffensiveAOEList[i].draggable
+			newSavedAOEData.AOEStatusActive = enemyOffensiveAOEList[i].statusActive
+			newSavedAOEData.AOEIsMelee = enemyOffensiveAOEList[i].isMelee
+			newSavedAOEData.AOEAccuracy = enemyOffensiveAOEList[i].accuracy
+			newSavedAOEData.AOEHealthDamage = enemyOffensiveAOEList[i].health
+			newSavedAOEData.AOEDefenseDamage = enemyOffensiveAOEList[i].defense
+			newSavedAOEData.AOEAttackDamage = enemyOffensiveAOEList[i].attack
+			newSavedAOEData.AOEMoraleDamage = enemyOffensiveAOEList[i].morale
+			newSavedAOEData.AOEExperienceGain = enemyOffensiveAOEList[i].experience
+			SaveSystem.GameInfoDict.EnemyOffensiveAOEList.push_back(newSavedAOEData)
+			await get_tree().create_timer(0.001).timeout
 	
 	await get_tree().create_timer(0.05).timeout
 	SavedAOE.emit()

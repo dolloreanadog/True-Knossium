@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://c5w4ua88x7k0g"]
+
+[ext_resource type="Script" path="res://resources/entities/characters_items/character/BaseCharacter.gd" id="1_sa5cx"]
+
+[node name="DevMerchant" type="CharacterBody2D"]
+script = ExtResource("1_sa5cx")

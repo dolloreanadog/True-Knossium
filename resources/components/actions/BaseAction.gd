@@ -80,9 +80,9 @@ func onCastTimeMinimum() -> void:
 		currentCastTime = castTime
 		print(str(self) + ": AOE has been Casted")
 
-func AddCastTime(amount: int) -> void:
-	currentCastTime += amount
-	print(str(self) + ": Added: " + str(amount))
+func AddCastTime(castAmount: int) -> void:
+	currentCastTime += castAmount
+	print(str(self) + ": Added: " + str(castAmount))
 	onCastTimeMinimum()
 
 func removeCastTime() -> void:

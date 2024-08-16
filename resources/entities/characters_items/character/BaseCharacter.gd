@@ -33,6 +33,7 @@ var turns: int
 # With this we can add more functions, SFX, VFX, & More
 # Like if I were to make a shield break VFX just for that character, I just attach it to that resource
 @export_category("Effects")
+@export var isUnlockable: bool = true
 @export var levelUpFX: BaseFX
 @export var healthDeathFX: BaseFX
 @export var defenseDeathFX: BaseFX
@@ -117,8 +118,9 @@ func playLevelUpFX():
 
 func playhealthDeathFX():
 	#print("Should run Health Death playFX")
-	unlockCharacter()
-	unlockItem()
+	if isUnlockable:
+		unlockCharacter()
+		unlockItem()
 	healthDeathFX.playFX()
 
 func playDefenseDeathFX():
@@ -129,8 +131,9 @@ func playAttackDeathFX():
 	attackDeathFX.playFX()
 
 func playMoraleDeathFX():
-	unlockCharacter()
-	unlockItem()
+	if isUnlockable:
+		unlockCharacter()
+		unlockItem()
 	moraleDeathFX.playFX()
 
 func playOverHealthFX():

@@ -52,6 +52,12 @@ var loadedDevCharactersArray: Array
 var loadedSpecialCharactersArray: Array
 
 signal SpawningIsOver
+signal SpawnNormals
+signal SpawnSpecials
+signal SpawnElites
+signal SpawnLegendary
+signal SpawnMythical
+signal SpawnGod
 
 func _ready() -> void:
 	getCharactersFilePaths()
@@ -294,6 +300,23 @@ func EliteSpawnBehavior() -> void:
 #	dungeon.stopControl.hide()
 	emit_signal("SpawningIsOver")
 	
+
+## Get the array which we'll be using to spawn what we want.
+func SpawnCharacterFromArray(loadedCharactersArray: Array) -> void:
+	print(str(self) + str(loadedCharactersArray))
+	var loadedCharacter = loadedCharactersArray.pick_random()
+	
+#	print(str(self) + "old loadedCharactersArray: " + str(loadedCharactersArray))
+#	print(str(self) + "old loadedCharactersArray size: " + str(loadedCharactersArray.size()))
+	
+	# Have an array choose
+	
+	var realLoadedCharacter = load(loadedCharacter)
+	var instance = realLoadedCharacter.instantiate()
+	enemyPartyContainer.addCharacter(instance, 0.0, true, Vector2(0, 0))
+	enemyPartyContainer.getCharactersInfo()
+#	print(str(self) + "new loadedCharactersArray: " + str(loadedCharactersArray))
+#	print(str(self) + "new loadedCharactersArray size: " + str(loadedCharactersArray.size()))
 
 
 ## Get the array which we'll be using to spawn what we want.

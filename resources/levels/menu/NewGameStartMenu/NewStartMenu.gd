@@ -417,8 +417,7 @@ func ItemAmountSelectorCancelButtonPressed() -> void:
 	$StopControl.hide()
 	itemAmountSelector.hide()
 	
-	if selectorIsFinal:
-		itemAmountSlider.value = selectorInitialItemAmount
+	itemAmountSlider.value = selectorInitialItemAmount
 	
 	UpdateCharacterFinalListVisual()
 	itemAmountSlider.set_value_no_signal(0)

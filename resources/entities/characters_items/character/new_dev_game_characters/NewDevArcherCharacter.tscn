@@ -89,7 +89,7 @@ amount = 2
 health = 3.0
 defense = 0.25
 attack = 0.5
-morale = 5.0
+morale = 1.0
 accuracy = 0.65
 description = "When the pitiful soldiers on the front can't take out the units at the back."
 

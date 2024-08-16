@@ -109,6 +109,9 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_pwkvq")
+}, {
+"duration": 1.0,
+"texture": null
 }],
 "loop": false,
 "name": &"active",

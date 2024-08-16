@@ -1,0 +1,68 @@
+[gd_scene load_steps=6 format=3 uid="uid://c6wqhfxma3kdu"]
+
+[ext_resource type="Script" path="res://resources/entities/characters_items/aoe/BaseAOE.gd" id="1_7idww"]
+[ext_resource type="Theme" uid="uid://b6csmgk4u4jyg" path="res://resources/theme/AOEButtonTheme.tres" id="2_c56yj"]
+[ext_resource type="SpriteFrames" uid="uid://cmope7adoshgf" path="res://assets/sprites/aoe_vfx/dev/BriberySprite.tres" id="3_3piqx"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_evicj"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_xxsi1"]
+radius = 64.0
+
+[node name="BriberyAOE" type="Area2D" node_paths=PackedStringArray("spriteAnimations")]
+script = ExtResource("1_7idww")
+spriteAnimations = NodePath("AnimatedSprite2D")
+isAnimationEveryTurn = false
+TurnsLeft = 3
+activateFirstTurn = true
+activateEveryTurn = false
+activateLastTurn = true
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="."]
+modulate = Color(1, 1, 1, 0.117647)
+position = Vector2(-7.62939e-06, 2.67029e-05)
+scale = Vector2(128.145, 128)
+mesh = SubResource("SphereMesh_evicj")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_xxsi1")
+
+[node name="Button" type="Button" parent="."]
+offset_left = -40.0
+offset_top = -64.0
+offset_right = 40.0
+offset_bottom = 64.0
+theme = ExtResource("2_c56yj")
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+
+[node name="Button2" type="Button" parent="."]
+offset_left = 40.0
+offset_top = -32.0
+offset_right = 64.0
+offset_bottom = 32.0
+theme = ExtResource("2_c56yj")
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+
+[node name="Button3" type="Button" parent="."]
+offset_left = -64.0
+offset_top = -32.0
+offset_right = -40.0
+offset_bottom = 32.0
+theme = ExtResource("2_c56yj")
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(-7.62939e-06, -7.62939e-06)
+scale = Vector2(0.512, 0.512)
+sprite_frames = ExtResource("3_3piqx")
+animation = &"inactive"
+
+[connection signal="button_down" from="Button" to="." method="_on_button_button_down"]
+[connection signal="button_up" from="Button" to="." method="_on_button_button_up"]
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
+[connection signal="button_down" from="Button2" to="." method="_on_button_button_down"]
+[connection signal="button_up" from="Button2" to="." method="_on_button_button_up"]
+[connection signal="pressed" from="Button2" to="." method="_on_button_pressed"]
+[connection signal="button_down" from="Button3" to="." method="_on_button_button_down"]
+[connection signal="button_up" from="Button3" to="." method="_on_button_button_up"]
+[connection signal="pressed" from="Button3" to="." method="_on_button_pressed"]

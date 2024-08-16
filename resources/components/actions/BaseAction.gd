@@ -22,10 +22,13 @@ var system: TurnSystem
 @export var AOE := preload("res://resources/entities/characters_items/aoe/dev_aoe/DevAOE.tscn")
 #--[ Cast Time ]--
 ## How many turns it takes to spawn it
+@export_category("Action Casts")
 @export var castTime: int
 var currentCastTime: int
 
 #--[ Stats ]--
+@export_category("AOE Information")
+## If true, it does damage, If false, it does suport
 @export var isOffensive: bool = true
 @export var amount: int = 1
 # Need to figure out how to utilize this attack stat

@@ -36,7 +36,7 @@ func getCharactersInfo():
 		
 		if characterStats.currentHealth <= 0:
 			pass
-			push_warning("Trying to push a character that's Dead")
+#			push_warning("Trying to push a character that's Dead")
 		else:
 			
 			match characterStats.role:

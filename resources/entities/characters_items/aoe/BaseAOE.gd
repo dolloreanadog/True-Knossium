@@ -46,8 +46,7 @@ var accuracy: float = 1
 
 #--[ Status ]--
 ## How long an AOE Lingers
-enum animationActivation {EVERYTURN, FIRSTTURN, LASTTURN}
-@export var animationActivateOn: animationActivation
+@export var isAnimationEveryTurn: bool = true
 
 @export var TurnsLeft: int
 @export var activateFirstTurn: bool = false
@@ -257,6 +256,7 @@ func getItemsInside() -> bool:
 func lastTurn():
 #	print(str(self) + ": Activate last turn")
 	if activateLastTurn:
+		animationActivate()
 		await getItemsInside()
 		areaOverlapCharacter(true)
 
@@ -269,21 +269,21 @@ func InTurn():
 	if activateEveryTurn:
 		await getItemsInside()
 		areaOverlapCharacter(true)
-		if animationActivateOn == animationActivation.EVERYTURN:
+		if isAnimationEveryTurn:
 			animationActivate()
 	if activateFirstTurn:
 		firstTurn()
 		activateFirstTurn = false
-		if animationActivateOn == animationActivation.FIRSTTURN:
-			animationActivate()
+#		if animationActivateOn == animationActivation.FIRSTTURN:
+#			animationActivate()
 	if isCharacterAnimationDone:
 		if is_instance_valid(ownerCharacter):
 			ownerCharacter.runAnimation(ownerCharacterAnimation)
 		isCharacterAnimationDone = false
 	if TurnsLeft <= 0:
 		lastTurn()
-		if animationActivateOn == animationActivation.LASTTURN:
-			animationActivate()
+#		if animationActivateOn == animationActivation.LASTTURN:
+#			animationActivate()
 		if is_instance_valid(spriteAnimations):
 			while spriteAnimations.is_playing():
 				await get_tree().create_timer(0.01).timeout
@@ -300,6 +300,7 @@ func inBattle():
 func firstTurn():
 	await getItemsInside()
 	areaOverlapCharacter(true)
+	animationActivate()
 	print(str(self) + ": Activate first turn")
 
 func attackStats(body: BaseCharacter):

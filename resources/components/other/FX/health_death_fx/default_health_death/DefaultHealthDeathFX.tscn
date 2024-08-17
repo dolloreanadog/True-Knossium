@@ -2,5 +2,9 @@
 
 [ext_resource type="Script" path="res://resources/components/other/FX/health_death_fx/default_health_death/DefaultHealthDeathFX.gd" id="1_wgk1x"]
 
-[node name="HealthDeathFX" type="Node"]
+[node name="HealthDeathFX" type="Node" node_paths=PackedStringArray("audioStreamPlayer")]
 script = ExtResource("1_wgk1x")
+audioStreamPlayer = NodePath("AudioStreamPlayer2D")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+bus = &"SFX"

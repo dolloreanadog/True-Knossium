@@ -37,7 +37,8 @@ func _on_continue_button_pressed() -> void:
 		Global.StartLoadingScreen(true)
 		print("Going to Dungeon")
 		await create_tween().tween_property($AudioStreamPlayer, "volume_db", -80, 1).finished
-		get_tree().change_scene_to_file("res://resources/levels/ingame/dungeon/Dungeon.tscn")
+		print("(check4): " + str(SaveSystem.GameInfoDict["DungeonLevel"]))
+		get_tree().change_scene_to_file(str(SaveSystem.GameInfoDict["DungeonLevel"]))
 	else:
 		push_error("There is no Save")
 

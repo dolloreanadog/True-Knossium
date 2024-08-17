@@ -1,7 +1,7 @@
 extends Node
 
 var filePathForSaveData := "user://SaveData.save"
-var gameSaveVersion: String = "0.83.3"
+var gameSaveVersion: String = "0.84"
 var placeholderDictionary: Dictionary
 
 signal Saved
@@ -17,6 +17,8 @@ signal Loaded
 	"CharactersSurrendered": 0,
 	"Battles": 0,
 	"Turns": 0,
+	
+	"DungeonLevel": "res://resources/levels/ingame/dungeon/Dungeon.tscn",
 	
 	"SpawnBehaviorWeights": placeholderDictionary,
 	"Inventory": [], # Store all itemInfoDicts Here
@@ -152,6 +154,8 @@ func clearSaveThroughEmptying() -> void:
 	"CharactersSurrendered": 0,
 	"Battles": 0,
 	"Turns": 0,
+	
+	"DungeonLevel": "res://resources/levels/ingame/dungeon/Dungeon.tscn",
 	
 	"SpawnBehaviorWeights": placeholderDictionary,
 	"Inventory": [], # Store all itemInfoDicts Here

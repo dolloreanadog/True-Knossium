@@ -1,0 +1,340 @@
+[gd_scene load_steps=53 format=3 uid="uid://chu3wd44hr42p"]
+
+[ext_resource type="Script" path="res://resources/entities/characters_items/character/BaseCharacter.gd" id="1_fnghu"]
+[ext_resource type="Texture2D" uid="uid://gfemtwbqdkve" path="res://assets/art/character/dev/ArcherSpriteSheet.png" id="2_vn3eg"]
+[ext_resource type="Resource" uid="uid://3i41wk26jwk2" path="res://resources/entities/inventory_items/dev_items/DevGold.tres" id="3_0loyi"]
+[ext_resource type="Texture2D" uid="uid://ysn1x5wm6rhb" path="res://assets/art/character/dev/rat/Rat.png" id="3_u781m"]
+[ext_resource type="Texture2D" uid="uid://baycibtsqr1hp" path="res://assets/art/character/dev/rat/RatAttack.png" id="4_w2nu0"]
+[ext_resource type="Script" path="res://resources/components/other/StatComponent.gd" id="5_6holo"]
+[ext_resource type="PackedScene" uid="uid://dhw2i4apl4wh6" path="res://resources/components/other/FX/level_up_fx/default_level_up/DefaultLevelUpFX.tscn" id="6_ppog5"]
+[ext_resource type="PackedScene" uid="uid://p6mxudeee7ur" path="res://resources/components/other/FX/health_death_fx/default_health_death/DefaultHealthDeathFX.tscn" id="7_bw0p8"]
+[ext_resource type="Script" path="res://resources/components/actions/BaseAction.gd" id="7_igrwb"]
+[ext_resource type="PackedScene" uid="uid://u172rb6a25bx" path="res://resources/entities/characters_items/aoe/melee_aoe/swing_aoe/SwingAOE.tscn" id="8_l28f1"]
+[ext_resource type="PackedScene" uid="uid://c1jhuxqcexyqy" path="res://resources/components/other/FX/defense_death_fx/default_death_fx/DefaultDefenseDeathFX.tscn" id="8_w6w3g"]
+[ext_resource type="PackedScene" uid="uid://bacq2pj0ev6au" path="res://resources/components/other/FX/attack_death_fx/default_attack_death/DefaultAttackDeathFX.tscn" id="9_n7drv"]
+[ext_resource type="PackedScene" uid="uid://ccggwqygiqjfq" path="res://resources/components/other/FX/morale_death_fx/default_morale_death/DefaultMoraleDeathFX.tscn" id="10_pkxci"]
+[ext_resource type="AudioStream" uid="uid://v7m6idfpt6v2" path="res://assets/audio/sfx/RatSqueak.mp3" id="11_pson1"]
+[ext_resource type="PackedScene" uid="uid://bi1oe18bs03s5" path="res://resources/components/other/FX/over_max_health_fx/over_max_health_default/DefaultMaxHealthFX.tscn" id="11_rgbma"]
+[ext_resource type="PackedScene" uid="uid://buvc426adj2om" path="res://resources/components/other/FX/over_max_defense_fx/default_max_defense/DefaultMaxDefenseFX.tscn" id="12_0uq2i"]
+[ext_resource type="PackedScene" uid="uid://kv1h2jlak6ta" path="res://resources/components/other/FX/over_max_attack_fx/default_max_attack/DefaultMaxAttackFX.tscn" id="13_ehtl3"]
+[ext_resource type="PackedScene" uid="uid://dnoftvoyc1f5x" path="res://resources/components/other/FX/over_max_morale_fx/default_max_morale/DefaultMaxMoraleFX.tscn" id="14_05oer"]
+[ext_resource type="PackedScene" uid="uid://denn0vrh87r4h" path="res://resources/components/other/FX/health_changed_fx/default_health_changed/DefaultHealthChangedFX.tscn" id="15_spp87"]
+[ext_resource type="PackedScene" uid="uid://bcp72aooxqkle" path="res://resources/components/other/FX/defense_changed_fx/default_defense_changed/DefaultDefenseChangedFX.tscn" id="16_uwi41"]
+[ext_resource type="PackedScene" uid="uid://butll8uw2kt72" path="res://resources/components/other/FX/attack_changed_fx/default_attack_changed/DefaultAttackChangedFX.tscn" id="17_aibsn"]
+[ext_resource type="PackedScene" uid="uid://gslyjo525r5f" path="res://resources/components/other/FX/morale_changed_fx/default_morale_changed/DefaultMoraleChangedFX.tscn" id="18_l5fog"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6dg1m"]
+atlas = ExtResource("2_vn3eg")
+region = Rect2(0, 800, 400, 400)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_80fjd"]
+atlas = ExtResource("2_vn3eg")
+region = Rect2(400, 800, 400, 400)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kpkwq"]
+atlas = ExtResource("2_vn3eg")
+region = Rect2(800, 800, 400, 400)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wrke1"]
+atlas = ExtResource("2_vn3eg")
+region = Rect2(1200, 800, 400, 400)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vv6i7"]
+atlas = ExtResource("2_vn3eg")
+region = Rect2(1600, 800, 400, 400)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1lu38"]
+atlas = ExtResource("2_vn3eg")
+region = Rect2(2000, 800, 400, 400)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t5hl7"]
+atlas = ExtResource("2_vn3eg")
+region = Rect2(2400, 800, 400, 400)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_07nte"]
+atlas = ExtResource("2_vn3eg")
+region = Rect2(2800, 800, 400, 400)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d22ll"]
+atlas = ExtResource("2_vn3eg")
+region = Rect2(3200, 800, 400, 400)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yv37b"]
+atlas = ExtResource("2_vn3eg")
+region = Rect2(3600, 800, 400, 400)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wnc7s"]
+atlas = ExtResource("2_vn3eg")
+region = Rect2(4000, 800, 400, 400)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5y5jw"]
+atlas = ExtResource("2_vn3eg")
+region = Rect2(4400, 800, 400, 400)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_31aki"]
+atlas = ExtResource("2_vn3eg")
+region = Rect2(4800, 800, 400, 400)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1iav1"]
+atlas = ExtResource("2_vn3eg")
+region = Rect2(5200, 800, 400, 400)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_87oan"]
+atlas = ExtResource("2_vn3eg")
+region = Rect2(5600, 800, 400, 400)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_je2xf"]
+atlas = ExtResource("2_vn3eg")
+region = Rect2(6000, 800, 400, 400)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ga5n0"]
+atlas = ExtResource("2_vn3eg")
+region = Rect2(6400, 800, 400, 400)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_43rn6"]
+atlas = ExtResource("2_vn3eg")
+region = Rect2(6800, 800, 400, 400)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kporc"]
+atlas = ExtResource("2_vn3eg")
+region = Rect2(7200, 800, 400, 400)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f2jk4"]
+atlas = ExtResource("2_vn3eg")
+region = Rect2(7600, 800, 400, 400)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7g48t"]
+atlas = ExtResource("3_u781m")
+region = Rect2(0, 0, 500, 500)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dvpyq"]
+atlas = ExtResource("4_w2nu0")
+region = Rect2(0, 0, 500, 500)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5kjxx"]
+atlas = ExtResource("4_w2nu0")
+region = Rect2(500, 0, 500, 500)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vysh6"]
+atlas = ExtResource("4_w2nu0")
+region = Rect2(1000, 0, 500, 500)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7n43j"]
+atlas = ExtResource("4_w2nu0")
+region = Rect2(0, 500, 500, 500)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mx5t4"]
+atlas = ExtResource("4_w2nu0")
+region = Rect2(500, 500, 500, 500)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u6tq7"]
+atlas = ExtResource("4_w2nu0")
+region = Rect2(1000, 500, 500, 500)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b8b84"]
+atlas = ExtResource("4_w2nu0")
+region = Rect2(0, 1000, 500, 500)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_dwngu"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6dg1m")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_80fjd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kpkwq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wrke1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vv6i7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1lu38")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_t5hl7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_07nte")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d22ll")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yv37b")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wnc7s")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5y5jw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_31aki")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1iav1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_87oan")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_je2xf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ga5n0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_43rn6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kporc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f2jk4")
+}],
+"loop": false,
+"name": &"death",
+"speed": 20.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7g48t")
+}],
+"loop": false,
+"name": &"idle1",
+"speed": 24.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dvpyq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5kjxx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vysh6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7n43j")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mx5t4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_u6tq7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b8b84")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_u781m")
+}],
+"loop": false,
+"name": &"offensive1",
+"speed": 16.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_o3rea"]
+size = Vector2(32, 32)
+
+[node name="DevRat" type="CharacterBody2D" node_paths=PackedStringArray("stats", "levelUpFX", "healthDeathFX", "defenseDeathFX", "attackDeathFX", "moraleDeathFX", "overHealthFX", "overDefenseFX", "overAttackFX", "overMoraleFX", "healthChangedFX", "defenseChangedFX", "attackChangedFX", "moraleChangedFX", "action1")]
+script = ExtResource("1_fnghu")
+id = "Rat"
+profilePicture = ExtResource("3_u781m")
+characterDescription = "The Rat."
+stats = NodePath("StatComponent")
+ResourceNeeded = ExtResource("3_0loyi")
+ResourceNeededNumber = 1
+ResourceDrop = ExtResource("3_0loyi")
+ResourceMaxDropAmount = 5
+levelUpFX = NodePath("DefaultLevelUpFX")
+healthDeathFX = NodePath("HealthDeathFX")
+defenseDeathFX = NodePath("DefenseDeathFX")
+attackDeathFX = NodePath("AttackDeathFX")
+moraleDeathFX = NodePath("DefaultMoraleDeathFX")
+overHealthFX = NodePath("DefaultMaxHealth")
+overDefenseFX = NodePath("DefaultMaxDefenseFX")
+overAttackFX = NodePath("DefaultMaxAttackFX")
+overMoraleFX = NodePath("DefaultMaxMoraleFX")
+healthChangedFX = NodePath("DefaultHealthChangedFX")
+defenseChangedFX = NodePath("DefaultDefenseChangedFX")
+attackChangedFX = NodePath("DefaultAttackChangedFX")
+moraleChangedFX = NodePath("DefaultMoraleChangedFX")
+action1 = NodePath("ActionBite")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.064, 0.064)
+sprite_frames = SubResource("SpriteFrames_dwngu")
+animation = &"death"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_o3rea")
+
+[node name="LevelLabel" type="Label" parent="."]
+editor_description = "This will show level, if the level visibility button is pushed"
+offset_left = -24.0
+offset_top = -24.0
+offset_right = 24.0
+offset_bottom = 24.0
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="StatComponent" type="Node" parent="."]
+script = ExtResource("5_6holo")
+maxEXP = 5.0
+worthEXP = 2.5
+role = 2
+health = 1.5
+attack = 1.1
+morale = 2.0
+potentialHealthGain = 0.05
+potentialDefenseGain = 0.2
+potentialAttackGain = 0.1
+potentialMoraleGain = 0.15
+
+[node name="ActionBite" type="Node" parent="." node_paths=PackedStringArray("stats")]
+script = ExtResource("7_igrwb")
+stats = NodePath("../StatComponent")
+ActionName = "Bite"
+animationUsed = "offensive1"
+AOE = ExtResource("8_l28f1")
+amount = 2
+health = 1.0
+morale = 0.2
+accuracy = 0.3
+description = "The bite can be really annoying."
+
+[node name="DefaultLevelUpFX" parent="." instance=ExtResource("6_ppog5")]
+
+[node name="HealthDeathFX" parent="." node_paths=PackedStringArray("sprite") instance=ExtResource("7_bw0p8")]
+sprite = NodePath("../AnimatedSprite2D")
+audio = ExtResource("11_pson1")
+
+[node name="DefenseDeathFX" parent="." instance=ExtResource("8_w6w3g")]
+
+[node name="AttackDeathFX" parent="." instance=ExtResource("9_n7drv")]
+
+[node name="DefaultMoraleDeathFX" parent="." instance=ExtResource("10_pkxci")]
+
+[node name="DefaultMaxHealth" parent="." instance=ExtResource("11_rgbma")]
+
+[node name="DefaultMaxDefenseFX" parent="." instance=ExtResource("12_0uq2i")]
+
+[node name="DefaultMaxAttackFX" parent="." instance=ExtResource("13_ehtl3")]
+
+[node name="DefaultMaxMoraleFX" parent="." instance=ExtResource("14_05oer")]
+
+[node name="DefaultHealthChangedFX" parent="." instance=ExtResource("15_spp87")]
+
+[node name="DefaultDefenseChangedFX" parent="." instance=ExtResource("16_uwi41")]
+
+[node name="DefaultAttackChangedFX" parent="." instance=ExtResource("17_aibsn")]
+
+[node name="DefaultMoraleChangedFX" parent="." instance=ExtResource("18_l5fog")]

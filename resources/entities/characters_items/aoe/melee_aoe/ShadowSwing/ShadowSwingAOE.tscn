@@ -1,0 +1,50 @@
+[gd_scene load_steps=7 format=3 uid="uid://cc4ys8brcj56"]
+
+[ext_resource type="Script" path="res://resources/entities/characters_items/aoe/BaseAOE.gd" id="1_tbm2j"]
+[ext_resource type="Theme" uid="uid://b6csmgk4u4jyg" path="res://resources/theme/AOEButtonTheme.tres" id="2_1op1e"]
+[ext_resource type="SpriteFrames" uid="uid://dhjtkuc2trmc5" path="res://assets/sprites/aoe_vfx/dev/SwingSprite.tres" id="3_s6jpm"]
+[ext_resource type="Script" path="res://resources/entities/characters_items/aoe/aoe_component/AOETurnModifier.gd" id="4_007a2"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_cqwa1"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hl61g"]
+size = Vector2(64, 144)
+
+[node name="ShadowSwingAOE" type="Area2D" node_paths=PackedStringArray("spriteAnimations")]
+script = ExtResource("1_tbm2j")
+AOEName = "Swing"
+spriteAnimations = NodePath("AnimatedSprite2D")
+isMelee = true
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="."]
+modulate = Color(1, 1, 1, 0.11)
+position = Vector2(0, -1.90735e-06)
+scale = Vector2(64, 144)
+mesh = SubResource("BoxMesh_cqwa1")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_hl61g")
+
+[node name="Button" type="Button" parent="."]
+offset_left = -32.0
+offset_top = -72.0
+offset_right = 32.0
+offset_bottom = 72.0
+theme = ExtResource("2_1op1e")
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+position = Vector2(0, 3.8147e-06)
+scale = Vector2(1, 1.125)
+sprite_frames = ExtResource("3_s6jpm")
+animation = &"inactive"
+
+[node name="AOETurnModifierComponent" type="Node" parent="."]
+script = ExtResource("4_007a2")
+castTimeModifyAmount = 5
+
+[connection signal="aoeHasAttack" from="." to="AOETurnModifierComponent" method="AOEHasAttack"]
+[connection signal="button_down" from="Button" to="." method="_on_button_button_down"]
+[connection signal="button_up" from="Button" to="." method="_on_button_button_up"]
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

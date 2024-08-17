@@ -35,16 +35,22 @@ var targetedSupport: Array
 
 #--[ Functions ]--
 
-func _ready():
+func _ready() -> void:
 	dungeon.connect("AOEQueueFinished", newTurn)
 
-func newTurn():
+func newTurn() -> void:
 	await get_tree().create_timer(0.25).timeout # Have this here so we get everything else loaded
 	getCharacters()
 	getAOEInfo()
 	randomChoosePreferredPlan()
 	useAllAOE()
 	#call_deferred("useAllAOE")
+
+func AnyAOEAnimationPlaying() -> bool:
+	var playing: bool
+	if get_child_count() == 0:
+		playing = get_children().any(func(object: BaseAOE): return object.spriteAnimations.is_playing())
+	return playing
 
 # Get all AOE Info
 func getAOEInfo():

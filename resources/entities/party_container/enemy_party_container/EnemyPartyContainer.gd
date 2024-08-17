@@ -8,7 +8,7 @@ func getCharactersInfo():
 		pass
 #		print(str(self) + ": Getting Character Info")
 	var LtotalStatPoints: int = 0
-	var LtotalCurrentStatPoints: float =0
+	var LtotalCurrentStatPoints: float = 0
 	var LcharacterIsHealer: Array = []
 	var LcharacterIsTank: Array = []
 	var LcharacterIsDPSMelee: Array = []
@@ -158,7 +158,8 @@ func addCharacter(character: BaseCharacter, startingExperience: float, giveDiffi
 func onAllCharactersDead():
 #	print(str(self) + ": Checking if characters are dead")
 #	print(str(self) + ": Checking if characters are dead List: " + str(characters))
-	if charactersAmount <= 0:
+	# replaced characterAmount with get_child_count()
+	if get_child_count() <= 0:
 		print(str(self) + ": All Characters Died")
 		print(str(self) + ": Battle should have ended")
 		system.newBattle()

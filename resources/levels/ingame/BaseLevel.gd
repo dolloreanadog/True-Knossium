@@ -71,6 +71,7 @@ var shopWeight: float = 0.0
 #--[ Surrender Window ]--
 var surrenderWindow = preload("res://resources/entities/surrender_window/surrender_window.tscn")
 var shopWindow = preload("res://resources/entities/shop_confirmation_window/ShopConfirmationWindow.tscn")
+var nextAreaWindow = preload("res://resources/user_interface/choose_next_level_menu/ChoseNextLevelMenu.tscn")
 
 #--[ Save/Load ]-- 
 var saveCheck: int
@@ -521,6 +522,7 @@ func saveToSaveSystem() -> void:
 	SaveSystem.GameInfoDict.Turns = system.turn
 	SaveSystem.GameInfoDict.SpawnBehaviorWeights = difficulty.SpawnBehaviors
 	SaveSystem.GameInfoDict.ConsoleUnlocked = knossiumConsole.unlocked
+	SaveSystem.GameInfoDict.DungeonLevel = get_tree().get_current_scene().get_scene_file_path()
 	print("Saved Spawn Behavior Weights: " + str(SaveSystem.GameInfoDict.SpawnBehaviorWeights))
 	
 	if Global.getBattlesWon() < system.battle:
@@ -571,6 +573,7 @@ func saveFriendlyCharacters() -> void:
 	friendlyPartyContainer.getCharactersInfo()
 	
 	# push_back to friendly characters
+	friendlyPartyContainer.characters = friendlyPartyContainer.characters.filter(func(object): return is_instance_valid(object))
 	for i in friendlyPartyContainer.characters.size():
 		var newSavedCharacterData: Dictionary = SaveSystem.CharacterInfoDict.duplicate(true)
 		if is_instance_valid(friendlyPartyContainer.characters[i]):
@@ -600,6 +603,7 @@ func saveEnemyCharacters() -> void:
 	enemyPartyContainer.getCharactersInfo()
 	
 	# push_back to Enemy characters
+	enemyPartyContainer.characters = enemyPartyContainer.characters.filter(func(object): return is_instance_valid(object))
 	for i in enemyPartyContainer.characters.size():
 		var newSavedCharacterData: Dictionary = SaveSystem.CharacterInfoDict.duplicate(true)
 		if is_instance_valid(enemyPartyContainer.characters[i]):
@@ -782,10 +786,14 @@ func goThroughQueuedAOEArray() -> void:
 				targetAOE = Ltarget
 				print(str(self) + ": targetAOE: " + str(targetAOE))
 				targetAOE.InTurn()
-				
-	while friendlyAOEAttack.get_child_count() != 0 && enemyAttackAOE.get_child_count() != 0 && friendlyAOESupport.get_child_count() != 0 && enemySupportAOE.get_child_count() != 0:
+			
+	# This is still in testing, this might cause crash or infinite loop
+	while friendlyAOEAttack.AnyAOEAnimationPlaying() && enemyAttackAOE.AnyAOEAnimationPlaying() && friendlyAOESupport.AnyAOEAnimationPlaying() && enemySupportAOE.AnyAOEAnimationPlaying():
 		print("AOE has no finished yet!")
 		await get_tree().create_timer(0.1).timeout
+#	while friendlyAOEAttack.get_child_count() != 0 && enemyAttackAOE.get_child_count() != 0 && friendlyAOESupport.get_child_count() != 0 && enemySupportAOE.get_child_count() != 0:
+#		print("AOE has no finished yet!")
+#		await get_tree().create_timer(0.1).timeout
 	# Spawn Our Friendly AOE Here
 	print("AOEQueueFinished")
 	print("--------------------------------")
@@ -810,7 +818,10 @@ func goThroughQueuedAOEArray() -> void:
 				await get_tree().create_timer(0.5).timeout
 				while difficulty.isCharactersSpawningIn == true:
 					await get_tree().create_timer(0.1).timeout
-				GotoShop()
+				if randi_range(0, 1) == 0:
+					GotoShop()
+				else:
+					GoToNextArea()
 			else:
 				checkSpecialWindowContainer()
 		else:
@@ -843,6 +854,18 @@ func GotoShop() -> void:
 	stopControlVisible(true, 2)
 #	stopControl2.show()
 	var instance := shopWindow.instantiate()
+	specialWindowContainer.add_child(instance)
+	instance.dungeon = self
+	instance.z_index = 2
+	
+	@warning_ignore("integer_division")
+	instance.set_global_position(Vector2(DisplayServer.screen_get_size(DisplayServer.window_get_current_screen(0)).x / 2, DisplayServer.screen_get_size(DisplayServer.window_get_current_screen(0)).y / 2))
+	checkSpecialWindowContainer()
+
+func GoToNextArea() -> void:
+	print("Go to Next Area!")
+	stopControlVisible(true, 2)
+	var instance := nextAreaWindow.instantiate()
 	specialWindowContainer.add_child(instance)
 	instance.dungeon = self
 	instance.z_index = 2

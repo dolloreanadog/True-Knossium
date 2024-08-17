@@ -2,6 +2,7 @@ extends BaseFX
 
 func playFX():
 	playVFX()
+	playSFX()
 
 func playVFX():
 	if character.getAnimation() != "death":

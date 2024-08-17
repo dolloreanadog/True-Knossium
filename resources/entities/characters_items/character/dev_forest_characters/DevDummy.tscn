@@ -1,0 +1,266 @@
+[gd_scene load_steps=42 format=3 uid="uid://dsdjg3n8as3cu"]
+
+[ext_resource type="Script" path="res://resources/entities/characters_items/character/BaseCharacter.gd" id="1_odyxt"]
+[ext_resource type="Resource" uid="uid://bbhq4sf2ipwus" path="res://resources/entities/inventory_items/dev_items/Trunk.tres" id="2_p776y"]
+[ext_resource type="Texture2D" uid="uid://gfemtwbqdkve" path="res://assets/art/character/dev/ArcherSpriteSheet.png" id="3_mv1vj"]
+[ext_resource type="Script" path="res://resources/components/other/StatComponent.gd" id="3_uuja5"]
+[ext_resource type="Texture2D" uid="uid://0a4ufcxqvkl4" path="res://resources/levels/menu/ChooseAOESettingsMenu/Character/dummy.png" id="4_r64di"]
+[ext_resource type="PackedScene" uid="uid://dhw2i4apl4wh6" path="res://resources/components/other/FX/level_up_fx/default_level_up/DefaultLevelUpFX.tscn" id="6_qha1k"]
+[ext_resource type="PackedScene" uid="uid://p6mxudeee7ur" path="res://resources/components/other/FX/health_death_fx/default_health_death/DefaultHealthDeathFX.tscn" id="7_6eau0"]
+[ext_resource type="PackedScene" uid="uid://c1jhuxqcexyqy" path="res://resources/components/other/FX/defense_death_fx/default_death_fx/DefaultDefenseDeathFX.tscn" id="8_cjnbn"]
+[ext_resource type="PackedScene" uid="uid://bacq2pj0ev6au" path="res://resources/components/other/FX/attack_death_fx/default_attack_death/DefaultAttackDeathFX.tscn" id="9_ao1lu"]
+[ext_resource type="PackedScene" uid="uid://ccggwqygiqjfq" path="res://resources/components/other/FX/morale_death_fx/default_morale_death/DefaultMoraleDeathFX.tscn" id="10_33s70"]
+[ext_resource type="PackedScene" uid="uid://bi1oe18bs03s5" path="res://resources/components/other/FX/over_max_health_fx/over_max_health_default/DefaultMaxHealthFX.tscn" id="11_m4ymy"]
+[ext_resource type="PackedScene" uid="uid://buvc426adj2om" path="res://resources/components/other/FX/over_max_defense_fx/default_max_defense/DefaultMaxDefenseFX.tscn" id="12_bkl6d"]
+[ext_resource type="PackedScene" uid="uid://kv1h2jlak6ta" path="res://resources/components/other/FX/over_max_attack_fx/default_max_attack/DefaultMaxAttackFX.tscn" id="13_asat6"]
+[ext_resource type="PackedScene" uid="uid://dnoftvoyc1f5x" path="res://resources/components/other/FX/over_max_morale_fx/default_max_morale/DefaultMaxMoraleFX.tscn" id="14_qfnrr"]
+[ext_resource type="PackedScene" uid="uid://denn0vrh87r4h" path="res://resources/components/other/FX/health_changed_fx/default_health_changed/DefaultHealthChangedFX.tscn" id="15_tt2pc"]
+[ext_resource type="PackedScene" uid="uid://bcp72aooxqkle" path="res://resources/components/other/FX/defense_changed_fx/default_defense_changed/DefaultDefenseChangedFX.tscn" id="16_l3cax"]
+[ext_resource type="PackedScene" uid="uid://butll8uw2kt72" path="res://resources/components/other/FX/attack_changed_fx/default_attack_changed/DefaultAttackChangedFX.tscn" id="17_tx2ig"]
+[ext_resource type="PackedScene" uid="uid://gslyjo525r5f" path="res://resources/components/other/FX/morale_changed_fx/default_morale_changed/DefaultMoraleChangedFX.tscn" id="18_r1vpf"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_df4mp"]
+atlas = ExtResource("3_mv1vj")
+region = Rect2(0, 800, 400, 400)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c3ve5"]
+atlas = ExtResource("3_mv1vj")
+region = Rect2(400, 800, 400, 400)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xmggl"]
+atlas = ExtResource("3_mv1vj")
+region = Rect2(800, 800, 400, 400)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6jyji"]
+atlas = ExtResource("3_mv1vj")
+region = Rect2(1200, 800, 400, 400)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rc4q2"]
+atlas = ExtResource("3_mv1vj")
+region = Rect2(1600, 800, 400, 400)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v4bad"]
+atlas = ExtResource("3_mv1vj")
+region = Rect2(2000, 800, 400, 400)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w03ar"]
+atlas = ExtResource("3_mv1vj")
+region = Rect2(2400, 800, 400, 400)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_spqym"]
+atlas = ExtResource("3_mv1vj")
+region = Rect2(2800, 800, 400, 400)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5lh2b"]
+atlas = ExtResource("3_mv1vj")
+region = Rect2(3200, 800, 400, 400)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wkp8u"]
+atlas = ExtResource("3_mv1vj")
+region = Rect2(3600, 800, 400, 400)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_numyk"]
+atlas = ExtResource("3_mv1vj")
+region = Rect2(4000, 800, 400, 400)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1fwam"]
+atlas = ExtResource("3_mv1vj")
+region = Rect2(4400, 800, 400, 400)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8pre8"]
+atlas = ExtResource("3_mv1vj")
+region = Rect2(4800, 800, 400, 400)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s6gvv"]
+atlas = ExtResource("3_mv1vj")
+region = Rect2(5200, 800, 400, 400)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6bu8c"]
+atlas = ExtResource("3_mv1vj")
+region = Rect2(5600, 800, 400, 400)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_85us8"]
+atlas = ExtResource("3_mv1vj")
+region = Rect2(6000, 800, 400, 400)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_peecp"]
+atlas = ExtResource("3_mv1vj")
+region = Rect2(6400, 800, 400, 400)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a4mux"]
+atlas = ExtResource("3_mv1vj")
+region = Rect2(6800, 800, 400, 400)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ubfu6"]
+atlas = ExtResource("3_mv1vj")
+region = Rect2(7200, 800, 400, 400)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mapu4"]
+atlas = ExtResource("3_mv1vj")
+region = Rect2(7600, 800, 400, 400)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jucgn"]
+atlas = ExtResource("4_r64di")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_0unbs"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_df4mp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_c3ve5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xmggl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6jyji")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rc4q2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_v4bad")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w03ar")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_spqym")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5lh2b")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wkp8u")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_numyk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1fwam")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8pre8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s6gvv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6bu8c")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_85us8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_peecp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_a4mux")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ubfu6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mapu4")
+}],
+"loop": false,
+"name": &"death",
+"speed": 24.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jucgn")
+}],
+"loop": false,
+"name": &"idle1",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_06b3t"]
+size = Vector2(48, 48)
+
+[node name="DevDummy" type="CharacterBody2D" node_paths=PackedStringArray("stats", "levelUpFX", "healthDeathFX", "defenseDeathFX", "attackDeathFX", "moraleDeathFX", "overHealthFX", "overDefenseFX", "overAttackFX", "overMoraleFX", "healthChangedFX", "defenseChangedFX", "attackChangedFX", "moraleChangedFX")]
+script = ExtResource("1_odyxt")
+id = "Dummy"
+profilePicture = ExtResource("4_r64di")
+characterDescription = "Left in the forest for ages, just waiting for people to hit it."
+stats = NodePath("StatComponent")
+ResourceNeeded = ExtResource("2_p776y")
+ResourceNeededNumber = 1
+ResourceDrop = ExtResource("2_p776y")
+ResourceMaxDropAmount = 20
+levelUpFX = NodePath("DefaultLevelUpFX")
+healthDeathFX = NodePath("HealthDeathFX")
+defenseDeathFX = NodePath("DefenseDeathFX")
+attackDeathFX = NodePath("AttackDeathFX")
+moraleDeathFX = NodePath("DefaultMoraleDeathFX")
+overHealthFX = NodePath("DefaultMaxHealth")
+overDefenseFX = NodePath("DefaultMaxDefenseFX")
+overAttackFX = NodePath("DefaultMaxAttackFX")
+overMoraleFX = NodePath("DefaultMaxMoraleFX")
+healthChangedFX = NodePath("DefaultHealthChangedFX")
+defenseChangedFX = NodePath("DefaultDefenseChangedFX")
+attackChangedFX = NodePath("DefaultAttackChangedFX")
+moraleChangedFX = NodePath("DefaultMoraleChangedFX")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.12, 0.12)
+sprite_frames = SubResource("SpriteFrames_0unbs")
+animation = &"death"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_06b3t")
+
+[node name="LevelLabel" type="Label" parent="."]
+editor_description = "This will show level, if the level visibility button is pushed"
+offset_left = -24.0
+offset_top = -24.0
+offset_right = 24.0
+offset_bottom = 24.0
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="StatComponent" type="Node" parent="."]
+script = ExtResource("3_uuja5")
+maxEXP = 5.0
+worthEXP = 1.0
+role = 3
+health = 30.0
+defense = 20.0
+attack = 0.0
+morale = 0.0
+potentialHealthGain = 10.0
+potentialDefenseGain = 0.1
+potentialAttackGain = 0.0
+potentialMoraleGain = 0.0
+
+[node name="DefaultLevelUpFX" parent="." instance=ExtResource("6_qha1k")]
+
+[node name="HealthDeathFX" parent="." node_paths=PackedStringArray("sprite") instance=ExtResource("7_6eau0")]
+sprite = NodePath("../AnimatedSprite2D")
+
+[node name="DefenseDeathFX" parent="." instance=ExtResource("8_cjnbn")]
+
+[node name="AttackDeathFX" parent="." instance=ExtResource("9_ao1lu")]
+
+[node name="DefaultMoraleDeathFX" parent="." instance=ExtResource("10_33s70")]
+
+[node name="DefaultMaxHealth" parent="." instance=ExtResource("11_m4ymy")]
+
+[node name="DefaultMaxDefenseFX" parent="." instance=ExtResource("12_bkl6d")]
+
+[node name="DefaultMaxAttackFX" parent="." instance=ExtResource("13_asat6")]
+
+[node name="DefaultMaxMoraleFX" parent="." instance=ExtResource("14_qfnrr")]
+
+[node name="DefaultHealthChangedFX" parent="." instance=ExtResource("15_tt2pc")]
+
+[node name="DefaultDefenseChangedFX" parent="." instance=ExtResource("16_l3cax")]
+
+[node name="DefaultAttackChangedFX" parent="." instance=ExtResource("17_tx2ig")]
+
+[node name="DefaultMoraleChangedFX" parent="." instance=ExtResource("18_r1vpf")]

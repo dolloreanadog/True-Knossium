@@ -60,6 +60,8 @@ func ConsoleInputLineSubmitted(new_text: String) -> void:
 			spawnItemDebugMenu.show()
 		if new_text.begins_with("shop"):
 			dungeon.GotoShop()
+		if new_text.begins_with("nextarea"):
+			dungeon.GoToNextArea()
 	else:
 		if new_text.contains("IOKNOWSKNOSSIUM"):
 			printConsoleText("Console is now unlocked!")

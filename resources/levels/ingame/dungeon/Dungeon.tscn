@@ -1,4 +1,4 @@
-[gd_scene load_steps=56 format=3 uid="uid://dmviuwgk6nssk"]
+[gd_scene load_steps=57 format=3 uid="uid://dmviuwgk6nssk"]
 
 [ext_resource type="Script" path="res://resources/levels/ingame/BaseLevel.gd" id="1_c7s3k"]
 [ext_resource type="PackedScene" uid="uid://2067o3jclptt" path="res://resources/user_interface/console/Console.tscn" id="2_1f5g3"]
@@ -20,6 +20,7 @@
 [ext_resource type="Script" path="res://resources/entities/difficulty_system/DifficultySystem.gd" id="15_dmc50"]
 [ext_resource type="Script" path="res://resources/entities/enemy_aoe_container/EnemyAOEContainer.gd" id="15_oeev1"]
 [ext_resource type="Script" path="res://resources/entities/inventory_system/InventorySystem.gd" id="16_w5ag0"]
+[ext_resource type="Script" path="res://resources/entities/difficulty_system/components/DevCharacters.gd" id="19_mirrt"]
 [ext_resource type="PackedScene" uid="uid://dacl7cdqcmb3c" path="res://resources/entities/button_invisibility/ButtonInvisibilityToggles.tscn" id="19_vyova"]
 [ext_resource type="PackedScene" uid="uid://b8c08cwk8od7q" path="res://resources/user_interface/ingame_menu/InGameMenu.tscn" id="21_7nwil"]
 [ext_resource type="Script" path="res://resources/entities/music_player/DungeonMusicPlayer.gd" id="26_1r80j"]
@@ -148,7 +149,7 @@ offset_left = -8.0
 offset_top = -8.0
 offset_right = 1928.0
 offset_bottom = 1088.0
-color = Color(0.25098, 0.215686, 0.0156863, 1)
+color = Color(0.403922, 0.254902, 0.0509804, 1)
 
 [node name="OutOfBoundsAOEDenial" type="Area2D" parent="."]
 script = ExtResource("7_7xw1c")
@@ -612,6 +613,37 @@ friendlyPartyContainer = NodePath("../PartyContainers/FriendlyPartyContainer")
 enemyPartyContainer = NodePath("../PartyContainers/EnemyPartyContainer")
 system = NodePath("../TurnSystem")
 
+[node name="SpawnNormal" type="Node" parent="difficultySystem" node_paths=PackedStringArray("spawner")]
+script = ExtResource("19_mirrt")
+spawner = NodePath("..")
+
+[node name="SpawnHorde" type="Node" parent="difficultySystem" node_paths=PackedStringArray("spawner")]
+script = ExtResource("19_mirrt")
+spawner = NodePath("..")
+difficultyTotalModifier = 2.0
+charityDifficultyEXPModifier = 0.2
+
+[node name="SpawnSpecial" type="Node" parent="difficultySystem" node_paths=PackedStringArray("spawner")]
+script = ExtResource("19_mirrt")
+spawner = NodePath("..")
+dirPaths = ["res://resources/entities/characters_items/character/new_dev_game_characters", "res://resources/entities/characters_items/character/special_game_characters"]
+difficultyTotalModifier = 0.25
+charityDifficultyEXPModifier = 13.75
+
+[node name="SpawnLegendary" type="Node" parent="difficultySystem" node_paths=PackedStringArray("spawner")]
+script = ExtResource("19_mirrt")
+spawner = NodePath("..")
+dirPaths = ["res://resources/entities/characters_items/character/legendary_dev_characters"]
+difficultyTotalModifier = 0.2
+charityDifficultyEXPModifier = 14.0
+
+[node name="SpawnMythical" type="Node" parent="difficultySystem" node_paths=PackedStringArray("spawner")]
+script = ExtResource("19_mirrt")
+spawner = NodePath("..")
+dirPaths = ["res://resources/entities/characters_items/character/mythical_dev_characters", "res://resources/entities/characters_items/character/legendary_dev_characters"]
+difficultyTotalModifier = 0.15
+charityDifficultyEXPModifier = 14.25
+
 [node name="InventorySystem" type="Node" parent="."]
 script = ExtResource("16_w5ag0")
 
@@ -714,4 +746,9 @@ visible = false
 [connection signal="pressed" from="ButtonsContainer/OpenConsoleButton" to="." method="OpenConsoleButtonPressed"]
 [connection signal="OnNewTurn" from="TurnSystem" to="." method="_on_turn_system_on_new_turn"]
 [connection signal="OnNewTurn" from="TurnSystem" to="ButtonsContainer/ButtonInvisibilityToggles" method="inTurn"]
+[connection signal="SpawnHorde" from="difficultySystem" to="difficultySystem/SpawnHorde" method="Activate"]
+[connection signal="SpawnLegendary" from="difficultySystem" to="difficultySystem/SpawnLegendary" method="Activate"]
+[connection signal="SpawnMythical" from="difficultySystem" to="difficultySystem/SpawnMythical" method="Activate"]
+[connection signal="SpawnNormals" from="difficultySystem" to="difficultySystem/SpawnNormal" method="Activate"]
+[connection signal="SpawnSpecials" from="difficultySystem" to="difficultySystem/SpawnSpecial" method="Activate"]
 [connection signal="SpawningIsOver" from="difficultySystem" to="." method="updateValueOfStatusBar"]

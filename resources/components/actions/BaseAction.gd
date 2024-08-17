@@ -94,7 +94,7 @@ func removeCastTime() -> void:
 	onCastTimeMinimum()
 
 ## Make the number negative
-func turnIntoOffensiveAction(inputNumber) -> int:
+func turnIntoOffensiveAction(inputNumber: float) -> float:
 	inputNumber *= -1
 	return inputNumber
 

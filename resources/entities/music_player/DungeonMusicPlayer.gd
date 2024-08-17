@@ -107,6 +107,8 @@ func setCharacterMusic(music: AudioStream, priority: int) -> void:
 			isPlayingDefaultMusic = false
 			currentCharacterMusicPriority = priority
 			characterMusic = music
+	else:
+		playDefaultMusic() 
 
 func PlayMusic(music: AudioStream) -> void:
 	if is_instance_valid(stream):

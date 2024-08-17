@@ -267,7 +267,7 @@ func positionAOE(targetAOE: BaseAOE, targetCharacter: BaseCharacter):
 			await get_tree().create_timer(0.03).timeout
 			if !(isAOESupportContainer):
 #				var itemGot: bool = await targetAOE.getItemsInside()
-#				if itemGot:
+				await get_tree().create_timer(0.01).timeout
 				targetAOE.areaOverlapCharacter(false)
 
 

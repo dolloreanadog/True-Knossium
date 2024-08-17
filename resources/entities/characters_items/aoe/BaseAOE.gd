@@ -225,7 +225,7 @@ func areaOverlapIsBadArea():
 func areaOverlapCharacter(ActiveAttack: bool):
 #	print(str(self) + ": Start Overlap Character Check (overlap)")
 #	print(str(self) + ": (overlap) Start Overlap Character Check " + str(overlappingBodiesArray.size()))
-	await get_tree().create_timer(0.001).timeout
+	await get_tree().create_timer(0.01).timeout
 	overlappingBodiesArray = get_overlapping_bodies()
 #	await get_tree().create_timer(0.01).timeout
 	if overlappingBodiesArray.size() != 0:
@@ -279,6 +279,7 @@ func InTurn():
 	if isCharacterAnimationDone:
 		if is_instance_valid(ownerCharacter):
 			ownerCharacter.runAnimation(ownerCharacterAnimation)
+			
 		isCharacterAnimationDone = false
 	if TurnsLeft <= 0:
 		lastTurn()

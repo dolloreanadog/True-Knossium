@@ -1,4 +1,4 @@
-[gd_scene load_steps=65 format=3 uid="uid://ubqjl7xo4jo1"]
+[gd_scene load_steps=66 format=3 uid="uid://ubqjl7xo4jo1"]
 
 [ext_resource type="Script" path="res://resources/levels/ingame/tutorial_levels/CombatTutorialDungeon.gd" id="1_mmmgc"]
 [ext_resource type="Script" path="res://resources/entities/AreaAOEDenial/BaseAreaAOEDenial.gd" id="2_57bap"]
@@ -20,6 +20,7 @@
 [ext_resource type="Script" path="res://resources/entities/difficulty_system/DifficultySystem.gd" id="16_jrav7"]
 [ext_resource type="Script" path="res://resources/entities/inventory_system/InventorySystem.gd" id="17_hs285"]
 [ext_resource type="PackedScene" uid="uid://2067o3jclptt" path="res://resources/user_interface/console/Console.tscn" id="18_wi3a0"]
+[ext_resource type="Script" path="res://resources/entities/difficulty_system/components/DevCharacters.gd" id="19_12ybw"]
 [ext_resource type="Script" path="res://resources/entities/music_player/DungeonMusicPlayer.gd" id="20_17go4"]
 [ext_resource type="AudioStream" uid="uid://dxufjrff8jslf" path="res://assets/audio/music/dev/LifillFeryquitous.mp3" id="21_u6g5i"]
 [ext_resource type="AudioStream" uid="uid://5vawwlwftcwx" path="res://assets/audio/music/dev/TheLastWorldISaw.mp3" id="22_cg253"]
@@ -121,7 +122,7 @@ bg_color = Color(1, 0.176471, 0, 0.537255)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5arox"]
 bg_color = Color(1, 0.176471, 0, 0.537255)
 
-[node name="Dungeon" type="Node2D" node_paths=PackedStringArray("turnsLabel", "battlesLabel", "friendlyPartyContainer", "enemyPartyContainer", "battleStatusBar", "stopControl", "stopControl2", "musicPlayer", "statButtonGroup", "specialWindowContainer", "knossiumConsole", "AOECheck", "endTurnButton", "showMenuButton", "autoPlaceButton", "inventoryButton", "partyButton", "friendlyAOEAttack", "friendlyAOESupport", "enemyAttackAOE", "enemySupportAOE", "warningLabel", "SaveWarningLabel")]
+[node name="Dungeon" type="Node2D" node_paths=PackedStringArray("turnsLabel", "battlesLabel", "friendlyPartyContainer", "enemyPartyContainer", "battleStatusBar", "stopControl", "stopControl2", "musicPlayer", "statButtonGroup", "specialWindowContainer", "knossiumConsole", "endTurnButton", "showMenuButton", "autoPlaceButton", "inventoryButton", "partyButton", "friendlyAOEAttack", "friendlyAOESupport", "enemyAttackAOE", "enemySupportAOE", "warningLabel", "SaveWarningLabel")]
 script = ExtResource("1_mmmgc")
 debugCharacterFileName = "res://resources/entities/characters_items/character/new_dev_game_characters/NewDevTankCharacter.tscn"
 debugItem = ExtResource("2_sxysn")
@@ -137,7 +138,6 @@ musicPlayer = NodePath("DungeonMusicPlayer")
 statButtonGroup = NodePath("ButtonsContainer/VisibilityToggles")
 specialWindowContainer = NodePath("SpecialWindowContainer")
 knossiumConsole = NodePath("Console")
-AOECheck = NodePath("AOECheck")
 endTurnButton = NodePath("ButtonsContainer/EndTurn")
 showMenuButton = NodePath("ButtonsContainer/ShowMenuButton")
 autoPlaceButton = NodePath("ButtonsContainer/AOEAutoPlacementButton")
@@ -582,6 +582,37 @@ script = ExtResource("16_jrav7")
 friendlyPartyContainer = NodePath("../PartyContainers/FriendlyPartyContainer")
 enemyPartyContainer = NodePath("../PartyContainers/EnemyPartyContainer")
 system = NodePath("../TurnSystem")
+
+[node name="SpawnNormal" type="Node" parent="difficultySystem" node_paths=PackedStringArray("spawner")]
+script = ExtResource("19_12ybw")
+spawner = NodePath("..")
+
+[node name="SpawnHorde" type="Node" parent="difficultySystem" node_paths=PackedStringArray("spawner")]
+script = ExtResource("19_12ybw")
+spawner = NodePath("..")
+difficultyTotalModifier = 2.0
+charityDifficultyEXPModifier = 0.2
+
+[node name="SpawnSpecial" type="Node" parent="difficultySystem" node_paths=PackedStringArray("spawner")]
+script = ExtResource("19_12ybw")
+spawner = NodePath("..")
+dirPaths = ["res://resources/entities/characters_items/character/new_dev_game_characters", "res://resources/entities/characters_items/character/special_game_characters"]
+difficultyTotalModifier = 0.25
+charityDifficultyEXPModifier = 13.75
+
+[node name="SpawnLegendary" type="Node" parent="difficultySystem" node_paths=PackedStringArray("spawner")]
+script = ExtResource("19_12ybw")
+spawner = NodePath("..")
+dirPaths = ["res://resources/entities/characters_items/character/legendary_dev_characters"]
+difficultyTotalModifier = 0.2
+charityDifficultyEXPModifier = 14.0
+
+[node name="SpawnMythical" type="Node" parent="difficultySystem" node_paths=PackedStringArray("spawner")]
+script = ExtResource("19_12ybw")
+spawner = NodePath("..")
+dirPaths = ["res://resources/entities/characters_items/character/mythical_dev_characters", "res://resources/entities/characters_items/character/legendary_dev_characters"]
+difficultyTotalModifier = 0.15
+charityDifficultyEXPModifier = 14.25
 
 [node name="InventorySystem" type="Node" parent="."]
 script = ExtResource("17_hs285")
@@ -1613,7 +1644,11 @@ text = "Press this to continue..."
 [connection signal="pressed" from="ButtonsContainer/OpenConsoleButton" to="." method="OpenConsoleButtonPressed"]
 [connection signal="OnNewTurn" from="TurnSystem" to="." method="_on_turn_system_on_new_turn"]
 [connection signal="OnNewTurn" from="TurnSystem" to="ButtonsContainer/ButtonInvisibilityToggles" method="inTurn"]
-[connection signal="SpawningIsOver" from="difficultySystem" to="." method="updateValueOfStatusBar"]
+[connection signal="SpawnHorde" from="difficultySystem" to="difficultySystem/SpawnHorde" method="Activate"]
+[connection signal="SpawnLegendary" from="difficultySystem" to="difficultySystem/SpawnLegendary" method="Activate"]
+[connection signal="SpawnMythical" from="difficultySystem" to="difficultySystem/SpawnMythical" method="Activate"]
+[connection signal="SpawnNormals" from="difficultySystem" to="difficultySystem/SpawnNormal" method="Activate"]
+[connection signal="SpawnSpecials" from="difficultySystem" to="difficultySystem/SpawnSpecial" method="Activate"]
 [connection signal="pressed" from="TutorialContainer/Intro/Part1/Button" to="TutorialContainer/Intro" method="_on_button_pressed"]
 [connection signal="pressed" from="TutorialContainer/Intro/Part2/Button" to="TutorialContainer/Intro" method="_on_button_pressed"]
 [connection signal="pressed" from="TutorialContainer/Party/Part2/Button" to="TutorialContainer/Party" method="NextButtonPressed"]

@@ -1,10 +1,11 @@
-[gd_scene load_steps=22 format=3 uid="uid://rmhrhjt28yr1"]
+[gd_scene load_steps=23 format=3 uid="uid://rmhrhjt28yr1"]
 
 [ext_resource type="Script" path="res://resources/entities/characters_items/character/BaseCharacter.gd" id="1_n3hux"]
 [ext_resource type="Texture2D" uid="uid://b5c6x8aob3ey6" path="res://assets/art/character_profile_picture/dev/DevCharacterPFP.png" id="2_ydne2"]
 [ext_resource type="Resource" uid="uid://3i41wk26jwk2" path="res://resources/entities/inventory_items/dev_items/DevGold.tres" id="3_ijmb7"]
 [ext_resource type="SpriteFrames" uid="uid://cskmdcnkex845" path="res://assets/sprites/character/dev/DevArcherSprite.tres" id="4_geh6e"]
 [ext_resource type="Script" path="res://resources/components/other/StatComponent.gd" id="5_4o40a"]
+[ext_resource type="Script" path="res://resources/better_nodes/BetterAnimatedSprite2D.gd" id="5_ffv61"]
 [ext_resource type="Script" path="res://resources/components/actions/BaseAction.gd" id="6_7dslw"]
 [ext_resource type="PackedScene" uid="uid://bcxatbqykyd8s" path="res://resources/entities/characters_items/aoe/ranged_aoe/arrow_aoe/ArrowAOE.tscn" id="7_vihfv"]
 [ext_resource type="PackedScene" uid="uid://dhw2i4apl4wh6" path="res://resources/components/other/FX/level_up_fx/default_level_up/DefaultLevelUpFX.tscn" id="8_ndbhd"]
@@ -50,9 +51,17 @@ moraleChangedFX = NodePath("DefaultMoraleChangedFX")
 action1 = NodePath("ArrowShotActionComponent")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -1)
 scale = Vector2(0.12, 0.12)
 sprite_frames = ExtResource("4_geh6e")
 animation = &"death"
+
+[node name="BetterAnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = ExtResource("4_geh6e")
+animation = &"death"
+script = ExtResource("5_ffv61")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_0d04v")

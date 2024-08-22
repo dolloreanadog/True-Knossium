@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://c8adry8eu46vl"]
 
 [ext_resource type="Script" path="res://resources/entities/difficulty_system/DifficultySystem.gd" id="1_ynb6v"]
-[ext_resource type="Script" path="res://resources/entities/difficulty_system/components/DevCharacters.gd" id="2_eyjwe"]
+[ext_resource type="Script" path="res://resources/entities/difficulty_system/components/SpawnCharacterComponent.gd" id="2_eyjwe"]
 
 [node name="spawnerTest" type="Node"]
 script = ExtResource("1_ynb6v")

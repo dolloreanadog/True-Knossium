@@ -19,5 +19,5 @@ AOEHealthGain = 0.0
 AOEDefenseGain = 0.0
 AOEAttackGain = 0.0
 AOEMoraleGain = 0.0
-AOEExpGain = 50.0
+AOEExpGain = 38.0
 AOEAccuracy = 1.0

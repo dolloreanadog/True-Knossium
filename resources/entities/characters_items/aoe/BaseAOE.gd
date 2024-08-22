@@ -23,6 +23,7 @@ var dungeon: BaseLevel
 var system: TurnSystem
 
 #--[ Child Nodes ]--
+## AOE sprite, not owner sprite animation
 @export var spriteAnimations: AnimatedSprite2D
 @onready var collisionVisualizer: MeshInstance2D = get_node("MeshInstance2D")
 @onready var button: Button = get_node("Button")
@@ -262,7 +263,7 @@ func lastTurn():
 
 # Every time a turn is done something happens
 func InTurn():
-	print(str(self) + ": AOE Turn")
+#	print(str(self) + ": AOE Turn")
 	TurnsLeft -= 1
 	draggable = false
 	statusActive = true
@@ -278,8 +279,9 @@ func InTurn():
 #			animationActivate()
 	if isCharacterAnimationDone:
 		if is_instance_valid(ownerCharacter):
-			ownerCharacter.runAnimation(ownerCharacterAnimation)
-			
+			ownerCharacter.playAnimation(ownerCharacterAnimation)
+			ownerCharacter.QueueAnimation("idle1")
+#			ownerCharacter.characterAnimation.queue("idle1")
 		isCharacterAnimationDone = false
 	if TurnsLeft <= 0:
 		lastTurn()

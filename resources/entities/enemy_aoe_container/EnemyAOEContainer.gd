@@ -47,9 +47,10 @@ func newTurn() -> void:
 	#call_deferred("useAllAOE")
 
 func AnyAOEAnimationPlaying() -> bool:
-	var playing: bool
-	if get_child_count() == 0:
+	var playing: bool = false
+	if get_child_count() != 0:
 		playing = get_children().any(func(object: BaseAOE): return object.spriteAnimations.is_playing())
+	print("(check5) is playing AOE? " + str(playing))
 	return playing
 
 # Get all AOE Info

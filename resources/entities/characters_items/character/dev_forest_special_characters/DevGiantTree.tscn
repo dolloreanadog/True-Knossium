@@ -1,4 +1,4 @@
-[gd_scene load_steps=59 format=3 uid="uid://c3ohb608yo2ye"]
+[gd_scene load_steps=64 format=3 uid="uid://c3ohb608yo2ye"]
 
 [ext_resource type="Script" path="res://resources/entities/characters_items/character/BaseCharacter.gd" id="1_0ft55"]
 [ext_resource type="Texture2D" uid="uid://bjvwv4j01rfnr" path="res://assets/art/character/dev/tree/Tree.png" id="2_30pdg"]
@@ -285,6 +285,111 @@ animations = [{
 "speed": 24.0
 }]
 
+[sub_resource type="Animation" id="Animation_vlj83"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [19]
+}
+
+[sub_resource type="Animation" id="Animation_7dgdt"]
+resource_name = "death"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"death"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0, 19]
+}
+
+[sub_resource type="Animation" id="Animation_568m0"]
+resource_name = "idle1"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"idle1"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_ratf1"]
+resource_name = "offensive1"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"offensive1"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0, 13]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_2og5k"]
+_data = {
+"RESET": SubResource("Animation_vlj83"),
+"death": SubResource("Animation_7dgdt"),
+"idle1": SubResource("Animation_568m0"),
+"offensive1": SubResource("Animation_ratf1")
+}
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_sjtx1"]
 size = Vector2(128, 128)
 
@@ -294,6 +399,7 @@ id = "Tree"
 profilePicture = ExtResource("2_30pdg")
 characterDescription = "One very angry tree."
 stats = NodePath("StatComponent")
+z_index_order = -2
 ResourceNeeded = ExtResource("3_2uiq4")
 ResourceNeededNumber = 2
 ResourceDrop = ExtResource("3_2uiq4")
@@ -317,7 +423,12 @@ action1 = NodePath("ActionTreeSwing")
 position = Vector2(-3.8147e-06, -3.8147e-06)
 scale = Vector2(0.256, 0.256)
 sprite_frames = SubResource("SpriteFrames_be3xj")
-animation = &"offensive1"
+animation = &"idle1"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_2og5k")
+}
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_sjtx1")
@@ -341,10 +452,10 @@ health = 40.0
 defense = 4.0
 attack = 6.0
 morale = 20.0
-potentialHealthGain = 0.08
-potentialDefenseGain = 0.06
-potentialAttackGain = 1.15
-potentialMoraleGain = 0.45
+potentialHealthGain = 0.15
+potentialDefenseGain = 0.2
+potentialAttackGain = 1.2
+potentialMoraleGain = 0.6
 
 [node name="ActionTreeSwing" type="Node" parent="." node_paths=PackedStringArray("stats")]
 script = ExtResource("7_abvmd")
@@ -383,3 +494,5 @@ sprite = NodePath("../AnimatedSprite2D")
 [node name="DefaultAttackChangedFX" parent="." instance=ExtResource("20_lgdhr")]
 
 [node name="DefaultMoraleChangedFX" parent="." instance=ExtResource("21_wddsk")]
+
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="GetAnimationPlayed"]

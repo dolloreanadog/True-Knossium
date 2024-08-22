@@ -1,7 +1,7 @@
 extends Node
 
 var filePathForSaveData := "user://SaveData.save"
-var gameSaveVersion: String = "0.84"
+var gameSaveVersion: String = "0.85"
 var placeholderDictionary: Dictionary
 
 signal Saved
@@ -46,6 +46,10 @@ signal Loaded
 	"CharacterAction2CurrentCastTime": 0,
 	"CharacterAction3CurrentCastTime": 0,
 	"CharacterAction4CurrentCastTime": 0,
+	"CharacterHealth": 0.0,
+	"CharacterDefense": 0.0,
+	"CharacterAttack": 0.0,
+	"CharacterMorale": 0.0,
 	"CharacterCurrentHealth": 0.0,
 	"CharacterCurrentDefense": 0.0,
 	"CharacterCurrentAttack": 0.0,
@@ -72,8 +76,6 @@ signal Loaded
 	"AOEMoraleDamage": 0.0,
 	"AOEExperienceGain": 0.0,
 }
-
-
 
 #--[ Functions ]--
 

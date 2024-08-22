@@ -236,6 +236,40 @@ func changeMorale(amount: float) -> void:
 	emit_signal("statChanged")
 	emit_signal("moraleChanged")
 
+func SetHealth(amount: float) -> void:
+	health = amount
+#	print(str(self) + ": health Setd = " + str(amount))
+	healthDeath()
+	overMaxHealth()
+	emit_signal("statChanged")
+	emit_signal("healthChanged")
+
+func SetDefense(amount: float) -> void:
+	if amount < 1:
+		amount = 1
+	defense = amount
+#	print(str(self) + ": defense Setd = " + str(amount))
+	defenseDeath()
+	overMaxDefense()
+	emit_signal("statChanged")
+	emit_signal("defenseChanged")
+
+func SetAttack(amount: float) -> void:
+	attack = amount
+#	print(str(self) + ": attack Setd = " + str(amount))
+	attackDeath()
+	overMaxAttack()
+	emit_signal("statChanged")
+	emit_signal("attackChanged")
+
+func SetMorale(amount: float) -> void:
+	morale = amount
+#	print(str(self) + ": morale changed = " + str(amount))
+	moraleDeath()
+	overMaxMorale()
+	emit_signal("statChanged")
+	emit_signal("moraleChanged")
+
 # There's an in lore reason why defense affects buffs
 func changeCurrentHealth(amount: float) -> void:
 	amount /= currentDefense

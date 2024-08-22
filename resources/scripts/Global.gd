@@ -34,6 +34,15 @@ var progressionDict: Dictionary = {
 	"BattlesWon": 0, # In a single game
 }
 
+var loadoutsListDict: Dictionary = {
+	"Loudouts": []
+}
+
+var loadoutDict: Dictionary = {
+	"Characters": [],
+	"Items": []
+}
+
 func _ready() -> void:
 	if checkGlobalDataFileExists():
 		loadAllData()
@@ -66,24 +75,26 @@ func EndLoadingScreen() -> void:
 #--[ Unlocking ]--
 
 func newlyUnlockedToFullyUnlocked():
-	progressionDict.CharactersUnlocked += newlyUnlockedCharacters
-	progressionDict.ItemsUnlocked += newlyUnlockedItems
+	progressionDict.CharactersUnlocked += newProgressionDict.CharactersUnlocked
+	progressionDict.ItemsUnlocked += newProgressionDict.ItemsUnlocked
 
 
 ## Check if filePath doesn't exist, if not then add
 func unlockCharacter(filePath: String) -> void:
 	if !(getDictCharactersUnlocked().has(filePath)):
 		getDictCharactersUnlocked().push_back(filePath)
-		newlyUnlockedCharacters.push_back(filePath)
-		print("newly character unlock list: " + str(newlyUnlockedCharacters))
+#		newlyUnlockedCharacters.push_back(filePath)
+		newProgressionDict.CharactersUnlocked.push_back(filePath)
+		print("newly character unlock list: " + str(newProgressionDict.CharactersUnlocked))
 		print("new character unlock list: " + str(getDictCharactersUnlocked()))
 
 ## Check if filePath doesn't exist, if not then add
 func unlockItem(filePath: String) -> void:
 	if !(getDictItemsUnlocked().has(filePath)):
 		getDictItemsUnlocked().push_back(filePath)
-		newlyUnlockedItems.push_back(filePath)
-		print("newly item unlock list: " + str(newlyUnlockedItems))
+#		newlyUnlockedItems.push_back(filePath)
+		newProgressionDict.ItemsUnlocked.push_back(filePath)
+		print("newly item unlock list: " + str(newProgressionDict.ItemsUnlocked))
 		print("new item unlock list: " + str(getDictItemsUnlocked()))
 
 func unlockWhenMostBattles(amount: int) -> void:
@@ -99,6 +110,8 @@ func clearProgressionDict() -> void:
 	}
 
 func clearNewProgressionDict() -> void:
+	newlyUnlockedCharacters.clear()
+	newlyUnlockedItems.clear()
 	newProgressionDict = {
 		"CharactersUnlocked": [],
 		"ItemsUnlocked": [],
@@ -119,6 +132,8 @@ func clearNewProgressThroughDeletion() -> void:
 
 func saveAllData() -> bool:
 	print("Progression Data Saved")
+	progressionDict.CharactersUnlocked = progressionDict.CharactersUnlocked.filter(func(object): return FileAccess.file_exists(object))
+	newProgressionDict.CharactersUnlocked = newProgressionDict.CharactersUnlocked.filter(func(object): return FileAccess.file_exists(object))
 	var file := FileAccess.open_encrypted_with_pass(filePathForProgressionData, FileAccess.WRITE, "Platy1ium")
 	var file1 := FileAccess.open_encrypted_with_pass(filePathForNewProgressionData, FileAccess.WRITE, "Platy1ium")
 	file.store_var(progressionDict)
@@ -134,17 +149,19 @@ func loadAllData() -> void:
 	var file := FileAccess.open_encrypted_with_pass(filePathForProgressionData, FileAccess.READ, "Platy1ium") 
 	var file1 := FileAccess.open_encrypted_with_pass(filePathForNewProgressionData, FileAccess.READ, "Platy1ium")
 	if not FileAccess.file_exists(filePathForProgressionData):
-		print("No Previous Global Data")
+		print("No Previous Global Progression Data")
 	else:
 		print("Global Data Exists!")
 		progressionDict = file.get_var()
+		progressionDict.CharactersUnlocked = progressionDict.CharactersUnlocked.filter(func(object): return FileAccess.file_exists(object))
 		print(progressionDict)
 		
 	if not FileAccess.file_exists(filePathForNewProgressionData):
-		print("No Previous Global Data")
+		print("No Previous Global New Progression Data")
 	else:
 		print("Global Data Exists!")
 		newProgressionDict = file1.get_var()
+		newProgressionDict.CharactersUnlocked = newProgressionDict.CharactersUnlocked.filter(func(object): return FileAccess.file_exists(object))
 		print(progressionDict)
 	emit_signal("loaded")
 

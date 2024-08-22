@@ -28,11 +28,11 @@ func getCharactersInfo():
 		var character: BaseCharacter = get_child(i)
 		var characterStats: StatComponent = get_child(i).get_node("StatComponent")
 		
-		if characterStats.is_connected("death", onCharacterDeath) == false:
-			characterStats.connect("death", onCharacterDeath)
-			
-		if characterStats.is_connected("moraleBroken", onCharacterDeath) == false:
-			characterStats.connect("moraleBroken", onCharacterDeath)
+#		if characterStats.is_connected("death", onCharacterDeath) == false:
+#			characterStats.connect("death", onCharacterDeath)
+#
+#		if characterStats.is_connected("moraleBroken", onCharacterDeath) == false:
+#			characterStats.connect("moraleBroken", onCharacterDeath)
 		
 		if characterStats.currentHealth <= 0:
 			pass
@@ -58,7 +58,7 @@ func getCharactersInfo():
 			LtotalStatPoints += characterStats.totalStatPoints
 			LtotalCurrentStatPoints += characterStats.getCurrentTotalStatPoints()
 			
-			
+#		await get_tree().create_timer(0.05).timeout
 	# reset receiving EXP since we're done using it, also to not use excess
 	receivingEXP = 0
 	print(str(self) + ": Reset receiving EXP")
@@ -85,8 +85,10 @@ func getCharactersInfo():
 	
 	emit_signal("charactersUpdated")
 
+
 @warning_ignore("unused_parameter")
-func addCharacter(character: BaseCharacter, startingExperience: float, giveDifficultyEXP: bool, characterPosition: Vector2):
+func addCharacter(character: BaseCharacter, startingExperience: float, spawnedFromDifficulty: bool, characterPosition: Vector2):
+	isSpawningCharacter = true
 	print(str(self) + ": Spawning: " + str(character))
 	var tween: Tween = get_tree().create_tween().bind_node(character)
 	print("Tween: " + str(tween))
@@ -94,6 +96,11 @@ func addCharacter(character: BaseCharacter, startingExperience: float, giveDiffi
 	
 	var role := characterStats.role
 	var spot: Vector2
+	
+	if characterStats.is_connected("death", onCharacterDeath) == false:
+		characterStats.connect("death", onCharacterDeath)
+	if characterStats.is_connected("moraleBroken", onCharacterDeath) == false:
+		characterStats.connect("moraleBroken", onCharacterDeath)
 	
 	character.isFriendly = true
 	add_child(character, true)
@@ -106,44 +113,46 @@ func addCharacter(character: BaseCharacter, startingExperience: float, giveDiffi
 				spot = SupportSpawnArea.randomizeSpawn()
 				character.trueGlobalPosition = spot
 				character.set_position(spot - Vector2(150, 0))
-				tween.tween_property(character, "global_position", spot, 1)
+				await tween.tween_property(character, "global_position", spot, 1).finished
 			else:
 				character.set_position(characterPosition)
 				character.trueGlobalPosition = characterPosition
-				tween.tween_property(character, "global_position", characterPosition, 1)
+				await tween.tween_property(character, "global_position", characterPosition, 1).finished
 		characterStats.rolesList.Tank: 
 			if Vector2(0, 0) == characterPosition:
 				spot = CQCSpawnArea.randomizeSpawn()
 				character.trueGlobalPosition = spot
-				character.set_position(spot - Vector2(550, 0))
-				tween.tween_property(character, "global_position", spot, 1)
+				character.set_position(spot - Vector2(950, 0))
+				await tween.tween_property(character, "global_position", spot, 1).finished
 			else:
 				character.set_position(characterPosition)
 				character.trueGlobalPosition = characterPosition
-				tween.tween_property(character, "global_position", characterPosition, 1)
+				await tween.tween_property(character, "global_position", characterPosition, 1).finished
 		characterStats.rolesList.DPSMelee: 
 			if Vector2(0, 0) == characterPosition:
 				spot = CQCSpawnArea.randomizeSpawn()
 				character.trueGlobalPosition = spot
-				character.set_position(spot - Vector2(550, 0))
-				tween.tween_property(character, "global_position", spot, 1)
+				character.set_position(spot - Vector2(950, 0))
+				await tween.tween_property(character, "global_position", spot, 1).finished
 			else:
 				character.set_position(characterPosition)
 				character.trueGlobalPosition = characterPosition
-				tween.tween_property(character, "global_position", characterPosition, 1)
+				await tween.tween_property(character, "global_position", characterPosition, 1).finished
 		characterStats.rolesList.DPSRanged: 
 			if Vector2(0, 0) == characterPosition:
 				spot = DPSRangedSpawnArea.randomizeSpawn()
 				character.trueGlobalPosition = spot
-				character.set_position(spot - Vector2(300, 0))
-				tween.tween_property(character, "global_position", spot, 1)
+				character.set_position(spot - Vector2(950, 0))
+				await tween.tween_property(character, "global_position", spot, 1).finished
 			else:
 				character.set_position(characterPosition)
 				character.trueGlobalPosition = characterPosition
-				tween.tween_property(character, "global_position", characterPosition, 1)
+				await tween.tween_property(character, "global_position", characterPosition, 1).finished
 	
 	getCharactersInfo()
 	dungeon.statButtonGroup.updateModulation()
+	isSpawningCharacter = false
+	tween.kill()
 
 func onAllCharactersDead():
 #	print(str(self) + ": Checking if characters are dead")

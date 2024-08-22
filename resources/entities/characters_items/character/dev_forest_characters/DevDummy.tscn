@@ -1,4 +1,4 @@
-[gd_scene load_steps=42 format=3 uid="uid://dsdjg3n8as3cu"]
+[gd_scene load_steps=46 format=3 uid="uid://dsdjg3n8as3cu"]
 
 [ext_resource type="Script" path="res://resources/entities/characters_items/character/BaseCharacter.gd" id="1_odyxt"]
 [ext_resource type="Resource" uid="uid://bbhq4sf2ipwus" path="res://resources/entities/inventory_items/dev_items/Trunk.tres" id="2_p776y"]
@@ -179,6 +179,107 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="Animation" id="Animation_obeja"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [19]
+}
+
+[sub_resource type="Animation" id="Animation_7dgdt"]
+resource_name = "death"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"death"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2(0.15, 0.15)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AnimatedSprite2D:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0, 19]
+}
+
+[sub_resource type="Animation" id="Animation_568m0"]
+resource_name = "idle1"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"idle1"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2(0.65, 0.65)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AnimatedSprite2D:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_2og5k"]
+_data = {
+"RESET": SubResource("Animation_obeja"),
+"death": SubResource("Animation_7dgdt"),
+"idle1": SubResource("Animation_568m0")
+}
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_06b3t"]
 size = Vector2(48, 48)
 
@@ -207,9 +308,15 @@ attackChangedFX = NodePath("DefaultAttackChangedFX")
 moraleChangedFX = NodePath("DefaultMoraleChangedFX")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-scale = Vector2(0.12, 0.12)
+scale = Vector2(0.15, 0.15)
 sprite_frames = SubResource("SpriteFrames_0unbs")
 animation = &"death"
+frame = 19
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_2og5k")
+}
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_06b3t")
@@ -229,12 +336,12 @@ script = ExtResource("3_uuja5")
 maxEXP = 5.0
 worthEXP = 1.0
 role = 3
-health = 30.0
+health = 20.0
 defense = 20.0
 attack = 0.0
-morale = 0.0
+morale = 20.0
 potentialHealthGain = 10.0
-potentialDefenseGain = 0.1
+potentialDefenseGain = 0.25
 potentialAttackGain = 0.0
 potentialMoraleGain = 0.0
 
@@ -264,3 +371,5 @@ sprite = NodePath("../AnimatedSprite2D")
 [node name="DefaultAttackChangedFX" parent="." instance=ExtResource("17_tx2ig")]
 
 [node name="DefaultMoraleChangedFX" parent="." instance=ExtResource("18_r1vpf")]
+
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="GetAnimationPlayed"]

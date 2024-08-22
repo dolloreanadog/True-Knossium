@@ -20,7 +20,7 @@
 [ext_resource type="Script" path="res://resources/entities/difficulty_system/DifficultySystem.gd" id="16_jrav7"]
 [ext_resource type="Script" path="res://resources/entities/inventory_system/InventorySystem.gd" id="17_hs285"]
 [ext_resource type="PackedScene" uid="uid://2067o3jclptt" path="res://resources/user_interface/console/Console.tscn" id="18_wi3a0"]
-[ext_resource type="Script" path="res://resources/entities/difficulty_system/components/DevCharacters.gd" id="19_12ybw"]
+[ext_resource type="Script" path="res://resources/entities/difficulty_system/components/SpawnCharacterComponent.gd" id="19_5fsuh"]
 [ext_resource type="Script" path="res://resources/entities/music_player/DungeonMusicPlayer.gd" id="20_17go4"]
 [ext_resource type="AudioStream" uid="uid://dxufjrff8jslf" path="res://assets/audio/music/dev/LifillFeryquitous.mp3" id="21_u6g5i"]
 [ext_resource type="AudioStream" uid="uid://5vawwlwftcwx" path="res://assets/audio/music/dev/TheLastWorldISaw.mp3" id="22_cg253"]
@@ -50,10 +50,10 @@ size = Vector2(1920, 1288)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pmviw"]
 size = Vector2(1344, 3328)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_u1vti"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_70olb"]
 size = Vector2(448, 96)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_hc7k6"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cq77x"]
 size = Vector2(448, 96)
 
 [sub_resource type="InputEventAction" id="InputEventAction_x7j3b"]
@@ -122,7 +122,7 @@ bg_color = Color(1, 0.176471, 0, 0.537255)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5arox"]
 bg_color = Color(1, 0.176471, 0, 0.537255)
 
-[node name="Dungeon" type="Node2D" node_paths=PackedStringArray("turnsLabel", "battlesLabel", "friendlyPartyContainer", "enemyPartyContainer", "battleStatusBar", "stopControl", "stopControl2", "musicPlayer", "statButtonGroup", "specialWindowContainer", "knossiumConsole", "endTurnButton", "showMenuButton", "autoPlaceButton", "inventoryButton", "partyButton", "friendlyAOEAttack", "friendlyAOESupport", "enemyAttackAOE", "enemySupportAOE", "warningLabel", "SaveWarningLabel")]
+[node name="Dungeon" type="Node2D" node_paths=PackedStringArray("turnsLabel", "battlesLabel", "friendlyPartyContainer", "enemyPartyContainer", "battleStatusBar", "stopControl", "stopControl2", "musicPlayer", "statButtonGroup", "specialWindowContainer", "knossiumConsole", "AOECheckSupport", "AOECheckOffense", "endTurnButton", "showMenuButton", "autoPlaceButton", "inventoryButton", "partyButton", "friendlyAOEAttack", "friendlyAOESupport", "enemyAttackAOE", "enemySupportAOE", "warningLabel", "SaveWarningLabel")]
 script = ExtResource("1_mmmgc")
 debugCharacterFileName = "res://resources/entities/characters_items/character/new_dev_game_characters/NewDevTankCharacter.tscn"
 debugItem = ExtResource("2_sxysn")
@@ -138,6 +138,8 @@ musicPlayer = NodePath("DungeonMusicPlayer")
 statButtonGroup = NodePath("ButtonsContainer/VisibilityToggles")
 specialWindowContainer = NodePath("SpecialWindowContainer")
 knossiumConsole = NodePath("Console")
+AOECheckSupport = NodePath("AOECheckSupport")
+AOECheckOffense = NodePath("AOECheckOffense")
 endTurnButton = NodePath("ButtonsContainer/EndTurn")
 showMenuButton = NodePath("ButtonsContainer/ShowMenuButton")
 autoPlaceButton = NodePath("ButtonsContainer/AOEAutoPlacementButton")
@@ -180,15 +182,17 @@ shape = SubResource("RectangleShape2D_tibo5")
 position = Vector2(2592, 704)
 shape = SubResource("RectangleShape2D_pmviw")
 
-[node name="AOECheck" type="Area2D" parent="."]
+[node name="AOECheckSupport" type="Area2D" parent="."]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="AOECheck"]
+[node name="SupportAOECollision" type="CollisionShape2D" parent="AOECheckSupport"]
 position = Vector2(672, 976)
-shape = SubResource("RectangleShape2D_u1vti")
+shape = SubResource("RectangleShape2D_70olb")
 
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="AOECheck"]
+[node name="AOECheckOffense" type="Area2D" parent="."]
+
+[node name="AttackAOECollision" type="CollisionShape2D" parent="AOECheckOffense"]
 position = Vector2(1248, 976)
-shape = SubResource("RectangleShape2D_hc7k6")
+shape = SubResource("RectangleShape2D_cq77x")
 
 [node name="Labels" type="Control" parent="."]
 layout_mode = 3
@@ -584,31 +588,31 @@ enemyPartyContainer = NodePath("../PartyContainers/EnemyPartyContainer")
 system = NodePath("../TurnSystem")
 
 [node name="SpawnNormal" type="Node" parent="difficultySystem" node_paths=PackedStringArray("spawner")]
-script = ExtResource("19_12ybw")
+script = ExtResource("19_5fsuh")
 spawner = NodePath("..")
 
 [node name="SpawnHorde" type="Node" parent="difficultySystem" node_paths=PackedStringArray("spawner")]
-script = ExtResource("19_12ybw")
+script = ExtResource("19_5fsuh")
 spawner = NodePath("..")
 difficultyTotalModifier = 2.0
 charityDifficultyEXPModifier = 0.2
 
 [node name="SpawnSpecial" type="Node" parent="difficultySystem" node_paths=PackedStringArray("spawner")]
-script = ExtResource("19_12ybw")
+script = ExtResource("19_5fsuh")
 spawner = NodePath("..")
 dirPaths = ["res://resources/entities/characters_items/character/new_dev_game_characters", "res://resources/entities/characters_items/character/special_game_characters"]
 difficultyTotalModifier = 0.25
 charityDifficultyEXPModifier = 13.75
 
 [node name="SpawnLegendary" type="Node" parent="difficultySystem" node_paths=PackedStringArray("spawner")]
-script = ExtResource("19_12ybw")
+script = ExtResource("19_5fsuh")
 spawner = NodePath("..")
 dirPaths = ["res://resources/entities/characters_items/character/legendary_dev_characters"]
 difficultyTotalModifier = 0.2
 charityDifficultyEXPModifier = 14.0
 
 [node name="SpawnMythical" type="Node" parent="difficultySystem" node_paths=PackedStringArray("spawner")]
-script = ExtResource("19_12ybw")
+script = ExtResource("19_5fsuh")
 spawner = NodePath("..")
 dirPaths = ["res://resources/entities/characters_items/character/mythical_dev_characters", "res://resources/entities/characters_items/character/legendary_dev_characters"]
 difficultyTotalModifier = 0.15

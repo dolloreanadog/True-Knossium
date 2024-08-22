@@ -27,6 +27,11 @@ var stats: StatComponent
 @export var endTurnButton: Button
 @export var showMenuButton: Button
 @export var autoPlaceButton: Button
+# Add the AOE Shortcut here, so that we can disable them later
+@export var placeMeleeAttackButton: Button
+@export var placeRangedAttackButton: Button
+@export var placeSupportButton: Button
+
 
 @export var inventoryButton: Button
 @export var partyButton: Button
@@ -102,6 +107,7 @@ func _ready():
 	print("is stopControl2 Visible: " + str(stopControl2.visible))
 	Global.StartLoadingScreen(false)
 	stopControlVisible(true, 1)
+	AudioServer.set_bus_mute(3, true)
 	if SaveSystem.checkSaveFileExists():
 		loadSave()
 		confirmed = await loadConfirmation()
@@ -117,6 +123,7 @@ func _ready():
 #	await loadConfirmation()
 	if confirmed:
 		updateValueOfStatusBar()
+		AudioServer.set_bus_mute(3, false)
 		Global.EndLoadingScreen()
 		stopControlVisible(false, 1)
 		checkSpecialWindowContainer()
@@ -166,22 +173,34 @@ func stopControlVisible(visibility: bool, stopControlNumber: int):
 			endTurnButton.disabled = true
 			showMenuButton.disabled = true
 			autoPlaceButton.disabled = true
+			placeMeleeAttackButton.disabled = true
+			placeRangedAttackButton.disabled = true
+			placeSupportButton.disabled = true
 		else:
 			stopControl.visible = false
 			endTurnButton.disabled = false
 			showMenuButton.disabled = false
 			autoPlaceButton.disabled = false
+			placeMeleeAttackButton.disabled = false
+			placeRangedAttackButton.disabled = false
+			placeSupportButton.disabled = false
 	elif stopControlNumber == 2:
 		if visibility == true:
 			stopControl2.visible = true
 			endTurnButton.disabled = true
 			showMenuButton.disabled = true
 			autoPlaceButton.disabled = true
+			placeMeleeAttackButton.disabled = true
+			placeRangedAttackButton.disabled = true
+			placeSupportButton.disabled = true
 		else:
 			stopControl2.visible = false
 			endTurnButton.disabled = false
 			showMenuButton.disabled = false
 			autoPlaceButton.disabled = false
+			placeMeleeAttackButton.disabled = false
+			placeRangedAttackButton.disabled = false
+			placeSupportButton.disabled = false
 
 #--[ Upkeep List ]--
 func updateUpkeepList() -> void:
@@ -228,6 +247,7 @@ func addNewGameItems() -> void:
 
 #-- Load
 func loadSave() -> void:
+	
 	SaveSystem.loadAllData()
 	
 	peakTotalStatPoints = SaveSystem.GameInfoDict.PeakTotalStatPoints
@@ -260,9 +280,9 @@ func loadSave() -> void:
 	await get_tree().create_timer(0.05).timeout
 	print("GameInfoDict Turns: " + str(SaveSystem.GameInfoDict.Turns))
 	await get_tree().create_timer(0.05).timeout
-	print("GameInfoDict FriendlyCharactersList: " + str(SaveSystem.GameInfoDict.FriendlyCharactersList))
+#	print("GameInfoDict FriendlyCharactersList: " + str(SaveSystem.GameInfoDict.FriendlyCharactersList))
 	await get_tree().create_timer(0.05).timeout
-	print("GameInfoDict EnemyCharactersList: " + str(SaveSystem.GameInfoDict.EnemyCharactersList))
+#	print("GameInfoDict EnemyCharactersList: " + str(SaveSystem.GameInfoDict.EnemyCharactersList))
 	await get_tree().create_timer(0.05).timeout
 	print("GameInfoDict Inventory: " + str(SaveSystem.GameInfoDict.Inventory))
 	await get_tree().create_timer(0.05).timeout
@@ -296,6 +316,10 @@ func loadCharacters() -> void:
 			targetCharacterInstance.action4.currentCastTime = targetCharacterInfo.CharacterAction4CurrentCastTime
 		
 		targetCharacterInstance.characterName = targetCharacterInfo.CharacterName
+		targetCharacterInstance.stats.SetHealth(targetCharacterInfo.CharacterHealth)
+		targetCharacterInstance.stats.SetDefense(targetCharacterInfo.CharacterDefense)
+		targetCharacterInstance.stats.SetAttack(targetCharacterInfo.CharacterAttack)
+		targetCharacterInstance.stats.SetMorale(targetCharacterInfo.CharacterMorale)
 		targetCharacterInstance.stats.setCurrentHealth(targetCharacterInfo.CharacterCurrentHealth)
 		targetCharacterInstance.stats.setCurrentDefense(targetCharacterInfo.CharacterCurrentDefense)
 		targetCharacterInstance.stats.setCurrentAttack(targetCharacterInfo.CharacterCurrentAttack)
@@ -322,6 +346,10 @@ func loadCharacters() -> void:
 			targetCharacterInstance.action4.currentCastTime = targetCharacterInfo.CharacterAction4CurrentCastTime
 		
 		targetCharacterInstance.characterName = targetCharacterInfo.CharacterName
+		targetCharacterInstance.stats.SetHealth(targetCharacterInfo.CharacterHealth)
+		targetCharacterInstance.stats.SetDefense(targetCharacterInfo.CharacterDefense)
+		targetCharacterInstance.stats.SetAttack(targetCharacterInfo.CharacterAttack)
+		targetCharacterInstance.stats.SetMorale(targetCharacterInfo.CharacterMorale)
 		targetCharacterInstance.stats.setCurrentHealth(targetCharacterInfo.CharacterCurrentHealth)
 		targetCharacterInstance.stats.setCurrentDefense(targetCharacterInfo.CharacterCurrentDefense)
 		targetCharacterInstance.stats.setCurrentAttack(targetCharacterInfo.CharacterCurrentAttack)
@@ -502,20 +530,20 @@ func saveToSaveSystem() -> void:
 	await get_tree().create_timer(0.05).timeout
 	
 	if peakTotalStatPoints < friendlyPartyContainer.totalStatPoints: # Peak Total Stats keep resetting to 0?
-		print("------------")
-		print("New Peak Score")
-		print("Peak Total Stat Local Points: " + str(peakTotalStatPoints))
-		print("Peak Total Stat Saved Points: " + str(SaveSystem.GameInfoDict.PeakTotalStatPoints))
-		print("Total Stat Points: " + str(friendlyPartyContainer.totalStatPoints))
+#		print("------------")
+#		print("New Peak Score")
+#		print("Peak Total Stat Local Points: " + str(peakTotalStatPoints))
+#		print("Peak Total Stat Saved Points: " + str(SaveSystem.GameInfoDict.PeakTotalStatPoints))
+#		print("Total Stat Points: " + str(friendlyPartyContainer.totalStatPoints))
 		SaveSystem.GameInfoDict.PeakTotalStatPoints = friendlyPartyContainer.totalStatPoints
 		peakTotalStatPoints = SaveSystem.GameInfoDict.PeakTotalStatPoints
 		print("New Peak Total Stat Points: " + str(SaveSystem.GameInfoDict.PeakTotalStatPoints))
 	else:
 		SaveSystem.GameInfoDict.PeakTotalStatPoints = peakTotalStatPoints
-		print("------------")
-		print("Not Peak Score")
-		print("Peak Total Stat Local Points: " + str(peakTotalStatPoints))
-		print("Peak Total Stat Saved Points: " + str(SaveSystem.GameInfoDict.PeakTotalStatPoints))
+#		print("------------")
+#		print("Not Peak Score")
+#		print("Peak Total Stat Local Points: " + str(peakTotalStatPoints))
+#		print("Peak Total Stat Saved Points: " + str(SaveSystem.GameInfoDict.PeakTotalStatPoints))
 	SaveSystem.GameInfoDict.CharactersDied = totalCharactersDied
 	SaveSystem.GameInfoDict.CharactersSurrendered = totalCharactersSurrendered
 	SaveSystem.GameInfoDict.Battles = system.battle
@@ -529,7 +557,6 @@ func saveToSaveSystem() -> void:
 		Global.progressionDict.BattlesWon = system.battle
 	
 	saveFriendlyCharacters()
-
 	await SavedFriendlyCharacters
 	print("Saved Friendly Characters Passed")
 	saveEnemyCharacters()
@@ -557,8 +584,8 @@ func saveToSaveSystem() -> void:
 #	await get_tree().create_timer(0.05).timeout
 #	print("GameInfoDict Turns: " + str(SaveSystem.GameInfoDict.Turns))
 #	await get_tree().create_timer(0.05).timeout
-	print("GameInfoDict FriendlyCharactersList: " + str(SaveSystem.GameInfoDict.FriendlyCharactersList))
-	print("GameInfoDict EnemyCharactersList: " + str(SaveSystem.GameInfoDict.EnemyCharactersList))
+#	print("GameInfoDict FriendlyCharactersList: " + str(SaveSystem.GameInfoDict.FriendlyCharactersList))
+#	print("GameInfoDict EnemyCharactersList: " + str(SaveSystem.GameInfoDict.EnemyCharactersList))
 	await get_tree().create_timer(0.05).timeout
 #	print("GameInfoDict EnemyCharactersList: " + str(SaveSystem.GameInfoDict.EnemyCharactersList))
 	await get_tree().create_timer(0.05).timeout
@@ -570,10 +597,14 @@ func saveToSaveSystem() -> void:
 	emit_signal("SaveFinished")
 
 func saveFriendlyCharacters() -> void:
-	friendlyPartyContainer.getCharactersInfo()
+	await friendlyPartyContainer.getCharactersInfo()
 	
 	# push_back to friendly characters
+	
+# USE THIS IF STILL SUFFERING CRASHES WITH OUT OF BOUND ARRAY
+#	var LcharacterArray: Array = friendlyPartyContainer.characters.filter(func(object): return is_instance_valid(object))
 	friendlyPartyContainer.characters = friendlyPartyContainer.characters.filter(func(object): return is_instance_valid(object))
+#	print("(check6) Friendly size = " + str(enemyPartyContainer.characters.size()))
 	for i in friendlyPartyContainer.characters.size():
 		var newSavedCharacterData: Dictionary = SaveSystem.CharacterInfoDict.duplicate(true)
 		if is_instance_valid(friendlyPartyContainer.characters[i]):
@@ -589,6 +620,10 @@ func saveFriendlyCharacters() -> void:
 				newSavedCharacterData.CharacterAction3CurrentCastTime = friendlyPartyContainer.characters[i].action3.currentCastTime
 			if is_instance_valid(friendlyPartyContainer.characters[i].action4):
 				newSavedCharacterData.CharacterAction4CurrentCastTime = friendlyPartyContainer.characters[i].action4.currentCastTime
+			newSavedCharacterData.CharacterHealth = friendlyPartyContainer.characters[i].stats.health
+			newSavedCharacterData.CharacterDefense = friendlyPartyContainer.characters[i].stats.defense
+			newSavedCharacterData.CharacterAttack = friendlyPartyContainer.characters[i].stats.attack
+			newSavedCharacterData.CharacterMorale = friendlyPartyContainer.characters[i].stats.morale
 			newSavedCharacterData.CharacterCurrentHealth = friendlyPartyContainer.characters[i].stats.currentHealth
 			newSavedCharacterData.CharacterCurrentDefense = friendlyPartyContainer.characters[i].stats.currentDefense
 			newSavedCharacterData.CharacterCurrentAttack = friendlyPartyContainer.characters[i].stats.currentAttack
@@ -600,10 +635,14 @@ func saveFriendlyCharacters() -> void:
 	SavedFriendlyCharacters.emit()
 
 func saveEnemyCharacters() -> void:
-	enemyPartyContainer.getCharactersInfo()
+	await enemyPartyContainer.getCharactersInfo()
 	
 	# push_back to Enemy characters
+	
+# USE THIS IF STILL SUFFERING CRASHES WITH OUT OF BOUND ARRAY
+#	var LcharacterArray: Array = enemyPartyContainer.characters.filter(func(object): return is_instance_valid(object))
 	enemyPartyContainer.characters = enemyPartyContainer.characters.filter(func(object): return is_instance_valid(object))
+#	print("(check6) Enemy size = " + str(enemyPartyContainer.characters.size()))
 	for i in enemyPartyContainer.characters.size():
 		var newSavedCharacterData: Dictionary = SaveSystem.CharacterInfoDict.duplicate(true)
 		if is_instance_valid(enemyPartyContainer.characters[i]):
@@ -619,6 +658,10 @@ func saveEnemyCharacters() -> void:
 				newSavedCharacterData.CharacterAction3CurrentCastTime = enemyPartyContainer.characters[i].action3.currentCastTime
 			if is_instance_valid(enemyPartyContainer.characters[i].action4):
 				newSavedCharacterData.CharacterAction4CurrentCastTime = enemyPartyContainer.characters[i].action4.currentCastTime
+			newSavedCharacterData.CharacterHealth = enemyPartyContainer.characters[i].stats.health
+			newSavedCharacterData.CharacterDefense = enemyPartyContainer.characters[i].stats.defense
+			newSavedCharacterData.CharacterAttack = enemyPartyContainer.characters[i].stats.attack
+			newSavedCharacterData.CharacterMorale = enemyPartyContainer.characters[i].stats.morale
 			newSavedCharacterData.CharacterCurrentHealth = enemyPartyContainer.characters[i].stats.currentHealth
 			newSavedCharacterData.CharacterCurrentDefense = enemyPartyContainer.characters[i].stats.currentDefense
 			newSavedCharacterData.CharacterCurrentAttack = enemyPartyContainer.characters[i].stats.currentAttack
@@ -788,18 +831,22 @@ func goThroughQueuedAOEArray() -> void:
 				targetAOE.InTurn()
 			
 	# This is still in testing, this might cause crash or infinite loop
-	while friendlyAOEAttack.AnyAOEAnimationPlaying() && enemyAttackAOE.AnyAOEAnimationPlaying() && friendlyAOESupport.AnyAOEAnimationPlaying() && enemySupportAOE.AnyAOEAnimationPlaying():
+	# Checks if any AOE is playing
+	while friendlyAOEAttack.AnyAOEAnimationPlaying() or enemyAttackAOE.AnyAOEAnimationPlaying() or friendlyAOESupport.AnyAOEAnimationPlaying() or enemySupportAOE.AnyAOEAnimationPlaying():
 		print("AOE has no finished yet!")
 		await get_tree().create_timer(0.1).timeout
-#	while friendlyAOEAttack.get_child_count() != 0 && enemyAttackAOE.get_child_count() != 0 && friendlyAOESupport.get_child_count() != 0 && enemySupportAOE.get_child_count() != 0:
-#		print("AOE has no finished yet!")
-#		await get_tree().create_timer(0.1).timeout
-	# Spawn Our Friendly AOE Here
 	print("AOEQueueFinished")
 	print("--------------------------------")
 	emit_signal("AOEQueueFinished")
 	updateValueOfStatusBar()
-	await get_tree().create_timer(1).timeout
+	while enemyPartyContainer.AnyAOEAnimationPlaying() or friendlyPartyContainer.AnyAOEAnimationPlaying():
+		print("Character Animation has no finished yet!")
+		await get_tree().create_timer(0.1).timeout
+#	await get_tree().create_timer(1).timeout
+	while enemyPartyContainer.isSpawningCharacter or friendlyPartyContainer.isSpawningCharacter:
+		print("Characters Spawning in!")
+		await get_tree().create_timer(0.1).timeout
+	print("past previous checks")
 	setIsCharactersActive(false)
 	
 	saveToSaveSystem()
@@ -810,15 +857,17 @@ func goThroughQueuedAOEArray() -> void:
 	musicPlayer.updateDangerLevel()
 	
 	if confirm:
+		print("(Old) Shop Weight is " + str(shopWeight))
 		if system.battle >= 2:
 			shopWeight += 0.25
-			if randi_range(0, 25) - shopWeight <= 0:
+			if randi_range(2, 25) - shopWeight <= 0:
 				shopWeight = 0.0
+				print("(New) Shop Weight is " + str(shopWeight))
 				stopControlVisible(true, 1)
 				await get_tree().create_timer(0.5).timeout
 				while difficulty.isCharactersSpawningIn == true:
 					await get_tree().create_timer(0.1).timeout
-				if randi_range(0, 1) == 0:
+				if randi_range(0, 2) != 0:
 					GotoShop()
 				else:
 					GoToNextArea()

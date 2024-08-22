@@ -258,11 +258,11 @@ func findTarget(priority: highAttackIn, targetAOE: BaseAOE):
 func positionAOE(targetAOE: BaseAOE, targetCharacter: BaseCharacter):
 	if targetCharacter != null:
 		if targetAOE.draggable:
-			targetAOE.set_global_position(targetCharacter.global_position)
+			targetAOE.set_global_position(targetCharacter.trueGlobalPosition)
 			print(str(self) + ": (positionAOE) targetAOE: " + str(targetAOE))
 			print(str(self) + ": (positionAOE) targetAOE position: " + str(targetAOE.global_position))
 			print(str(self) + ": (positionAOE) targetCharacter: " + str(targetCharacter))
-			print(str(self) + ": (positionAOE) targetCharacter position: " + str(targetCharacter.global_position))
+			print(str(self) + ": (positionAOE) targetCharacter position: " + str(targetCharacter.trueGlobalPosition))
 			print("Placed")
 			await get_tree().create_timer(0.03).timeout
 			if !(isAOESupportContainer):

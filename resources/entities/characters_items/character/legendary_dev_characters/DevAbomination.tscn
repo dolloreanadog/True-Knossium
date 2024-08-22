@@ -1,4 +1,4 @@
-[gd_scene load_steps=63 format=3 uid="uid://cx6ld51m4jw8l"]
+[gd_scene load_steps=68 format=3 uid="uid://cx6ld51m4jw8l"]
 
 [ext_resource type="Script" path="res://resources/entities/characters_items/character/all_game_character_scripts/DevAbomination.gd" id="1_cruh6"]
 [ext_resource type="Texture2D" uid="uid://gfemtwbqdkve" path="res://assets/art/character/dev/ArcherSpriteSheet.png" id="2_c6ns3"]
@@ -313,6 +313,111 @@ animations = [{
 "speed": 24.0
 }]
 
+[sub_resource type="Animation" id="Animation_dv3ks"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [19]
+}
+
+[sub_resource type="Animation" id="Animation_7dgdt"]
+resource_name = "death"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"death"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0, 19]
+}
+
+[sub_resource type="Animation" id="Animation_568m0"]
+resource_name = "idle1"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"idle1"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_6x5j6"]
+resource_name = "offensive1"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"offensive1"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0, 17]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_2og5k"]
+_data = {
+"RESET": SubResource("Animation_dv3ks"),
+"death": SubResource("Animation_7dgdt"),
+"idle1": SubResource("Animation_568m0"),
+"offensive1": SubResource("Animation_6x5j6")
+}
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4dvkk"]
 size = Vector2(256, 256)
 
@@ -320,12 +425,16 @@ size = Vector2(256, 256)
 script = ExtResource("1_cruh6")
 id = "Abomination"
 profilePicture = ExtResource("3_5lky4")
-characterDescription = "This flesh thing is quite dangerous. As it hungers. Every time a friendly character dies, it heals and strengthens itself."
+characterDescription = "This flesh thing is quite dangerous. As it hungers. Every time a character dies, it heals and strengthens itself."
 stats = NodePath("StatComponent")
+idleAnimationCount = null
+z_index_order = -2
 ResourceNeeded = ExtResource("2_m1yu7")
 ResourceNeededNumber = 2
 ResourceDrop = ExtResource("2_m1yu7")
-ResourceMaxDropAmount = 150
+ResourceMaxDropAmount = 200
+characterMusicPriority = null
+isUnlockable = null
 levelUpFX = NodePath("DefaultLevelUpFX")
 healthDeathFX = NodePath("HealthDeathFX")
 defenseDeathFX = NodePath("DefenseDeathFX")
@@ -345,7 +454,13 @@ action1 = NodePath("ActionFleshySwing")
 position = Vector2(-3.8147e-06, -3.8147e-06)
 scale = Vector2(0.64, 0.64)
 sprite_frames = SubResource("SpriteFrames_m8vim")
-animation = &"death"
+animation = &"offensive1"
+frame = 17
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_2og5k")
+}
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_4dvkk")
@@ -366,7 +481,7 @@ maxEXP = 20.0
 worthEXP = 17.5
 role = 3
 health = 30.0
-defense = 3.0
+defense = 1.5
 morale = 40.0
 potentialHealthGain = 1.0
 potentialDefenseGain = 0.5
@@ -412,3 +527,5 @@ sprite = NodePath("../AnimatedSprite2D")
 [node name="DefaultAttackChangedFX" parent="." instance=ExtResource("16_ve8ip")]
 
 [node name="DefaultMoraleChangedFX" parent="." instance=ExtResource("17_avre1")]
+
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="GetAnimationPlayed"]

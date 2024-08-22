@@ -62,14 +62,14 @@ func visualizeUnlockedList() -> void:
 		UnlockedList.set_item_tooltip(i, Litem.itemDesciption)
 
 func loadFiledCharacters() -> void:
-	var LCharacterUnlocked: Array = Global.newlyUnlockedCharacters
+	var LCharacterUnlocked: Array = Global.newProgressionDict.CharactersUnlocked
 	for i in LCharacterUnlocked.size():
 		var loadedCharacter := load(LCharacterUnlocked[i])
 		var instance: BaseCharacter = loadedCharacter.instantiate()
 		loadedCharacterUnlocked.push_back(instance)
 
 func loadFiledItems() -> void:
-	var LItemUnlocked: Array = Global.newlyUnlockedItems
+	var LItemUnlocked: Array = Global.newProgressionDict.ItemsUnlocked
 	for i in LItemUnlocked.size():
 		var loadedItem: BaseInventoryItem = load(LItemUnlocked[i])
 		loadedItemUnlocked.push_back(loadedItem)

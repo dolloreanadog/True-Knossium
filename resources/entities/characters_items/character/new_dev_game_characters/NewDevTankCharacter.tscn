@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://by4b3qkfgq1e2"]
+[gd_scene load_steps=30 format=3 uid="uid://by4b3qkfgq1e2"]
 
 [ext_resource type="Script" path="res://resources/entities/characters_items/character/BaseCharacter.gd" id="1_r68vv"]
 [ext_resource type="Resource" uid="uid://3i41wk26jwk2" path="res://resources/entities/inventory_items/dev_items/DevGold.tres" id="2_f1k35"]
@@ -23,6 +23,139 @@
 [ext_resource type="PackedScene" uid="uid://butll8uw2kt72" path="res://resources/components/other/FX/attack_changed_fx/default_attack_changed/DefaultAttackChangedFX.tscn" id="19_a3vct"]
 [ext_resource type="PackedScene" uid="uid://gslyjo525r5f" path="res://resources/components/other/FX/morale_changed_fx/default_morale_changed/DefaultMoraleChangedFX.tscn" id="20_cmhjc"]
 
+[sub_resource type="Animation" id="Animation_7626j"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [19]
+}
+
+[sub_resource type="Animation" id="Animation_jbu5h"]
+resource_name = "death"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"death"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0, 19]
+}
+
+[sub_resource type="Animation" id="Animation_ccxqu"]
+resource_name = "idle1"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"idle1"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0, 19]
+}
+
+[sub_resource type="Animation" id="Animation_rl37c"]
+resource_name = "inoffensive1"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"inoffensive1"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0, 19]
+}
+
+[sub_resource type="Animation" id="Animation_xyqdm"]
+resource_name = "offensive1"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"offensive1"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0, 19]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_mh0y5"]
+_data = {
+"RESET": SubResource("Animation_7626j"),
+"death": SubResource("Animation_jbu5h"),
+"idle1": SubResource("Animation_ccxqu"),
+"inoffensive1": SubResource("Animation_rl37c"),
+"offensive1": SubResource("Animation_xyqdm")
+}
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_x2m2k"]
 size = Vector2(48, 48)
 
@@ -33,7 +166,7 @@ profilePicture = ExtResource("2_kplo1")
 characterDescription = "I take hits alright, also not broken."
 stats = NodePath("StatComponent")
 ResourceNeeded = ExtResource("2_f1k35")
-ResourceNeededNumber = 2
+ResourceNeededNumber = 3
 ResourceDrop = ExtResource("2_f1k35")
 ResourceMaxDropAmount = 50
 characterThemeMusic = ExtResource("4_nxelk")
@@ -57,7 +190,13 @@ action2 = NodePath("Action2Component")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(0.12, 0.12)
 sprite_frames = ExtResource("3_3l11k")
-animation = &"death"
+animation = &"idle1"
+frame = 19
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_mh0y5")
+}
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_x2m2k")
@@ -75,15 +214,15 @@ autowrap_mode = 3
 [node name="StatComponent" type="Node" parent="."]
 script = ExtResource("5_bcgar")
 maxEXP = 12.5
-worthEXP = 8.0
+worthEXP = 10.0
 role = 3
 health = 15.0
 defense = 3.0
 morale = 15.0
-potentialHealthGain = 3.0
-potentialDefenseGain = 0.5
-potentialAttackGain = 1.0
-potentialMoraleGain = 3.0
+potentialHealthGain = 1.0
+potentialDefenseGain = 0.25
+potentialAttackGain = 0.5
+potentialMoraleGain = 2.5
 
 [node name="Action1Component" type="Node" parent="." node_paths=PackedStringArray("stats")]
 script = ExtResource("6_gqvjb")
@@ -91,7 +230,7 @@ stats = NodePath("../StatComponent")
 ActionName = "Breaker"
 animationUsed = "offensive1"
 AOE = ExtResource("7_x80r1")
-health = 2.5
+health = 3.0
 defense = 1.5
 attack = 2.0
 morale = 3.0
@@ -106,8 +245,8 @@ animationUsed = "inoffensive1"
 AOE = ExtResource("7_ytqte")
 castTime = 3
 isOffensive = false
-health = 1.0
-defense = 1.5
+health = 1.5
+defense = 3.0
 morale = 5.0
 accuracy = 1.0
 description = "This creates a Shields for any character caught within its radius."
@@ -138,3 +277,5 @@ sprite = NodePath("../AnimatedSprite2D")
 [node name="DefaultAttackChangedFX" parent="." instance=ExtResource("19_a3vct")]
 
 [node name="DefaultMoraleChangedFX" parent="." instance=ExtResource("20_cmhjc")]
+
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="GetAnimationPlayed"]

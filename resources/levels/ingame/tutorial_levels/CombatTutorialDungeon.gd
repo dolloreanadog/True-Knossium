@@ -147,3 +147,26 @@ func saveToSaveSystem() -> void:
 #	SaveWarningLabel.hide()
 	emit_signal("SaveFinished")
 
+func stopControlVisible(visibility: bool, stopControlNumber: int):
+	if stopControlNumber == 1:
+		if visibility == true:
+			stopControl.visible = true
+			endTurnButton.disabled = true
+			showMenuButton.disabled = true
+			autoPlaceButton.disabled = true
+		else:
+			stopControl.visible = false
+			endTurnButton.disabled = false
+			showMenuButton.disabled = false
+			autoPlaceButton.disabled = false
+	elif stopControlNumber == 2:
+		if visibility == true:
+			stopControl2.visible = true
+			endTurnButton.disabled = true
+			showMenuButton.disabled = true
+			autoPlaceButton.disabled = true
+		else:
+			stopControl2.visible = false
+			endTurnButton.disabled = false
+			showMenuButton.disabled = false
+			autoPlaceButton.disabled = false

@@ -18,24 +18,9 @@ var enemyTotalStats: float
 var charityDifficultyEXP: float = 1
 
 #--[ Variable Paths ]--
-# These are the paths which we use for later functions, when adding a new type, put folder path here
 
-#Template
-#var dir(name) = DirAccess.open("res://resources/entities/characters_items/character/NAME_OF_FOLDER_OF_CHARACTERS")
-
-# Might make "dir*" variables put into array, we just grab an index
-## With total componentization, this will become useless
-#@export var characterDirectoryArray: Array = [DirAccess.open("res://resources/entities/characters_items/character/new_dev_game_characters")]
-#var dirDev := DirAccess.open("res://resources/entities/characters_items/character/new_dev_game_characters")
-#var dirSpecial := DirAccess.open("res://resources/entities/characters_items/character/special_game_characters")
-#var dirSpecial := DirAccess.open("res://resources/entities/characters_items/character/special_game_characters")
-var extension := "tscn"
 
 #--[ character loading ]--
-## With total componentization, this will become useless
-#enum characterType {DEV, DUNGEON, GARDEN, FOREST, FACTORY, LABORATORY, BATTLEFIELD, SPECIAL}
-## With total componentization, this will become useless
-#@export var dungeonType: characterType
 var isCharactersSpawningIn: bool = false
 # This has to with console, make this true if guaranteed
 var debugGuaranteeSpawning: bool = false
@@ -95,7 +80,6 @@ func onBattleNew() -> void:
 # We use here to decide what kind of characterType we're getting
 func getDungeonType():
 	pass
-
 
 func updateDifficultyTotal() -> void:
 	difficultyTotal = (friendlyPartyContainer.getTotalStatPoints() + (system.battle * 5) + (float(system.turn) / 2)) * 0.90
@@ -211,6 +195,7 @@ func randomSpawningBehavior() -> void:
 
 ## Normal Spawning Behavior, no exp or difficulty total manipulation
 func NormalSpawnBehavior() -> void:
+	difficultyTotal /= get_signal_connection_list("SpawnNormals").size()
 	SpawnNormals.emit()
 #	print(str(self) + " (NormalSpawnBehavior)" + ": Normal Spawning Behavior")
 #	print(str(self) + "LdifficultyTotal: " + str(difficultyTotal))
@@ -238,79 +223,20 @@ func NormalSpawnBehavior() -> void:
 
 ## Horde Spawning Behavior, difficulty manipulation for higher rates, also lower exp
 func HordeSpawnBehavior() -> void: # <- For some reason this is the most reliable spawner
-	SpawnNormals.emit()
-#	print(str(self) + ": Horde Spawning Behavior ")
-#	var LdifficultyTotal = difficultyTotal * 2
-#	print(str(self) + "LdifficultyTotal: " + str(LdifficultyTotal))
-#	charityDifficultyEXP *= 0.2
-#	print("(HordeSpawnBehavior) charityDifficultyEXP: " + str(charityDifficultyEXP))
-#	enemyPartyContainer.difficultyEXP = charityDifficultyEXP
-#	getEnemyStats()
-#	dungeon.stopControlVisible(true, 1)
-#	while enemyTotalStats <= LdifficultyTotal:
-#		dungeon.stopControlVisible(true, 1)
-#		#print(str(self) + " (HordeSpawnBehavior) " + ": total total: " + str(total))
-#		#print(str(self) + " (HordeSpawnBehavior) " + ": enemyTotalStats: " + str(enemyTotalStats))
-#		spawnCharacter(dungeonType)
-#		getEnemyStats()
-#		#print(str(self) + " (HordeSpawnBehavior)" + "enemyPartyContainer totalStatPoins: " + str(enemyTotalStats))
-#		await get_tree().create_timer(0.10).timeout
-#
-#	print(str(self) + " (HordeSpawnBehavior) " + ": real enemyTotalStats: " + str(enemyTotalStats))
-#	print(str(self) + " (HordeSpawnBehavior) " + "It's over")
-#	isCharactersSpawningIn = false
-#	emit_signal("SpawningIsOver")
-#	dungeon.saveToSaveSystem()
-#
-#	dungeon.SaveWarningLabel.show()
-#	await get_tree().create_timer(1).timeout
-#	dungeon.saveToSaveSystem()
-#	dungeon.stopControlVisible(false, 1)
-#	dungeon.SaveWarningLabel.hide()
-#	dungeon.stopControl.hide()
+	difficultyTotal /= get_signal_connection_list("SpawnHorde").size()
+	SpawnHorde.emit()
 
 ## Elite Spawning Behavior, Give enemies higher initial EXP & higher difficulty total
 func EliteSpawnBehavior() -> void:
+	difficultyTotal /= get_signal_connection_list("SpawnSpecials").size()
 	SpawnSpecials.emit()
-#	print(str(self) + ": Elite Spawning Behavior")
-##	@warning_ignore("unused_variable")
-#	var LdifficultyTotal = difficultyTotal * 0.25
-#	charityDifficultyEXP *= 13.75
-#	print(str(self) + " (EliteSpawnBehavior) " + "charityDifficultyEXP: " + str(charityDifficultyEXP))
-#	enemyPartyContainer.difficultyEXP = charityDifficultyEXP
-#
-#	print(str(self) + " (EliteSpawnBehavior) " + "LdifficultyTotal: " + str(LdifficultyTotal))
-#	#print(str(self) + " (EliteSpawnBehavior) " + "LdifficultyTotal: " + str(enemyTotalStats))
-#	getEnemyStats()
-#	dungeon.stopControlVisible(true, 1)
-#	while enemyTotalStats <= LdifficultyTotal:
-#		dungeon.stopControlVisible(true, 1)
-#		#print(str(self) + " (EliteSpawnBehavior) " + ": total total: " + str(total))
-#		#print(str(self) + " (EliteSpawnBehavior) " + "enemyPartyContainer totalStatPoins: " + str(enemyPartyContainer.totalStatPoints))
-#		if randi_range(1, 2) == 1:
-#			#print(str(self) + " (EliteSpawnBehavior) " + ": Going for dev Type")
-#			spawnCharacter(dungeonType)
-#		else:
-#			#print(str(self) + " (EliteSpawnBehavior) " + ": Going for special Type")
-#			spawnCharacter(characterType.SPECIAL)
-#		getEnemyStats()
-#		await get_tree().create_timer(0.10).timeout
-#		print(str(self) + " (EliteSpawnBehavior) " + "It's over")
-#	isCharactersSpawningIn = false
-#	dungeon.saveToSaveSystem()
-#	dungeon.SaveWarningLabel.show()
-#	await get_tree().create_timer(1).timeout
-#	dungeon.saveToSaveSystem()
-#	dungeon.SaveWarningLabel.hide()
-#	dungeon.stopControlVisible(false, 1)
-##	dungeon.stopControl.hide()
-#	emit_signal("SpawningIsOver")
-	
 
 func LegendarySpawnBehavior() -> void:
+	difficultyTotal /= get_signal_connection_list("SpawnLegendary").size()
 	SpawnLegendary.emit()
 
 func MythicalSpawnBehavior() -> void:
+	difficultyTotal /= get_signal_connection_list("SpawnMythical").size()
 	SpawnMythical.emit()
 
 

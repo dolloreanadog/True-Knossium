@@ -11,11 +11,15 @@ var characterName: String
 var system: TurnSystem
 var inventory: InventorySystem
 @export var stats: StatComponent
+@export var idleAnimationCount: int = 1
+## This will be used so that bigger enemies will usually appear behind smaller enemies
+@export var z_index_order: int = 0
 
 var trueGlobalPosition: Vector2
 
 @onready var levelLabel: Label = get_node("LevelLabel")
 @onready var characterSprite: AnimatedSprite2D = get_node("AnimatedSprite2D")
+@onready var characterAnimation: AnimationPlayer = get_node("AnimationPlayer")
 var isFriendly: bool = true
 @export_category("Resource Drop")
 @export var ResourceNeeded: BaseInventoryItem # We still don't know how or what variable it's as
@@ -64,11 +68,13 @@ func _ready() -> void:
 	characterName = id
 	system = dungeon.system
 	inventory = dungeon.inventory
+	z_index = z_index_order
 	activateLevelLabel(false)
 	print("TurnSystem: " + str(system))
 	dungeon.connect("AOEQueueFinished", characterNewTurn) # Instead of this use Dungeon's Queue Signal
 	system.connect("OnNewBattle", characterNewBattle)
-	runAnimation("idle1")
+	
+	playAnimation("idle1")
 	if ResourceNeeded == null && ResourceNeededNumber > 0:
 		push_error(str(self) + " Resource is empty")
 
@@ -169,26 +175,32 @@ func playMoraleChangedFX(amount: float):
 ## When spawning choose an idle animation or new Turn happens
 func idleAnimation():
 	await get_tree().create_timer(randf_range(0.1, 0.5)).timeout
-	match randi_range(1, 4):
-		1:
-			runAnimation("idle1")
-		2:
-			runAnimation("idle2")
-		3:
-			runAnimation("idle3")
+	playAnimation("idle" + str(randi_range(1, idleAnimationCount)))
 
 # The new way to do attack animation
 # When AOE is used it either choose attack animation, special attack animation, buff animation, defense animation
 
-func runAnimation(animationName: String):
-	# We can do a more dynamic system by running a loop statement to get all string names of the character's animated sprite
-	# Then matching animationName to the an item in an array with the same string <- Low Priority
-	print(str(self) + ": (runAnimation) " + getAnimation() + " - " + animationName)
-	characterSprite.play(animationName)
-	emit_signal("characterAnimationFinished")
-
 func getAnimation():
-	return characterSprite.get_animation()
+	return characterAnimation.get_current_animation()
+
+func playAnimation(anim_name: String) -> void:
+	if characterAnimation.current_animation != "death":
+		characterAnimation.play(anim_name)
+
+func QueueAnimation(anim_name: String) -> void:
+	if characterAnimation.current_animation != "death" && !characterAnimation.get_queue().has("death"):
+		characterAnimation.queue(anim_name)
+
+func GetAnimationPlayed(anim_name: StringName):
+	AnimationIsDeath(anim_name)
+
+func AnimationIsDeath(anim_name: StringName):
+#	push_error("anim_name = " + anim_name)
+	if anim_name == "death":
+#		push_error("Character has died")
+		queue_free()
+		stats.emit_signal("death", stats.worthEXP, stats.characterBody)
+		# ^ Something wrong with connection on Aqua Part
 
 #--[ Extra ]--
 
@@ -207,7 +219,7 @@ func characterNewTurn():
 					stats.changeCurrentMorale(-999)
 				2:
 					stats.changeCurrentHealth(-999)
-	runAnimation("idle1")
+	playAnimation("idle1")
 
 func characterNewBattle():
 	pass

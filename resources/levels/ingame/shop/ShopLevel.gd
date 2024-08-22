@@ -112,7 +112,7 @@ func EndShoppingPressed() -> void:
 
 func ExitShop() -> void:
 	Global.StartLoadingScreen(true)
-	var dungeon: PackedScene = load("res://resources/levels/ingame/dungeon/Dungeon.tscn")
+	var dungeon: PackedScene = load(str(SaveSystem.GameInfoDict["DungeonLevel"]))
 	stopControl.show()
 	print("(check) exiting shop")
 	# If in amount selector confirm & exit

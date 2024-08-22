@@ -34,9 +34,11 @@ func SpawnCharacters() -> void:
 		spawner.dungeon.stopControlVisible(true, 1)
 		spawner.SpawnCharacterFromArray(loadedCharactersArray)
 		spawner.getEnemyStats()
-#		dungeon.stopControl.show()
-		await get_tree().create_timer(0.10).timeout
+		while spawner.dungeon.enemyPartyContainer.isSpawningCharacter:
+			print("Wait for character Spawning in")
+			await get_tree().create_timer(0.1).timeout
 	print(str(self) + " (NormalSpawnBehavior) " + "It's over")
+	spawner.dungeon.enemyPartyContainer.MoveAllCharactersToTruePosition()
 	spawner.isCharactersSpawningIn = false
 	spawner.emit_signal("SpawningIsOver")
 	

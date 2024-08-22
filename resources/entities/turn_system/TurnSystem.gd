@@ -5,6 +5,7 @@ class_name TurnSystem
 @export var FriendlyPartyContainer: BasePartyContainer
 @export var EnemyPartyContainer: BasePartyContainer
 
+var failsafeLevel: int = 0
 var playerControlActive: bool = true
 var turn: int
 var battle: int
@@ -14,20 +15,21 @@ signal OnNewTurn
 signal OnPlayerControlActive
 signal OnPlayerControlInactive
 
-func _ready():
+func _ready() -> void:
 	FriendlyPartyContainer.connect("allCharactersDead", newBattle)
 	EnemyPartyContainer.connect("allCharactersDead", newBattle)
 
-func newTurn():
+func newTurn() -> void:
 	turn += 1
 	print(str(self) + ": turns = " + str(turn))
 	emit_signal("OnNewTurn")
 	FriendlyPartyContainer.getCharactersInfo()
 	EnemyPartyContainer.getCharactersInfo()
+	BattleFailsafe()
 	#EnemyPartyContainer.onAllCharactersDead()
 	print("---------------[ Turn Changed to " + str(turn) + " ]---------------")
 
-func newBattle():
+func newBattle() -> void:
 	battle += 1
 	dungeon.difficulty.onBattleNew()
 	dungeon.EndTurnButtonHighlight(true)
@@ -36,10 +38,23 @@ func newBattle():
 	emit_signal("OnNewBattle")
 	print("Battle Changed")
 
-func removeControl():
+func removeControl() -> void:
 	playerControlActive = false
 	emit_signal("OnPlayerControlActive")
 
-func returnControl():
+func returnControl() -> void:
 	playerControlActive = true
 	emit_signal("OnPlayerControlInactive")
+
+## This check will make characters spawn if the signal fails
+
+func BattleFailsafe() -> void:
+	if EnemyPartyContainer.get_child_count() == 0:
+		print("FailsafeLevel needed, adding: " + str(failsafeLevel))
+		failsafeLevel += 1
+	else:
+		failsafeLevel = 0
+	
+	if failsafeLevel == 2:
+		print("FailsafeLevel Maximum, Activating: " + str(failsafeLevel))
+		EnemyPartyContainer.onAllCharactersDead()

@@ -18,42 +18,38 @@ var currentCharacterMusicPriority: int
 
 #--[ Base Functions ]--
 func _ready() -> void:
+	connect("finished", musicFinished)
 	playDefaultMusic()
+
+func musicFinished() -> void:
+	updateDangerLevel()
 
 # Initiate a check
 func playDefaultMusic() -> void:
 	print(str(self) + ": Playing Level Music")
 	isPlayingDefaultMusic = true
 	currentCharacterMusicPriority = 0
-	await create_tween().tween_property(self, "volume_db", -80, 1).finished
-	stop()
 	PlayMusic(DefaultMusic)
-	play()
-	create_tween().tween_property(self, "volume_db", 0, 1)
 
 # change this to set character music & create a new playCharacterMusic
 func playCharacterMusic() -> void:
 	print(str(self) + ": Playing Character Music")
-	await create_tween().tween_property(self, "volume_db", -80, 1).finished
 	PlayMusic(characterMusic)
-	create_tween().tween_property(self, "volume_db", 0, 1)
+
 
 func playWinningMusic() -> void:
 	print(str(self) + ": Playing Winning Music")
 	isPlayingDefaultMusic = true
 	currentCharacterMusicPriority = 0
-	await create_tween().tween_property(self, "volume_db", -80, 1).finished
 	PlayMusic(winningMusic)
-	create_tween().tween_property(self, "volume_db", 0, 1)
+
 
 func playLosingMusic() -> void:
 	print(str(self) + ": Playing Losing Music")
 	if canPlayLosingMusic:
 		isPlayingDefaultMusic = false
 		currentCharacterMusicPriority = 0
-		await create_tween().tween_property(self, "volume_db", -80, 1).finished
 		PlayMusic(losingMusic)
-		create_tween().tween_property(self, "volume_db", 0, 1)
 	else:
 		push_warning("Cannot Play Danger Music as it is disabled!")
 
@@ -65,7 +61,6 @@ func setCanPlayDangerMusic(boolean: bool) -> void:
 
 # if dangerLevel stays the same area, don't restart the music.
 func updateDangerLevel() -> void:
-	
 	dangerLevel = clampf(dungeon.enemyPartyContainer.currentTotalStatPoints / dungeon.friendlyPartyContainer.currentTotalStatPoints, 0, 4)
 	print(str(self) + ": danger level is at " + str(dangerLevel * 100) + "%")
 	# print(str(self) + ": ")
@@ -111,17 +106,20 @@ func setCharacterMusic(music: AudioStream, priority: int) -> void:
 		playDefaultMusic() 
 
 func PlayMusic(music: AudioStream) -> void:
-	if is_instance_valid(stream):
-		print("old music: " + str(stream.resource_path))
-	if is_instance_valid(music):
-		print("new music: " + str(music.resource_path))
 	if is_instance_valid(stream) && is_instance_valid(music):
-		print("music playing")
-		if music.resource_path != stream.resource_path:
+#		print("old music: " + str(stream.resource_path))
+#		print("new music: " + str(music.resource_path))
+#		print("music playing")
+		if music.resource_path != stream.resource_path or !is_playing():
+			await create_tween().tween_property(self, "volume_db", -80, 1).finished
 			stop()
 			set_stream(music)
 			play()
-	else:
+			create_tween().tween_property(self, "volume_db", 0, 1)
+	elif !is_playing():
+		print(str(self) + ": No valid character music, playing default.")
+		await create_tween().tween_property(self, "volume_db", -80, 1).finished
 		stop()
 		set_stream(DefaultMusic)
 		play()
+		create_tween().tween_property(self, "volume_db", 0, 1)

@@ -1,11 +1,10 @@
-[gd_scene load_steps=23 format=3 uid="uid://rmhrhjt28yr1"]
+[gd_scene load_steps=27 format=3 uid="uid://rmhrhjt28yr1"]
 
 [ext_resource type="Script" path="res://resources/entities/characters_items/character/BaseCharacter.gd" id="1_n3hux"]
 [ext_resource type="Texture2D" uid="uid://b5c6x8aob3ey6" path="res://assets/art/character_profile_picture/dev/DevCharacterPFP.png" id="2_ydne2"]
 [ext_resource type="Resource" uid="uid://3i41wk26jwk2" path="res://resources/entities/inventory_items/dev_items/DevGold.tres" id="3_ijmb7"]
 [ext_resource type="SpriteFrames" uid="uid://cskmdcnkex845" path="res://assets/sprites/character/dev/DevArcherSprite.tres" id="4_geh6e"]
 [ext_resource type="Script" path="res://resources/components/other/StatComponent.gd" id="5_4o40a"]
-[ext_resource type="Script" path="res://resources/better_nodes/BetterAnimatedSprite2D.gd" id="5_ffv61"]
 [ext_resource type="Script" path="res://resources/components/actions/BaseAction.gd" id="6_7dslw"]
 [ext_resource type="PackedScene" uid="uid://bcxatbqykyd8s" path="res://resources/entities/characters_items/aoe/ranged_aoe/arrow_aoe/ArrowAOE.tscn" id="7_vihfv"]
 [ext_resource type="PackedScene" uid="uid://dhw2i4apl4wh6" path="res://resources/components/other/FX/level_up_fx/default_level_up/DefaultLevelUpFX.tscn" id="8_ndbhd"]
@@ -21,6 +20,112 @@
 [ext_resource type="PackedScene" uid="uid://bcp72aooxqkle" path="res://resources/components/other/FX/defense_changed_fx/default_defense_changed/DefaultDefenseChangedFX.tscn" id="18_ktk3y"]
 [ext_resource type="PackedScene" uid="uid://butll8uw2kt72" path="res://resources/components/other/FX/attack_changed_fx/default_attack_changed/DefaultAttackChangedFX.tscn" id="19_u2dxn"]
 [ext_resource type="PackedScene" uid="uid://gslyjo525r5f" path="res://resources/components/other/FX/morale_changed_fx/default_morale_changed/DefaultMoraleChangedFX.tscn" id="20_rswvu"]
+
+[sub_resource type="Animation" id="Animation_7yre1"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [19]
+}
+
+[sub_resource type="Animation" id="Animation_43qrg"]
+resource_name = "death"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"death"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0, 19]
+}
+
+[sub_resource type="Animation" id="Animation_800nj"]
+resource_name = "idle1"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"idle1"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0, 19]
+}
+
+[sub_resource type="Animation" id="Animation_bynkl"]
+resource_name = "offensive1"
+length = 1.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"offensive1"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0, 19]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_tlmth"]
+_data = {
+"RESET": SubResource("Animation_7yre1"),
+"death": SubResource("Animation_43qrg"),
+"idle1": SubResource("Animation_800nj"),
+"offensive1": SubResource("Animation_bynkl")
+}
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0d04v"]
 size = Vector2(48, 48)
@@ -54,14 +159,13 @@ action1 = NodePath("ArrowShotActionComponent")
 position = Vector2(0, -1)
 scale = Vector2(0.12, 0.12)
 sprite_frames = ExtResource("4_geh6e")
-animation = &"death"
-
-[node name="BetterAnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-sprite_frames = ExtResource("4_geh6e")
-animation = &"death"
-script = ExtResource("5_ffv61")
+animation = &"idle1"
+frame = 19
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_tlmth")
+}
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_0d04v")
@@ -128,3 +232,5 @@ sprite = NodePath("../AnimatedSprite2D")
 [node name="DefaultAttackChangedFX" parent="." instance=ExtResource("19_u2dxn")]
 
 [node name="DefaultMoraleChangedFX" parent="." instance=ExtResource("20_rswvu")]
+
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="GetAnimationPlayed"]

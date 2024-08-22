@@ -18,7 +18,7 @@
 [ext_resource type="Script" path="res://resources/entities/enemy_aoe_container/EnemyAOEContainer.gd" id="16_y00rq"]
 [ext_resource type="Script" path="res://resources/entities/turn_system/TurnSystem.gd" id="17_inc51"]
 [ext_resource type="Script" path="res://resources/entities/difficulty_system/DifficultySystem.gd" id="18_bfjtg"]
-[ext_resource type="Script" path="res://resources/entities/difficulty_system/components/DevCharacters.gd" id="19_uq4yr"]
+[ext_resource type="Script" path="res://resources/entities/difficulty_system/components/SpawnCharacterComponent.gd" id="19_rkba7"]
 [ext_resource type="Script" path="res://resources/entities/inventory_system/InventorySystem.gd" id="20_m2q0j"]
 [ext_resource type="Script" path="res://resources/entities/music_player/DungeonMusicPlayer.gd" id="21_lp8vl"]
 [ext_resource type="AudioStream" uid="uid://dxufjrff8jslf" path="res://assets/audio/music/dev/LifillFeryquitous.mp3" id="22_0oqu3"]
@@ -113,7 +113,7 @@ size = Vector2(320, 640)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4dgf2"]
 size = Vector2(320, 640)
 
-[node name="Dungeon" type="Node2D" node_paths=PackedStringArray("turnsLabel", "battlesLabel", "friendlyPartyContainer", "enemyPartyContainer", "battleStatusBar", "stopControl", "stopControl2", "musicPlayer", "statButtonGroup", "specialWindowContainer", "knossiumConsole", "AOECheckSupport", "AOECheckOffense", "endTurnButton", "showMenuButton", "autoPlaceButton", "inventoryButton", "partyButton", "friendlyAOEAttack", "friendlyAOESupport", "enemyAttackAOE", "enemySupportAOE", "warningLabel", "SaveWarningLabel")]
+[node name="Dungeon" type="Node2D" node_paths=PackedStringArray("turnsLabel", "battlesLabel", "friendlyPartyContainer", "enemyPartyContainer", "battleStatusBar", "stopControl", "stopControl2", "musicPlayer", "statButtonGroup", "specialWindowContainer", "knossiumConsole", "AOECheckSupport", "AOECheckOffense", "endTurnButton", "showMenuButton", "autoPlaceButton", "placeMeleeAttackButton", "placeRangedAttackButton", "placeSupportButton", "inventoryButton", "partyButton", "friendlyAOEAttack", "friendlyAOESupport", "enemyAttackAOE", "enemySupportAOE", "warningLabel", "SaveWarningLabel")]
 script = ExtResource("1_1cjpr")
 turnsLabel = NodePath("Labels/TurnsLabel")
 battlesLabel = NodePath("Labels/BattlesLabel")
@@ -131,6 +131,9 @@ AOECheckOffense = NodePath("AOECheckOffense")
 endTurnButton = NodePath("ButtonsContainer/EndTurn")
 showMenuButton = NodePath("ButtonsContainer/ShowMenuButton")
 autoPlaceButton = NodePath("ButtonsContainer/AOEAutoPlacementButton")
+placeMeleeAttackButton = NodePath("ButtonsContainer/AttachAttackAOEToCursor")
+placeRangedAttackButton = NodePath("ButtonsContainer/AOEOffensiveAttacherButton")
+placeSupportButton = NodePath("ButtonsContainer/AttachSupportAOEToCursor")
 inventoryButton = NodePath("ButtonsContainer/ShowInventoryButton")
 partyButton = NodePath("ButtonsContainer/ShowPartyButton")
 friendlyAOEAttack = NodePath("AOEContainers/AOESpawnAreaAttack")
@@ -145,6 +148,7 @@ SaveWarningLabel = NodePath("Labels/SaveWarningLabel")
 [node name="Node2D" type="Node2D" parent="Visuals"]
 
 [node name="ColorRect" type="ColorRect" parent="Visuals/Node2D"]
+z_index = -100
 offset_left = -8.0
 offset_top = -8.0
 offset_right = 1928.0
@@ -614,37 +618,37 @@ enemyPartyContainer = NodePath("../PartyContainers/EnemyPartyContainer")
 system = NodePath("../TurnSystem")
 
 [node name="SpawnNormal" type="Node" parent="difficultySystem" node_paths=PackedStringArray("spawner")]
-script = ExtResource("19_uq4yr")
+script = ExtResource("19_rkba7")
 spawner = NodePath("..")
 dirPaths = ["res://resources/entities/characters_items/character/dev_forest_characters/"]
 
 [node name="SpawnHorde" type="Node" parent="difficultySystem" node_paths=PackedStringArray("spawner")]
-script = ExtResource("19_uq4yr")
+script = ExtResource("19_rkba7")
 spawner = NodePath("..")
 dirPaths = ["res://resources/entities/characters_items/character/dev_forest_characters/"]
 difficultyTotalModifier = 2.0
 charityDifficultyEXPModifier = 0.2
 
 [node name="SpawnSpecial" type="Node" parent="difficultySystem" node_paths=PackedStringArray("spawner")]
-script = ExtResource("19_uq4yr")
+script = ExtResource("19_rkba7")
 spawner = NodePath("..")
 dirPaths = ["res://resources/entities/characters_items/character/dev_forest_characters/", "res://resources/entities/characters_items/character/dev_forest_special_characters/"]
 difficultyTotalModifier = 0.25
 charityDifficultyEXPModifier = 13.75
 
 [node name="SpawnLegendary" type="Node" parent="difficultySystem" node_paths=PackedStringArray("spawner")]
-script = ExtResource("19_uq4yr")
+script = ExtResource("19_rkba7")
 spawner = NodePath("..")
 dirPaths = ["res://resources/entities/characters_items/character/legendary_dev_characters"]
 difficultyTotalModifier = 0.2
-charityDifficultyEXPModifier = 14.0
+charityDifficultyEXPModifier = 16.5
 
 [node name="SpawnMythical" type="Node" parent="difficultySystem" node_paths=PackedStringArray("spawner")]
-script = ExtResource("19_uq4yr")
+script = ExtResource("19_rkba7")
 spawner = NodePath("..")
 dirPaths = ["res://resources/entities/characters_items/character/mythical_dev_characters", "res://resources/entities/characters_items/character/legendary_dev_characters"]
 difficultyTotalModifier = 0.15
-charityDifficultyEXPModifier = 14.25
+charityDifficultyEXPModifier = 20.0
 
 [node name="InventorySystem" type="Node" parent="."]
 script = ExtResource("20_m2q0j")

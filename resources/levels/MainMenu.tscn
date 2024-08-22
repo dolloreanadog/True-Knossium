@@ -185,9 +185,12 @@ offset_bottom = 184.0
 text = "No"
 
 [node name="Label" type="Label" parent="."]
-offset_right = 40.0
-offset_bottom = 23.0
-text = "Early Version Expect Some Stuff to be Missing or Broken"
+offset_right = 432.0
+offset_bottom = 104.0
+text = "Early Version Expect Some Stuff to be Missing or Broken
+Not Everything is Final
+Character Balance is not final
+Characters are not final"
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("3_ro8dp")

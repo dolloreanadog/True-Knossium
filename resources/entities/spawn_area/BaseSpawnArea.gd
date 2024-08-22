@@ -12,6 +12,7 @@ func randomizeSpawn() -> Vector2:
 
 func AnyAOEAnimationPlaying() -> bool:
 	var playing: bool
-	if get_child_count() == 0:
+	if get_child_count() != 0:
 		playing = get_children().any(func(object: BaseAOE): return object.spriteAnimations.is_playing())
+	print("(check5) is playing AOE? " + str(playing))
 	return playing

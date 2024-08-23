@@ -1,5 +1,5 @@
 extends Node2D
-
+class_name PartyStartMenu
 
 @export var warningLabel: Label
 #---[ Amount Selectors ]---
@@ -91,6 +91,14 @@ func _ready() -> void:
 	
 	await get_tree().create_timer(0.5).timeout
 	Global.EndLoadingScreen()
+
+func clear() -> void:
+	finalInventorySystem.storedItems.clear()
+	finalCharacterListArray.clear()
+	
+	UpdateCharacterFinalListVisual()
+	UpdateItemFinalListVisual()
+	UpdateCurrentValue()
 
 func UpdateCurrentValue() -> void:
 	

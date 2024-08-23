@@ -7,6 +7,7 @@ var previousScene: String
 
 var filePathForProgressionData := "user://ProgressionData.save"
 var filePathForNewProgressionData := "user://NewProgressionData.save"
+var filePathForLoadoutsData := "user://Loadouts.save"
 var gameProgressionVersion: String = "0.82"
 
 # Things to bring into the in game through new game start menu
@@ -34,6 +35,7 @@ var progressionDict: Dictionary = {
 	"BattlesWon": 0, # In a single game
 }
 
+# Loadouts
 var loadoutsListDict: Dictionary = {
 	"Loudouts": []
 }
@@ -41,6 +43,11 @@ var loadoutsListDict: Dictionary = {
 var loadoutDict: Dictionary = {
 	"Characters": [],
 	"Items": []
+}
+
+var loadoutItemDict: Dictionary = {
+	"ItemFilePath": "res://",
+	"ItemAmount": 0
 }
 
 func _ready() -> void:
@@ -108,6 +115,10 @@ func clearProgressionDict() -> void:
 		"ItemsUnlocked": ["res://resources/entities/inventory_items/dev_items/DevGold.tres", "res://resources/entities/inventory_items/dev_items/ExperiencePotion.tres"],
 		"BattlesWon": 0, # In a single game
 	}
+	
+	loadoutsListDict = {
+		"Loudouts": []
+	}
 
 func clearNewProgressionDict() -> void:
 	newlyUnlockedCharacters.clear()
@@ -133,7 +144,9 @@ func clearNewProgressThroughDeletion() -> void:
 func saveAllData() -> bool:
 	print("Progression Data Saved")
 	progressionDict.CharactersUnlocked = progressionDict.CharactersUnlocked.filter(func(object): return FileAccess.file_exists(object))
+	progressionDict.ItemsUnlocked = progressionDict.ItemsUnlocked.filter(func(object): return FileAccess.file_exists(object))
 	newProgressionDict.CharactersUnlocked = newProgressionDict.CharactersUnlocked.filter(func(object): return FileAccess.file_exists(object))
+	newProgressionDict.ItemsUnlocked = progressionDict.ItemsUnlocked.filter(func(object): return FileAccess.file_exists(object))
 	var file := FileAccess.open_encrypted_with_pass(filePathForProgressionData, FileAccess.WRITE, "Platy1ium")
 	var file1 := FileAccess.open_encrypted_with_pass(filePathForNewProgressionData, FileAccess.WRITE, "Platy1ium")
 	file.store_var(progressionDict)
@@ -154,6 +167,7 @@ func loadAllData() -> void:
 		print("Global Data Exists!")
 		progressionDict = file.get_var()
 		progressionDict.CharactersUnlocked = progressionDict.CharactersUnlocked.filter(func(object): return FileAccess.file_exists(object))
+		progressionDict.ItemsUnlocked = progressionDict.ItemsUnlocked.filter(func(object): return FileAccess.file_exists(object))
 		print(progressionDict)
 		
 	if not FileAccess.file_exists(filePathForNewProgressionData):
@@ -162,8 +176,34 @@ func loadAllData() -> void:
 		print("Global Data Exists!")
 		newProgressionDict = file1.get_var()
 		newProgressionDict.CharactersUnlocked = newProgressionDict.CharactersUnlocked.filter(func(object): return FileAccess.file_exists(object))
+		newProgressionDict.ItemsUnlocked = progressionDict.ItemsUnlocked.filter(func(object): return FileAccess.file_exists(object))
 		print(progressionDict)
 	emit_signal("loaded")
+
+func SaveLoadoutData() -> void:
+	for i in loadoutsListDict.Loudouts.size():
+		print("Saving Loadout: " + str(loadoutsListDict.Loudouts[i]))
+		print("loadoutsListDict.Loudouts[i].Characters: " + str(loadoutsListDict.Loudouts[i].Characters))
+		loadoutsListDict.Loudouts[i].Characters = loadoutsListDict.Loudouts[i].Characters.filter(func(object): return FileAccess.file_exists(object))
+		loadoutsListDict.Loudouts[i].Items = loadoutsListDict.Loudouts[i].Items.filter(func(object): return FileAccess.file_exists(object.ItemFilePath))
+	var file := FileAccess.open_encrypted_with_pass(filePathForLoadoutsData, FileAccess.WRITE, "Platy1ium")
+	file.store_var(loadoutsListDict)
+	file.close()
+
+func LoadLoadoutData() -> void:
+	var file := FileAccess.open_encrypted_with_pass(filePathForLoadoutsData, FileAccess.READ, "Platy1ium") 
+	if not FileAccess.file_exists(filePathForLoadoutsData):
+		print("No Previous Loadout Data")
+	else:
+		print("Loadout Data Exists!")
+		loadoutsListDict = file.get_var()
+		for i in loadoutsListDict.Loudouts.size():
+			loadoutsListDict.Loudouts[i].Characters = loadoutsListDict.Loudouts[i].Characters.filter(func(object): return FileAccess.file_exists(object))
+			loadoutsListDict.Loudouts[i].Items = loadoutsListDict.Loudouts[i].Items.filter(func(object): return FileAccess.file_exists(object.ItemFilePath))
+			await get_tree().create_timer(0.001).timeout
+		print(loadoutsListDict)
+	await get_tree().create_timer(0.01).timeout
+
 
 func checkGlobalDataFileExists() -> bool:
 	if FileAccess.file_exists(filePathForProgressionData):
@@ -173,6 +213,12 @@ func checkGlobalDataFileExists() -> bool:
 
 func checkNewProgressionDataFileExists() -> bool:
 	if FileAccess.file_exists(filePathForNewProgressionData):
+		return true
+	else:
+		return false
+
+func checkLoadoutsDataFileExists() -> bool:
+	if FileAccess.file_exists(filePathForLoadoutsData):
 		return true
 	else:
 		return false

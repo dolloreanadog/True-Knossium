@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://y244ci3gm7os"]
+[gd_scene load_steps=5 format=3 uid="uid://y244ci3gm7os"]
 
 [ext_resource type="Script" path="res://resources/levels/menu/NewGameStartMenu/NewStartMenu.gd" id="1_bba4k"]
 [ext_resource type="Script" path="res://resources/entities/inventory_system/InventorySystem.gd" id="2_l8k1b"]
+[ext_resource type="Script" path="res://resources/levels/menu/NewGameStartMenu/PartySetupButtonsContainer.gd" id="3_ba87b"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_b0hky"]
 bg_color = Color(0.466667, 0.121569, 0, 1)
@@ -203,7 +204,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Label2" type="Label" parent="."]
-offset_left = 1408.0
+offset_left = 1664.0
 offset_top = 8.0
 offset_right = 1920.0
 offset_bottom = 34.0
@@ -378,6 +379,39 @@ offset_bottom = 306.0
 text = "No Character!"
 horizontal_alignment = 1
 
+[node name="PartySetupButtons" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 1168.0
+offset_top = 16.0
+offset_right = 1568.0
+offset_bottom = 56.0
+script = ExtResource("3_ba87b")
+
+[node name="SetupOptionButton" type="OptionButton" parent="PartySetupButtons"]
+layout_mode = 2
+offset_right = 88.0
+offset_bottom = 40.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PartySetupButtons"]
+layout_mode = 0
+offset_left = 96.0
+offset_right = 396.0
+offset_bottom = 40.0
+alignment = 2
+
+[node name="NewSetupButton" type="Button" parent="PartySetupButtons/HBoxContainer"]
+layout_mode = 2
+text = "New Setup"
+
+[node name="SaveSetupButton" type="Button" parent="PartySetupButtons/HBoxContainer"]
+layout_mode = 2
+text = "Save Setup"
+
+[node name="DeleteSetupButton" type="Button" parent="PartySetupButtons/HBoxContainer"]
+layout_mode = 2
+text = "Delete Setup"
+
 [connection signal="item_selected" from="Lists/ChooseCharacterList" to="." method="OnChooseCharacterListItemSelected"]
 [connection signal="item_selected" from="Lists/ChooseInventoryList" to="." method="OnChooseInventoryListItemSelected"]
 [connection signal="item_selected" from="Lists/FinalCharacterList" to="." method="OnFinalCharacterListItemSelected"]
@@ -393,3 +427,7 @@ horizontal_alignment = 1
 [connection signal="value_changed" from="ItemAmountSelector/AmountSpinBox" to="." method="ItemAmountSpinBoxValueChanged"]
 [connection signal="pressed" from="ItemAmountSelector/AmountConfirmButton" to="." method="ItemAmountSelectorConfirmButtonPressed"]
 [connection signal="pressed" from="ItemAmountSelector/AmountConfirmButton2" to="." method="ItemAmountSelectorCancelButtonPressed"]
+[connection signal="item_selected" from="PartySetupButtons/SetupOptionButton" to="PartySetupButtons" method="SetupOptionItemSelected"]
+[connection signal="pressed" from="PartySetupButtons/HBoxContainer/NewSetupButton" to="PartySetupButtons" method="NewSetupButtonPressed"]
+[connection signal="pressed" from="PartySetupButtons/HBoxContainer/SaveSetupButton" to="PartySetupButtons" method="SaveSetupButtonPressed"]
+[connection signal="pressed" from="PartySetupButtons/HBoxContainer/DeleteSetupButton" to="PartySetupButtons" method="DeleteSetupButtonPressed"]

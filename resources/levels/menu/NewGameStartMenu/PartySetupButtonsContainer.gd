@@ -1,5 +1,7 @@
 extends Control
 
+enum confirmationType {DELETE, SAVE}
+var confirmType: confirmationType
 var onIndex: int = 0
 
 @onready var gameStartMenu: PartyStartMenu = get_tree().get_current_scene()
@@ -7,6 +9,7 @@ var onIndex: int = 0
 @onready var newSetupButton: Button = $HBoxContainer/NewSetupButton
 @onready var saveSetupButton: Button = $HBoxContainer/SaveSetupButton
 @onready var deleteSetupButton: Button = $HBoxContainer/DeleteSetupButton
+@onready var confirmationBox: ConfirmationBox = $"../ConfirmationControl"
 
 func _ready() -> void:
 	await Global.LoadLoadoutData()
@@ -103,43 +106,61 @@ func NewSetupButtonPressed() -> void:
 	setupOptionButton.item_selected.emit(setupOptionButton.item_count - 1)
 
 func SaveSetupButtonPressed() -> void:
-	var newSavedLoadoutData: Dictionary = Global.loadoutDict.duplicate(true)
-	print("Old Loadout: " + str(Global.loadoutsListDict.Loudouts[setupOptionButton.selected]))
-	
-	# Save Items
-	for i in gameStartMenu.finalInventorySystem.storedItems.size():
-		var newSavedItemData: Dictionary = Global.loadoutItemDict.duplicate(true)
-		newSavedItemData.ItemFilePath = gameStartMenu.finalInventorySystem.storedItems[i].globalFilePath
-		newSavedItemData.ItemAmount = gameStartMenu.finalInventorySystem.storedItems[i].amount
-		print("Save Item File Path: " + str(newSavedItemData.ItemFilePath))
-		print("Save Item Amount: " + str(newSavedItemData.ItemAmount))
-		newSavedLoadoutData.Items.push_back(newSavedItemData)
-	
-	# Save Characters
-	for i in gameStartMenu.finalCharacterListArray.size():
-		newSavedLoadoutData.Characters.push_back(gameStartMenu.finalCharacterListArray[i].scene_file_path)
-		print("Save Characters: " + str(newSavedLoadoutData.Characters))
-	
-	print("Save Loadout: " + str(Global.loadoutsListDict.Loudouts))
-	Global.loadoutsListDict.Loudouts[setupOptionButton.selected] = newSavedLoadoutData
-	print("New Loadout: " + str(Global.loadoutsListDict.Loudouts[setupOptionButton.selected]))
-	LoadAllLoudouts()
-	setupOptionButton.select(onIndex)
-	await Global.SaveLoadoutData()
-
+	confirmType = confirmationType.SAVE
+	confirmationBox.show()
+	confirmationBox.setLabel("Are you sure you want to overwrite setup?")
 
 func DeleteSetupButtonPressed() -> void:
-	gameStartMenu.clear()
-	print("Deletion Old Size: " + str(Global.loadoutsListDict.Loudouts.size()))
-	Global.loadoutsListDict.Loudouts.remove_at(setupOptionButton.selected)
-	print("Deletion New Size: " + str(Global.loadoutsListDict.Loudouts.size()))
-#	setupOptionButton.item_selected.emit(-1)
-	LoadAllLoudouts()
-	await Global.SaveLoadoutData()
-	if setupOptionButton.item_count > 0:
-		setupOptionButton.select(0)
-		setupOptionButton.item_selected.emit(0)
-	else:
-		setupOptionButton.select(-1)
-		deleteSetupButton.disabled = true
-		saveSetupButton.disabled = true
+	confirmType = confirmationType.DELETE
+	confirmationBox.show()
+	confirmationBox.setLabel("Are you sure you want to delete setup?")
+
+
+func ConfirmationYesButtonPressed() -> void:
+	if confirmType == confirmationType.DELETE:
+		gameStartMenu.clear()
+		print("Deletion Old Size: " + str(Global.loadoutsListDict.Loudouts.size()))
+		Global.loadoutsListDict.Loudouts.remove_at(setupOptionButton.selected)
+		print("Deletion New Size: " + str(Global.loadoutsListDict.Loudouts.size()))
+	#	setupOptionButton.item_selected.emit(-1)
+		LoadAllLoudouts()
+		await Global.SaveLoadoutData()
+		if setupOptionButton.item_count > 0:
+			setupOptionButton.select(0)
+			setupOptionButton.item_selected.emit(0)
+		else:
+			setupOptionButton.select(-1)
+			deleteSetupButton.disabled = true
+			saveSetupButton.disabled = true
+	elif confirmType == confirmationType.SAVE:
+		var newSavedLoadoutData: Dictionary = Global.loadoutDict.duplicate(true)
+		print("Old Loadout: " + str(Global.loadoutsListDict.Loudouts[setupOptionButton.selected]))
+		
+		# Save Items
+		for i in gameStartMenu.finalInventorySystem.storedItems.size():
+			var newSavedItemData: Dictionary = Global.loadoutItemDict.duplicate(true)
+			newSavedItemData.ItemFilePath = gameStartMenu.finalInventorySystem.storedItems[i].globalFilePath
+			newSavedItemData.ItemAmount = gameStartMenu.finalInventorySystem.storedItems[i].amount
+			print("Save Item File Path: " + str(newSavedItemData.ItemFilePath))
+			print("Save Item Amount: " + str(newSavedItemData.ItemAmount))
+			newSavedLoadoutData.Items.push_back(newSavedItemData)
+		
+		# Save Characters
+		for i in gameStartMenu.finalCharacterListArray.size():
+			newSavedLoadoutData.Characters.push_back(gameStartMenu.finalCharacterListArray[i].scene_file_path)
+			print("Save Characters: " + str(newSavedLoadoutData.Characters))
+		
+		print("Save Loadout: " + str(Global.loadoutsListDict.Loudouts))
+		Global.loadoutsListDict.Loudouts[setupOptionButton.selected] = newSavedLoadoutData
+		print("New Loadout: " + str(Global.loadoutsListDict.Loudouts[setupOptionButton.selected]))
+		LoadAllLoudouts()
+		setupOptionButton.select(onIndex)
+		await Global.SaveLoadoutData()
+	
+	confirmationBox.hide()
+
+func ConfirmationNoButtonPressed() -> void:
+	confirmationBox.hide()
+
+
+

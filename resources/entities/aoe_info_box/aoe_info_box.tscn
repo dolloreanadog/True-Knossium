@@ -78,17 +78,26 @@ text = "Morale Damage: x"
 layout_mode = 0
 offset_left = 322.0
 offset_top = 24.0
-offset_right = 474.0
+offset_right = 442.0
 offset_bottom = 50.0
-text = "Accuracy: x"
+text = "Accuracy: 100%"
 
 [node name="AOEIsMeleeLabel" type="Label" parent="."]
 layout_mode = 0
-offset_left = 474.0
+offset_left = 624.0
 offset_top = 24.0
-offset_right = 706.0
+offset_right = 720.0
 offset_bottom = 50.0
-text = "IsMelee: x"
+text = "Ranged"
+horizontal_alignment = 1
+
+[node name="AOETurnLeft" type="Label" parent="."]
+layout_mode = 0
+offset_left = 440.0
+offset_top = 24.0
+offset_right = 632.0
+offset_bottom = 50.0
+text = "Turns Left: 0"
 horizontal_alignment = 1
 
 [node name="CharacterNameLabel" type="Label" parent="."]
@@ -106,7 +115,7 @@ offset_left = 706.0
 offset_top = 24.0
 offset_right = 850.0
 offset_bottom = 50.0
-text = "Movable: x"
+text = "It's not movable"
 horizontal_alignment = 2
 
 [node name="Description" type="RichTextLabel" parent="."]

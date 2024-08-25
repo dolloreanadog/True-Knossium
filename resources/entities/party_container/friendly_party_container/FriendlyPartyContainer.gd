@@ -163,6 +163,7 @@ func onAllCharactersDead():
 			dungeon.stopControlVisible(true, 1)
 			dungeon.saveToSaveSystem()
 			await dungeon.SaveFinished
+			dungeon.stopControlVisible(true, 1)
 			await get_tree().create_timer(2).timeout
 			Global.StartLoadingScreen(false)
 			dungeon.queue_free()

@@ -14,11 +14,13 @@ class_name AOEInfoBox
 @onready var AOEAccuracyLabel: Label = $AOEAccuracyLabel
 @onready var AOEIsMeleeLabel: Label = $AOEIsMeleeLabel
 @onready var AOEIsMovableLabel: Label = $IsMovableLabel
+@onready var AOETurnLeftLabel: Label = $AOETurnLeft
 
 var characterPFP: Texture2D
 var characterName: String
 var AOEName: String
 var description: String
+var turnsLeftValue: int
 var accuracyValue: float
 var healthDamageValue: float
 var defenseDamageValue: float
@@ -43,6 +45,7 @@ func placeholderAOEInfo():
 	AOEAccuracyLabel.text = ""
 	AOEIsMeleeLabel.text = ""
 	AOEIsMovableLabel.text = ""
+	AOETurnLeftLabel.text = ""
 
 func insertAOEInfo():
 	characterPFPHolder.texture = characterPFP
@@ -97,9 +100,9 @@ func insertAOEInfo():
 	AOEAccuracyLabel.text = "Accuracy: " + str(snappedf(accuracyValue * 100, 0.01)) + "%"
 	
 	if isMeleeValue:
-		AOEIsMeleeLabel.text = "It's a melee attack"
+		AOEIsMeleeLabel.text = "Melee"
 	else:
-		AOEIsMeleeLabel.text = "It's a ranged attack"
+		AOEIsMeleeLabel.text = "Ranged"
 		
 	if isMovableValue:
 		AOEIsMovableLabel.text = "It's movable"
@@ -107,3 +110,5 @@ func insertAOEInfo():
 	else:
 		AOEIsMovableLabel.text = "It's not movable"
 		AOEIsMovableLabel.set_modulate(Color(1, 0, 0))
+		
+	AOETurnLeftLabel.text = "Turns Left: " + str(turnsLeftValue)

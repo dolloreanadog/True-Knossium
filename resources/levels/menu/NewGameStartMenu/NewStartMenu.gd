@@ -71,6 +71,7 @@ var loadedItemsArray: Array
 
 func _ready() -> void:
 	Global.StartLoadingScreen(false)
+	
 	GetCharactersFilePaths()
 	print(filedCharactersArray)
 	CharacterFilePathsToCharacterInstances()
@@ -203,6 +204,7 @@ func UpdateCharacterChooseListVisual() -> void:
 	chooseCharacterList.clear()
 	for i in chooseCharacterListArray.size():
 		var Lcharacter: BaseCharacter = chooseCharacterListArray[i]
+		Lcharacter.stats.getTotalStatPoints()
 		chooseCharacterList.add_item(Lcharacter.id, Lcharacter.profilePicture)
 		chooseCharacterList.set_item_tooltip(i, Lcharacter.characterDescription + "\n" + "Value: " + str(Lcharacter.stats.totalStatPoints))
 		await get_tree().create_timer(0.01).timeout

@@ -15,6 +15,7 @@ func _ready():
 	print("is stopControl Visible: " + str(stopControl.visible))
 	print("is stopControl2 Visible: " + str(stopControl2.visible))
 	Global.StartLoadingScreen(false)
+	Global.unlockingDisabled = true
 	stopControlVisible(true, 1)
 	
 	# Add the player character

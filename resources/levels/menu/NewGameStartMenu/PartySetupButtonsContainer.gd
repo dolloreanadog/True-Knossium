@@ -101,7 +101,7 @@ func NewSetupButtonPressed() -> void:
 	print("New Loadout: " + str(Global.loadoutsListDict.Loudouts))
 	Global.loadoutsListDict.Loudouts.push_back(newSavedLoadoutData)
 	LoadAllLoudouts()
-	await Global.SaveLoadoutData()
+	Global.SaveLoadoutData()
 	setupOptionButton.select(setupOptionButton.item_count - 1)
 	setupOptionButton.item_selected.emit(setupOptionButton.item_count - 1)
 
@@ -124,7 +124,7 @@ func ConfirmationYesButtonPressed() -> void:
 		print("Deletion New Size: " + str(Global.loadoutsListDict.Loudouts.size()))
 	#	setupOptionButton.item_selected.emit(-1)
 		LoadAllLoudouts()
-		await Global.SaveLoadoutData()
+		Global.SaveLoadoutData()
 		if setupOptionButton.item_count > 0:
 			setupOptionButton.select(0)
 			setupOptionButton.item_selected.emit(0)
@@ -155,7 +155,7 @@ func ConfirmationYesButtonPressed() -> void:
 		print("New Loadout: " + str(Global.loadoutsListDict.Loudouts[setupOptionButton.selected]))
 		LoadAllLoudouts()
 		setupOptionButton.select(onIndex)
-		await Global.SaveLoadoutData()
+		Global.SaveLoadoutData()
 	
 	confirmationBox.hide()
 

@@ -14,6 +14,7 @@ radius = 44.0114
 script = ExtResource("1_i6lep")
 AOEName = "Experience Pool III"
 spriteAnimations = NodePath("AnimatedSprite2D")
+isDynamicColor = false
 
 [node name="MeshInstance2D" type="MeshInstance2D" parent="."]
 modulate = Color(0, 1, 0, 0.117647)

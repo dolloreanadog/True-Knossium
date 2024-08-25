@@ -20,6 +20,8 @@ var unlockedListArray: Array
 
 func _ready() -> void:
 	Global.StartLoadingScreen(false)
+	UnlockedList.clear()
+	unlockedListArray.clear()
 	loadSaveData()
 	
 	loadFiledCharacters()

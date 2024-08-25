@@ -106,6 +106,8 @@ func _ready():
 	print("is stopControl Visible: " + str(stopControl.visible))
 	print("is stopControl2 Visible: " + str(stopControl2.visible))
 	Global.StartLoadingScreen(false)
+	Global.unlockingDisabled = true
+	print("1 The hell? " + str(Global.newProgressionDict.ItemsUnlocked))
 	stopControlVisible(true, 1)
 	AudioServer.set_bus_mute(3, true)
 	if SaveSystem.checkSaveFileExists():
@@ -220,8 +222,6 @@ func updateUpkeepList() -> void:
 		var Litem: BaseInventoryItem = upkeepInventory.storedItems[i]
 		upkeepList.add_item(Litem.itemName + "  x" + str(Litem.amount), Litem.image)
 		upkeepList.set_item_tooltip(i, Litem.itemDesciption)
-
-
 
 #--[ New Game System ]--
 func addNewGameCharacters() -> void:

@@ -463,14 +463,16 @@ libraries = {
 }
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 shape = SubResource("RectangleShape2D_4dvkk")
 
 [node name="LevelLabel" type="Label" parent="."]
 editor_description = "This will show level, if the level visibility button is pushed"
 offset_left = -128.0
-offset_top = -128.0
+offset_top = -64.0
 offset_right = 128.0
 offset_bottom = 128.0
+text = "32"
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 3

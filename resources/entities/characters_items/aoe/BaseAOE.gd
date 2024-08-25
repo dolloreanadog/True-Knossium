@@ -136,6 +136,7 @@ func _on_button_pressed():
 	dungeonAOEInfoBox.moraleDamageValue = morale
 	dungeonAOEInfoBox.isMeleeValue = isMelee
 	dungeonAOEInfoBox.isMovableValue = draggable
+	dungeonAOEInfoBox.turnsLeftValue = TurnsLeft
 	dungeonAOEInfoBox.insertAOEInfo()
 
 

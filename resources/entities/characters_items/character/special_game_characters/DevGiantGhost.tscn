@@ -493,7 +493,7 @@ AOE = ExtResource("8_ju5kl")
 health = 0.5
 defense = 0.75
 attack = 0.5
-morale = 1.15
+morale = 3.0
 accuracy = 0.75
 description = "Scaring the enemy is the priority."
 

@@ -71,7 +71,7 @@ signal gotItems
 signal aoeHasAttack(character: BaseCharacter)
 
 #--[ Base Functions ]--
-func _ready():
+func _ready() -> void:
 #	if get_parent().get_parent().get_node("TurnSystem") is TurnSystem:
 #		system = get_parent().get_parent().get_node("TurnSystem")
 #		system.connect("OnNewBattle", inBattle)
@@ -94,16 +94,17 @@ func _ready():
 	
 	self.z_index = 1
 
-func _process(_delta):
+
+func _process(_delta) -> void:
 	if draggable:
 		if dragging:
-			self.global_position = get_global_mouse_position()
+			global_position = get_global_mouse_position()
 		
 	
 
 #--[ Dragging Functions ]--
 # Make sure to connect these functions to the button
-func _on_button_pressed():
+func _on_button_pressed() -> void:
 	print(str(self) + ": Pressed")
 	if draggable:
 		if SettingsSystem.getAOEMovement():
@@ -140,12 +141,10 @@ func _on_button_pressed():
 	dungeonAOEInfoBox.insertAOEInfo()
 
 
-func _on_button_button_up():
+func _on_button_button_up() -> void:
 	# When Up should whether its in an area it's not suppose to be in
 	if draggable:
-		if SettingsSystem.getAOEMovement():
-			pass
-		else:
+		if !SettingsSystem.getAOEMovement():
 			dragging = false
 			collisionVisualizer.modulate = mainColor
 			await get_tree().create_timer(0.1).timeout
@@ -156,11 +155,9 @@ func _on_button_button_up():
 			areaOverlapIsBadArea()
 	
 
-func _on_button_button_down():
+func _on_button_button_down() -> void:
 	if draggable:
-		if SettingsSystem.getAOEMovement():
-			pass
-		else:
+		if !SettingsSystem.getAOEMovement():
 			dragging = true
 			#if isDynamicColor:
 			collisionVisualizer.modulate = Color(1, 1, 1, 0.2)
@@ -168,7 +165,7 @@ func _on_button_button_down():
 			print(str(self) + ": Global Position:" + str(lastPosition))
 
 # When you place it in an area you're not suppose to
-func returnToLastPosition():
+func returnToLastPosition() -> void:
 	var warningLabel: Label = Label.new()
 	
 	draggable = false
@@ -200,7 +197,7 @@ func returnToLastPosition():
 
 #Check if overlaps an Area it's not suppose to
 #Example: if it isn't melee, it should not be in anti-melee area
-func areaOverlapIsBadArea():
+func areaOverlapIsBadArea() -> void:
 	# The plan to remove the area is to set the position somewhere else
 	print(str(self) + ": Start Overlap Area Check")
 	overlappingAreaArray = get_overlapping_areas()
@@ -224,7 +221,7 @@ func areaOverlapIsBadArea():
 				break
 
 #When it overlaps character should put into an array
-func areaOverlapCharacter(ActiveAttack: bool):
+func areaOverlapCharacter(ActiveAttack: bool) -> void:
 #	print(str(self) + ": Start Overlap Character Check (overlap)")
 #	print(str(self) + ": (overlap) Start Overlap Character Check " + str(overlappingBodiesArray.size()))
 	await get_tree().create_timer(0.01).timeout
@@ -255,7 +252,7 @@ func getItemsInside() -> bool:
 
 #--[ Action Functions ]--
 # When there are no more turns activate
-func lastTurn():
+func lastTurn() -> void:
 #	print(str(self) + ": Activate last turn")
 	if activateLastTurn:
 		animationActivate()
@@ -263,7 +260,7 @@ func lastTurn():
 		areaOverlapCharacter(true)
 
 # Every time a turn is done something happens
-func InTurn():
+func InTurn() -> void:
 #	print(str(self) + ": AOE Turn")
 	TurnsLeft -= 1
 	draggable = false
@@ -295,19 +292,19 @@ func InTurn():
 		
 
 
-func inBattle():
+func inBattle() -> void:
 	self.queue_free()
 
 # In Case we want something where  it gives a temporary buff, but not add onto it every turn
 # Example: First Turn, give 5 health. Last Turn, remove 5 health
 # Example: First Turn, give 10 morale. Every Turn, remove 2 morale
-func firstTurn():
+func firstTurn() -> void:
 	await getItemsInside()
 	areaOverlapCharacter(true)
 	animationActivate()
 	print(str(self) + ": Activate first turn")
 
-func attackStats(body: BaseCharacter):
+func attackStats(body: BaseCharacter) -> void:
 	
 #	if randf_range(0, 1) <= accuracy:
 	print(str(self) + ": Target Has Been hit ")
@@ -318,14 +315,14 @@ func attackStats(body: BaseCharacter):
 #		print(str(self) + ": Target Has Been missed ")
 #		body.damageStats(0, 0, 0, 0)
 
-func animationActivate():
+func animationActivate() -> void:
 	if is_instance_valid(spriteAnimations):
 		spriteAnimations.play("active")
 
-func setVisbility(visibility: bool):
+func setVisbility(visibility: bool) -> void:
 	collisionVisualizer.set_visible(visibility)
 	button.set_visible(visibility)
 
-func getVisibility():
+func getVisibility() -> bool:
 	print("getting visiblity")
 	return collisionVisualizer.is_visible()

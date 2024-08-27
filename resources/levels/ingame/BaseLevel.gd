@@ -125,6 +125,7 @@ func _ready():
 #	await loadConfirmation()
 	if confirmed:
 		updateValueOfStatusBar()
+		updateUpkeepList()
 		AudioServer.set_bus_mute(3, false)
 		Global.EndLoadingScreen()
 		stopControlVisible(false, 1)
@@ -524,6 +525,16 @@ func loadAOE() -> void:
 
 func saveToSaveSystem() -> void:
 	SaveWarningLabel.show()
+	var LPlayerTotalDamage: float = SaveSystem.GameInfoDict.PlayerTotalDamage
+	var LPlayerTotalSupport: float = SaveSystem.GameInfoDict.PlayerTotalSupport
+	var LEnemyTotalDamage: float = SaveSystem.GameInfoDict.EnemyTotalDamage
+	var LEnemyTotalSupport: float = SaveSystem.GameInfoDict.EnemyTotalSupport
+	var LExperienceGained: float = SaveSystem.GameInfoDict.ExperienceGained
+	var LLevelsGained: int = SaveSystem.GameInfoDict.LevelsGained
+	var LPlayerTotalAOEUsed: int = SaveSystem.GameInfoDict.PlayerTotalAOEUsed
+	var LEnemyTotalAOEUsed: int = SaveSystem.GameInfoDict.EnemyTotalAOEUsed
+	print("Before GameInfoDict: " + str(SaveSystem.GameInfoDict))
+	await get_tree().create_timer(0.05).timeout
 	SaveSystem.clearSaveThroughEmptying()
 	SaveSystem.clearSaveThroughDeletion()
 	# Peak Total Stats have to be broken due to how we do what we're doing up top
@@ -544,6 +555,15 @@ func saveToSaveSystem() -> void:
 #		print("Not Peak Score")
 #		print("Peak Total Stat Local Points: " + str(peakTotalStatPoints))
 #		print("Peak Total Stat Saved Points: " + str(SaveSystem.GameInfoDict.PeakTotalStatPoints))
+	
+	SaveSystem.GameInfoDict.PlayerTotalDamage = LPlayerTotalDamage
+	SaveSystem.GameInfoDict.PlayerTotalSupport = LPlayerTotalSupport
+	SaveSystem.GameInfoDict.EnemyTotalDamage = LEnemyTotalDamage
+	SaveSystem.GameInfoDict.EnemyTotalSupport = LEnemyTotalSupport
+	SaveSystem.GameInfoDict.ExperienceGained = LExperienceGained
+	SaveSystem.GameInfoDict.LevelsGained = LLevelsGained
+	SaveSystem.GameInfoDict.PlayerTotalAOEUsed = LPlayerTotalAOEUsed
+	SaveSystem.GameInfoDict.EnemyTotalAOEUsed = LEnemyTotalAOEUsed
 	SaveSystem.GameInfoDict.CharactersDied = totalCharactersDied
 	SaveSystem.GameInfoDict.CharactersSurrendered = totalCharactersSurrendered
 	SaveSystem.GameInfoDict.Battles = system.battle
@@ -574,6 +594,7 @@ func saveToSaveSystem() -> void:
 	SaveSystem.call_deferred("saveAllData")
 	await SaveSystem.Saved
 	print("Saved All Game Data Passed")
+	print("After GameInfoDict: " + str(SaveSystem.GameInfoDict))
 #	print("GameInfoDict PeakTotalStatPoints: " + str(SaveSystem.GameInfoDict.PeakTotalStatPoints))
 #	await get_tree().create_timer(0.05).timeout
 #	print("GameInfoDict CharactersDied: " + str(SaveSystem.GameInfoDict.CharactersDied))
@@ -589,16 +610,17 @@ func saveToSaveSystem() -> void:
 	await get_tree().create_timer(0.05).timeout
 #	print("GameInfoDict EnemyCharactersList: " + str(SaveSystem.GameInfoDict.EnemyCharactersList))
 	await get_tree().create_timer(0.05).timeout
-	print("GameInfoDict Inventory: " + str(SaveSystem.GameInfoDict.Inventory))
+#	print("GameInfoDict Inventory: " + str(SaveSystem.GameInfoDict.Inventory))
 	await get_tree().create_timer(0.05).timeout
-	print("Saved GameInfoDict SupportAOEList: " + str(SaveSystem.GameInfoDict.FriendlySupportAOEList))
-	print("Saved GameInfoDict SupportAOEList: " + str(SaveSystem.GameInfoDict.EnemySupportAOEList))
+#	print("Saved GameInfoDict SupportAOEList: " + str(SaveSystem.GameInfoDict.FriendlySupportAOEList))
+#	print("Saved GameInfoDict SupportAOEList: " + str(SaveSystem.GameInfoDict.EnemySupportAOEList))
 	SaveWarningLabel.hide()
 	emit_signal("SaveFinished")
 
 func saveFriendlyCharacters() -> void:
 	await friendlyPartyContainer.getCharactersInfo()
-	
+	var ExperienceGained: float = 0
+	var LevelsGained: int = 0
 	# push_back to friendly characters
 	
 # USE THIS IF STILL SUFFERING CRASHES WITH OUT OF BOUND ARRAY
@@ -629,8 +651,12 @@ func saveFriendlyCharacters() -> void:
 			newSavedCharacterData.CharacterCurrentAttack = friendlyPartyContainer.characters[i].stats.currentAttack
 			newSavedCharacterData.CharacterCurrentMorale = friendlyPartyContainer.characters[i].stats.currentMorale
 			SaveSystem.GameInfoDict.FriendlyCharactersList.push_back(newSavedCharacterData)
+			ExperienceGained += friendlyPartyContainer.characters[i].stats.totalExperience
+			LevelsGained += friendlyPartyContainer.characters[i].stats.level
 			await get_tree().create_timer(0.001).timeout
 	
+	SaveSystem.GameInfoDict.ExperienceGained += ExperienceGained
+	SaveSystem.GameInfoDict.LevelsGained += LevelsGained
 	await get_tree().create_timer(0.05).timeout
 	SavedFriendlyCharacters.emit()
 
@@ -908,7 +934,8 @@ func GotoShop() -> void:
 	instance.z_index = 2
 	
 	@warning_ignore("integer_division")
-	instance.set_global_position(Vector2(DisplayServer.screen_get_size(DisplayServer.window_get_current_screen(0)).x / 2, DisplayServer.screen_get_size(DisplayServer.window_get_current_screen(0)).y / 2))
+#	instance.set_global_position(Vector2(DisplayServer.screen_get_size(DisplayServer.window_get_current_screen(0)).x / 2, DisplayServer.screen_get_size(DisplayServer.window_get_current_screen(0)).y / 2))
+	instance.set_global_position(get_viewport_rect().size / 2)
 	checkSpecialWindowContainer()
 
 func GoToNextArea() -> void:
@@ -920,7 +947,8 @@ func GoToNextArea() -> void:
 	instance.z_index = 2
 	
 	@warning_ignore("integer_division")
-	instance.set_global_position(Vector2(DisplayServer.screen_get_size(DisplayServer.window_get_current_screen(0)).x / 2, DisplayServer.screen_get_size(DisplayServer.window_get_current_screen(0)).y / 2))
+#	instance.set_global_position(Vector2(DisplayServer.screen_get_size(DisplayServer.window_get_current_screen(0)).x / 2, DisplayServer.screen_get_size(DisplayServer.window_get_current_screen(0)).y / 2))
+	instance.set_global_position(get_viewport_rect().size / 2)
 	checkSpecialWindowContainer()
 
 func spawnSurrenderWindow(Lcharacter: BaseCharacter, profilePicture: Texture2D, characterName: String, experience: float) -> void:

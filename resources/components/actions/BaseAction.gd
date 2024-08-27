@@ -81,6 +81,10 @@ func onCastTimeMinimum() -> void:
 	if currentCastTime <= 0:
 		spawnAOE()
 		currentCastTime = castTime
+		if character.isFriendly:
+			SaveSystem.GameInfoDict.PlayerTotalAOEUsed += 1
+		else:
+			SaveSystem.GameInfoDict.EnemyTotalAOEUsed += 1
 		print(str(self) + ": AOE has been Casted")
 
 func AddCastTime(castAmount: int) -> void:

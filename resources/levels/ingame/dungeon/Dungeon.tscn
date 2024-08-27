@@ -1,4 +1,4 @@
-[gd_scene load_steps=57 format=3 uid="uid://dmviuwgk6nssk"]
+[gd_scene load_steps=58 format=3 uid="uid://dmviuwgk6nssk"]
 
 [ext_resource type="Script" path="res://resources/levels/ingame/BaseLevel.gd" id="1_c7s3k"]
 [ext_resource type="PackedScene" uid="uid://2067o3jclptt" path="res://resources/user_interface/console/Console.tscn" id="2_1f5g3"]
@@ -26,6 +26,7 @@
 [ext_resource type="Script" path="res://resources/entities/music_player/DungeonMusicPlayer.gd" id="26_1r80j"]
 [ext_resource type="AudioStream" uid="uid://dxufjrff8jslf" path="res://assets/audio/music/dev/LifillFeryquitous.mp3" id="27_cokja"]
 [ext_resource type="AudioStream" uid="uid://5vawwlwftcwx" path="res://assets/audio/music/dev/TheLastWorldISaw.mp3" id="28_4f54h"]
+[ext_resource type="PackedScene" uid="uid://d2t61dttpmn8x" path="res://resources/user_interface/fps_counter/FPSCounter.tscn" id="29_0x462"]
 [ext_resource type="AudioStream" uid="uid://btiylovgh3asi" path="res://assets/audio/music/dev/DeemoRecollections.mp3" id="29_erg55"]
 [ext_resource type="Script" path="res://resources/entities/battle_status_bar/BattleStatusBar.gd" id="30_h3q2n"]
 
@@ -620,6 +621,7 @@ system = NodePath("../TurnSystem")
 [node name="SpawnNormal" type="Node" parent="difficultySystem" node_paths=PackedStringArray("spawner")]
 script = ExtResource("19_hbix6")
 spawner = NodePath("..")
+difficultyTotalModifier = 0.8
 
 [node name="SpawnHorde" type="Node" parent="difficultySystem" node_paths=PackedStringArray("spawner")]
 script = ExtResource("19_hbix6")
@@ -632,7 +634,7 @@ script = ExtResource("19_hbix6")
 spawner = NodePath("..")
 dirPaths = ["res://resources/entities/characters_items/character/new_dev_game_characters", "res://resources/entities/characters_items/character/special_game_characters"]
 difficultyTotalModifier = 0.25
-charityDifficultyEXPModifier = 13.75
+charityDifficultyEXPModifier = 13.775
 
 [node name="SpawnLegendary" type="Node" parent="difficultySystem" node_paths=PackedStringArray("spawner")]
 script = ExtResource("19_hbix6")
@@ -729,8 +731,6 @@ offset_bottom = 540.0
 [node name="SpecialWindowContainer" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
 
 [node name="TutorialContainer" type="Control" parent="."]
 layout_mode = 3
@@ -740,6 +740,16 @@ offset_bottom = 40.0
 
 [node name="Console" parent="." instance=ExtResource("2_1f5g3")]
 visible = false
+
+[node name="FPSCounter" parent="." instance=ExtResource("29_0x462")]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_top = 1040.0
+offset_right = 128.0
+offset_bottom = 1072.0
+grow_vertical = 0
 
 [connection signal="AOEQueueFinished" from="." to="ButtonsContainer/ButtonInvisibilityToggles" method="_on_dungeon_aoe_queue_finished"]
 [connection signal="pressed" from="ButtonsContainer/ShowMenuButton" to="." method="_on_show_menu_button_pressed"]

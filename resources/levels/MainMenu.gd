@@ -70,6 +70,7 @@ func _on_exit_button_pressed() -> void:
 
 func _on_new_game_yes_pressed() -> void:
 	Global.StartLoadingScreen(true)
+	SaveSystem.clearSaveThroughEmptying()
 	SaveSystem.clearSaveThroughDeletion()
 	Global.clearNewProgressThroughDeletion()
 	Global.clearNewProgressionDict()

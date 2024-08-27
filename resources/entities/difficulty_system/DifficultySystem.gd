@@ -82,7 +82,7 @@ func getDungeonType():
 	pass
 
 func updateDifficultyTotal() -> void:
-	difficultyTotal = (friendlyPartyContainer.getTotalStatPoints() + (system.battle * 5) + (float(system.turn) / 2)) * 0.90
+	difficultyTotal = (friendlyPartyContainer.getTotalStatPoints() + (system.battle * 10) + (float(system.turn) / 1.5)) * 0.80
 	charityDifficultyEXP = difficultyTotal * 0.1
 
 func getEnemyStats() -> void:

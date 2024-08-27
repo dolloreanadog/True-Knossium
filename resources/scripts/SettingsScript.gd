@@ -16,7 +16,7 @@ enum language {ENGLISH, SIMPLECHINESE, JAPANESE, SPANISH, FRENCH}
 var inputsLoaded: bool = false
 #SettingsAOEMovement
 # False = Click & Click
-# Click & Click = Click & Drag
+# True = Click & Drag
 
 var SettingsDict: Dictionary = {
 	"SettingsAOEMovement": false,
@@ -25,7 +25,7 @@ var SettingsDict: Dictionary = {
 	"SettingsScreenDisplay": 0,
 	"SettingsWindowedMode": windowMode.FULLSCREEN,
 	"SettingsMasterVolume": 1.0,
-	"SettingsMusicVolume": 0.25,
+	"SettingsMusicVolume": 0.15,
 	"SettingsCharacterVolume": 1.0,
 	"SettingsSFXVolume": 1.0,
 	"SettingsVersion": gameSaveVersion,
@@ -52,6 +52,7 @@ func SetIsTutorialNeeded(boolean: bool) -> void:
 
 func getAOEMovement() -> bool:
 	return SettingsDict.SettingsAOEMovement
+
 func setAOEMovement(boolean: bool) -> void:
 	SettingsDict.SettingsAOEMovement = boolean
 
@@ -120,7 +121,7 @@ func resetSettings() -> void:
 	setScreenSize(screenSize.AUTOMATIC)
 	setWindowedMode(windowMode.FULLSCREEN)
 	setMasterVolume(1)
-	setMusicVolume(0.25)
+	setMusicVolume(0.15)
 	setCharacterVolume(1)
 	setSFXVolume(1)
 	SettingsDict.SettingsVersion = gameSaveVersion
@@ -141,11 +142,11 @@ func applySettings() -> void:
 	await get_tree().create_timer(0.05).timeout
 	match SettingsDict.SettingsWindowedMode:
 		windowMode.FULLSCREEN:
+			DisplayServer.window_set_flag(DisplayServer.WINDOW_FLAG_BORDERLESS, false)
 			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_EXCLUSIVE_FULLSCREEN)
-			DisplayServer.window_set_flag(DisplayServer.WINDOW_FLAG_BORDERLESS, false)
 		windowMode.WINDOWED:
-			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
 			DisplayServer.window_set_flag(DisplayServer.WINDOW_FLAG_BORDERLESS, false)
+			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
 		windowMode.BORDERLESSWINDOW:
 			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
 			DisplayServer.window_set_flag(DisplayServer.WINDOW_FLAG_BORDERLESS, true)

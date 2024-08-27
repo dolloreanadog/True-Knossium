@@ -26,45 +26,64 @@ text = "Stats"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="CharactersDiedLabel" type="Label" parent="StatsPanel"]
+[node name="VBoxContainer" type="VBoxContainer" parent="StatsPanel"]
 layout_mode = 0
 offset_left = 8.0
 offset_top = 40.0
 offset_right = 448.0
-offset_bottom = 66.0
+offset_bottom = 616.0
+
+[node name="CharactersDiedLabel" type="Label" parent="StatsPanel/VBoxContainer"]
+layout_mode = 2
 text = "Characters Died:"
 
-[node name="CharactersSurrenderedLabel" type="Label" parent="StatsPanel"]
-layout_mode = 0
-offset_left = 8.0
-offset_top = 64.0
-offset_right = 448.0
-offset_bottom = 90.0
+[node name="CharactersSurrenderedLabel" type="Label" parent="StatsPanel/VBoxContainer"]
+layout_mode = 2
 text = "Characters Surrendered:"
 
-[node name="TotalBattlesLabel" type="Label" parent="StatsPanel"]
-layout_mode = 0
-offset_left = 8.0
-offset_top = 136.0
-offset_right = 448.0
-offset_bottom = 162.0
+[node name="TotalBattlesLabel" type="Label" parent="StatsPanel/VBoxContainer"]
+layout_mode = 2
 text = "Total Battles:"
 
-[node name="TotalTurnsLabel" type="Label" parent="StatsPanel"]
-layout_mode = 0
-offset_left = 8.0
-offset_top = 112.0
-offset_right = 448.0
-offset_bottom = 138.0
+[node name="TotalTurnsLabel" type="Label" parent="StatsPanel/VBoxContainer"]
+layout_mode = 2
 text = "Total Turns:"
 
-[node name="PeakTotalStatPointsLabel" type="Label" parent="StatsPanel"]
-layout_mode = 0
-offset_left = 8.0
-offset_top = 88.0
-offset_right = 448.0
-offset_bottom = 114.0
+[node name="PeakTotalStatPointsLabel" type="Label" parent="StatsPanel/VBoxContainer"]
+layout_mode = 2
 text = "Peak Total Stat Points: "
+
+[node name="PlayerTotalDamageLabel" type="Label" parent="StatsPanel/VBoxContainer"]
+layout_mode = 2
+text = "Your Total Damage:"
+
+[node name="PlayerTotalSupportLabel" type="Label" parent="StatsPanel/VBoxContainer"]
+layout_mode = 2
+text = "Your Total Support:"
+
+[node name="EnemyTotalDamageLabel" type="Label" parent="StatsPanel/VBoxContainer"]
+layout_mode = 2
+text = "Enemy Total Damage:"
+
+[node name="EnemyTotalSupportLabel" type="Label" parent="StatsPanel/VBoxContainer"]
+layout_mode = 2
+text = "Enemy Total Support:"
+
+[node name="TotalExperienceGained" type="Label" parent="StatsPanel/VBoxContainer"]
+layout_mode = 2
+text = "Enemy Total Support:"
+
+[node name="TotalLevelsGained" type="Label" parent="StatsPanel/VBoxContainer"]
+layout_mode = 2
+text = "Enemy Total Support:"
+
+[node name="TotalPlayerAOEUsed" type="Label" parent="StatsPanel/VBoxContainer"]
+layout_mode = 2
+text = "Enemy Total Support:"
+
+[node name="TotalEnemyAOEUsed" type="Label" parent="StatsPanel/VBoxContainer"]
+layout_mode = 2
+text = "Enemy Total Support:"
 
 [node name="UnlockedPanel" type="Panel" parent="."]
 offset_left = 64.0

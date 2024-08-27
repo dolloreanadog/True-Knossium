@@ -750,11 +750,11 @@ maxEXP = 8.5
 role = 3
 health = 15.0
 defense = 7.5
-attack = 2.25
+attack = 2.2
 morale = 15.5
 potentialHealthGain = 0.5
 potentialDefenseGain = 0.55
-potentialAttackGain = 0.25
+potentialAttackGain = 0.2
 potentialMoraleGain = 3.1
 
 [node name="ActionLaser" type="Node" parent="." node_paths=PackedStringArray("stats")]

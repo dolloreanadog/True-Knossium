@@ -1,4 +1,4 @@
-[gd_scene load_steps=57 format=3 uid="uid://dt8n5ydm47v3d"]
+[gd_scene load_steps=58 format=3 uid="uid://dt8n5ydm47v3d"]
 
 [ext_resource type="Script" path="res://resources/levels/ingame/BaseLevel.gd" id="1_1cjpr"]
 [ext_resource type="Script" path="res://resources/entities/AreaAOEDenial/BaseAreaAOEDenial.gd" id="2_4r8rd"]
@@ -28,6 +28,7 @@
 [ext_resource type="PackedScene" uid="uid://cmupnt3ig0bql" path="res://resources/user_interface/party_menu/PartyMenu.tscn" id="26_8ie0o"]
 [ext_resource type="PackedScene" uid="uid://b8c08cwk8od7q" path="res://resources/user_interface/ingame_menu/InGameMenu.tscn" id="27_28o15"]
 [ext_resource type="PackedScene" uid="uid://2067o3jclptt" path="res://resources/user_interface/console/Console.tscn" id="28_p236b"]
+[ext_resource type="PackedScene" uid="uid://d2t61dttpmn8x" path="res://resources/user_interface/fps_counter/FPSCounter.tscn" id="29_18kmm"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_q1uww"]
 size = Vector2(1920, 2816)
@@ -171,7 +172,7 @@ position = Vector2(960, 2348)
 shape = SubResource("RectangleShape2D_tibo5")
 
 [node name="CollisionShape2D4" type="CollisionShape2D" parent="OutOfBoundsAOEDenial"]
-position = Vector2(3940, 464)
+position = Vector2(3940, 496)
 shape = SubResource("RectangleShape2D_pmviw")
 
 [node name="AOECheckSupport" type="Area2D" parent="."]
@@ -742,6 +743,16 @@ offset_bottom = 40.0
 
 [node name="Console" parent="." instance=ExtResource("28_p236b")]
 visible = false
+
+[node name="FPSCounter" parent="." instance=ExtResource("29_18kmm")]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_top = 1040.0
+offset_right = 128.0
+offset_bottom = 1072.0
+grow_vertical = 0
 
 [connection signal="AOEQueueFinished" from="." to="ButtonsContainer/ButtonInvisibilityToggles" method="_on_dungeon_aoe_queue_finished"]
 [connection signal="pressed" from="ButtonsContainer/ShowMenuButton" to="." method="_on_show_menu_button_pressed"]

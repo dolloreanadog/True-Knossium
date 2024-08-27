@@ -121,7 +121,6 @@ func changeEXP(amount: float) -> void:
 		changeAttack(potentialAttackGain)
 		changeMorale(potentialMoraleGain)
 		
-		
 		currentHealth = clampf(currentHealth * 1.10, 0, health)
 		currentDefense = clampf(currentDefense * 1.15, 0, defense)
 		currentAttack = clampf(currentAttack * 1.15, 0, attack)
@@ -270,9 +269,24 @@ func SetMorale(amount: float) -> void:
 	emit_signal("statChanged")
 	emit_signal("moraleChanged")
 
-# There's an in lore reason why defense affects buffs
+## update the save with these amounts
+func UpdateSave(amount: int) -> void:
+	if characterBody.isFriendly:
+		if amount < 0:
+			SaveSystem.GameInfoDict.EnemyTotalDamage += absf(amount)
+		elif amount > 0:
+			SaveSystem.GameInfoDict.PlayerTotalSupport += absf(amount)
+	elif !characterBody.isFriendly:
+		if amount < 0:
+			SaveSystem.GameInfoDict.PlayerTotalDamage += absf(amount)
+		elif amount > 0:
+			SaveSystem.GameInfoDict.EnemyTotalSupport += absf(amount)
+			
+
 func changeCurrentHealth(amount: float) -> void:
-	amount /= currentDefense
+	UpdateSave(amount)
+	if amount < 0:
+		amount /= currentDefense
 	currentHealth += amount
 	if characterBody.healthChangedFX != null:
 		characterBody.playHealthChangedFX(amount)
@@ -283,7 +297,9 @@ func changeCurrentHealth(amount: float) -> void:
 	overMaxHealth()
 
 func changeCurrentDefense(amount: float) -> void:
-	amount /= currentDefense
+	UpdateSave(amount)
+	if amount < 0:
+		amount /= currentDefense
 	currentDefense += amount
 	if characterBody.defenseChangedFX != null:
 		characterBody.playDefenseChangedFX(amount)
@@ -294,7 +310,9 @@ func changeCurrentDefense(amount: float) -> void:
 	overMaxDefense()
 
 func changeCurrentAttack(amount: float) -> void:
-	amount /= currentDefense
+	UpdateSave(amount)
+	if amount < 0:
+		amount /= currentDefense
 	currentAttack += amount
 	if characterBody.attackChangedFX != null:
 		characterBody.playAttackChangedFX(amount)
@@ -306,7 +324,9 @@ func changeCurrentAttack(amount: float) -> void:
 	overMaxAttack()
 
 func changeCurrentMorale(amount: float) -> void:
-	amount /= currentDefense
+	UpdateSave(amount)
+	if amount < 0:
+		amount /= currentDefense
 	currentMorale += amount
 	if characterBody.moraleChangedFX != null:
 		characterBody.playMoraleChangedFX(amount)
@@ -360,5 +380,6 @@ func setCurrentExperience(amount: float) -> void:
 		getTotalStatPoints()
 		characterBody.updateLevelLabel()
 		
+	
 	emit_signal("statChanged")
 	emit_signal("experienceChanged")

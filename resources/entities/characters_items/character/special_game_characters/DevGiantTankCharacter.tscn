@@ -243,9 +243,9 @@ animationUsed = "inoffensive1"
 AOE = ExtResource("8_0oir0")
 castTime = 3
 isOffensive = false
-health = 1.0
-defense = 1.5
-morale = 5.0
+health = 0.5
+defense = 1.0
+morale = 1.5
 accuracy = 1.0
 description = "This creates a Shields for any character caught within its radius."
 

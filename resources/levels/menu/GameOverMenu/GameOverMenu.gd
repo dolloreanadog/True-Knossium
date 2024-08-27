@@ -9,11 +9,19 @@ extends Node2D
 @onready var loadedItemUnlocked: Array
 
 # Important Stuff
-@onready var CharacterDiedLabel: Label = get_node("StatsPanel/CharactersDiedLabel")
-@onready var CharactersSurrenderedLabel: Label = get_node("StatsPanel/CharactersSurrenderedLabel")
-@onready var TotalBattlesLabel: Label = get_node("StatsPanel/TotalBattlesLabel")
-@onready var TotalTurnsLabel: Label = get_node("StatsPanel/TotalTurnsLabel")
-@onready var PeakTotalStatPointsLabel: Label = get_node("StatsPanel/PeakTotalStatPointsLabel")
+@onready var CharacterDiedLabel: Label = $StatsPanel/VBoxContainer/CharactersDiedLabel
+@onready var CharactersSurrenderedLabel: Label = $StatsPanel/VBoxContainer/CharactersSurrenderedLabel
+@onready var TotalBattlesLabel: Label = $StatsPanel/VBoxContainer/TotalBattlesLabel
+@onready var TotalTurnsLabel: Label = $StatsPanel/VBoxContainer/TotalTurnsLabel
+@onready var PeakTotalStatPointsLabel: Label = $StatsPanel/VBoxContainer/PeakTotalStatPointsLabel
+@onready var PlayerTotalDamageLabel: Label = $StatsPanel/VBoxContainer/PlayerTotalDamageLabel
+@onready var PlayerTotalSupportLabel: Label = $StatsPanel/VBoxContainer/PlayerTotalSupportLabel
+@onready var EnemyTotalDamageLabel: Label = $StatsPanel/VBoxContainer/EnemyTotalDamageLabel
+@onready var EnemyTotalSupportLabel: Label = $StatsPanel/VBoxContainer/EnemyTotalSupportLabel
+@onready var TotalPlayerAOEUsed: Label = $StatsPanel/VBoxContainer/TotalPlayerAOEUsed
+@onready var TotalEnemyAOEUsed: Label = $StatsPanel/VBoxContainer/TotalEnemyAOEUsed
+@onready var TotalExperienceGained: Label = $StatsPanel/VBoxContainer/TotalExperienceGained
+@onready var TotalLevelsGained: Label = $StatsPanel/VBoxContainer/TotalLevelsGained
 
 @onready var UnlockedList: ItemList = get_node("UnlockedPanel/UnlockedList")
 var unlockedListArray: Array
@@ -28,8 +36,6 @@ func _ready() -> void:
 	loadFiledItems()
 	visualizeUnlockedList()
 	
-	SaveSystem.clearSaveThroughEmptying()
-	SaveSystem.clearSaveThroughDeletion()
 	Global.EndLoadingScreen()
 
 func _on_go_to_menu_pressed() -> void:
@@ -44,11 +50,23 @@ func _on_go_to_menu_pressed() -> void:
 
 # Load Save
 func loadSaveData() -> void:
+#	print("Loaded: " + str(SaveSystem.GameInfoDict))
 	CharacterDiedLabel.text = "Total Characters Died: " + str(SaveSystem.GameInfoDict.CharactersDied)
 	CharactersSurrenderedLabel.text = "Total Characters Surrendered: " + str(SaveSystem.GameInfoDict.CharactersSurrendered)
 	TotalBattlesLabel.text = "Total Battles: " + str(SaveSystem.GameInfoDict.Battles)
 	TotalTurnsLabel.text = "Total Turns: " + str(SaveSystem.GameInfoDict.Turns)
 	PeakTotalStatPointsLabel.text = "Peak Total Stat Points: " + str(SaveSystem.GameInfoDict.PeakTotalStatPoints)
+	PlayerTotalDamageLabel.text = "You Did " + str(snappedf(SaveSystem.GameInfoDict.PlayerTotalDamage, 0.01)) + " Total Damage"
+	PlayerTotalSupportLabel.text = "You Did " + str(snappedf(SaveSystem.GameInfoDict.PlayerTotalSupport, 0.01)) + " Total Support"
+	EnemyTotalDamageLabel.text = "Enemy Did " + str(snappedf(SaveSystem.GameInfoDict.EnemyTotalDamage, 0.01)) + " Total Damage"
+	EnemyTotalSupportLabel.text = "Enemy Did " + str(snappedf(SaveSystem.GameInfoDict.EnemyTotalSupport, 0.01)) + " Total Support"
+	TotalPlayerAOEUsed.text = "You Placed " + str(SaveSystem.GameInfoDict.PlayerTotalAOEUsed) + " AOE"
+	TotalEnemyAOEUsed.text = "Enemy Placed " + str(SaveSystem.GameInfoDict.EnemyTotalAOEUsed) + " AOE"
+	TotalExperienceGained.text = "Total Experience: " + str(snappedf(SaveSystem.GameInfoDict.ExperienceGained, 0.01))
+	TotalLevelsGained.text = "Total Levels: " + str(SaveSystem.GameInfoDict.LevelsGained)
+	
+	SaveSystem.clearSaveThroughEmptying()
+	SaveSystem.clearSaveThroughDeletion()
 
 func visualizeUnlockedList() -> void:
 	UnlockedList.clear()

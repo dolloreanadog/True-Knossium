@@ -11,6 +11,7 @@ func TutorialIndexSwitch() -> void:
 		0:
 			endTurnActive = true
 			self.show()
+			await get_tree().create_timer(0.2).timeout
 			dungeon.enemyPartyContainer.getCharactersInfo()
 			for i in dungeon.enemyPartyContainer.characters.size():
 				var character: BaseCharacter = dungeon.enemyPartyContainer.characters[i]

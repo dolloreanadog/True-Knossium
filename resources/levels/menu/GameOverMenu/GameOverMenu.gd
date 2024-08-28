@@ -64,7 +64,7 @@ func loadSaveData() -> void:
 	TotalEnemyAOEUsed.text = "Enemy Placed " + str(SaveSystem.GameInfoDict.EnemyTotalAOEUsed) + " AOE"
 	TotalExperienceGained.text = "Total Experience: " + str(snappedf(SaveSystem.GameInfoDict.ExperienceGained, 0.01))
 	TotalLevelsGained.text = "Total Levels: " + str(SaveSystem.GameInfoDict.LevelsGained)
-	
+	await get_tree().create_timer(0.5).timeout
 	SaveSystem.clearSaveThroughEmptying()
 	SaveSystem.clearSaveThroughDeletion()
 

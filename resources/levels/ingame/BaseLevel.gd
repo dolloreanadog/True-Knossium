@@ -71,6 +71,7 @@ var totalCharactersSurrendered: int
 
 #--[ Other ]--
 var highlightEndTurn: bool
+var isSaving: bool = false
 var shopWeight: float = 0.0
 
 #--[ Surrender Window ]--
@@ -230,6 +231,8 @@ func addNewGameCharacters() -> void:
 		var targetCharacter := load(Global.newGameCharacterInfo.pop_back())
 		var loadedCharacter: BaseCharacter = targetCharacter.instantiate()
 		friendlyPartyContainer.addCharacter(loadedCharacter, 0, false, Vector2(0, 0))
+		if system.turn == 1:
+			inventory.addToInventory(loadedCharacter.ResourceNeeded.duplicate(true), loadedCharacter.ResourceNeededNumber * 15)
 		await get_tree().create_timer(0.01).timeout
 
 func addNewGameItems() -> void:
@@ -524,98 +527,101 @@ func loadAOE() -> void:
 #-- Save
 
 func saveToSaveSystem() -> void:
-	SaveWarningLabel.show()
-	var LPlayerTotalDamage: float = SaveSystem.GameInfoDict.PlayerTotalDamage
-	var LPlayerTotalSupport: float = SaveSystem.GameInfoDict.PlayerTotalSupport
-	var LEnemyTotalDamage: float = SaveSystem.GameInfoDict.EnemyTotalDamage
-	var LEnemyTotalSupport: float = SaveSystem.GameInfoDict.EnemyTotalSupport
-	var LExperienceGained: float = SaveSystem.GameInfoDict.ExperienceGained
-	var LLevelsGained: int = SaveSystem.GameInfoDict.LevelsGained
-	var LPlayerTotalAOEUsed: int = SaveSystem.GameInfoDict.PlayerTotalAOEUsed
-	var LEnemyTotalAOEUsed: int = SaveSystem.GameInfoDict.EnemyTotalAOEUsed
-	print("Before GameInfoDict: " + str(SaveSystem.GameInfoDict))
-	await get_tree().create_timer(0.05).timeout
-	SaveSystem.clearSaveThroughEmptying()
-	SaveSystem.clearSaveThroughDeletion()
-	# Peak Total Stats have to be broken due to how we do what we're doing up top
-	await get_tree().create_timer(0.05).timeout
-	
-	if peakTotalStatPoints < friendlyPartyContainer.totalStatPoints: # Peak Total Stats keep resetting to 0?
-#		print("------------")
-#		print("New Peak Score")
-#		print("Peak Total Stat Local Points: " + str(peakTotalStatPoints))
-#		print("Peak Total Stat Saved Points: " + str(SaveSystem.GameInfoDict.PeakTotalStatPoints))
-#		print("Total Stat Points: " + str(friendlyPartyContainer.totalStatPoints))
-		SaveSystem.GameInfoDict.PeakTotalStatPoints = friendlyPartyContainer.totalStatPoints
-		peakTotalStatPoints = SaveSystem.GameInfoDict.PeakTotalStatPoints
-		print("New Peak Total Stat Points: " + str(SaveSystem.GameInfoDict.PeakTotalStatPoints))
-	else:
-		SaveSystem.GameInfoDict.PeakTotalStatPoints = peakTotalStatPoints
-#		print("------------")
-#		print("Not Peak Score")
-#		print("Peak Total Stat Local Points: " + str(peakTotalStatPoints))
-#		print("Peak Total Stat Saved Points: " + str(SaveSystem.GameInfoDict.PeakTotalStatPoints))
-	
-	SaveSystem.GameInfoDict.PlayerTotalDamage = LPlayerTotalDamage
-	SaveSystem.GameInfoDict.PlayerTotalSupport = LPlayerTotalSupport
-	SaveSystem.GameInfoDict.EnemyTotalDamage = LEnemyTotalDamage
-	SaveSystem.GameInfoDict.EnemyTotalSupport = LEnemyTotalSupport
-	SaveSystem.GameInfoDict.ExperienceGained = LExperienceGained
-	SaveSystem.GameInfoDict.LevelsGained = LLevelsGained
-	SaveSystem.GameInfoDict.PlayerTotalAOEUsed = LPlayerTotalAOEUsed
-	SaveSystem.GameInfoDict.EnemyTotalAOEUsed = LEnemyTotalAOEUsed
-	SaveSystem.GameInfoDict.CharactersDied = totalCharactersDied
-	SaveSystem.GameInfoDict.CharactersSurrendered = totalCharactersSurrendered
-	SaveSystem.GameInfoDict.Battles = system.battle
-	SaveSystem.GameInfoDict.Turns = system.turn
-	SaveSystem.GameInfoDict.SpawnBehaviorWeights = difficulty.SpawnBehaviors
-	SaveSystem.GameInfoDict.ConsoleUnlocked = knossiumConsole.unlocked
-	SaveSystem.GameInfoDict.DungeonLevel = get_tree().get_current_scene().get_scene_file_path()
-	print("Saved Spawn Behavior Weights: " + str(SaveSystem.GameInfoDict.SpawnBehaviorWeights))
-	
-	if Global.getBattlesWon() < system.battle:
-		Global.progressionDict.BattlesWon = system.battle
-	
-	saveFriendlyCharacters()
-	await SavedFriendlyCharacters
-	print("Saved Friendly Characters Passed")
-	saveEnemyCharacters()
-	await SavedEnemyCharacters
-	print("Saved Enemy Characters Passed")
-	saveItems()
-	await SavedItems
-	print("Saved Items Passed")
-	saveAOE()
-	await SavedAOE
-	print("Saved AOE Passed")
-	Global.call_deferred("saveAllData")
-	await Global.Saved
-	print("Saved Global Data Passed")
-	SaveSystem.call_deferred("saveAllData")
-	await SaveSystem.Saved
-	print("Saved All Game Data Passed")
-	print("After GameInfoDict: " + str(SaveSystem.GameInfoDict))
-#	print("GameInfoDict PeakTotalStatPoints: " + str(SaveSystem.GameInfoDict.PeakTotalStatPoints))
-#	await get_tree().create_timer(0.05).timeout
-#	print("GameInfoDict CharactersDied: " + str(SaveSystem.GameInfoDict.CharactersDied))
-#	await get_tree().create_timer(0.05).timeout
-#	print("GameInfoDict CharactersSurrendered: " + str(SaveSystem.GameInfoDict.CharactersSurrendered))
-#	await get_tree().create_timer(0.05).timeout
-#	print("GameInfoDict Battles: " + str(SaveSystem.GameInfoDict.Battles))
-#	await get_tree().create_timer(0.05).timeout
-#	print("GameInfoDict Turns: " + str(SaveSystem.GameInfoDict.Turns))
-#	await get_tree().create_timer(0.05).timeout
-#	print("GameInfoDict FriendlyCharactersList: " + str(SaveSystem.GameInfoDict.FriendlyCharactersList))
-#	print("GameInfoDict EnemyCharactersList: " + str(SaveSystem.GameInfoDict.EnemyCharactersList))
-	await get_tree().create_timer(0.05).timeout
-#	print("GameInfoDict EnemyCharactersList: " + str(SaveSystem.GameInfoDict.EnemyCharactersList))
-	await get_tree().create_timer(0.05).timeout
-#	print("GameInfoDict Inventory: " + str(SaveSystem.GameInfoDict.Inventory))
-	await get_tree().create_timer(0.05).timeout
-#	print("Saved GameInfoDict SupportAOEList: " + str(SaveSystem.GameInfoDict.FriendlySupportAOEList))
-#	print("Saved GameInfoDict SupportAOEList: " + str(SaveSystem.GameInfoDict.EnemySupportAOEList))
-	SaveWarningLabel.hide()
-	emit_signal("SaveFinished")
+	if !isSaving:
+		isSaving = true
+		SaveWarningLabel.show()
+		var LPlayerTotalDamage: float = SaveSystem.GameInfoDict.PlayerTotalDamage
+		var LPlayerTotalSupport: float = SaveSystem.GameInfoDict.PlayerTotalSupport
+		var LEnemyTotalDamage: float = SaveSystem.GameInfoDict.EnemyTotalDamage
+		var LEnemyTotalSupport: float = SaveSystem.GameInfoDict.EnemyTotalSupport
+		var LExperienceGained: float = SaveSystem.GameInfoDict.ExperienceGained
+		var LLevelsGained: int = SaveSystem.GameInfoDict.LevelsGained
+		var LPlayerTotalAOEUsed: int = SaveSystem.GameInfoDict.PlayerTotalAOEUsed
+		var LEnemyTotalAOEUsed: int = SaveSystem.GameInfoDict.EnemyTotalAOEUsed
+		print("Before GameInfoDict: " + str(SaveSystem.GameInfoDict))
+		await get_tree().create_timer(0.05).timeout
+		SaveSystem.clearSaveThroughEmptying()
+		SaveSystem.clearSaveThroughDeletion()
+		# Peak Total Stats have to be broken due to how we do what we're doing up top
+		await get_tree().create_timer(0.05).timeout
+		
+		if peakTotalStatPoints < friendlyPartyContainer.totalStatPoints: # Peak Total Stats keep resetting to 0?
+	#		print("------------")
+	#		print("New Peak Score")
+	#		print("Peak Total Stat Local Points: " + str(peakTotalStatPoints))
+	#		print("Peak Total Stat Saved Points: " + str(SaveSystem.GameInfoDict.PeakTotalStatPoints))
+	#		print("Total Stat Points: " + str(friendlyPartyContainer.totalStatPoints))
+			SaveSystem.GameInfoDict.PeakTotalStatPoints = friendlyPartyContainer.totalStatPoints
+			peakTotalStatPoints = SaveSystem.GameInfoDict.PeakTotalStatPoints
+			print("New Peak Total Stat Points: " + str(SaveSystem.GameInfoDict.PeakTotalStatPoints))
+		else:
+			SaveSystem.GameInfoDict.PeakTotalStatPoints = peakTotalStatPoints
+	#		print("------------")
+	#		print("Not Peak Score")
+	#		print("Peak Total Stat Local Points: " + str(peakTotalStatPoints))
+	#		print("Peak Total Stat Saved Points: " + str(SaveSystem.GameInfoDict.PeakTotalStatPoints))
+		
+		SaveSystem.GameInfoDict.PlayerTotalDamage = LPlayerTotalDamage
+		SaveSystem.GameInfoDict.PlayerTotalSupport = LPlayerTotalSupport
+		SaveSystem.GameInfoDict.EnemyTotalDamage = LEnemyTotalDamage
+		SaveSystem.GameInfoDict.EnemyTotalSupport = LEnemyTotalSupport
+		SaveSystem.GameInfoDict.ExperienceGained = LExperienceGained
+		SaveSystem.GameInfoDict.LevelsGained = LLevelsGained
+		SaveSystem.GameInfoDict.PlayerTotalAOEUsed = LPlayerTotalAOEUsed
+		SaveSystem.GameInfoDict.EnemyTotalAOEUsed = LEnemyTotalAOEUsed
+		SaveSystem.GameInfoDict.CharactersDied = totalCharactersDied
+		SaveSystem.GameInfoDict.CharactersSurrendered = totalCharactersSurrendered
+		SaveSystem.GameInfoDict.Battles = system.battle
+		SaveSystem.GameInfoDict.Turns = system.turn
+		SaveSystem.GameInfoDict.SpawnBehaviorWeights = difficulty.SpawnBehaviors
+		SaveSystem.GameInfoDict.ConsoleUnlocked = knossiumConsole.unlocked
+		SaveSystem.GameInfoDict.DungeonLevel = get_tree().get_current_scene().get_scene_file_path()
+		print("Saved Spawn Behavior Weights: " + str(SaveSystem.GameInfoDict.SpawnBehaviorWeights))
+		
+		if Global.getBattlesWon() < system.battle:
+			Global.progressionDict.BattlesWon = system.battle
+		
+		saveFriendlyCharacters()
+		await SavedFriendlyCharacters
+		print("Saved Friendly Characters Passed")
+		saveEnemyCharacters()
+		await SavedEnemyCharacters
+		print("Saved Enemy Characters Passed")
+		saveItems()
+		await SavedItems
+		print("Saved Items Passed")
+		saveAOE()
+		await SavedAOE
+		print("Saved AOE Passed")
+		Global.call_deferred("saveAllData")
+		await Global.Saved
+		print("Saved Global Data Passed")
+		SaveSystem.call_deferred("saveAllData")
+		await SaveSystem.Saved
+		print("Saved All Game Data Passed")
+		print("After GameInfoDict: " + str(SaveSystem.GameInfoDict))
+	#	print("GameInfoDict PeakTotalStatPoints: " + str(SaveSystem.GameInfoDict.PeakTotalStatPoints))
+	#	await get_tree().create_timer(0.05).timeout
+	#	print("GameInfoDict CharactersDied: " + str(SaveSystem.GameInfoDict.CharactersDied))
+	#	await get_tree().create_timer(0.05).timeout
+	#	print("GameInfoDict CharactersSurrendered: " + str(SaveSystem.GameInfoDict.CharactersSurrendered))
+	#	await get_tree().create_timer(0.05).timeout
+	#	print("GameInfoDict Battles: " + str(SaveSystem.GameInfoDict.Battles))
+	#	await get_tree().create_timer(0.05).timeout
+	#	print("GameInfoDict Turns: " + str(SaveSystem.GameInfoDict.Turns))
+	#	await get_tree().create_timer(0.05).timeout
+	#	print("GameInfoDict FriendlyCharactersList: " + str(SaveSystem.GameInfoDict.FriendlyCharactersList))
+	#	print("GameInfoDict EnemyCharactersList: " + str(SaveSystem.GameInfoDict.EnemyCharactersList))
+		await get_tree().create_timer(0.05).timeout
+	#	print("GameInfoDict EnemyCharactersList: " + str(SaveSystem.GameInfoDict.EnemyCharactersList))
+		await get_tree().create_timer(0.05).timeout
+	#	print("GameInfoDict Inventory: " + str(SaveSystem.GameInfoDict.Inventory))
+		await get_tree().create_timer(0.05).timeout
+	#	print("Saved GameInfoDict SupportAOEList: " + str(SaveSystem.GameInfoDict.FriendlySupportAOEList))
+	#	print("Saved GameInfoDict SupportAOEList: " + str(SaveSystem.GameInfoDict.EnemySupportAOEList))
+		SaveWarningLabel.hide()
+		emit_signal("SaveFinished")
+		isSaving = false
 
 func saveFriendlyCharacters() -> void:
 	await friendlyPartyContainer.getCharactersInfo()

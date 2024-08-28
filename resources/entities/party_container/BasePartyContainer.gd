@@ -161,7 +161,14 @@ func MoveAllCharactersToTruePosition() -> void:
 		tween.tween_property(character, "global_position", character.trueGlobalPosition, 1)
 		await get_tree().create_timer(randf_range(0, 0.15)).timeout
 	isSpawningCharacter = false
+	CharacterInCorrectPosition()
 	dungeon.stopControlVisible(false, 1)
+
+func CharacterInCorrectPosition() -> void:
+	for i in charactersAmount:
+		var character: BaseCharacter = characters[i]
+		if character.global_position != character.trueGlobalPosition:
+			character.set_global_position(character.trueGlobalPosition)
 
 func addCharacter(character: BaseCharacter, startingExperience: float, spawnedFromDifficulty: bool, characterPosition: Vector2):
 	print(str(self) + ": Spawning: " + str(character))

@@ -317,7 +317,7 @@ offset_bottom = 191.0
 
 [node name="Label2" type="Label" parent="ColorRect/Panel/ActionPanel/VBoxContainer"]
 layout_mode = 2
-text = " "
+text = "Name"
 
 [node name="Label" type="Label" parent="ColorRect/Panel/ActionPanel/VBoxContainer"]
 layout_mode = 2

@@ -963,7 +963,7 @@ func spawnSurrenderWindow(Lcharacter: BaseCharacter, profilePicture: Texture2D, 
 	instance.characterName = characterName
 	instance.totalExperience = experience
 	instance.setWindowInfo()
-	instance.set_global_position(Vector2(0, 0))
+	instance.set_global_position(Vector2(get_viewport_rect().size.x / 2, get_viewport_rect().size.y / 1.5))
 	stopControlVisible(true, 1)
 	stopControlVisible(true, 2)
 

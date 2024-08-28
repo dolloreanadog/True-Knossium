@@ -270,7 +270,7 @@ func SetMorale(amount: float) -> void:
 	emit_signal("moraleChanged")
 
 ## update the save with these amounts
-func UpdateSave(amount: int) -> void:
+func UpdateSave(amount: float) -> void:
 	if characterBody.isFriendly:
 		if amount < 0:
 			SaveSystem.GameInfoDict.EnemyTotalDamage += absf(amount)

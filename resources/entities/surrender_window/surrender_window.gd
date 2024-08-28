@@ -3,9 +3,9 @@ class_name SurrenderWindow
 
 @onready var dungeon: BaseLevel = get_tree().get_current_scene()
 
-@onready var characterPFPHolder: TextureRect = $characterPFPHolder
-@onready var characterNameLabel: Label = $CharacterNameLabel
-@onready var characterLevelLabel: Label = $LevelLabel
+@onready var characterPFPHolder: TextureRect = $Control/characterPFPHolder
+@onready var characterNameLabel: Label = $Control/CharacterNameLabel
+@onready var characterLevelLabel: Label = $Control/LevelLabel
 
 var character: BaseCharacter
 var characterPFP: Texture2D

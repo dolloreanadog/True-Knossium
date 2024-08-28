@@ -102,7 +102,7 @@ func SetScreenDisplay(value: int) -> void:
 #--[ Functions ]--
 func _ready() -> void:
 	loadSettings()
-	checkSettingsVersion()
+	await checkSettingsVersion()
 	applySettings()
 	
 	for action in InputMap.get_actions():
@@ -115,7 +115,7 @@ func CenterWindow() -> void:
 	var screen = DisplayServer.screen_get_size(0)
 	get_window().position = (screen / 2) - get_window().size / 2
 
-func resetSettings() -> void:
+func resetSettings() -> bool:
 	setAOEMovement(true)
 	setTranslation(language.ENGLISH)
 	setScreenSize(screenSize.AUTOMATIC)
@@ -129,6 +129,8 @@ func resetSettings() -> void:
 	SetIsTutorialNeeded(true)
 	SettingsDict.SettingsScreenDisplay = 0
 	applySettings()
+	await get_tree().create_timer(0.001).timeout
+	return true
 
 func clearSettingsThroughDeletion() -> void:
 	if checkSettingsDataExists():
@@ -268,10 +270,11 @@ func checkSettingsVersion() -> bool:
 	if SettingsDict.find_key("SettingsVersion") != "":
 		if SettingsDict.SettingsVersion != gameSaveVersion:
 			push_error("Incompatible Settings Version, Current is " + str(gameSaveVersion) + ", Your Version is " + str(SettingsDict.SettingsVersion))
-			resetSettings()
+			await resetSettings()
 			return false
 		else:
 			print("Correct Settings Version")
+			await get_tree().create_timer(0.001).timeout
 			return true
 	else:
 		push_error("The Key SettingsVersion doesn't exist")
@@ -279,4 +282,5 @@ func checkSettingsVersion() -> bool:
 		resetSettings()
 		saveSettings()
 		print("Settings Version: " + SettingsDict.SettingsVersion)
+		await get_tree().create_timer(0.001).timeout
 		return false

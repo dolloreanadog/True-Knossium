@@ -9,9 +9,9 @@
 [ext_resource type="PackedScene" uid="uid://dacl7cdqcmb3c" path="res://resources/entities/button_invisibility/ButtonInvisibilityToggles.tscn" id="5_sd2mv"]
 [ext_resource type="Script" path="res://resources/levels/ingame/dungeon/AOEAutoPlacementButton.gd" id="6_lpwyv"]
 [ext_resource type="Script" path="res://resources/components/other/AOEAutoPlacementButton/AutoPlacementAOEComponent.gd" id="7_mgrp3"]
-[ext_resource type="Script" path="res://resources/levels/ingame/dungeon/EndTurn.gd" id="8_4ktpl"]
 [ext_resource type="PackedScene" uid="uid://b8kerqouxqko2" path="res://resources/entities/aoe_info_box/aoe_info_box.tscn" id="9_ffpdq"]
 [ext_resource type="Script" path="res://resources/entities/battle_status_bar/BattleStatusBar.gd" id="10_p772i"]
+[ext_resource type="Script" path="res://resources/levels/ingame/tutorial_levels/EndTurn.gd" id="10_sdg6l"]
 [ext_resource type="Script" path="res://resources/entities/spawn_area/BaseSpawnArea.gd" id="11_5032i"]
 [ext_resource type="PackedScene" uid="uid://j6e4b1w1e5u4" path="res://resources/entities/party_container/enemy_party_container/EnemyPartyContainer.tscn" id="12_grgwp"]
 [ext_resource type="PackedScene" uid="uid://cm1bg68as3a8x" path="res://resources/entities/party_container/friendly_party_container/FriendlyPartyContainer.tscn" id="13_6j585"]
@@ -349,7 +349,7 @@ offset_bottom = 63.0
 action_mode = 0
 shortcut = SubResource("Shortcut_h1j2k")
 text = "End Turn"
-script = ExtResource("8_4ktpl")
+script = ExtResource("10_sdg6l")
 
 [node name="OpenConsoleButton" type="Button" parent="ButtonsContainer"]
 layout_mode = 0

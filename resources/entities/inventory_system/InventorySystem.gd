@@ -23,22 +23,23 @@ func addToInventory(item: BaseInventoryItem, amount: int) -> void:
 	# Replicate this entire thing in other functions
 	var Litem: BaseInventoryItem
 	
-	for i in storedItems.size():
-		print("item name: " + str(item.itemName))
-		print("Stored item name: " + str(storedItems[i].itemName))
-		if storedItems[i].itemName == item.itemName:
-			Litem = storedItems[i]
-	
-	print("LitemIndex = " + str(Litem))
-	if is_instance_valid(Litem):
-		print("It does exist")
-		print("Old Amount: " + str(Litem.amount))
-		Litem.amount += amount
-		print("New Amount: " + str(Litem.amount))
-	else:
-		print("doesn't exist yet")
-		item.amount = amount
-		storedItems.push_back(item)
+	if amount > 0:
+		for i in storedItems.size():
+			print("item name: " + str(item.itemName))
+			print("Stored item name: " + str(storedItems[i].itemName))
+			if storedItems[i].itemName == item.itemName:
+				Litem = storedItems[i]
+
+		print("LitemIndex = " + str(Litem))
+		if is_instance_valid(Litem):
+			print("It does exist")
+			print("Old Amount: " + str(Litem.amount))
+			Litem.amount += amount
+			print("New Amount: " + str(Litem.amount))
+		else:
+			print("doesn't exist yet")
+			item.amount = amount
+			storedItems.push_back(item)
 
 ## Removes an amount of items from the player's inventory
 func removeFromInventory(item: BaseInventoryItem, amount: int, isRemoveAtZero: bool = true) -> void:

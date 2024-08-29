@@ -232,7 +232,7 @@ func addNewGameCharacters() -> void:
 		var loadedCharacter: BaseCharacter = targetCharacter.instantiate()
 		friendlyPartyContainer.addCharacter(loadedCharacter, 0, false, Vector2(0, 0))
 		if system.turn == 1:
-			inventory.addToInventory(loadedCharacter.ResourceNeeded.duplicate(true), loadedCharacter.ResourceNeededNumber * 15)
+			inventory.addToInventory(loadedCharacter.ResourceNeeded.duplicate(true), loadedCharacter.ResourceNeededNumber * 12)
 		await get_tree().create_timer(0.01).timeout
 
 func addNewGameItems() -> void:

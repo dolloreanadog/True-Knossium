@@ -116,7 +116,7 @@ func CenterWindow() -> void:
 	get_window().position = (screen / 2) - get_window().size / 2
 
 func resetSettings() -> bool:
-	setAOEMovement(true)
+	setAOEMovement(false)
 	setTranslation(language.ENGLISH)
 	setScreenSize(screenSize.AUTOMATIC)
 	setWindowedMode(windowMode.FULLSCREEN)

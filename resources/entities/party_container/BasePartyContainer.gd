@@ -72,6 +72,13 @@ func AnyAOEAnimationPlaying() -> bool:
 	print("(check5) is playing character? " + str(playing))
 	return playing
 
+
+func AnyCharacterSurrendered() -> bool:
+	var isAnySurrendered: bool = false
+	if get_child_count() != 0:
+		isAnySurrendered = dungeon.enemyPartyContainer.get_children().any(func(object: BaseCharacter): return object.stats.moraleAlreadyBroken)
+	return isAnySurrendered
+
 ## Grabs children, should all be on BaseCharacter
 func getCharactersInfo():
 	if characterDied:

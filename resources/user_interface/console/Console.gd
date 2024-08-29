@@ -58,12 +58,14 @@ func ConsoleInputLineSubmitted(new_text: String) -> void:
 			spawnCharacterDebugMenu.show()
 		if new_text.begins_with("spawnitem"):
 			spawnItemDebugMenu.show()
-		if new_text.begins_with("shop"):
+		if new_text == "shop":
 			dungeon.GotoShop()
 		if new_text.begins_with("nextarea"):
 			dungeon.GoToNextArea()
+		if new_text.begins_with("shopvalue"):
+			printConsoleText("ShopWeight: " + str(dungeon.shopWeight))
 	else:
-		if new_text.contains("IOKNOWSKNOSSIUM"):
+		if new_text.contains("IO"):
 			printConsoleText("Console is now unlocked!")
 			unlocked = true
 		else:

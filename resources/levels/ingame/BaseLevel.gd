@@ -599,7 +599,7 @@ func saveToSaveSystem() -> void:
 		SaveSystem.call_deferred("saveAllData")
 		await SaveSystem.Saved
 		print("Saved All Game Data Passed")
-		print("After GameInfoDict: " + str(SaveSystem.GameInfoDict))
+#		print("After GameInfoDict: " + str(SaveSystem.GameInfoDict))
 	#	print("GameInfoDict PeakTotalStatPoints: " + str(SaveSystem.GameInfoDict.PeakTotalStatPoints))
 	#	await get_tree().create_timer(0.05).timeout
 	#	print("GameInfoDict CharactersDied: " + str(SaveSystem.GameInfoDict.CharactersDied))

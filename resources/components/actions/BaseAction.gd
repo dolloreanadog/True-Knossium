@@ -2,12 +2,13 @@ extends Node
 class_name BaseActionComponent
 
 
-## This is where we'll spawn it & make it a child of
+## Attach StatComponent of character here
 @export var stats: StatComponent
 @onready var character: BaseCharacter = get_parent()
 @onready var dungeon: BaseLevel
-## What animation to use when casted, Check Animation Naming Convention in Discord.
+## What the action will be named
 @export var ActionName: String
+## What animation to use when casted, Check Animation Naming Convention in Discord.
 @export var animationUsed: String
 var spawnAreaAttack: BaseSpawnArea
 var spawnAreaSupport: BaseSpawnArea
@@ -23,6 +24,7 @@ var system: TurnSystem
 #--[ Cast Time ]--
 ## How many turns it takes to spawn it
 @export_category("Action Casts")
+## How long it takes for character to cast this action
 @export var castTime: int
 var currentCastTime: int
 
@@ -30,14 +32,19 @@ var currentCastTime: int
 @export_category("AOE Information")
 ## If true, it does damage, If false, it does suport
 @export var isOffensive: bool = true
+## How many AOE it spawns
 @export var amount: int = 1
 # Need to figure out how to utilize this attack stat
 # Here should be 0-9
+## Multiplies current attack stat of character, Determines how much AOE attacks this stat
 @export var health: float = 0
+## Multiplies current attack stat of character, Determines how much AOE attacks this stat
 @export var defense: float = 0
+## Multiplies current attack stat of character, Determines how much AOE attacks this stat
 @export var attack: float = 0
+## Multiplies current attack stat of character, Determines how much AOE attacks this stat
 @export var morale: float = 0
-## The higher the accuracy, the more it misses
+## The higher the accuracy, the higher the maximum damage is up to x2
 @export_range(0, 1, 0.01) var accuracy: float
 var currentHealth: float
 var CurrentDefense: float
@@ -45,6 +52,7 @@ var CurrentAttack: float
 var CurrentMorale: float
 
 #--[ Other important variables ]-- 
+## Describe it
 @export_multiline var description: String
 
 func _ready() -> void:
@@ -77,6 +85,7 @@ func _ready() -> void:
 	if !is_instance_valid(character):
 		assert(false, "Character is not valid")
 
+## If cast time for action is 0, place aoe
 func onCastTimeMinimum() -> void:
 	if currentCastTime <= 0:
 		spawnAOE()
@@ -87,11 +96,13 @@ func onCastTimeMinimum() -> void:
 			SaveSystem.GameInfoDict.EnemyTotalAOEUsed += 1
 		print(str(self) + ": AOE has been Casted")
 
+## Adds Cast Time to this action
 func AddCastTime(castAmount: int) -> void:
 	currentCastTime += castAmount
 	print(str(self) + ": Added: " + str(castAmount))
 	onCastTimeMinimum()
 
+## Removes Cast time to this action
 func removeCastTime() -> void:
 	currentCastTime -= 1
 	print(str(self) + ": Cast Time Going Down")
@@ -102,6 +113,7 @@ func turnIntoOffensiveAction(inputNumber: float) -> float:
 	inputNumber *= -1
 	return inputNumber
 
+## Spawns the AOE
 func spawnAOE() -> void:
 	if !is_instance_valid(character):
 		assert(false, "Character is not valid")
@@ -165,12 +177,14 @@ func spawnAOE() -> void:
 		else:
 			push_error("Action Broke!")
 
+## Get the information of the attack & print to console
 func getAttackInfo() -> void:
 	print(str(self) + ": health attack = " + str(currentHealth))
 	print(str(self) + ": defense attack = " + str(CurrentDefense))
 	print(str(self) + ": attack attack = " + str(CurrentAttack))
 	print(str(self) + ": morale attack = " + str(CurrentMorale))
 
+## Update the attack info of the action
 func updateAttackInfo() -> void:
 #	getAttackInfo()
 	var Lhealth: float = health

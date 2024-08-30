@@ -1,4 +1,4 @@
-[gd_scene load_steps=101 format=3 uid="uid://c5w4ua88x7k0g"]
+[gd_scene load_steps=102 format=3 uid="uid://c5w4ua88x7k0g"]
 
 [ext_resource type="Script" path="res://resources/entities/characters_items/character/BaseCharacter.gd" id="1_sa5cx"]
 [ext_resource type="Resource" uid="uid://3i41wk26jwk2" path="res://resources/entities/inventory_items/dev_items/DevGold.tres" id="2_5et11"]
@@ -23,6 +23,7 @@
 [ext_resource type="PackedScene" uid="uid://bcp72aooxqkle" path="res://resources/components/other/FX/defense_changed_fx/default_defense_changed/DefaultDefenseChangedFX.tscn" id="19_irwt5"]
 [ext_resource type="PackedScene" uid="uid://butll8uw2kt72" path="res://resources/components/other/FX/attack_changed_fx/default_attack_changed/DefaultAttackChangedFX.tscn" id="20_5x7eu"]
 [ext_resource type="PackedScene" uid="uid://gslyjo525r5f" path="res://resources/components/other/FX/morale_changed_fx/default_morale_changed/DefaultMoraleChangedFX.tscn" id="21_2ude0"]
+[ext_resource type="Script" path="res://resources/components/other/ExtraResourceDropComponent.gd" id="24_3fjum"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ixmey"]
 atlas = ExtResource("2_qsbfr")
@@ -758,4 +759,12 @@ sprite = NodePath("../AnimatedSprite2D")
 
 [node name="DefaultMoraleChangedFX" parent="." instance=ExtResource("21_2ude0")]
 
+[node name="ExtraResourceDropComponent" type="Node" parent="."]
+script = ExtResource("24_3fjum")
+itemsDict = {
+"res://resources/entities/inventory_items/dev_items/ExperiencePotion2.tres": 2,
+"res://resources/entities/inventory_items/dev_items/HealthPotion2.tres": 3
+}
+
+[connection signal="CharacterDied" from="." to="ExtraResourceDropComponent" method="Activated"]
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="GetAnimationPlayed"]

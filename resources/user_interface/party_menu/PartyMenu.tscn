@@ -409,6 +409,14 @@ offset_right = 1776.0
 offset_bottom = 47.0
 text = "Exit"
 
+[node name="ShowCharacterLocationButton" type="Button" parent="ColorRect"]
+layout_mode = 0
+offset_left = 1544.0
+offset_top = 168.0
+offset_right = 1768.0
+offset_bottom = 208.0
+text = "Show Character's Location"
+
 [node name="UpkeepList" type="ItemList" parent="ColorRect"]
 layout_mode = 0
 offset_left = 16.0
@@ -440,3 +448,4 @@ vertical_alignment = 1
 [connection signal="item_selected" from="ColorRect/CharacterList" to="." method="_on_character_list_item_selected"]
 [connection signal="text_submitted" from="ColorRect/Panel/CharacterNameLabelEdit" to="." method="CharacterNameLabelTextSet"]
 [connection signal="pressed" from="ColorRect/ExitButton" to="." method="_on_exit_button_pressed"]
+[connection signal="pressed" from="ColorRect/ShowCharacterLocationButton" to="." method="ShowCharacterLocationButton"]

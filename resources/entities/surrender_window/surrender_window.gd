@@ -6,12 +6,15 @@ class_name SurrenderWindow
 @onready var characterPFPHolder: TextureRect = $Control/characterPFPHolder
 @onready var characterNameLabel: Label = $Control/CharacterNameLabel
 @onready var characterLevelLabel: Label = $Control/LevelLabel
+@onready var UpkeepLabel: Label = $Control/UpkeepLabel
 
 var character: BaseCharacter
 var characterPFP: Texture2D
 var characterName: String
 var characterLevel: int
 var totalExperience: float
+var UpkeepItemName: String
+var UpkeepAmount: int
 
 func _ready() -> void:
 	dungeon.stopControlVisible(true, 1)
@@ -24,6 +27,7 @@ func setWindowInfo() -> void:
 	characterPFPHolder.texture = characterPFP
 	characterNameLabel.text = characterName 
 	characterLevelLabel.text = "Level: " + str(characterLevel)
+	UpkeepLabel.text = "Upkeep: " + str(UpkeepItemName) + " x" + str(UpkeepAmount)
 
 func _on_button_yes_pressed() -> void:
 	#var newCharacter: BaseCharacter = character

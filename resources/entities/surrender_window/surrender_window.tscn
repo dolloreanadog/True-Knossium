@@ -28,8 +28,8 @@ grow_vertical = 2
 
 [node name="ColorRect" type="ColorRect" parent="Control"]
 layout_mode = 0
-offset_right = 448.0
-offset_bottom = 128.0
+offset_right = 480.0
+offset_bottom = 164.0
 color = Color(0.239216, 0.239216, 0.239216, 1)
 
 [node name="characterPFPHolder" type="TextureRect" parent="Control"]
@@ -45,44 +45,52 @@ expand_mode = 1
 layout_mode = 0
 offset_left = 128.0
 offset_top = 8.0
-offset_right = 440.0
-offset_bottom = 34.0
+offset_right = 472.0
+offset_bottom = 36.0
 text = "Character Name - Character Name Charac"
-horizontal_alignment = 1
 text_overrun_behavior = 1
 
 [node name="LevelLabel" type="Label" parent="Control"]
 layout_mode = 0
 offset_left = 128.0
-offset_top = 32.0
+offset_top = 44.0
 offset_right = 440.0
-offset_bottom = 58.0
+offset_bottom = 76.0
 text = "Level"
+text_overrun_behavior = 1
+
+[node name="UpkeepLabel" type="Label" parent="Control"]
+layout_mode = 0
+offset_left = 128.0
+offset_top = 84.0
+offset_right = 472.0
+offset_bottom = 116.0
+text = "Upkeep Thing"
 text_overrun_behavior = 1
 
 [node name="Message" type="Label" parent="Control"]
 layout_mode = 0
-offset_left = 128.0
-offset_top = 56.0
-offset_right = 440.0
-offset_bottom = 82.0
+offset_left = 8.0
+offset_top = 124.0
+offset_right = 272.0
+offset_bottom = 156.0
 text = "Do you want them in your team?"
-horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="ButtonYes" type="Button" parent="Control"]
 layout_mode = 0
-offset_left = 136.0
-offset_top = 88.0
-offset_right = 224.0
-offset_bottom = 119.0
+offset_left = 280.0
+offset_top = 124.0
+offset_right = 368.0
+offset_bottom = 155.0
 text = "Yes"
 
 [node name="ButtonNo" type="Button" parent="Control"]
 layout_mode = 0
-offset_left = 352.0
-offset_top = 88.0
-offset_right = 440.0
-offset_bottom = 119.0
+offset_left = 384.0
+offset_top = 124.0
+offset_right = 472.0
+offset_bottom = 155.0
 text = "No"
 
 [connection signal="pressed" from="Control/ButtonYes" to="." method="_on_button_yes_pressed"]

@@ -4,6 +4,10 @@ class_name PartyMenu
 #--[ Some other important nodes ]--
 @export var partyContainer: BasePartyContainer
 @onready var dungeon: BaseLevel = get_parent()
+@onready var showCharacterLocationButton: Button = $ColorRect/ShowCharacterLocationButton
+
+
+var loadedCircle: PackedScene = preload("res://resources/user_interface/HighlightCharacterCircle/HighlighCharacterCircle.tscn")
 
 #--[ ItemList ]--
 @onready var characterList: ItemList = get_node("ColorRect/CharacterList")
@@ -116,9 +120,9 @@ func _ready() -> void:
 	DropAmount.text = ""
 	
 	characterDescription.text = ""
-	
+	showCharacterLocationButton.disabled = true
 
-func _on_exit_button_pressed() -> void:
+func Exit() -> void:
 	if dungeon.isCharactersActive != true && dungeon.specialWindowContainer.get_child_count() == 0 && dungeon.difficulty.isCharactersSpawningIn != true && dungeon.knossiumConsole.visible == false:
 		print("(check3) isCharactersActive " + str(dungeon.isCharactersActive))
 		print("(check3) get_child_count " + str(dungeon.specialWindowContainer.get_child_count()))
@@ -127,16 +131,31 @@ func _on_exit_button_pressed() -> void:
 		dungeon.stopControlVisible(false, 2)
 	dungeon.partyButton.disabled = false
 	characters.clear()
+	showCharacterLocationButton.disabled = true
 #	dungeon.checkSpecialWindowContainer()
 #	get_parent().stopControl.hide()
 	self.hide()
 
+func _on_exit_button_pressed() -> void:
+	Exit()
+
+func ShowCharacterLocationButton() -> void:
+	var InstantiatedCircle = loadedCircle.instantiate()
+	
+	if is_instance_valid(targetCharacter):
+		print("Spawning Highlight")
+		InstantiatedCircle.set_position(targetCharacter.trueGlobalPosition)
+		dungeon.add_child(InstantiatedCircle)
+		InstantiatedCircle.z_index = 49
+		print("Circle Spawned at " + str(InstantiatedCircle.global_position))
+		print("Character at " + str(targetCharacter.trueGlobalPosition))
 
 func _on_character_list_item_selected(index: int) -> void:
 	$ColorRect/Panel/CharacterNameLabelEdit.editable = true
 #	targetCharacter = partyContainer.characters[index]
 	if is_instance_valid(characters[index]):
 		targetCharacter = characters[index]
+		showCharacterLocationButton.disabled = false
 		updateCharacterInfo()
 	else:
 		updateCharacterList()

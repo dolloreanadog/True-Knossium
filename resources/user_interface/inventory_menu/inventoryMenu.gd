@@ -35,7 +35,7 @@ func updateInventoryItemList() -> void:
 		var LitemName = inventorySystem.storedItems[i].itemName + " x" + str(inventorySystem.storedItems[i].amount) + " £" + str("%.2f" % inventorySystem.storedItems[i].value)
 		itemList.add_item(LitemName, inventorySystem.storedItems[i].image)
 
-func _on_exit_button_pressed() -> void:
+func Exit() -> void:
 	if !(dungeon.isCharactersActive) && (dungeon.specialWindowContainer.get_child_count() == 0) && (dungeon.difficulty.isCharactersSpawningIn != true) && dungeon.knossiumConsole.visible == false:
 		dungeon.stopControlVisible(false, 1)
 		dungeon.stopControlVisible(false, 2)
@@ -43,6 +43,9 @@ func _on_exit_button_pressed() -> void:
 #	dungeon.checkSpecialWindowContainer()
 #	get_parent().stopControl.hide()
 	self.hide()
+
+func _on_exit_button_pressed() -> void:
+	Exit()
 
 func _on_item_list_item_selected(index: int) -> void:
 	#if is_instance_valid(inventorySystem.storedItems[index]):

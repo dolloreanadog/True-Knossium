@@ -892,7 +892,7 @@ func goThroughQueuedAOEArray() -> void:
 		print("(Old) Shop Weight is " + str(shopWeight))
 		if system.battle >= 2:
 			shopWeight += 0.25
-			if randi_range(2, 25) - shopWeight <= 0:
+			if randf_range(1.5, 25) - shopWeight <= 0:
 				shopWeight = 0.0
 				print("(New) Shop Weight is " + str(shopWeight))
 				stopControlVisible(true, 1)
@@ -937,7 +937,7 @@ func GotoShop() -> void:
 	var instance := shopWindow.instantiate()
 	specialWindowContainer.add_child(instance)
 	instance.dungeon = self
-	instance.z_index = 2
+	instance.z_index = 50
 	
 	@warning_ignore("integer_division")
 #	instance.set_global_position(Vector2(DisplayServer.screen_get_size(DisplayServer.window_get_current_screen(0)).x / 2, DisplayServer.screen_get_size(DisplayServer.window_get_current_screen(0)).y / 2))
@@ -950,7 +950,7 @@ func GoToNextArea() -> void:
 	var instance := nextAreaWindow.instantiate()
 	specialWindowContainer.add_child(instance)
 	instance.dungeon = self
-	instance.z_index = 2
+	instance.z_index = 50
 	
 	@warning_ignore("integer_division")
 #	instance.set_global_position(Vector2(DisplayServer.screen_get_size(DisplayServer.window_get_current_screen(0)).x / 2, DisplayServer.screen_get_size(DisplayServer.window_get_current_screen(0)).y / 2))
@@ -968,6 +968,8 @@ func spawnSurrenderWindow(Lcharacter: BaseCharacter, profilePicture: Texture2D, 
 	instance.characterPFP = profilePicture
 	instance.characterName = characterName
 	instance.totalExperience = experience
+	instance.UpkeepItemName = Lcharacter.ResourceNeeded.itemName
+	instance.UpkeepAmount = Lcharacter.ResourceNeededNumber
 	instance.setWindowInfo()
 	instance.set_global_position(Vector2(get_viewport_rect().size.x / 2, get_viewport_rect().size.y / 1.5))
 	stopControlVisible(true, 1)
@@ -985,24 +987,36 @@ func checkSpecialWindowContainer() -> void:
 		stopControlVisible(false, 2)
 
 func _on_show_inventory_button_pressed() -> void:
-	stopControlVisible(true, 1)
-#	stopControl.show()
-	inventoryButton.disabled = true
-	inventoryUI.updateInventoryItemList()
-	inventoryUI.show()
+	if !inventoryUI.visible:
+		stopControlVisible(true, 1)
+	#	stopControl.show()
+#		inventoryButton.disabled = true
+		inventoryUI.updateInventoryItemList()
+		inventoryUI.show()
+	else:
+		inventoryUI.Exit()
 
 func _on_show_party_button_pressed() -> void:
-	stopControlVisible(true, 1)
-#	stopControl.show()
-	partyButton.disabled = true
-	partyUI.updateCharacterList()
-	partyUI.show()
+	if partyUI.visible == false:
+		stopControlVisible(true, 1)
+	#	stopControl.show()
+#		partyButton.disabled = true
+		partyUI.updateCharacterList()
+		partyUI.show()
+	else:
+		partyUI.Exit()
 
 func _on_show_menu_button_pressed() -> void:
-	stopControlVisible(true, 1)
-#	stopControl.show()
-	ingameUI.show()
+	if ingameUI.visible == false:
+		stopControlVisible(true, 1)
+	#	stopControl.show()
+		ingameUI.show()
+	else:
+		ingameUI.Exit()
 
 func OpenConsoleButtonPressed() -> void:
-	stopControlVisible(true, 1)
-	knossiumConsole.show()
+	if knossiumConsole.visible == false:
+		stopControlVisible(true, 1)
+		knossiumConsole.show()
+	else:
+		knossiumConsole.Exit()

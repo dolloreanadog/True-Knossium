@@ -482,7 +482,7 @@ morale = 8.0
 potentialHealthGain = 0.15
 potentialDefenseGain = 0.025
 potentialAttackGain = 1.8
-potentialMoraleGain = 0.2
+potentialMoraleGain = 0.5
 
 [node name="ActionSpook" type="Node" parent="." node_paths=PackedStringArray("stats")]
 script = ExtResource("7_skifd")

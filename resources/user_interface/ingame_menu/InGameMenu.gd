@@ -7,8 +7,7 @@ enum confirmationType {QUITTODESKTOP, QUITTOMENU, ENDGAME}
 var confirmType: confirmationType
 @onready var confirmationBox: ConfirmationBox = get_node("ConfirmationControl")
 
-
-func _on_back_to_game_button_pressed() -> void:
+func Exit() -> void:
 	if !(dungeon.isCharactersActive) && dungeon.specialWindowContainer.get_child_count() == 0 && dungeon.difficulty.isCharactersSpawningIn != true && dungeon.knossiumConsole.visible == false:
 		dungeon.stopControlVisible(false, 1)
 		dungeon.stopControlVisible(false, 2)
@@ -16,6 +15,8 @@ func _on_back_to_game_button_pressed() -> void:
 	self.hide()
 #	dungeon.checkSpecialWindowContainer()
 
+func _on_back_to_game_button_pressed() -> void:
+	Exit()
 
 func _on_settings_button_pressed() -> void:
 	Global.StartLoadingScreen(true)

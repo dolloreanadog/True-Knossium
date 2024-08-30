@@ -69,9 +69,6 @@ func setSettings() -> void:
 	SFXVolSpinbox.value = SettingsSystem.getSFXVolume() * 100
 	
 
-	
-	
-
 #--[ Button Functions]--
 
 func AOEMovementButtonToggled(button_pressed: bool) -> void:

@@ -1,0 +1,17 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://byko42bic7c75"
+
+[deps]
+
+files=["res://resources/localization/TextTranslationsKnossium.en.translation", "res://resources/localization/TextTranslationsKnossium.es.translation", "res://resources/localization/TextTranslationsKnossium.zh.translation", "res://resources/localization/TextTranslationsKnossium.fr.translation", "res://resources/localization/TextTranslationsKnossium.ja.translation"]
+
+source_file="res://resources/localization/TextTranslationsKnossium.csv"
+dest_files=["res://resources/localization/TextTranslationsKnossium.en.translation", "res://resources/localization/TextTranslationsKnossium.es.translation", "res://resources/localization/TextTranslationsKnossium.zh.translation", "res://resources/localization/TextTranslationsKnossium.fr.translation", "res://resources/localization/TextTranslationsKnossium.ja.translation"]
+
+[params]
+
+compress=true
+delimiter=0

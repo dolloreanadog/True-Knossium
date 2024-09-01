@@ -14,32 +14,32 @@ offset_bottom = 1024.0
 
 [node name="NewGameButton" type="Button" parent="VBoxContainer"]
 layout_mode = 2
-text = "New Game"
+text = "BUTTON_NEWGAME"
 
 [node name="ContinueButton" type="Button" parent="VBoxContainer"]
 layout_mode = 2
-text = "Continue"
+text = "BUTTON_CONTINUE"
 
 [node name="TutorialButton" type="Button" parent="VBoxContainer"]
 layout_mode = 2
-text = "Tutorial"
+text = "BUTTON_TUTORIAL"
 
 [node name="CreditsButton" type="Button" parent="VBoxContainer"]
 layout_mode = 2
-text = "Credits"
+text = "BUTTON_CREDITS"
 
 [node name="SettingsButton" type="Button" parent="VBoxContainer"]
 layout_mode = 2
-text = "Settings"
+text = "BUTTON_SETTINGS"
 
 [node name="ClearGlobalProgression" type="Button" parent="VBoxContainer"]
 layout_mode = 2
-text = "Clear Global Progression"
+text = "BUTTON_CLEARGLOBALPROGRESSION"
 
 [node name="ExitButton" type="Button" parent="VBoxContainer"]
 layout_mode = 2
 action_mode = 0
-text = "Exit Game"
+text = "BUTTON_EXITGAME"
 
 [node name="DevStartButton" type="Button" parent="."]
 offset_left = 696.0
@@ -47,9 +47,6 @@ offset_top = -64.0
 offset_right = 884.0
 offset_bottom = -33.0
 text = "Dev Start Game"
-
-[node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(960, 540)
 
 [node name="Control" type="Control" parent="."]
 visible = false
@@ -184,6 +181,13 @@ offset_right = 1568.0
 offset_bottom = 184.0
 text = "No"
 
+[node name="LinkButton" type="LinkButton" parent="."]
+offset_left = 64.0
+offset_top = 896.0
+offset_right = 200.0
+offset_bottom = 920.0
+text = "Discord"
+
 [node name="Label" type="Label" parent="."]
 offset_right = 432.0
 offset_bottom = 104.0
@@ -195,6 +199,9 @@ Characters are not final"
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("3_ro8dp")
 bus = &"Music"
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(960, 540)
 
 [connection signal="pressed" from="VBoxContainer/NewGameButton" to="." method="_on_new_game_button_pressed"]
 [connection signal="pressed" from="VBoxContainer/ContinueButton" to="." method="_on_continue_button_pressed"]

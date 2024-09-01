@@ -12,37 +12,52 @@ offset_top = 16.0
 offset_right = 133.0
 offset_bottom = 47.0
 
-[node name="WagonFish" type="Label" parent="."]
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
 offset_left = 16.0
 offset_top = 64.0
-offset_right = 304.0
-offset_bottom = 87.0
+offset_right = 320.0
+offset_bottom = 1024.0
+
+[node name="WagonFish" type="Label" parent="VBoxContainer"]
+layout_mode = 2
 text = "Wagon Fish - Main Developer"
 
-[node name="tester" type="Label" parent="."]
-offset_left = 16.0
-offset_top = 112.0
-offset_right = 304.0
-offset_bottom = 138.0
+[node name="Groundhog" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Mr. Groundhog - Coolest Play Tester"
+
+[node name="tester" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Ray - Play Tester"
+
+[node name="tester2" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Aquadango - Play Tester"
+
+[node name="tester6" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Henchman - Play Tester"
+
+[node name="tester7" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Fishy - Play Tester"
+
+[node name="tester8" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Reavage - Play Tester"
+
+[node name="tester9" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "RTBandaiCrowd - Play Tester"
+
+[node name="tester5" type="Label" parent="VBoxContainer"]
+layout_mode = 2
 text = "Tiltro - Play Tester"
 
-[node name="tester3" type="Label" parent="."]
-offset_left = 16.0
-offset_top = 136.0
-offset_right = 304.0
-offset_bottom = 162.0
+[node name="tester3" type="Label" parent="VBoxContainer"]
+layout_mode = 2
 text = "SaltShiro - Play Tester"
 
-[node name="tester4" type="Label" parent="."]
-offset_left = 16.0
-offset_top = 160.0
-offset_right = 304.0
-offset_bottom = 186.0
+[node name="tester4" type="Label" parent="VBoxContainer"]
+layout_mode = 2
 text = "Jareth26 - Play Tester"
-
-[node name="tester2" type="Label" parent="."]
-offset_left = 16.0
-offset_top = 88.0
-offset_right = 304.0
-offset_bottom = 114.0
-text = "Mr. Groundhog - Coolest Play Tester"

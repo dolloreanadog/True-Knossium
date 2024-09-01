@@ -11,7 +11,7 @@ var gameSaveVersion: String = "0.87.2"
 # 3840 x 2160 is XX
 enum screenSize {T, S, L, X, XX, AUTOMATIC }
 enum windowMode {FULLSCREEN, WINDOWED, BORDERLESSWINDOW}
-enum language {ENGLISH, SIMPLECHINESE, JAPANESE, SPANISH, FRENCH}
+enum language {ENGLISH, SIMPLECHINESE, JAPANESE, ESPANOL, FRENCH}
 
 var inputsLoaded: bool = false
 #SettingsAOEMovement
@@ -60,6 +60,21 @@ func getTranslation() -> int:
 	return SettingsDict.SettingsTranslation
 func setTranslation(enumerator: language) -> void:
 	SettingsDict.SettingsTranslation = enumerator
+func SetTranslationFROMOS() -> void:
+	match OS.get_locale_language():
+		"en":
+			setTranslation(language.ENGLISH)
+		"es":
+			setTranslation(language.ESPANOL)
+		"fr":
+			setTranslation(language.FRENCH)
+		"ja":
+			setTranslation(language.JAPANESE)
+		"zh":
+			setTranslation(language.SIMPLECHINESE)
+		_:
+			setTranslation(language.ENGLISH)
+
 
 func getScreenSize() -> int:
 	return SettingsDict.SettingsScreenSize
@@ -117,7 +132,7 @@ func CenterWindow() -> void:
 
 func resetSettings() -> bool:
 	setAOEMovement(false)
-	setTranslation(language.ENGLISH)
+	SetTranslationFROMOS()
 	setScreenSize(screenSize.AUTOMATIC)
 	setWindowedMode(windowMode.FULLSCREEN)
 	setMasterVolume(1)
@@ -141,6 +156,7 @@ func applySettings() -> void:
 	# For Testing
 #	setKeybindThroughKey("ToggleVisibilityAOEEnemy", SettingsDict["ToggleVisibilityAOEEnemy"])
 	
+	#-- Windowed Mode
 	await get_tree().create_timer(0.05).timeout
 	match SettingsDict.SettingsWindowedMode:
 		windowMode.FULLSCREEN:
@@ -154,6 +170,7 @@ func applySettings() -> void:
 			DisplayServer.window_set_flag(DisplayServer.WINDOW_FLAG_BORDERLESS, true)
 #			get_window().borderless = true
 	
+	#-- Screen Size
 	await get_tree().create_timer(0.05).timeout
 	match SettingsDict.SettingsScreenSize:
 		screenSize.S:
@@ -191,8 +208,25 @@ func applySettings() -> void:
 			get_viewport().size = DisplayServer.screen_get_size(0)
 			get_window().position = Vector2i(0, 0)
 	
+	#-- Monitor
 	DisplayServer.window_set_current_screen(SettingsDict.SettingsScreenDisplay, 0)
 	
+	#-- Language
+	match getTranslation():
+		language.ENGLISH:
+			TranslationServer.set_locale("en")
+		language.ESPANOL:
+			TranslationServer.set_locale("es")
+		language.SIMPLECHINESE:
+			TranslationServer.set_locale("zh")
+		language.JAPANESE:
+			TranslationServer.set_locale("ja")
+		language.FRENCH:
+			TranslationServer.set_locale("fr")
+		_:
+			push_error("This is not a existing language.")
+	
+	#-- Volume
 	AudioServer.set_bus_volume_db(0, linear_to_db(SettingsDict.SettingsMasterVolume))
 	AudioServer.set_bus_volume_db(1, linear_to_db(SettingsDict.SettingsMusicVolume))
 	AudioServer.set_bus_volume_db(2, linear_to_db(SettingsDict.SettingsCharacterVolume))

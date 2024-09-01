@@ -150,3 +150,7 @@ AttachSupportAOEToCursor={
 "events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":68,"physical_keycode":0,"key_label":0,"unicode":100,"echo":false,"script":null)
 ]
 }
+
+[internationalization]
+
+locale/translations=PackedStringArray("res://resources/localization/TextTranslationsKnossium.en.translation", "res://resources/localization/TextTranslationsKnossium.es.translation", "res://resources/localization/TextTranslationsKnossium.fr.translation", "res://resources/localization/TextTranslationsKnossium.zh.translation", "res://resources/localization/TextTranslationsKnossium.ja.translation")

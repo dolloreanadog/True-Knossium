@@ -15,6 +15,7 @@ var unlocked: bool = false
 @export var spawnCharacterInputFileNameLine: LineEdit
 @export var spawnCharacterPartyOption: OptionButton
 @export var spawnCharacterInputExperienceLine: SpinBox
+@export var spawnCharacterUseDifficultyEXP: CheckBox
 #Confirm Button
 
 @export_category("Spawn Behavior Variables")
@@ -123,9 +124,9 @@ func SpawnCharacterConfirmButtonPressed() -> void:
 		var loadCharacter := load(spawnCharacterInputFileNameLine.text)
 		var targetCharacterInstance = loadCharacter.instantiate()
 		if spawnCharacterPartyOption.selected == 0:
-			dungeon.friendlyPartyContainer.addCharacter(targetCharacterInstance, spawnCharacterInputExperienceLine.value, false, Vector2(0, 0))
+			dungeon.friendlyPartyContainer.addCharacter(targetCharacterInstance, spawnCharacterInputExperienceLine.value, spawnCharacterUseDifficultyEXP.toggle_mode, Vector2(0, 0))
 		elif spawnCharacterPartyOption.selected == 1:
-			dungeon.enemyPartyContainer.addCharacter(targetCharacterInstance, spawnCharacterInputExperienceLine.value, false, Vector2(0, 0))
+			dungeon.enemyPartyContainer.addCharacter(targetCharacterInstance, spawnCharacterInputExperienceLine.value, spawnCharacterUseDifficultyEXP.toggle_mode, Vector2(0, 0))
 		else:
 			printConsoleText("Did Not Select a Party!")
 	else:

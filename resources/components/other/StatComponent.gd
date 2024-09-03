@@ -299,7 +299,7 @@ func changeCurrentHealth(amount: float) -> void:
 func changeCurrentDefense(amount: float) -> void:
 	UpdateSave(amount)
 	if amount < 0:
-		amount /= currentDefense
+		amount /= currentDefense / 2
 	currentDefense += amount
 	if characterBody.defenseChangedFX != null:
 		characterBody.playDefenseChangedFX(amount)

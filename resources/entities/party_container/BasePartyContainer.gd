@@ -80,7 +80,7 @@ func AnyCharacterSurrendered() -> bool:
 	return isAnySurrendered
 
 ## Grabs children, should all be on BaseCharacter
-func getCharactersInfo():
+func getCharactersInfo() -> void:
 	if characterDied:
 #		print(str(self) + ": Getting Character Info, because character Died")
 		characterDied = false
@@ -281,7 +281,7 @@ func addCharacter(character: BaseCharacter, startingExperience: float, spawnedFr
 					character.set_position(characterPosition)
 					await tween.tween_property(character, "global_position", characterPosition, 1).finished
 	
-	getCharactersInfo()
+#	getCharactersInfo()
 	dungeon.statButtonGroup.updateModulation()
 	tween.kill()
 
@@ -297,7 +297,10 @@ func onCharacterDeath(EXPWorth, characterBody):
 	print(str(self) + ": (onCharacterDeath) new Character Died" + str(characterBody))
 	characterHasDied.emit()
 	
-	getCharactersInfo()
+	if isFriendly:
+		dungeon.updateUpkeepList()
+	else:
+		getCharactersInfo()
 	call_deferred("onAllCharactersDead")
 
 ## Randomizes difficulty Experience

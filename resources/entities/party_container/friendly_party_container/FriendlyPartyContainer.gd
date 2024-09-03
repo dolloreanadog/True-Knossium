@@ -86,7 +86,6 @@ func getCharactersInfo():
 	emit_signal("charactersUpdated")
 
 
-@warning_ignore("unused_parameter")
 func addCharacter(character: BaseCharacter, startingExperience: float, spawnedFromDifficulty: bool, characterPosition: Vector2):
 	isSpawningCharacter = true
 	print(str(self) + ": Spawning: " + str(character))
@@ -105,6 +104,8 @@ func addCharacter(character: BaseCharacter, startingExperience: float, spawnedFr
 	character.isFriendly = true
 	add_child(character, true)
 	character.stats.changeEXP(startingExperience)
+	if spawnedFromDifficulty:
+		characterStats.changeEXP(randomizeDifficultyEXP())
 	if character.characterSprite != null:
 		character.characterSprite.flip_h = false
 	match role:
@@ -149,7 +150,8 @@ func addCharacter(character: BaseCharacter, startingExperience: float, spawnedFr
 				character.trueGlobalPosition = characterPosition
 				await tween.tween_property(character, "global_position", characterPosition, 1).finished
 	
-	getCharactersInfo()
+#	getCharactersInfo()
+#	dungeon.updateUpkeepList()
 	dungeon.statButtonGroup.updateModulation()
 	isSpawningCharacter = false
 	tween.kill()

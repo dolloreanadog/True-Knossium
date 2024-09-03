@@ -163,7 +163,7 @@ func addCharacter(character: BaseCharacter, startingExperience: float, spawnedFr
 				await tween.tween_property(character, "global_position", characterPosition, 1).finished
 	
 	isSpawningCharacter = false
-	getCharactersInfo()
+#	getCharactersInfo()
 	dungeon.statButtonGroup.updateModulation()
 	tween.kill()
 

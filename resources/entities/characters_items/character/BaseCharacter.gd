@@ -261,7 +261,7 @@ func characterNewTurn():
 	if partyContainer.isFriendly:
 		if inventory.getNamedItemAmount(ResourceNeeded.itemName) > 0:
 			inventory.removeFromInventory(ResourceNeeded, ResourceNeededNumber)
-			dungeon.warningLabel.text = ""
+#			dungeon.warningLabel.text = ""
 		else:
 			dungeon.warningLabel.text = "We Ran out of " + str(ResourceNeeded.itemName)
 			match randi_range(0, 1):

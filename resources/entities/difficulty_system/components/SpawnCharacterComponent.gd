@@ -1,5 +1,5 @@
 extends Node
-## Attached to a DifficultySystem for spawn characters.
+## Attached to a DifficultySystem for spawn characters. ONLY ONE CONNECTION PER DIFFICULTY SYSTEM SIGNAL.
 class_name SpawnCharacterComponent
 # Eventaully make a base class for this called SpawnCharacterComponent
 

@@ -16,7 +16,7 @@ config/features=PackedStringArray("4.1", "Forward Plus")
 run/max_fps=60
 boot_splash/bg_color=Color(1, 1, 1, 1)
 boot_splash/image="res://assets/art/character_profile_picture/dev/DevCharacterPFP.png"
-config/icon="res://icon.svg"
+config/icon="res://assets/art/character_profile_picture/dev/DevCharacterPFP.png"
 
 [audio]
 

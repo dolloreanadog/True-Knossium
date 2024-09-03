@@ -105,7 +105,7 @@ func chooseSpawnBehavior(spawnBehavior: String):
 			
 			# Change Weight as it was chosen so others get a chance
 			SpawnBehaviors["Normal Spawn Behavior"] += 25
-			SpawnBehaviors["Horde Spawn Behavior"] -= 15
+			SpawnBehaviors["Horde Spawn Behavior"] -= 25
 			SpawnBehaviors["Elite Spawn Behavior"] += 7.5
 			SpawnBehaviors["Legendary Spawn Behavior"] += 2.5
 			SpawnBehaviors["Mythical Spawn Behavior"] += 1
@@ -116,7 +116,7 @@ func chooseSpawnBehavior(spawnBehavior: String):
 			# Change Weight as it was chosen so others get a chance
 			SpawnBehaviors["Normal Spawn Behavior"] += 25
 			SpawnBehaviors["Horde Spawn Behavior"] += 7.5
-			SpawnBehaviors["Elite Spawn Behavior"] -= 15
+			SpawnBehaviors["Elite Spawn Behavior"] -= 25
 			SpawnBehaviors["Legendary Spawn Behavior"] += 2.5
 			SpawnBehaviors["Mythical Spawn Behavior"] += 1
 			SpawnBehaviors["God Spawn Behavior"] += 0.05

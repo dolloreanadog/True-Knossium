@@ -390,7 +390,7 @@ characterDescription = "This character is a powerful being that can manipulate t
 stats = NodePath("StatComponent")
 z_index_order = -1
 ResourceNeeded = ExtResource("3_7cc5h")
-ResourceNeededNumber = 5
+ResourceNeededNumber = 10
 ResourceDrop = ExtResource("3_7cc5h")
 ResourceMaxDropAmount = 200
 levelUpFX = NodePath("DefaultLevelUpFX")
@@ -442,7 +442,7 @@ defense = 15.0
 attack = 5.0
 morale = 30.0
 potentialDefenseGain = 1.25
-potentialAttackGain = 1.0
+potentialAttackGain = 3.0
 
 [node name="ActionDelay" type="Node" parent="." node_paths=PackedStringArray("stats")]
 script = ExtResource("6_kwtxa")

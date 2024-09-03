@@ -26,16 +26,18 @@ func FriendlyCharacterHasDied() -> void:
 	print("character has died, abomination grows in strength")
 	stats.health += 2.5
 	stats.attack += 1
-	stats.currentHealth += 10
-	stats.currentDefense += 0.25
-	stats.currentAttack += 2
-	stats.currentMorale += 10
+	damageStats(10, 0.25, 2, 10)
+#	stats.currentHealth += 10
+#	stats.currentDefense += 0.25
+#	stats.currentAttack += 2
+#	stats.currentMorale += 10
 
 func EnemyCharacterHasDied() -> void:
 	print("character has died, abomination grows in strength")
 	stats.health += 1
 	stats.attack += 0.5
-	stats.currentHealth += 5
-	stats.currentDefense += 0.125
-	stats.currentAttack += 1
-	stats.currentMorale += 5
+	damageStats(5, 0.125, 1, 5)
+#	stats.currentHealth += 5
+#	stats.currentDefense += 0.125
+#	stats.currentAttack += 1
+#	stats.currentMorale += 5

@@ -20,7 +20,7 @@ var EnemyAOEContainerSupport: EnemyAOEContainer
 var system: TurnSystem
 # This is default
 ## This will be in each individual class (OVERRIDE THIS)
-@export var AOE := preload("res://resources/entities/characters_items/aoe/dev_aoe/DevAOE.tscn")
+@export var AOE: PackedScene
 #--[ Cast Time ]--
 ## How many turns it takes to spawn it
 @export_category("Action Casts")

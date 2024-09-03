@@ -126,7 +126,6 @@ func _ready():
 #	await loadConfirmation()
 	if confirmed:
 		updateValueOfStatusBar()
-		updateUpkeepList()
 		AudioServer.set_bus_mute(3, false)
 		Global.EndLoadingScreen()
 		stopControlVisible(false, 1)
@@ -635,31 +634,32 @@ func saveFriendlyCharacters() -> void:
 #	print("(check6) Friendly size = " + str(enemyPartyContainer.characters.size()))
 	for i in friendlyPartyContainer.characters.size():
 		var newSavedCharacterData: Dictionary = SaveSystem.CharacterInfoDict.duplicate(true)
-		if is_instance_valid(friendlyPartyContainer.characters[i]):
-			newSavedCharacterData.CharacterFilePath = friendlyPartyContainer.characters[i].scene_file_path
-			newSavedCharacterData.CharacterPosition = friendlyPartyContainer.characters[i].trueGlobalPosition
-			newSavedCharacterData.CharacterName = friendlyPartyContainer.characters[i].characterName
-			newSavedCharacterData.CharacterExperience = friendlyPartyContainer.characters[i].stats.totalExperience
-			if is_instance_valid(friendlyPartyContainer.characters[i].action1):
-				newSavedCharacterData.CharacterAction1CurrentCastTime = friendlyPartyContainer.characters[i].action1.currentCastTime
-			if is_instance_valid(friendlyPartyContainer.characters[i].action2):
-				newSavedCharacterData.CharacterAction2CurrentCastTime = friendlyPartyContainer.characters[i].action2.currentCastTime
-			if is_instance_valid(friendlyPartyContainer.characters[i].action3):
-				newSavedCharacterData.CharacterAction3CurrentCastTime = friendlyPartyContainer.characters[i].action3.currentCastTime
-			if is_instance_valid(friendlyPartyContainer.characters[i].action4):
-				newSavedCharacterData.CharacterAction4CurrentCastTime = friendlyPartyContainer.characters[i].action4.currentCastTime
-			newSavedCharacterData.CharacterHealth = friendlyPartyContainer.characters[i].stats.health
-			newSavedCharacterData.CharacterDefense = friendlyPartyContainer.characters[i].stats.defense
-			newSavedCharacterData.CharacterAttack = friendlyPartyContainer.characters[i].stats.attack
-			newSavedCharacterData.CharacterMorale = friendlyPartyContainer.characters[i].stats.morale
-			newSavedCharacterData.CharacterCurrentHealth = friendlyPartyContainer.characters[i].stats.currentHealth
-			newSavedCharacterData.CharacterCurrentDefense = friendlyPartyContainer.characters[i].stats.currentDefense
-			newSavedCharacterData.CharacterCurrentAttack = friendlyPartyContainer.characters[i].stats.currentAttack
-			newSavedCharacterData.CharacterCurrentMorale = friendlyPartyContainer.characters[i].stats.currentMorale
-			SaveSystem.GameInfoDict.FriendlyCharactersList.push_back(newSavedCharacterData)
-			ExperienceGained += friendlyPartyContainer.characters[i].stats.totalExperience
-			LevelsGained += friendlyPartyContainer.characters[i].stats.level
-			await get_tree().create_timer(0.001).timeout
+		if !(i > friendlyPartyContainer.characters.size()):
+			if is_instance_valid(friendlyPartyContainer.characters[i]):
+				newSavedCharacterData.CharacterFilePath = friendlyPartyContainer.characters[i].scene_file_path
+				newSavedCharacterData.CharacterPosition = friendlyPartyContainer.characters[i].trueGlobalPosition
+				newSavedCharacterData.CharacterName = friendlyPartyContainer.characters[i].characterName
+				newSavedCharacterData.CharacterExperience = friendlyPartyContainer.characters[i].stats.totalExperience
+				if is_instance_valid(friendlyPartyContainer.characters[i].action1):
+					newSavedCharacterData.CharacterAction1CurrentCastTime = friendlyPartyContainer.characters[i].action1.currentCastTime
+				if is_instance_valid(friendlyPartyContainer.characters[i].action2):
+					newSavedCharacterData.CharacterAction2CurrentCastTime = friendlyPartyContainer.characters[i].action2.currentCastTime
+				if is_instance_valid(friendlyPartyContainer.characters[i].action3):
+					newSavedCharacterData.CharacterAction3CurrentCastTime = friendlyPartyContainer.characters[i].action3.currentCastTime
+				if is_instance_valid(friendlyPartyContainer.characters[i].action4):
+					newSavedCharacterData.CharacterAction4CurrentCastTime = friendlyPartyContainer.characters[i].action4.currentCastTime
+				newSavedCharacterData.CharacterHealth = friendlyPartyContainer.characters[i].stats.health
+				newSavedCharacterData.CharacterDefense = friendlyPartyContainer.characters[i].stats.defense
+				newSavedCharacterData.CharacterAttack = friendlyPartyContainer.characters[i].stats.attack
+				newSavedCharacterData.CharacterMorale = friendlyPartyContainer.characters[i].stats.morale
+				newSavedCharacterData.CharacterCurrentHealth = friendlyPartyContainer.characters[i].stats.currentHealth
+				newSavedCharacterData.CharacterCurrentDefense = friendlyPartyContainer.characters[i].stats.currentDefense
+				newSavedCharacterData.CharacterCurrentAttack = friendlyPartyContainer.characters[i].stats.currentAttack
+				newSavedCharacterData.CharacterCurrentMorale = friendlyPartyContainer.characters[i].stats.currentMorale
+				SaveSystem.GameInfoDict.FriendlyCharactersList.push_back(newSavedCharacterData)
+				ExperienceGained += friendlyPartyContainer.characters[i].stats.totalExperience
+				LevelsGained += friendlyPartyContainer.characters[i].stats.level
+				await get_tree().create_timer(0.001).timeout
 	
 	SaveSystem.GameInfoDict.ExperienceGained += ExperienceGained
 	SaveSystem.GameInfoDict.LevelsGained += LevelsGained
@@ -677,29 +677,30 @@ func saveEnemyCharacters() -> void:
 #	print("(check6) Enemy size = " + str(enemyPartyContainer.characters.size()))
 	for i in enemyPartyContainer.characters.size():
 		var newSavedCharacterData: Dictionary = SaveSystem.CharacterInfoDict.duplicate(true)
-		if is_instance_valid(enemyPartyContainer.characters[i]):
-			newSavedCharacterData.CharacterFilePath = enemyPartyContainer.characters[i].scene_file_path
-			newSavedCharacterData.CharacterPosition = enemyPartyContainer.characters[i].trueGlobalPosition
-			newSavedCharacterData.CharacterName = enemyPartyContainer.characters[i].characterName
-			newSavedCharacterData.CharacterExperience = enemyPartyContainer.characters[i].stats.totalExperience
-			if is_instance_valid(enemyPartyContainer.characters[i].action1):
-				newSavedCharacterData.CharacterAction1CurrentCastTime = enemyPartyContainer.characters[i].action1.currentCastTime
-			if is_instance_valid(enemyPartyContainer.characters[i].action2):
-				newSavedCharacterData.CharacterAction2CurrentCastTime = enemyPartyContainer.characters[i].action2.currentCastTime
-			if is_instance_valid(enemyPartyContainer.characters[i].action3):
-				newSavedCharacterData.CharacterAction3CurrentCastTime = enemyPartyContainer.characters[i].action3.currentCastTime
-			if is_instance_valid(enemyPartyContainer.characters[i].action4):
-				newSavedCharacterData.CharacterAction4CurrentCastTime = enemyPartyContainer.characters[i].action4.currentCastTime
-			newSavedCharacterData.CharacterHealth = enemyPartyContainer.characters[i].stats.health
-			newSavedCharacterData.CharacterDefense = enemyPartyContainer.characters[i].stats.defense
-			newSavedCharacterData.CharacterAttack = enemyPartyContainer.characters[i].stats.attack
-			newSavedCharacterData.CharacterMorale = enemyPartyContainer.characters[i].stats.morale
-			newSavedCharacterData.CharacterCurrentHealth = enemyPartyContainer.characters[i].stats.currentHealth
-			newSavedCharacterData.CharacterCurrentDefense = enemyPartyContainer.characters[i].stats.currentDefense
-			newSavedCharacterData.CharacterCurrentAttack = enemyPartyContainer.characters[i].stats.currentAttack
-			newSavedCharacterData.CharacterCurrentMorale = enemyPartyContainer.characters[i].stats.currentMorale
-			SaveSystem.GameInfoDict.EnemyCharactersList.push_back(newSavedCharacterData)
-			await get_tree().create_timer(0.001).timeout
+		if !(i > enemyPartyContainer.characters.size()):
+			if is_instance_valid(enemyPartyContainer.characters[i]):
+				newSavedCharacterData.CharacterFilePath = enemyPartyContainer.characters[i].scene_file_path
+				newSavedCharacterData.CharacterPosition = enemyPartyContainer.characters[i].trueGlobalPosition
+				newSavedCharacterData.CharacterName = enemyPartyContainer.characters[i].characterName
+				newSavedCharacterData.CharacterExperience = enemyPartyContainer.characters[i].stats.totalExperience
+				if is_instance_valid(enemyPartyContainer.characters[i].action1):
+					newSavedCharacterData.CharacterAction1CurrentCastTime = enemyPartyContainer.characters[i].action1.currentCastTime
+				if is_instance_valid(enemyPartyContainer.characters[i].action2):
+					newSavedCharacterData.CharacterAction2CurrentCastTime = enemyPartyContainer.characters[i].action2.currentCastTime
+				if is_instance_valid(enemyPartyContainer.characters[i].action3):
+					newSavedCharacterData.CharacterAction3CurrentCastTime = enemyPartyContainer.characters[i].action3.currentCastTime
+				if is_instance_valid(enemyPartyContainer.characters[i].action4):
+					newSavedCharacterData.CharacterAction4CurrentCastTime = enemyPartyContainer.characters[i].action4.currentCastTime
+				newSavedCharacterData.CharacterHealth = enemyPartyContainer.characters[i].stats.health
+				newSavedCharacterData.CharacterDefense = enemyPartyContainer.characters[i].stats.defense
+				newSavedCharacterData.CharacterAttack = enemyPartyContainer.characters[i].stats.attack
+				newSavedCharacterData.CharacterMorale = enemyPartyContainer.characters[i].stats.morale
+				newSavedCharacterData.CharacterCurrentHealth = enemyPartyContainer.characters[i].stats.currentHealth
+				newSavedCharacterData.CharacterCurrentDefense = enemyPartyContainer.characters[i].stats.currentDefense
+				newSavedCharacterData.CharacterCurrentAttack = enemyPartyContainer.characters[i].stats.currentAttack
+				newSavedCharacterData.CharacterCurrentMorale = enemyPartyContainer.characters[i].stats.currentMorale
+				SaveSystem.GameInfoDict.EnemyCharactersList.push_back(newSavedCharacterData)
+				await get_tree().create_timer(0.001).timeout
 	
 	await get_tree().create_timer(0.05).timeout
 	SavedEnemyCharacters.emit()
@@ -892,8 +893,8 @@ func goThroughQueuedAOEArray() -> void:
 		print("(Old) Shop Weight is " + str(shopWeight))
 		if system.battle >= 2:
 			shopWeight += 0.25
-			if randf_range(1.5, 25) - shopWeight <= 0:
-				shopWeight = 0.0
+			if randf_range(1.25, 25) - shopWeight <= 0:
+				
 				print("(New) Shop Weight is " + str(shopWeight))
 				stopControlVisible(true, 1)
 				await get_tree().create_timer(0.5).timeout
@@ -901,8 +902,10 @@ func goThroughQueuedAOEArray() -> void:
 					await get_tree().create_timer(0.1).timeout
 				if randi_range(0, 2) != 0:
 					GotoShop()
+					shopWeight = 0.0
 				else:
 					GoToNextArea()
+					shopWeight /= 2
 			else:
 				checkSpecialWindowContainer()
 		else:

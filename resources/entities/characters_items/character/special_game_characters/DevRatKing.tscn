@@ -427,9 +427,9 @@ characterExperience = 5.0
 stats = NodePath("../StatComponent")
 ActionName = "Summon Rats"
 animationUsed = "offensive1"
-castTime = 4
+castTime = 3
 isOffensive = false
-amount = 5
+amount = 2
 
 [node name="DefaultLevelUpFX" parent="." instance=ExtResource("9_hqiuf")]
 

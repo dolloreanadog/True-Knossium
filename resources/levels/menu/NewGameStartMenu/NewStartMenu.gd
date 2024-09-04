@@ -206,7 +206,7 @@ func UpdateCharacterChooseListVisual() -> void:
 		var Lcharacter: BaseCharacter = chooseCharacterListArray[i]
 		Lcharacter.stats.getTotalStatPoints()
 		chooseCharacterList.add_item(Lcharacter.id, Lcharacter.profilePicture)
-		chooseCharacterList.set_item_tooltip(i, Lcharacter.characterDescription + "\n" + "Value: " + str(Lcharacter.stats.totalStatPoints))
+		chooseCharacterList.set_item_tooltip(i, Lcharacter.characterDescription + "\n" + "Value: " + str(Lcharacter.stats.totalStatPoints + Lcharacter.stats.fillerStatPoint))
 		await get_tree().create_timer(0.01).timeout
 
 func UpdateInventoryChooseListVisual() -> void:

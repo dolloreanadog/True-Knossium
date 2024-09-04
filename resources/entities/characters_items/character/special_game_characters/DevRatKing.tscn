@@ -399,7 +399,7 @@ autowrap_mode = 3
 [node name="StatComponent" type="Node" parent="."]
 script = ExtResource("6_nyo4o")
 worthEXP = 7.5
-role = 1
+role = 2
 health = 3.0
 attack = 1.1
 morale = 2.0
@@ -427,9 +427,9 @@ characterExperience = 5.0
 stats = NodePath("../StatComponent")
 ActionName = "Summon Rats"
 animationUsed = "offensive1"
-castTime = 3
+castTime = 4
 isOffensive = false
-amount = 2
+amount = 5
 
 [node name="DefaultLevelUpFX" parent="." instance=ExtResource("9_hqiuf")]
 

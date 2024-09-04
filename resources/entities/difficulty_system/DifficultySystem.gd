@@ -86,7 +86,6 @@ func updateDifficultyTotal() -> void:
 	charityDifficultyEXP = difficultyTotal * 0.1
 
 func getEnemyStats() -> void:
-	dungeon.enemyPartyContainer.getCharactersInfo()
 	enemyTotalStats = enemyPartyContainer.getTotalStatPoints()
 
 func chooseSpawnBehavior(spawnBehavior: String):
@@ -198,6 +197,29 @@ func randomSpawningBehavior() -> void:
 func NormalSpawnBehavior() -> void:
 	difficultyTotal /= get_signal_connection_list("SpawnNormals").size()
 	SpawnNormals.emit()
+#	print(str(self) + " (NormalSpawnBehavior)" + ": Normal Spawning Behavior")
+#	print(str(self) + "LdifficultyTotal: " + str(difficultyTotal))
+#	print(str(self) + " (NormalSpawnBehavior) " + " charityDifficultyEXP: " + str(charityDifficultyEXP))
+#	enemyPartyContainer.difficultyEXP = charityDifficultyEXP
+#	getEnemyStats()
+#	dungeon.stopControlVisible(true, 1)
+#	while enemyTotalStats <= difficultyTotal:
+#		dungeon.stopControlVisible(true, 1)
+#		spawnCharacter(dungeonType)
+#		getEnemyStats()
+##		dungeon.stopControl.show()
+#		await get_tree().create_timer(0.10).timeout
+#	print(str(self) + " (NormalSpawnBehavior) " + "It's over")
+#	isCharactersSpawningIn = false
+#	emit_signal("SpawningIsOver")
+#
+#	dungeon.SaveWarningLabel.show()
+#	await get_tree().create_timer(1).timeout
+#	dungeon.saveToSaveSystem()
+#	dungeon.SaveWarningLabel.hide()
+#	dungeon.stopControlVisible(false, 1)
+#	dungeon.stopControl.hide()
+	#print(str(self) + " (NormalSpawnBehavior) " + "It's over")
 
 ## Horde Spawning Behavior, difficulty manipulation for higher rates, also lower exp
 func HordeSpawnBehavior() -> void: # <- For some reason this is the most reliable spawner
@@ -231,7 +253,85 @@ func SpawnCharacterFromArray(loadedCharactersArray: Array) -> void:
 	var realLoadedCharacter = load(loadedCharacter)
 	var instance = realLoadedCharacter.instantiate()
 	enemyPartyContainer.addCharacter(instance, 0.0, true, Vector2(0, 0))
-	await enemyPartyContainer.getCharactersInfo()
+	enemyPartyContainer.getCharactersInfo()
 #	print(str(self) + "new loadedCharactersArray: " + str(loadedCharactersArray))
 #	print(str(self) + "new loadedCharactersArray size: " + str(loadedCharactersArray.size()))
 
+
+## Get the array which we'll be using to spawn what we want.
+#func spawnCharacter(spawnCharacterArrayType: characterType) -> void:
+#	var loadedCharactersArray: Array
+#	match spawnCharacterArrayType: # While adding to the enum, put the new ArrayType here
+#		characterType.DEV:
+#			loadedCharactersArray = loadedDevCharactersArray
+#		characterType.SPECIAL:
+#			loadedCharactersArray = loadedSpecialCharactersArray
+#
+#
+#	print(str(self) + str(loadedCharactersArray))
+#	var loadedCharacter = loadedCharactersArray.pick_random()
+	
+#	print(str(self) + "old loadedCharactersArray: " + str(loadedCharactersArray))
+#	print(str(self) + "old loadedCharactersArray size: " + str(loadedCharactersArray.size()))
+	
+	# Have an array choose
+	
+#	var realLoadedCharacter = load(loadedCharacter)
+#	var instance = realLoadedCharacter.instantiate()
+#	enemyPartyContainer.addCharacter(instance, 0.0, true, Vector2(0, 0))
+#	enemyPartyContainer.getCharactersInfo()
+#	print(str(self) + "new loadedCharactersArray: " + str(loadedCharactersArray))
+#	print(str(self) + "new loadedCharactersArray size: " + str(loadedCharactersArray.size()))
+
+## We'll use this to get all the .tscn of characters to put into array that'll eventually be spawned
+#func getCharactersFilePaths() -> void: # WHATEVER YOU DO NOT DELETE THIS TEMPLATE
+#	--[ TEMPLATE ]-- 
+#	This is what it looks like when adding a new character type's folder
+#	Look at variable file paths to see what to put
+#	Everything in (characterType) <- That's where to replace with type
+#
+#	if dir*(characterType):
+#		dir*(characterType).list_dir_begin()
+#		var file_name = dir*(characterType).get_next()
+#		while file_name != "":
+#			if dir*(characterType).current_is_dir():
+#				print(dir*(characterType).get_current_dir() + "/" + file_name)
+#			else:
+#				var characterPath = dir*(characterType).get_current_dir() + "/" + file_name
+#				print(str(self) + str(characterPath))
+#				loaded(characterType)CharactersArray.push_back(characterPath)
+#			file_name = dir*(characterType).get_next()
+#	else:
+#		push_error("An error occurred when trying to access the path.")
+	
+#	if dirSpecial: # The variable above
+#		dirSpecial.list_dir_begin()
+#		var file_name = dirSpecial.get_next()
+#		while file_name != "":
+#			if dirSpecial.current_is_dir():
+#				print(dirSpecial.get_current_dir() + "/" + file_name)
+#			else:
+#				var characterPath = dirSpecial.get_current_dir() + "/" + file_name
+#				print(str(self) + str(characterPath))
+#				loadedSpecialCharactersArray.push_back(characterPath)
+#			file_name = dirSpecial.get_next()
+#	else:
+#		push_error("An error occurred when trying to access the path.")
+#
+#	if dirDev:
+#		dirDev.list_dir_begin()
+#		var file_name = dirDev.get_next()
+#		while file_name != "":
+#			if dirDev.current_is_dir():
+#				print(dirDev.get_current_dir() + "/" + file_name)
+#			else:
+#				var characterPath = dirDev.get_current_dir() + "/" + file_name
+#				print(str(self) + str(characterPath))
+#				loadedDevCharactersArray.push_back(characterPath)
+#			file_name = dirDev.get_next()
+#	else:
+#		push_error("An error occurred when trying to access the path.")
+	# When adding any more game type characters, put that function here
+	
+	#print(str(self) + ": LoadedCharactersArray = " + str(loadedDevCharactersArray))
+	#print(str(self) + ": LoadedCharactersArray = " + str(loadedSpecialCharactersArray))

@@ -133,7 +133,6 @@ func getCharactersInfo() -> void:
 			# Adds to the temporary totalStatPoints
 			LtotalStatPoints += characterStats.totalStatPoints
 			LtotalCurrentStatPoints += characterStats.getCurrentTotalStatPoints()
-		await get_tree().create_timer(0.001).timeout
 #		await get_tree().create_timer(0.01).timeout
 	# reset receiving EXP since we're done using it, also to not use excess
 	receivingEXP = 0
@@ -158,7 +157,6 @@ func getCharactersInfo() -> void:
 		AOEDenialSupport.setActive(false)
 	else: 
 		AOEDenialSupport.setActive(true)
-	await get_tree().create_timer(0.001).timeout
 	emit_signal("charactersUpdated")
 
 func MoveAllCharactersToTruePosition() -> void:
@@ -283,6 +281,7 @@ func addCharacter(character: BaseCharacter, startingExperience: float, spawnedFr
 					character.set_position(characterPosition)
 					await tween.tween_property(character, "global_position", characterPosition, 1).finished
 	
+#	getCharactersInfo()
 	dungeon.statButtonGroup.updateModulation()
 	tween.kill()
 
@@ -298,7 +297,10 @@ func onCharacterDeath(EXPWorth, characterBody):
 	print(str(self) + ": (onCharacterDeath) new Character Died" + str(characterBody))
 	characterHasDied.emit()
 	
-	
+	if isFriendly:
+		dungeon.updateUpkeepList()
+	else:
+		getCharactersInfo()
 	call_deferred("onAllCharactersDead")
 
 ## Randomizes difficulty Experience
@@ -330,7 +332,6 @@ func giveCharityEXPTotal():
 func onAllCharactersDead():
 #	print(str(self) + ": Checking if characters are dead")
 #	print(str(self) + ": Checking if characters are dead List: " + str(characters))
-	getCharactersInfo()
 	if charactersAmount <= 0:
 		print(str(self) + ": All Characters Died")
 		if isFriendly:

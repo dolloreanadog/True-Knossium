@@ -56,8 +56,7 @@ func getCharactersInfo():
 			# Adds to the temporary totalStatPoints
 			LtotalStatPoints += characterStats.totalStatPoints
 			LtotalCurrentStatPoints += characterStats.getCurrentTotalStatPoints()
-		
-		await get_tree().create_timer(0.001).timeout
+			
 #		await get_tree().create_timer(0.05).timeout
 	# reset receiving EXP since we're done using it, also to not use excess
 	receivingEXP = 0
@@ -91,7 +90,6 @@ func getCharactersInfo():
 #		print(str(self) + ": Enemy Total Stat Points = " + str(totalStatPoints))
 #		print(str(self) + ": Turn: " + str(system.turn) + ": Enemy Characters" + str(characters))
 #		print(str(self) + ": Turn: " + str(system.turn) + ": Enemy Character Amount: " + str(charactersAmount))
-	await get_tree().create_timer(0.001).timeout
 	emit_signal("charactersUpdated")
 
 @warning_ignore("unused_parameter")
@@ -165,6 +163,7 @@ func addCharacter(character: BaseCharacter, startingExperience: float, spawnedFr
 				await tween.tween_property(character, "global_position", characterPosition, 1).finished
 	
 	isSpawningCharacter = false
+#	getCharactersInfo()
 	dungeon.statButtonGroup.updateModulation()
 	tween.kill()
 
@@ -172,7 +171,7 @@ func onAllCharactersDead():
 #	print(str(self) + ": Checking if characters are dead")
 #	print(str(self) + ": Checking if characters are dead List: " + str(characters))
 	# replaced characterAmount with get_child_count()
-	await getCharactersInfo()
+	await get_tree().create_timer(0.05).timeout
 	if get_child_count() <= 0:
 		print(str(self) + ": All Characters Died")
 		print(str(self) + ": Battle should have ended")

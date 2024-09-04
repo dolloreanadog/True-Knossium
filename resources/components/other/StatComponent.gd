@@ -20,7 +20,6 @@ enum rolesList {Healer, DPSRanged, DPSMelee, Tank}
 
 #--[ Stats ]--
 # These are the maximum of a stat value
-@export var fillerStatPoints: float = 0
 @export var health: float = 10
 @export var defense: float = 2
 @export var attack: float = 3
@@ -91,7 +90,6 @@ func resetCurrentStats() -> void:
 func getTotalStatPoints() -> void:
 	@warning_ignore("narrowing_conversion")
 	totalStatPoints = health + attack + defense + morale
-
 
 func getCurrentTotalStatPoints() -> float:
 	return (currentHealth + currentDefense + currentAttack + currentMorale)

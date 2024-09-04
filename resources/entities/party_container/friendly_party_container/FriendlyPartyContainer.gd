@@ -151,6 +151,7 @@ func addCharacter(character: BaseCharacter, startingExperience: float, spawnedFr
 				await tween.tween_property(character, "global_position", characterPosition, 1).finished
 	
 #	getCharactersInfo()
+#	dungeon.updateUpkeepList()
 	dungeon.statButtonGroup.updateModulation()
 	isSpawningCharacter = false
 	tween.kill()
@@ -158,7 +159,6 @@ func addCharacter(character: BaseCharacter, startingExperience: float, spawnedFr
 func onAllCharactersDead():
 #	print(str(self) + ": Checking if characters are dead")
 #	print(str(self) + ": Checking if characters are dead List: " + str(characters))
-	await getCharactersInfo()
 	if charactersAmount <= 0 && dungeon.specialWindowContainer.get_child_count() == 0:
 		print(str(self) + ": All Characters Died")
 		if isFriendly:

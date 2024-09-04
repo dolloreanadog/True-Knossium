@@ -25,3 +25,4 @@ func SpawnCharacter() -> void:
 		var instance: BaseCharacter = spawningCharacter.instantiate()
 		character.partyContainer.addCharacter(instance, characterExperience, true, Vector2(0, 0))
 		await get_tree().create_timer(0.005).timeout
+	

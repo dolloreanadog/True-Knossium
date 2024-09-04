@@ -125,13 +125,14 @@ func _ready():
 	
 #	await loadConfirmation()
 	if confirmed:
-		updateValueOfStatusBar()
 		AudioServer.set_bus_mute(3, false)
 		Global.EndLoadingScreen()
 		stopControlVisible(false, 1)
 		checkSpecialWindowContainer()
-		friendlyPartyContainer.onAllCharactersDead()
 		SaveWarningLabel.hide()
+		await get_tree().create_timer(0.16).timeout
+		updateValueOfStatusBar()
+		updateUpkeepList()
 
 func saveConfirmation() -> bool:
 	await SaveFinished
@@ -164,8 +165,8 @@ func _notification(what: int) -> void:
 		get_tree().quit()
 
 func updateValueOfStatusBar() -> void:
-	friendlyPartyContainer.getCharactersInfo()
-	enemyPartyContainer.getCharactersInfo()
+#	friendlyPartyContainer.getCharactersInfo()
+#	enemyPartyContainer.getCharactersInfo()
 	battleStatusBar.updateStatusBar(friendlyPartyContainer.currentTotalStatPoints, enemyPartyContainer.currentTotalStatPoints)
 	
 
@@ -208,7 +209,7 @@ func stopControlVisible(visibility: bool, stopControlNumber: int):
 #--[ Upkeep List ]--
 func updateUpkeepList() -> void:
 	print("update upkeep list")
-	friendlyPartyContainer.getCharactersInfo()
+#	friendlyPartyContainer.getCharactersInfo()
 	
 #	print("characters: " + str(friendlyPartyContainer.characters))
 	upkeepInventory.storedItems.clear()
@@ -291,7 +292,7 @@ func loadSave() -> void:
 	await get_tree().create_timer(0.05).timeout
 	print("Loaded GameInfoDict OffensiveAOEList: " + str(SaveSystem.GameInfoDict.EnemyOffensiveAOEList))
 	print("Loaded GameInfoDict SupportAOEList: " + str(SaveSystem.GameInfoDict.FriendlyOffensiveAOEList))
-	friendlyPartyContainer.getCharactersInfo()
+#	friendlyPartyContainer.getCharactersInfo()
 	turnsLabel.set_text("Turns: " + str(system.turn))
 	getBattle()
 	emit_signal("LoadFinished")

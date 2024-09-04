@@ -110,11 +110,11 @@ func _ready() -> void:
 
 ## Damage the Stats in the StatComponent
 func damageStats(health, defense, attack, morale): # Print out the stats of getting damage
-	print(str(self) + ": Body is getting Damaged")
-	print(str(self) + ": Health stat being damaged for " + str(health))
-	print(str(self) + ": Defense stat being damaged for " + str(defense))
-	print(str(self) + ": Attack stat being damaged for " + str(attack))
-	print(str(self) + ": Morale stat being damaged for " + str(morale))
+#	print(str(self) + ": Body is getting Damaged")
+#	print(str(self) + ": Health stat being damaged for " + str(health))
+#	print(str(self) + ": Defense stat being damaged for " + str(defense))
+#	print(str(self) + ": Attack stat being damaged for " + str(attack))
+#	print(str(self) + ": Morale stat being damaged for " + str(morale))
 	#stats.isDamaged()
 	stats.changeCurrentHealth(health)
 	stats.changeCurrentDefense(defense)

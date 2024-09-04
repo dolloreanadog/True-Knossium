@@ -72,6 +72,11 @@ func AnyAOEAnimationPlaying() -> bool:
 	print("(check5) is playing character? " + str(playing))
 	return playing
 
+func AnyDeadCharacter() -> bool:
+	var isAnyAlreadyDied: bool = false
+	if get_child_count() != 0:
+		isAnyAlreadyDied = dungeon.enemyPartyContainer.get_children().any(func(object: BaseCharacter): return object.stats.alreadyDied)
+	return isAnyAlreadyDied
 
 func AnyCharacterSurrendered() -> bool:
 	var isAnySurrendered: bool = false
@@ -297,10 +302,10 @@ func onCharacterDeath(EXPWorth, characterBody):
 	print(str(self) + ": (onCharacterDeath) new Character Died" + str(characterBody))
 	characterHasDied.emit()
 	
-	if isFriendly:
-		dungeon.updateUpkeepList()
-	else:
-		getCharactersInfo()
+#	if isFriendly:
+#		dungeon.updateUpkeepList()
+#	else:
+#		getCharactersInfo()
 	call_deferred("onAllCharactersDead")
 
 ## Randomizes difficulty Experience
@@ -330,7 +335,7 @@ func giveCharityEXPTotal():
 
 ## does something if all characters dead
 func onAllCharactersDead():
-#	print(str(self) + ": Checking if characters are dead")
+	print(str(self) + ": Checking if characters are dead")
 #	print(str(self) + ": Checking if characters are dead List: " + str(characters))
 	if charactersAmount <= 0:
 		print(str(self) + ": All Characters Died")
@@ -368,3 +373,4 @@ func getSupportArray():
 func getTotalStatPoints():
 	var exportedTotalStatPoints = totalStatPoints
 	return exportedTotalStatPoints
+

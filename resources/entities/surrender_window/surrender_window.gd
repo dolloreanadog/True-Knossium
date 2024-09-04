@@ -38,7 +38,12 @@ func _on_button_yes_pressed() -> void:
 	character.queue_free()
 	character.stats.emit_signal("moraleBroken", 0, 0)
 	if dungeon.specialWindowContainer.get_child_count() != 0:
+		$Control/ButtonYes.disabled = true
+		$Control/ButtonNo.disabled = true
+		await get_tree().create_timer(0.01).timeout
 		dungeon.stopControlVisible(false, 2)
+		dungeon.enemyPartyContainer.getCharactersInfo()
+		dungeon.enemyPartyContainer.onAllCharactersDead()
 #	dungeon.stopControl2.hide()
 #	remove_child(self)
 #	dungeon.call_deferred("checkSpecialWindowContainer")
@@ -49,8 +54,15 @@ func _on_button_yes_pressed() -> void:
 func _on_button_no_pressed() -> void:
 	character.stats.setCurrentHealth(-1)
 	if dungeon.specialWindowContainer.get_child_count() != 0:
+		hide()
+		while dungeon.enemyPartyContainer.AnyDeadCharacter() or dungeon.friendlyPartyContainer.AnyDeadCharacter():
+			print("Character Animation has no finished yet!")
+			await get_tree().create_timer(0.1).timeout
 		dungeon.stopControlVisible(false, 2)
+		dungeon.friendlyPartyContainer.getCharactersInfo()
+		dungeon.enemyPartyContainer.getCharactersInfo()
 		dungeon.friendlyPartyContainer.onAllCharactersDead()
+		dungeon.enemyPartyContainer.onAllCharactersDead()
 #	dungeon.stopControl2.hide()
 #	remove_child(self)
 #	dungeon.call_deferred("checkSpecialWindowContainer")

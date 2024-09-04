@@ -305,9 +305,8 @@ func firstTurn() -> void:
 	print(str(self) + ": Activate first turn")
 
 func attackStats(body: BaseCharacter) -> void:
-	
 #	if randf_range(0, 1) <= accuracy:
-	print(str(self) + ": Target Has Been hit ")
+#	print(str(self) + ": Target Has Been hit ")
 	body.damageStats(randf_range(0, health * (1 + accuracy)), randf_range(0, defense * (1 + accuracy)), randf_range(0, attack * (1 + accuracy)), randf_range(0, morale * (1 + accuracy)))
 	body.stats.changeEXP(experience)
 	aoeHasAttack.emit(body)

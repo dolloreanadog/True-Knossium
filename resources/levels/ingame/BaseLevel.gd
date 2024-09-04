@@ -164,8 +164,8 @@ func _notification(what: int) -> void:
 		get_tree().quit()
 
 func updateValueOfStatusBar() -> void:
-	friendlyPartyContainer.getCharactersInfo()
-	enemyPartyContainer.getCharactersInfo()
+#	friendlyPartyContainer.getCharactersInfo()
+#	enemyPartyContainer.getCharactersInfo()
 	battleStatusBar.updateStatusBar(friendlyPartyContainer.currentTotalStatPoints, enemyPartyContainer.currentTotalStatPoints)
 	
 
@@ -623,7 +623,7 @@ func saveToSaveSystem() -> void:
 		isSaving = false
 
 func saveFriendlyCharacters() -> void:
-	await friendlyPartyContainer.getCharactersInfo()
+	friendlyPartyContainer.getCharactersInfo()
 	var ExperienceGained: float = 0
 	var LevelsGained: int = 0
 	# push_back to friendly characters
@@ -667,7 +667,7 @@ func saveFriendlyCharacters() -> void:
 	SavedFriendlyCharacters.emit()
 
 func saveEnemyCharacters() -> void:
-	await enemyPartyContainer.getCharactersInfo()
+	enemyPartyContainer.getCharactersInfo()
 	
 	# push_back to Enemy characters
 	
@@ -871,11 +871,14 @@ func goThroughQueuedAOEArray() -> void:
 	print("AOEQueueFinished")
 	print("--------------------------------")
 	emit_signal("AOEQueueFinished")
-	updateValueOfStatusBar()
 	while enemyPartyContainer.AnyAOEAnimationPlaying() or friendlyPartyContainer.AnyAOEAnimationPlaying():
 		print("Character Animation has no finished yet!")
 		await get_tree().create_timer(0.1).timeout
-#	await get_tree().create_timer(1).timeout
+	
+	while enemyPartyContainer.AnyDeadCharacter() or friendlyPartyContainer.AnyDeadCharacter():
+		print("Character Animation has no finished yet!")
+		await get_tree().create_timer(0.1).timeout
+	
 	while enemyPartyContainer.isSpawningCharacter or friendlyPartyContainer.isSpawningCharacter:
 		print("Characters Spawning in!")
 		await get_tree().create_timer(0.1).timeout
@@ -883,6 +886,7 @@ func goThroughQueuedAOEArray() -> void:
 	setIsCharactersActive(false)
 	
 	saveToSaveSystem()
+	updateValueOfStatusBar()
 	updateUpkeepList()
 	stopControlVisible(true, 1)
 	var confirm: bool = await saveConfirmation()
@@ -891,6 +895,8 @@ func goThroughQueuedAOEArray() -> void:
 	
 	if confirm:
 		print("(Old) Shop Weight is " + str(shopWeight))
+		friendlyPartyContainer.onAllCharactersDead()
+		enemyPartyContainer.onAllCharactersDead()
 		if system.battle >= 2:
 			shopWeight += 0.25
 			if randf_range(1.25, 25) - shopWeight <= 0:

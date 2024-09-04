@@ -157,9 +157,9 @@ func addCharacter(character: BaseCharacter, startingExperience: float, spawnedFr
 	tween.kill()
 
 func onAllCharactersDead():
-#	print(str(self) + ": Checking if characters are dead")
+	print(str(self) + ": Checking if characters are dead")
 #	print(str(self) + ": Checking if characters are dead List: " + str(characters))
-	if charactersAmount <= 0 && dungeon.specialWindowContainer.get_child_count() == 0:
+	if totalStatPoints <= 0 && dungeon.specialWindowContainer.get_child_count() == 0 && system.turn != 1:
 		print(str(self) + ": All Characters Died")
 		if isFriendly:
 			if !AnyCharacterSurrendered():
@@ -167,7 +167,7 @@ func onAllCharactersDead():
 				dungeon.saveToSaveSystem()
 				await dungeon.SaveFinished
 				dungeon.stopControlVisible(true, 1)
-				await get_tree().create_timer(2).timeout
+				await get_tree().create_timer(0.5).timeout
 				Global.StartLoadingScreen(false)
 				dungeon.queue_free()
 				get_tree().change_scene_to_file("res://resources/levels/menu/GameOverMenu/GameOverMenu.tscn")

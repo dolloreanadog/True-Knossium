@@ -139,7 +139,7 @@ func changeEXP(amount: float) -> void:
 
 
 func healthDeath() -> void:
-	print(str(self) + ": Running health death method")
+#	print(str(self) + ": Running health death method")
 	if alreadyDied != true:
 		if currentHealth <= 0:
 			print(str(self) + ": Health is Below Zero")
@@ -181,7 +181,7 @@ func moraleDeath() -> void:
 			characterBody.dungeon.totalCharactersSurrendered += 1
 
 func overMaxHealth() -> void:
-	print(str(self) + ": Function not overridem!")
+#	print(str(self) + ": Function not overridem!")
 	if currentHealth > health:
 		if characterBody.overHealthFX != null:
 			characterBody.playOverHealthFX()

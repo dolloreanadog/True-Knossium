@@ -24,8 +24,8 @@ func newTurn() -> void:
 	dungeon.warningLabel.text = ""
 	print(str(self) + ": turns = " + str(turn))
 	emit_signal("OnNewTurn")
-	FriendlyPartyContainer.getCharactersInfo()
-	EnemyPartyContainer.getCharactersInfo()
+#	FriendlyPartyContainer.getCharactersInfo()
+#	EnemyPartyContainer.getCharactersInfo()
 	BattleFailsafe()
 	#EnemyPartyContainer.onAllCharactersDead()
 	print("---------------[ Turn Changed to " + str(turn) + " ]---------------")

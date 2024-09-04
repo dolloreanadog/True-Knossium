@@ -172,8 +172,7 @@ func onAllCharactersDead():
 #	print(str(self) + ": Checking if characters are dead List: " + str(characters))
 	# replaced characterAmount with get_child_count()
 	await get_tree().create_timer(0.05).timeout
-#	if get_child_count() <= 0:
-	if totalStatPoints <= 0:
+	if get_child_count() <= 0:
 		print(str(self) + ": All Characters Died")
 		print(str(self) + ": Battle should have ended")
 		system.newBattle()

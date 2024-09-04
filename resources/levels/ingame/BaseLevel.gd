@@ -120,21 +120,18 @@ func _ready():
 		
 		addNewGameCharacters()
 		addNewGameItems()
-		
 		confirmed = true
 		EndTurnButtonHighlight(true)
 	
 #	await loadConfirmation()
 	if confirmed:
+		updateValueOfStatusBar()
 		AudioServer.set_bus_mute(3, false)
 		Global.EndLoadingScreen()
 		stopControlVisible(false, 1)
 		checkSpecialWindowContainer()
 		friendlyPartyContainer.onAllCharactersDead()
 		SaveWarningLabel.hide()
-		await get_tree().create_timer(0.16).timeout
-		updateValueOfStatusBar()
-		updateUpkeepList()
 
 func saveConfirmation() -> bool:
 	await SaveFinished
@@ -167,8 +164,8 @@ func _notification(what: int) -> void:
 		get_tree().quit()
 
 func updateValueOfStatusBar() -> void:
-#	friendlyPartyContainer.getCharactersInfo()
-#	enemyPartyContainer.getCharactersInfo()
+	friendlyPartyContainer.getCharactersInfo()
+	enemyPartyContainer.getCharactersInfo()
 	battleStatusBar.updateStatusBar(friendlyPartyContainer.currentTotalStatPoints, enemyPartyContainer.currentTotalStatPoints)
 	
 
@@ -211,7 +208,7 @@ func stopControlVisible(visibility: bool, stopControlNumber: int):
 #--[ Upkeep List ]--
 func updateUpkeepList() -> void:
 	print("update upkeep list")
-#	friendlyPartyContainer.getCharactersInfo()
+	friendlyPartyContainer.getCharactersInfo()
 	
 #	print("characters: " + str(friendlyPartyContainer.characters))
 	upkeepInventory.storedItems.clear()
@@ -294,7 +291,7 @@ func loadSave() -> void:
 	await get_tree().create_timer(0.05).timeout
 	print("Loaded GameInfoDict OffensiveAOEList: " + str(SaveSystem.GameInfoDict.EnemyOffensiveAOEList))
 	print("Loaded GameInfoDict SupportAOEList: " + str(SaveSystem.GameInfoDict.FriendlyOffensiveAOEList))
-#	friendlyPartyContainer.getCharactersInfo()
+	friendlyPartyContainer.getCharactersInfo()
 	turnsLabel.set_text("Turns: " + str(system.turn))
 	getBattle()
 	emit_signal("LoadFinished")
@@ -364,8 +361,8 @@ func loadCharacters() -> void:
 		await get_tree().create_timer(0.01).timeout
 	
 	setIsCharactersActive(false)
-#	friendlyPartyContainer.getCharactersInfo()
-#	enemyPartyContainer.getCharactersInfo()
+	friendlyPartyContainer.getCharactersInfo()
+	enemyPartyContainer.getCharactersInfo()
 	partyUI.updateUpkeepList()
 	await get_tree().create_timer(0.01).timeout
 	LoadCharacters.emit()
@@ -914,7 +911,6 @@ func goThroughQueuedAOEArray() -> void:
 		else:
 			checkSpecialWindowContainer()
 		stopControlVisible(false, 1)
-	friendlyPartyContainer.onAllCharactersDead()
 
 func grabAllAOE() -> Array:
 	var AOEGrabbed: Array = friendlyAOEAttack.get_children() + enemyAttackAOE.get_children() + friendlyAOESupport.get_children() + enemySupportAOE.get_children()

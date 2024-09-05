@@ -309,6 +309,8 @@ func tradeItems() -> void:
 #	for i in playerBarterInventory.storedItems.size():
 #		playerBarterInventory.storedItems.pop_back()
 	
+	SaveSystem.GameInfoDict.TradeCompleted += 1
+	
 	for i in shopBarterInventory.storedItems.size():
 		var Litem: BaseInventoryItem = shopBarterInventory.storedItems.pop_back()
 		Global.unlockItem(Litem.globalFilePath)
@@ -386,6 +388,8 @@ func raiseStrike() -> void:
 func buttonCooldown() -> void:
 	# How much time cooldown is.
 	var time: float = buttonCooldownTime
+	
+	SaveSystem.GameInfoDict.TradeFailed += 1
 	
 	confirmButton.disabled = true
 	while time > 0:

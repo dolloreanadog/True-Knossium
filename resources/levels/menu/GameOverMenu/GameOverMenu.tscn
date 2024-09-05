@@ -1,95 +1,125 @@
-[gd_scene load_steps=2 format=3 uid="uid://bjkenydobhj7i"]
+[gd_scene load_steps=3 format=3 uid="uid://bjkenydobhj7i"]
 
 [ext_resource type="Script" path="res://resources/levels/menu/GameOverMenu/GameOverMenu.gd" id="1_1htv5"]
+[ext_resource type="Script" path="res://addons/graph_2d/graph_2d.gd" id="2_4s0mh"]
 
 [node name="GameOverMenu" type="Node2D"]
 script = ExtResource("1_1htv5")
 
 [node name="GoToMenu" type="Button" parent="."]
-offset_left = 1088.0
-offset_top = 672.0
-offset_right = 1216.0
-offset_bottom = 703.0
+offset_left = 1776.0
+offset_top = 1032.0
+offset_right = 1904.0
+offset_bottom = 1063.0
 text = "Back To Menu"
 
 [node name="StatsPanel" type="Panel" parent="."]
-offset_left = 768.0
-offset_top = 24.0
-offset_right = 1216.0
-offset_bottom = 640.0
+offset_left = 832.0
+offset_top = 840.0
+offset_right = 1784.0
+offset_bottom = 1024.0
 
 [node name="Label" type="Label" parent="StatsPanel"]
 layout_mode = 0
-offset_right = 448.0
+offset_right = 952.0
 offset_bottom = 26.0
 text = "Stats"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="VBoxContainer" type="VBoxContainer" parent="StatsPanel"]
+[node name="HBoxContainer" type="HBoxContainer" parent="StatsPanel"]
 layout_mode = 0
-offset_left = 8.0
-offset_top = 40.0
-offset_right = 448.0
-offset_bottom = 616.0
+offset_top = 32.0
+offset_right = 952.0
+offset_bottom = 178.0
+alignment = 1
 
-[node name="CharactersDiedLabel" type="Label" parent="StatsPanel/VBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="StatsPanel/HBoxContainer"]
+layout_mode = 2
+
+[node name="CharactersDiedLabel" type="Label" parent="StatsPanel/HBoxContainer/VBoxContainer"]
 layout_mode = 2
 text = "Characters Died:"
 
-[node name="CharactersSurrenderedLabel" type="Label" parent="StatsPanel/VBoxContainer"]
+[node name="CharactersSurrenderedLabel" type="Label" parent="StatsPanel/HBoxContainer/VBoxContainer"]
 layout_mode = 2
 text = "Characters Surrendered:"
 
-[node name="TotalBattlesLabel" type="Label" parent="StatsPanel/VBoxContainer"]
+[node name="TotalBattlesLabel" type="Label" parent="StatsPanel/HBoxContainer/VBoxContainer"]
 layout_mode = 2
 text = "Total Battles:"
 
-[node name="TotalTurnsLabel" type="Label" parent="StatsPanel/VBoxContainer"]
+[node name="TotalTurnsLabel" type="Label" parent="StatsPanel/HBoxContainer/VBoxContainer"]
 layout_mode = 2
 text = "Total Turns:"
 
-[node name="PeakTotalStatPointsLabel" type="Label" parent="StatsPanel/VBoxContainer"]
+[node name="PeakTotalStatPointsLabel" type="Label" parent="StatsPanel/HBoxContainer/VBoxContainer"]
 layout_mode = 2
 text = "Peak Total Stat Points: "
 
-[node name="PlayerTotalDamageLabel" type="Label" parent="StatsPanel/VBoxContainer"]
+[node name="VBoxContainer2" type="VBoxContainer" parent="StatsPanel/HBoxContainer"]
+layout_mode = 2
+
+[node name="TotalExperienceGainedLabel" type="Label" parent="StatsPanel/HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+text = "Total Experience Gained:"
+
+[node name="TotalLevelsGainedLabel" type="Label" parent="StatsPanel/HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+text = "Total Levels Gained:"
+
+[node name="TotalPlayerAOEUsedLabel" type="Label" parent="StatsPanel/HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+text = "Total Player AOE Used:"
+
+[node name="TotalEnemyAOEUsedLabel" type="Label" parent="StatsPanel/HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+text = "Total Enemy AOE Used:"
+
+[node name="ShopAppearedLabel" type="Label" parent="StatsPanel/HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+text = "Shop Appeared "
+
+[node name="VBoxContainer3" type="VBoxContainer" parent="StatsPanel/HBoxContainer"]
+layout_mode = 2
+
+[node name="PlayerTotalDamageLabel" type="Label" parent="StatsPanel/HBoxContainer/VBoxContainer3"]
 layout_mode = 2
 text = "Your Total Damage:"
 
-[node name="PlayerTotalSupportLabel" type="Label" parent="StatsPanel/VBoxContainer"]
+[node name="PlayerTotalSupportLabel" type="Label" parent="StatsPanel/HBoxContainer/VBoxContainer3"]
 layout_mode = 2
 text = "Your Total Support:"
 
-[node name="EnemyTotalDamageLabel" type="Label" parent="StatsPanel/VBoxContainer"]
+[node name="EnemyTotalDamageLabel" type="Label" parent="StatsPanel/HBoxContainer/VBoxContainer3"]
 layout_mode = 2
 text = "Enemy Total Damage:"
 
-[node name="EnemyTotalSupportLabel" type="Label" parent="StatsPanel/VBoxContainer"]
+[node name="EnemyTotalSupportLabel" type="Label" parent="StatsPanel/HBoxContainer/VBoxContainer3"]
 layout_mode = 2
 text = "Enemy Total Support:"
 
-[node name="TotalExperienceGained" type="Label" parent="StatsPanel/VBoxContainer"]
+[node name="AreasAppearedLabel" type="Label" parent="StatsPanel/HBoxContainer/VBoxContainer3"]
 layout_mode = 2
-text = "Enemy Total Support:"
+text = "Areas Appeared"
 
-[node name="TotalLevelsGained" type="Label" parent="StatsPanel/VBoxContainer"]
+[node name="VBoxContainer4" type="VBoxContainer" parent="StatsPanel/HBoxContainer"]
 layout_mode = 2
-text = "Enemy Total Support:"
+alignment = 1
 
-[node name="TotalPlayerAOEUsed" type="Label" parent="StatsPanel/VBoxContainer"]
+[node name="TradesFailedLabel" type="Label" parent="StatsPanel/HBoxContainer/VBoxContainer4"]
 layout_mode = 2
-text = "Enemy Total Support:"
+text = "Trades Failed:"
 
-[node name="TotalEnemyAOEUsed" type="Label" parent="StatsPanel/VBoxContainer"]
+[node name="TradesCompletedLabel" type="Label" parent="StatsPanel/HBoxContainer/VBoxContainer4"]
 layout_mode = 2
-text = "Enemy Total Support:"
+text = "Trades Completed:"
 
 [node name="UnlockedPanel" type="Panel" parent="."]
-offset_left = 64.0
-offset_top = 24.0
-offset_right = 704.0
-offset_bottom = 704.0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 648.0
+offset_bottom = 1072.0
 
 [node name="Label" type="Label" parent="UnlockedPanel"]
 layout_mode = 0
@@ -104,10 +134,71 @@ layout_mode = 0
 offset_left = 16.0
 offset_top = 40.0
 offset_right = 624.0
-offset_bottom = 664.0
+offset_bottom = 1056.0
 fixed_icon_size = Vector2i(28, 28)
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(960, 540)
+
+[node name="Panel" type="Panel" parent="."]
+offset_left = 656.0
+offset_top = 8.0
+offset_right = 1912.0
+offset_bottom = 832.0
+
+[node name="TabContainer" type="TabContainer" parent="Panel"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 1248.0
+offset_bottom = 816.0
+
+[node name="Characters Fielded" type="TabBar" parent="Panel/TabContainer"]
+layout_mode = 2
+
+[node name="Graph2D" type="Control" parent="Panel/TabContainer/Characters Fielded"]
+anchors_preset = 0
+offset_right = 1240.0
+offset_bottom = 777.0
+script = ExtResource("2_4s0mh")
+x_max = 1.0
+x_label = "Turns"
+show_x_ticks = false
+y_label = "Characters Fielded"
+show_y_ticks = false
+
+[node name="Total Stat Points" type="TabBar" parent="Panel/TabContainer"]
+visible = false
+layout_mode = 2
+
+[node name="Graph2D" type="Control" parent="Panel/TabContainer/Total Stat Points"]
+layout_mode = 3
+anchors_preset = 0
+offset_top = 32.0
+offset_right = 1240.0
+offset_bottom = 808.0
+script = ExtResource("2_4s0mh")
+x_max = 1.0
+x_label = "Turns"
+show_x_ticks = false
+y_label = "Total Stat Points"
+show_y_ticks = false
+
+[node name="AOE Fielded" type="TabBar" parent="Panel/TabContainer"]
+visible = false
+layout_mode = 2
+
+[node name="Graph2D" type="Control" parent="Panel/TabContainer/AOE Fielded"]
+layout_mode = 3
+anchors_preset = 0
+offset_top = 32.0
+offset_right = 1240.0
+offset_bottom = 808.0
+script = ExtResource("2_4s0mh")
+x_max = 1.0
+x_label = "Turns"
+show_x_ticks = false
+y_label = "AOE Fielded"
+show_y_ticks = false
 
 [connection signal="pressed" from="GoToMenu" to="." method="_on_go_to_menu_pressed"]

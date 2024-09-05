@@ -9,21 +9,30 @@ extends Node2D
 @onready var loadedItemUnlocked: Array
 
 # Important Stuff
-@onready var CharacterDiedLabel: Label = $StatsPanel/VBoxContainer/CharactersDiedLabel
-@onready var CharactersSurrenderedLabel: Label = $StatsPanel/VBoxContainer/CharactersSurrenderedLabel
-@onready var TotalBattlesLabel: Label = $StatsPanel/VBoxContainer/TotalBattlesLabel
-@onready var TotalTurnsLabel: Label = $StatsPanel/VBoxContainer/TotalTurnsLabel
-@onready var PeakTotalStatPointsLabel: Label = $StatsPanel/VBoxContainer/PeakTotalStatPointsLabel
-@onready var PlayerTotalDamageLabel: Label = $StatsPanel/VBoxContainer/PlayerTotalDamageLabel
-@onready var PlayerTotalSupportLabel: Label = $StatsPanel/VBoxContainer/PlayerTotalSupportLabel
-@onready var EnemyTotalDamageLabel: Label = $StatsPanel/VBoxContainer/EnemyTotalDamageLabel
-@onready var EnemyTotalSupportLabel: Label = $StatsPanel/VBoxContainer/EnemyTotalSupportLabel
-@onready var TotalPlayerAOEUsed: Label = $StatsPanel/VBoxContainer/TotalPlayerAOEUsed
-@onready var TotalEnemyAOEUsed: Label = $StatsPanel/VBoxContainer/TotalEnemyAOEUsed
-@onready var TotalExperienceGained: Label = $StatsPanel/VBoxContainer/TotalExperienceGained
-@onready var TotalLevelsGained: Label = $StatsPanel/VBoxContainer/TotalLevelsGained
+@onready var CharacterDiedLabel: Label = $StatsPanel/HBoxContainer/VBoxContainer/CharactersDiedLabel
+@onready var CharactersSurrenderedLabel: Label = $StatsPanel/HBoxContainer/VBoxContainer/CharactersSurrenderedLabel
+@onready var TotalBattlesLabel: Label = $StatsPanel/HBoxContainer/VBoxContainer/TotalBattlesLabel
+@onready var TotalTurnsLabel: Label = $StatsPanel/HBoxContainer/VBoxContainer/TotalTurnsLabel
+@onready var PeakTotalStatPointsLabel: Label = $StatsPanel/HBoxContainer/VBoxContainer/PeakTotalStatPointsLabel
+@onready var PlayerTotalDamageLabel: Label = $StatsPanel/HBoxContainer/VBoxContainer3/PlayerTotalDamageLabel
+@onready var PlayerTotalSupportLabel: Label = $StatsPanel/HBoxContainer/VBoxContainer3/PlayerTotalSupportLabel
+@onready var EnemyTotalDamageLabel: Label = $StatsPanel/HBoxContainer/VBoxContainer3/EnemyTotalDamageLabel
+@onready var EnemyTotalSupportLabel: Label = $StatsPanel/HBoxContainer/VBoxContainer3/EnemyTotalSupportLabel
+@onready var TotalPlayerAOEUsed: Label = $StatsPanel/HBoxContainer/VBoxContainer2/TotalPlayerAOEUsedLabel
+@onready var TotalEnemyAOEUsed: Label = $StatsPanel/HBoxContainer/VBoxContainer2/TotalEnemyAOEUsedLabel
+@onready var TotalExperienceGained: Label = $StatsPanel/HBoxContainer/VBoxContainer2/TotalExperienceGainedLabel
+@onready var TotalLevelsGained: Label = $StatsPanel/HBoxContainer/VBoxContainer2/TotalLevelsGainedLabel
 
-@onready var UnlockedList: ItemList = get_node("UnlockedPanel/UnlockedList")
+@onready var ShopAppearedLabel: Label = $StatsPanel/HBoxContainer/VBoxContainer2/ShopAppearedLabel
+@onready var AreasAppearedLabel: Label = $StatsPanel/HBoxContainer/VBoxContainer3/AreasAppearedLabel
+@onready var TradesFailedLabel: Label = $StatsPanel/HBoxContainer/VBoxContainer4/TradesFailedLabel
+@onready var TradesCompletedLabel: Label = $StatsPanel/HBoxContainer/VBoxContainer4/TradesCompletedLabel
+
+@onready var CharactersFieldedGraph = $"Panel/TabContainer/Characters Fielded/Graph2D"
+@onready var TotalStatPointsGraph = $"Panel/TabContainer/Total Stat Points/Graph2D"
+@onready var AOEFieldedGraph = $"Panel/TabContainer/AOE Fielded/Graph2D"
+
+@onready var UnlockedList: ItemList = $UnlockedPanel/UnlockedList
 var unlockedListArray: Array
 
 func _ready() -> void:
@@ -64,6 +73,10 @@ func loadSaveData() -> void:
 	TotalEnemyAOEUsed.text = "Enemy Placed " + str(SaveSystem.GameInfoDict.EnemyTotalAOEUsed) + " AOE"
 	TotalExperienceGained.text = "Total Experience: " + str(snappedf(SaveSystem.GameInfoDict.ExperienceGained, 0.01))
 	TotalLevelsGained.text = "Total Levels: " + str(SaveSystem.GameInfoDict.LevelsGained)
+	ShopAppearedLabel.text = "Shop appeared " + str(SaveSystem.GameInfoDict.ShopAppeared)
+	AreasAppearedLabel.text = "Area appeared " + str(SaveSystem.GameInfoDict.AreaAppeared)
+	TradesFailedLabel.text = "Trade failed " + str(SaveSystem.GameInfoDict.TradeCompleted) + " times"
+	TradesCompletedLabel.text = "Trade completed " + str(SaveSystem.GameInfoDict.TradeFailed) + " times"
 	await get_tree().create_timer(0.5).timeout
 	SaveSystem.clearSaveThroughEmptying()
 	SaveSystem.clearSaveThroughDeletion()

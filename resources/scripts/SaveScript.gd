@@ -30,6 +30,9 @@ signal Loaded
 	"Battles": 0,
 	"Turns": 0,
 	
+	"TotalStatPoints": [],
+	"CharactersFielded": [],
+	"AOEFielded": [],
 	
 	"DungeonLevel": "res://resources/levels/ingame/dungeon/Dungeon.tscn",
 	

@@ -537,6 +537,10 @@ func saveToSaveSystem() -> void:
 		var LLevelsGained: int = SaveSystem.GameInfoDict.LevelsGained
 		var LPlayerTotalAOEUsed: int = SaveSystem.GameInfoDict.PlayerTotalAOEUsed
 		var LEnemyTotalAOEUsed: int = SaveSystem.GameInfoDict.EnemyTotalAOEUsed
+		var LShopCompleted: int = SaveSystem.GameInfoDict.TradeCompleted
+		var LShopFailed: int = SaveSystem.GameInfoDict.TradeFailed
+		var LShopAppeared: int = SaveSystem.GameInfoDict.ShopAppeared
+		var LAreaAppeared: int = SaveSystem.GameInfoDict.AreaAppeared
 		print("Before GameInfoDict: " + str(SaveSystem.GameInfoDict))
 		await get_tree().create_timer(0.05).timeout
 		SaveSystem.clearSaveThroughEmptying()
@@ -570,6 +574,10 @@ func saveToSaveSystem() -> void:
 		SaveSystem.GameInfoDict.EnemyTotalAOEUsed = LEnemyTotalAOEUsed
 		SaveSystem.GameInfoDict.CharactersDied = totalCharactersDied
 		SaveSystem.GameInfoDict.CharactersSurrendered = totalCharactersSurrendered
+		SaveSystem.GameInfoDict.TradeCompleted = LShopCompleted
+		SaveSystem.GameInfoDict.TradeFailed = LShopFailed
+		SaveSystem.GameInfoDict.ShopAppeared = LShopAppeared
+		SaveSystem.GameInfoDict.AreaAppeared = LAreaAppeared
 		SaveSystem.GameInfoDict.Battles = system.battle
 		SaveSystem.GameInfoDict.Turns = system.turn
 		SaveSystem.GameInfoDict.SpawnBehaviorWeights = difficulty.SpawnBehaviors
@@ -943,6 +951,7 @@ func GotoShop() -> void:
 	print("Go to shop!")
 	stopControlVisible(true, 2)
 #	stopControl2.show()
+	SaveSystem.GameInfoDict.ShopAppeared += 1
 	var instance := shopWindow.instantiate()
 	specialWindowContainer.add_child(instance)
 	instance.dungeon = self
@@ -956,6 +965,7 @@ func GotoShop() -> void:
 func GoToNextArea() -> void:
 	print("Go to Next Area!")
 	stopControlVisible(true, 2)
+	SaveSystem.GameInfoDict.AreaAppeared += 1
 	var instance := nextAreaWindow.instantiate()
 	specialWindowContainer.add_child(instance)
 	instance.dungeon = self

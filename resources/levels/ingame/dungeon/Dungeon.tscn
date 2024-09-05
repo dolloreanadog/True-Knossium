@@ -622,13 +622,13 @@ system = NodePath("../TurnSystem")
 script = ExtResource("19_hbix6")
 spawner = NodePath("..")
 difficultyTotalModifier = 0.75
-charityDifficultyEXPModifier = 0.77
+charityDifficultyEXPModifier = 0.8
 
 [node name="SpawnHorde" type="Node" parent="difficultySystem" node_paths=PackedStringArray("spawner")]
 script = ExtResource("19_hbix6")
 spawner = NodePath("..")
-difficultyTotalModifier = 2.0
-charityDifficultyEXPModifier = 0.35
+difficultyTotalModifier = 1.5
+charityDifficultyEXPModifier = 0.6
 
 [node name="SpawnSpecial" type="Node" parent="difficultySystem" node_paths=PackedStringArray("spawner")]
 script = ExtResource("19_hbix6")

@@ -27,11 +27,11 @@ var debugGuaranteeSpawning: bool = false
 var debugChosenSpawnBehavior: int
 
 @export var SpawnBehaviors: Dictionary = {
-	"Normal Spawn Behavior": 750,
-	"Horde Spawn Behavior": 50,
-	"Elite Spawn Behavior": 25,
-	"Legendary Spawn Behavior": 15,
-	"Mythical Spawn Behavior": 5,
+	"Normal Spawn Behavior": 500,
+	"Horde Spawn Behavior": 37,
+	"Elite Spawn Behavior": 36,
+	"Legendary Spawn Behavior": 0,
+	"Mythical Spawn Behavior": 0,
 	"God Spawn Behavior": 0,
 }
 
@@ -94,30 +94,30 @@ func chooseSpawnBehavior(spawnBehavior: String):
 			NormalSpawnBehavior()
 			
 			# Change Weight as it was chosen so others get a chance
-			SpawnBehaviors["Normal Spawn Behavior"] -= 50
-			SpawnBehaviors["Horde Spawn Behavior"] += 7.5
-			SpawnBehaviors["Elite Spawn Behavior"] += 7.5
-			SpawnBehaviors["Legendary Spawn Behavior"] += 2.5
-			SpawnBehaviors["Mythical Spawn Behavior"] += 1
+			SpawnBehaviors["Normal Spawn Behavior"] -= 30
+			SpawnBehaviors["Horde Spawn Behavior"] += 7.8
+			SpawnBehaviors["Elite Spawn Behavior"] += 8.2
+			SpawnBehaviors["Legendary Spawn Behavior"] += 3
+			SpawnBehaviors["Mythical Spawn Behavior"] += 1.75
 			SpawnBehaviors["God Spawn Behavior"] += 0.05
 		"Horde Spawn Behavior":
 			HordeSpawnBehavior()
 			
 			# Change Weight as it was chosen so others get a chance
 			SpawnBehaviors["Normal Spawn Behavior"] += 25
-			SpawnBehaviors["Horde Spawn Behavior"] -= 25
-			SpawnBehaviors["Elite Spawn Behavior"] += 7.5
-			SpawnBehaviors["Legendary Spawn Behavior"] += 2.5
-			SpawnBehaviors["Mythical Spawn Behavior"] += 1
+			SpawnBehaviors["Horde Spawn Behavior"] -= 20
+			SpawnBehaviors["Elite Spawn Behavior"] += 8.2
+			SpawnBehaviors["Legendary Spawn Behavior"] += 3
+			SpawnBehaviors["Mythical Spawn Behavior"] += 1.75
 			SpawnBehaviors["God Spawn Behavior"] += 0.05
 		"Elite Spawn Behavior":
 			EliteSpawnBehavior()
 			
 			# Change Weight as it was chosen so others get a chance
-			SpawnBehaviors["Normal Spawn Behavior"] += 25
-			SpawnBehaviors["Horde Spawn Behavior"] += 7.5
-			SpawnBehaviors["Elite Spawn Behavior"] -= 25
-			SpawnBehaviors["Legendary Spawn Behavior"] += 2.5
+			SpawnBehaviors["Normal Spawn Behavior"] += 15
+			SpawnBehaviors["Horde Spawn Behavior"] += 7.8
+			SpawnBehaviors["Elite Spawn Behavior"] -= 20
+			SpawnBehaviors["Legendary Spawn Behavior"] += 3
 			SpawnBehaviors["Mythical Spawn Behavior"] += 1
 			SpawnBehaviors["God Spawn Behavior"] += 0.05
 		"Legendary Spawn Behavior":
@@ -125,40 +125,40 @@ func chooseSpawnBehavior(spawnBehavior: String):
 
 			# Change Weight as it was chosen so others get a chance
 			SpawnBehaviors["Normal Spawn Behavior"] += 15
-			SpawnBehaviors["Horde Spawn Behavior"] += 7.5
-			SpawnBehaviors["Elite Spawn Behavior"] += 7.5
-			SpawnBehaviors["Legendary Spawn Behavior"] -= 10
-			SpawnBehaviors["Mythical Spawn Behavior"] += 1
+			SpawnBehaviors["Horde Spawn Behavior"] += 7.8
+			SpawnBehaviors["Elite Spawn Behavior"] += 8.2
+			SpawnBehaviors["Legendary Spawn Behavior"] -= 15
+			SpawnBehaviors["Mythical Spawn Behavior"] += 1.75
 			SpawnBehaviors["God Spawn Behavior"] += 0.05
 		"Mythical Spawn Behavior":
 			MythicalSpawnBehavior()
 
 			# Change Weight as it was chosen so others get a chance
 			SpawnBehaviors["Normal Spawn Behavior"] += 15
-			SpawnBehaviors["Horde Spawn Behavior"] += 7.5
-			SpawnBehaviors["Elite Spawn Behavior"] += 7.5
-			SpawnBehaviors["Legendary Spawn Behavior"] += 2.5
-			SpawnBehaviors["Mythical Spawn Behavior"] -= 10
+			SpawnBehaviors["Horde Spawn Behavior"] += 7.8
+			SpawnBehaviors["Elite Spawn Behavior"] += 8.2
+			SpawnBehaviors["Legendary Spawn Behavior"] += 3
+			SpawnBehaviors["Mythical Spawn Behavior"] -= 15
 			SpawnBehaviors["God Spawn Behavior"] += 0.05
 #		"God Spawn Behavior":
 #			GodSpawnBehavior()
 #
 #			# Change Weight as it was chosen so others get a chance
-#			SpawnBehaviors["Normal Spawn Behavior"] += 15
-#			SpawnBehaviors["Horde Spawn Behavior"] += 10
-#			SpawnBehaviors["Elite Spawn Behavior"] += 10
-#			SpawnBehaviors["Legendary Spawn Behavior"] += 2.5
-#			SpawnBehaviors["Mythical Spawn Behavior"] += 1
-#			SpawnBehaviors["God Spawn Behavior"] -= 20
+#			SpawnBehaviors["Normal Spawn Behavior"] += 10
+#			SpawnBehaviors["Horde Spawn Behavior"] += 20
+#			SpawnBehaviors["Elite Spawn Behavior"] += 100
+#			SpawnBehaviors["Legendary Spawn Behavior"] += 80
+#			SpawnBehaviors["Mythical Spawn Behavior"] += 60
+#			SpawnBehaviors["God Spawn Behavior"] = -10
 		_:
 			push_warning("That Spawn Behavior was not added defaulting to Elite Spawn Behavior")
 			EliteSpawnBehavior()
 			
 			# Change Weight as it was chosen so others get a chance
 			SpawnBehaviors["Normal Spawn Behavior"] += 15
-			SpawnBehaviors["Horde Spawn Behavior"] += 7.5
-			SpawnBehaviors["Elite Spawn Behavior"] -= 15
-			SpawnBehaviors["Legendary Spawn Behavior"] += 2.5
+			SpawnBehaviors["Horde Spawn Behavior"] += 7.8
+			SpawnBehaviors["Elite Spawn Behavior"] -= 20
+			SpawnBehaviors["Legendary Spawn Behavior"] += 3
 			SpawnBehaviors["Mythical Spawn Behavior"] += 1
 			SpawnBehaviors["God Spawn Behavior"] += 0.05
 

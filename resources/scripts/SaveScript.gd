@@ -23,6 +23,10 @@ signal Loaded
 	"EnemyTotalAOEUsed": 0,
 	"ExperienceGained": 0,
 	"LevelsGained": 0,
+	"ShopAppeared": 0,
+	"AreaAppeared": 0,
+	"TradeCompleted": 0,
+	"TradeFailed": 0,
 	"Battles": 0,
 	"Turns": 0,
 	

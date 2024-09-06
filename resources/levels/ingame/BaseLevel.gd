@@ -525,6 +525,12 @@ func loadAOE() -> void:
 
 #-- Save
 
+func PushBackNewTurnInfo(array: Array, info: Vector2) -> Array:
+	if !(array.any(func(object: Vector2): return object.x == info.x)):
+		array.push_back(info)
+	await get_tree().create_timer(0.001).timeout
+	return array
+
 func saveToSaveSystem() -> void:
 	if !isSaving:
 		isSaving = true
@@ -541,20 +547,24 @@ func saveToSaveSystem() -> void:
 		var LShopFailed: int = SaveSystem.GameInfoDict.TradeFailed
 		var LShopAppeared: int = SaveSystem.GameInfoDict.ShopAppeared
 		var LAreaAppeared: int = SaveSystem.GameInfoDict.AreaAppeared
-		print("Before GameInfoDict: " + str(SaveSystem.GameInfoDict))
+		
+		var LTotalStatPoints: Array = SaveSystem.GameInfoDict.TotalStatPoints
+		var LCharactersFielded: Array = SaveSystem.GameInfoDict.CharactersFielded
+		var LAOEFielded: Array = SaveSystem.GameInfoDict.AOEFielded
+#		print("Before GameInfoDict: " + str(SaveSystem.GameInfoDict))
 		await get_tree().create_timer(0.05).timeout
 		SaveSystem.clearSaveThroughEmptying()
 		SaveSystem.clearSaveThroughDeletion()
 		# Peak Total Stats have to be broken due to how we do what we're doing up top
 		await get_tree().create_timer(0.05).timeout
 		
-		if peakTotalStatPoints < friendlyPartyContainer.totalStatPoints: # Peak Total Stats keep resetting to 0?
+		if peakTotalStatPoints < friendlyPartyContainer.currentTotalStatPoints: # Peak Total Stats keep resetting to 0?
 	#		print("------------")
 	#		print("New Peak Score")
 	#		print("Peak Total Stat Local Points: " + str(peakTotalStatPoints))
 	#		print("Peak Total Stat Saved Points: " + str(SaveSystem.GameInfoDict.PeakTotalStatPoints))
 	#		print("Total Stat Points: " + str(friendlyPartyContainer.totalStatPoints))
-			SaveSystem.GameInfoDict.PeakTotalStatPoints = friendlyPartyContainer.totalStatPoints
+			SaveSystem.GameInfoDict.PeakTotalStatPoints = friendlyPartyContainer.currentTotalStatPoints
 			peakTotalStatPoints = SaveSystem.GameInfoDict.PeakTotalStatPoints
 			print("New Peak Total Stat Points: " + str(SaveSystem.GameInfoDict.PeakTotalStatPoints))
 		else:
@@ -564,6 +574,12 @@ func saveToSaveSystem() -> void:
 	#		print("Peak Total Stat Local Points: " + str(peakTotalStatPoints))
 	#		print("Peak Total Stat Saved Points: " + str(SaveSystem.GameInfoDict.PeakTotalStatPoints))
 		
+		LTotalStatPoints = await PushBackNewTurnInfo(LTotalStatPoints, Vector2(system.turn, friendlyPartyContainer.currentTotalStatPoints))
+		LCharactersFielded = await PushBackNewTurnInfo(LCharactersFielded, Vector2(system.turn, friendlyPartyContainer.get_child_count()))
+		LAOEFielded = await PushBackNewTurnInfo(LAOEFielded, Vector2(system.turn, friendlyAOEAttack.get_child_count() + friendlyAOESupport.get_child_count()))
+		SaveSystem.GameInfoDict.TotalStatPoints = LTotalStatPoints
+		SaveSystem.GameInfoDict.CharactersFielded = LCharactersFielded
+		SaveSystem.GameInfoDict.AOEFielded = LAOEFielded
 		SaveSystem.GameInfoDict.PlayerTotalDamage = LPlayerTotalDamage
 		SaveSystem.GameInfoDict.PlayerTotalSupport = LPlayerTotalSupport
 		SaveSystem.GameInfoDict.EnemyTotalDamage = LEnemyTotalDamage
@@ -606,7 +622,7 @@ func saveToSaveSystem() -> void:
 		SaveSystem.call_deferred("saveAllData")
 		await SaveSystem.Saved
 		print("Saved All Game Data Passed")
-#		print("After GameInfoDict: " + str(SaveSystem.GameInfoDict))
+		print("After GameInfoDict: " + str(SaveSystem.GameInfoDict))
 	#	print("GameInfoDict PeakTotalStatPoints: " + str(SaveSystem.GameInfoDict.PeakTotalStatPoints))
 	#	await get_tree().create_timer(0.05).timeout
 	#	print("GameInfoDict CharactersDied: " + str(SaveSystem.GameInfoDict.CharactersDied))
@@ -640,7 +656,7 @@ func saveFriendlyCharacters() -> void:
 #	var LcharacterArray: Array = friendlyPartyContainer.characters.filter(func(object): return is_instance_valid(object))
 	friendlyPartyContainer.characters = friendlyPartyContainer.characters.filter(func(object): return is_instance_valid(object))
 #	print("(check6) Friendly size = " + str(enemyPartyContainer.characters.size()))
-	for i in friendlyPartyContainer.characters.size():
+	for i in friendlyPartyContainer.characters.size(): # Any more issues switch to: for character in friendlyPartyContainer.get_children(), these use character than getting array index
 		var newSavedCharacterData: Dictionary = SaveSystem.CharacterInfoDict.duplicate(true)
 		if !(i > friendlyPartyContainer.characters.size()):
 			if is_instance_valid(friendlyPartyContainer.characters[i]):
@@ -884,8 +900,9 @@ func goThroughQueuedAOEArray() -> void:
 		await get_tree().create_timer(0.1).timeout
 	
 	while enemyPartyContainer.AnyDeadCharacter() or friendlyPartyContainer.AnyDeadCharacter():
-		print("Character Animation has no finished yet!")
+		print("The dead are still on field!")
 		await get_tree().create_timer(0.1).timeout
+	
 	
 	while enemyPartyContainer.isSpawningCharacter or friendlyPartyContainer.isSpawningCharacter:
 		print("Characters Spawning in!")

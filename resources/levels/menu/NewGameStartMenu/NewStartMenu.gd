@@ -34,11 +34,11 @@ var selectorInitialInventory: InventorySystem
 var selectorInventory: InventorySystem
 
 #---[ Item Containers ]---
-@onready var chooseCharacterList: ItemList = get_node("Lists/ChooseCharacterList")
-@onready var chooseInventoryList: ItemList = get_node("Lists/ChooseInventoryList")
-@onready var finalCharacterList: ItemList = get_node("Lists/FinalCharacterList")
-@onready var finalInventoryList: ItemList = get_node("Lists/FinalInventoryList")
-@onready var finalUpkeepList: ItemList = get_node("Lists/UpkeepList")
+@onready var chooseCharacterList: ItemList = $Lists/TabContainer/Characters/ChooseCharacterList
+@onready var chooseInventoryList: ItemList = $Lists/TabContainer/Items/ChooseInventoryList
+@onready var finalCharacterList: ItemList = $Lists/FinalCharacterList
+@onready var finalInventoryList: ItemList = $Lists/FinalInventoryList
+@onready var finalUpkeepList: ItemList = $Lists/UpkeepList
 
 @export var choosingInventorySystem: InventorySystem
 @export var finalInventorySystem: InventorySystem
@@ -206,7 +206,7 @@ func UpdateCharacterChooseListVisual() -> void:
 		var Lcharacter: BaseCharacter = chooseCharacterListArray[i]
 		Lcharacter.stats.getTotalStatPoints()
 		chooseCharacterList.add_item(Lcharacter.id, Lcharacter.profilePicture)
-		chooseCharacterList.set_item_tooltip(i, Lcharacter.characterDescription + "\n" + "Value: " + str(Lcharacter.stats.totalStatPoints + Lcharacter.stats.fillerStatPoint))
+		chooseCharacterList.set_item_tooltip(i, Lcharacter.characterDescription + "\n" + "Upkeep: " + str(Lcharacter.ResourceNeeded.itemName) + " x" + str(Lcharacter.ResourceNeededNumber) + "\n" + "Value: " + str(Lcharacter.stats.totalStatPoints + Lcharacter.stats.fillerStatPoint))
 		await get_tree().create_timer(0.01).timeout
 
 func UpdateInventoryChooseListVisual() -> void:

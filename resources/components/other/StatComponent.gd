@@ -134,6 +134,7 @@ func changeEXP(amount: float) -> void:
 		else:
 			push_warning("There's no level up effect")
 		
+		await get_tree().create_timer(0.001).timeout
 	emit_signal("statChanged")
 	emit_signal("experienceChanged")
 

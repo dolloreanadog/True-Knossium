@@ -1,7 +1,7 @@
 extends Node
 
 var filePathForSaveData := "user://SaveData.save"
-var gameSaveVersion: String = "0.86.01"
+var gameSaveVersion: String = "0.86.1"
 var placeholderDictionary: Dictionary
 
 signal Saved
@@ -170,16 +170,24 @@ func clearSaveThroughEmptying() -> void:
 	"PeakTotalStatPoints": 0,
 	"CharactersDied": 0,
 	"CharactersSurrendered": 0,
-	"PlayerTotalDamage": 0.0,
-	"PlayerTotalSupport": 0.0,
-	"EnemyTotalDamage": 0.0,
-	"EnemyTotalSupport": 0.0,
+	"PlayerTotalDamage": 0,
+	"PlayerTotalSupport": 0,
+	"EnemyTotalDamage": 0,
+	"EnemyTotalSupport": 0,
 	"PlayerTotalAOEUsed": 0,
 	"EnemyTotalAOEUsed": 0,
-	"ExperienceGained": 0.0,
+	"ExperienceGained": 0,
 	"LevelsGained": 0,
+	"ShopAppeared": 0,
+	"AreaAppeared": 0,
+	"TradeCompleted": 0,
+	"TradeFailed": 0,
 	"Battles": 0,
 	"Turns": 0,
+	
+	"TotalStatPoints": [],
+	"CharactersFielded": [],
+	"AOEFielded": [],
 	
 	"DungeonLevel": "res://resources/levels/ingame/dungeon/Dungeon.tscn",
 	

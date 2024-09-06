@@ -1,6 +1,10 @@
-[gd_resource type="Theme" load_steps=2 format=3 uid="uid://3hixtirfxqq3"]
+[gd_resource type="Theme" load_steps=3 format=3 uid="uid://3hixtirfxqq3"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_b0f7f"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1q7m5"]
+bg_color = Color(0.819608, 0.47451, 0.631373, 1)
+
 [resource]
 Button/styles/focus = SubResource("StyleBoxEmpty_b0f7f")
+TooltipPanel/styles/panel = SubResource("StyleBoxFlat_1q7m5")

@@ -190,7 +190,7 @@ func _input(event: InputEvent) -> void:
 			get_node("PlotArea/Coordinate").text = str([snappedf(point.x, 0.1), snappedf(point.y, 0.1)])
 
 ## Add plot to the graph and return an instance of plot.
-func add_plot_item(label = "", color = Color.WHITE, width = 1.0) -> PlotItem:
+func add_plot_item(label: String = "", color: Color = Color.WHITE, width: float = 1.0) -> PlotItem:
 	var plot = PlotItem.new(self, label, color, width)
 	_plots.append(plot)
 	_update_legend()

@@ -159,6 +159,10 @@ func addCharacter(character: BaseCharacter, startingExperience: float, spawnedFr
 func onAllCharactersDead():
 	print(str(self) + ": Checking if characters are dead")
 #	print(str(self) + ": Checking if characters are dead List: " + str(characters))
+	while AnyCharacterSurrendered():
+		print("Friendly has no finished surrendering yet!")
+		await get_tree().create_timer(0.1).timeout
+	await get_tree().create_timer(0.3).timeout
 	if totalStatPoints <= 0 && dungeon.specialWindowContainer.get_child_count() == 0 && system.turn != 1:
 		print(str(self) + ": All Characters Died")
 		if isFriendly:

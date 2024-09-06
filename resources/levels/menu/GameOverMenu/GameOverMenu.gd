@@ -28,9 +28,9 @@ extends Node2D
 @onready var TradesFailedLabel: Label = $StatsPanel/HBoxContainer/VBoxContainer4/TradesFailedLabel
 @onready var TradesCompletedLabel: Label = $StatsPanel/HBoxContainer/VBoxContainer4/TradesCompletedLabel
 
-@onready var CharactersFieldedGraph = $"Panel/TabContainer/Characters Fielded/Graph2D"
-@onready var TotalStatPointsGraph = $"Panel/TabContainer/Total Stat Points/Graph2D"
-@onready var AOEFieldedGraph = $"Panel/TabContainer/AOE Fielded/Graph2D"
+@onready var CharactersFieldedGraph: Graph2D = $"Panel/TabContainer/Characters Fielded/Graph2D"
+@onready var TotalStatPointsGraph: Graph2D = $"Panel/TabContainer/Total Stat Points/Graph2D"
+@onready var AOEFieldedGraph: Graph2D = $"Panel/TabContainer/AOE Fielded/Graph2D"
 
 @onready var UnlockedList: ItemList = $UnlockedPanel/UnlockedList
 var unlockedListArray: Array
@@ -77,9 +77,42 @@ func loadSaveData() -> void:
 	AreasAppearedLabel.text = "Area appeared " + str(SaveSystem.GameInfoDict.AreaAppeared)
 	TradesFailedLabel.text = "Trade failed " + str(SaveSystem.GameInfoDict.TradeCompleted) + " times"
 	TradesCompletedLabel.text = "Trade completed " + str(SaveSystem.GameInfoDict.TradeFailed) + " times"
-	await get_tree().create_timer(0.5).timeout
-	SaveSystem.clearSaveThroughEmptying()
-	SaveSystem.clearSaveThroughDeletion()
+	var confirm: bool = await UpdateCharts()
+	if confirm:
+		await get_tree().create_timer(0.5).timeout
+		SaveSystem.clearSaveThroughEmptying()
+		SaveSystem.clearSaveThroughDeletion()
+	else:
+		assert(false, "failed to update chart")
+
+func UpdateCharts() -> bool:
+	var charactersFieldedPlot: PlotItem = CharactersFieldedGraph.add_plot_item("", Color.WHITE, 1.5)
+	var totalStatPointsPlot: PlotItem = TotalStatPointsGraph.add_plot_item("", Color.WHITE, 1.5)
+	var AOEFieldedPlot: PlotItem = AOEFieldedGraph.add_plot_item("", Color.WHITE, 1.5)
+	
+	for vector in SaveSystem.GameInfoDict.TotalStatPoints:
+		totalStatPointsPlot.add_point(vector)
+		if TotalStatPointsGraph.x_max < vector.x:
+			TotalStatPointsGraph.x_max = vector.x
+		if TotalStatPointsGraph.y_max < vector.y:
+			TotalStatPointsGraph.y_max = vector.y
+		await get_tree().create_timer(0.001).timeout
+	for vector in SaveSystem.GameInfoDict.CharactersFielded:
+		charactersFieldedPlot.add_point(vector)
+		if CharactersFieldedGraph.x_max < vector.x:
+			CharactersFieldedGraph.x_max = vector.x
+		if CharactersFieldedGraph.y_max < vector.y:
+			CharactersFieldedGraph.y_max = vector.y
+		await get_tree().create_timer(0.001).timeout
+	for vector in SaveSystem.GameInfoDict.AOEFielded:
+		AOEFieldedPlot.add_point(vector)
+		if AOEFieldedGraph.x_max < vector.x:
+			AOEFieldedGraph.x_max = vector.x
+		if AOEFieldedGraph.y_max < vector.y:
+			AOEFieldedGraph.y_max = vector.y
+		await get_tree().create_timer(0.001).timeout
+	return true
+
 
 func visualizeUnlockedList() -> void:
 	UnlockedList.clear()

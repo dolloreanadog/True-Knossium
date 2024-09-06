@@ -75,13 +75,13 @@ func AnyAOEAnimationPlaying() -> bool:
 func AnyDeadCharacter() -> bool:
 	var isAnyAlreadyDied: bool = false
 	if get_child_count() != 0:
-		isAnyAlreadyDied = dungeon.enemyPartyContainer.get_children().any(func(object: BaseCharacter): return object.stats.alreadyDied)
+		isAnyAlreadyDied = get_children().any(func(object: BaseCharacter): return object.stats.alreadyDied)
 	return isAnyAlreadyDied
 
 func AnyCharacterSurrendered() -> bool:
 	var isAnySurrendered: bool = false
 	if get_child_count() != 0:
-		isAnySurrendered = dungeon.enemyPartyContainer.get_children().any(func(object: BaseCharacter): return object.stats.moraleAlreadyBroken)
+		isAnySurrendered = get_children().any(func(object: BaseCharacter): return object.stats.moraleAlreadyBroken)
 	return isAnySurrendered
 
 ## Grabs children, should all be on BaseCharacter

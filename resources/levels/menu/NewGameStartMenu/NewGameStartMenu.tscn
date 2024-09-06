@@ -48,24 +48,6 @@ anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="ChooseCharacterList" type="ItemList" parent="Lists"]
-layout_mode = 0
-offset_left = 64.0
-offset_top = 128.0
-offset_right = 384.0
-offset_bottom = 1024.0
-allow_reselect = true
-fixed_icon_size = Vector2i(28, 28)
-
-[node name="ChooseInventoryList" type="ItemList" parent="Lists"]
-layout_mode = 0
-offset_left = 448.0
-offset_top = 128.0
-offset_right = 768.0
-offset_bottom = 1024.0
-allow_reselect = true
-fixed_icon_size = Vector2i(28, 28)
-
 [node name="FinalCharacterList" type="ItemList" parent="Lists"]
 layout_mode = 0
 offset_left = 1536.0
@@ -95,24 +77,6 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_b0hky")
 allow_reselect = true
 fixed_icon_size = Vector2i(28, 28)
 
-[node name="Label" type="Label" parent="Lists"]
-layout_mode = 0
-offset_left = 64.0
-offset_top = 96.0
-offset_right = 384.0
-offset_bottom = 128.0
-text = "Characters"
-horizontal_alignment = 1
-
-[node name="Label2" type="Label" parent="Lists"]
-layout_mode = 0
-offset_left = 448.0
-offset_top = 96.0
-offset_right = 768.0
-offset_bottom = 128.0
-text = "Items"
-horizontal_alignment = 1
-
 [node name="Label3" type="Label" parent="Lists"]
 layout_mode = 0
 offset_left = 1536.0
@@ -130,6 +94,35 @@ offset_right = 1472.0
 offset_bottom = 128.0
 text = "Items"
 horizontal_alignment = 1
+
+[node name="TabContainer" type="TabContainer" parent="Lists"]
+layout_mode = 0
+offset_left = 64.0
+offset_top = 96.0
+offset_right = 768.0
+offset_bottom = 1024.0
+
+[node name="Characters" type="TabBar" parent="Lists/TabContainer"]
+visible = false
+layout_mode = 2
+
+[node name="ChooseCharacterList" type="ItemList" parent="Lists/TabContainer/Characters"]
+layout_mode = 0
+offset_top = 1.0
+offset_right = 704.0
+offset_bottom = 897.0
+allow_reselect = true
+fixed_icon_size = Vector2i(50, 50)
+
+[node name="Items" type="TabBar" parent="Lists/TabContainer"]
+layout_mode = 2
+
+[node name="ChooseInventoryList" type="ItemList" parent="Lists/TabContainer/Items"]
+layout_mode = 0
+offset_right = 704.0
+offset_bottom = 896.0
+allow_reselect = true
+fixed_icon_size = Vector2i(50, 50)
 
 [node name="MiddleInfo" type="Control" parent="."]
 layout_mode = 3
@@ -420,10 +413,10 @@ offset_top = 0.0
 offset_right = 1920.0
 offset_bottom = 1080.0
 
-[connection signal="item_selected" from="Lists/ChooseCharacterList" to="." method="OnChooseCharacterListItemSelected"]
-[connection signal="item_selected" from="Lists/ChooseInventoryList" to="." method="OnChooseInventoryListItemSelected"]
 [connection signal="item_selected" from="Lists/FinalCharacterList" to="." method="OnFinalCharacterListItemSelected"]
 [connection signal="item_selected" from="Lists/FinalInventoryList" to="." method="OnFinalInventoryListItemSelected"]
+[connection signal="item_selected" from="Lists/TabContainer/Characters/ChooseCharacterList" to="." method="OnChooseCharacterListItemSelected"]
+[connection signal="item_selected" from="Lists/TabContainer/Items/ChooseInventoryList" to="." method="OnChooseInventoryListItemSelected"]
 [connection signal="pressed" from="MiddleInfo/StartGameButton" to="." method="StartGameButtonPressed"]
 [connection signal="pressed" from="MiddleInfo/ResetListsButton" to="." method="ResetListsButtonPressed"]
 [connection signal="pressed" from="MiddleInfo/BackToMenuButton" to="." method="BackToMenuButtonPressed"]

@@ -380,6 +380,7 @@ func checkForAcceptance() -> void:
 
 func raiseStrike() -> void:
 	strikes += 1
+	SaveSystem.GameInfoDict.TradeFailed += 1
 	strikesLabel.text = "Strikes: " + str(strikes) + "/" + str(maxStrikes)
 	buttonCooldown()
 	if strikes >= maxStrikes:
@@ -389,7 +390,6 @@ func buttonCooldown() -> void:
 	# How much time cooldown is.
 	var time: float = buttonCooldownTime
 	
-	SaveSystem.GameInfoDict.TradeFailed += 1
 	
 	confirmButton.disabled = true
 	while time > 0:

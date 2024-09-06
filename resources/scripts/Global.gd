@@ -8,7 +8,7 @@ var previousScene: String
 var filePathForProgressionData := "user://ProgressionData.save"
 var filePathForNewProgressionData := "user://NewProgressionData.save"
 var filePathForLoadoutsData := "user://Loadouts.save"
-var gameProgressionVersion: String = "0.82"
+var gameProgressionVersion: String = "0.83"
 
 # Things to bring into the in game through new game start menu
 var newGameCharacterInfo: Array

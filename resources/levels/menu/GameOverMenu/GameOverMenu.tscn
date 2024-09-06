@@ -57,6 +57,10 @@ text = "Total Turns:"
 layout_mode = 2
 text = "Peak Total Stat Points: "
 
+[node name="Label" type="Label" parent="StatsPanel/HBoxContainer"]
+layout_mode = 2
+text = "  "
+
 [node name="VBoxContainer2" type="VBoxContainer" parent="StatsPanel/HBoxContainer"]
 layout_mode = 2
 
@@ -79,6 +83,10 @@ text = "Total Enemy AOE Used:"
 [node name="ShopAppearedLabel" type="Label" parent="StatsPanel/HBoxContainer/VBoxContainer2"]
 layout_mode = 2
 text = "Shop Appeared "
+
+[node name="Label2" type="Label" parent="StatsPanel/HBoxContainer"]
+layout_mode = 2
+text = "  "
 
 [node name="VBoxContainer3" type="VBoxContainer" parent="StatsPanel/HBoxContainer"]
 layout_mode = 2
@@ -103,15 +111,21 @@ text = "Enemy Total Support:"
 layout_mode = 2
 text = "Areas Appeared"
 
+[node name="Label3" type="Label" parent="StatsPanel/HBoxContainer"]
+layout_mode = 2
+text = "  "
+
 [node name="VBoxContainer4" type="VBoxContainer" parent="StatsPanel/HBoxContainer"]
 layout_mode = 2
 alignment = 1
 
 [node name="TradesFailedLabel" type="Label" parent="StatsPanel/HBoxContainer/VBoxContainer4"]
+visible = false
 layout_mode = 2
 text = "Trades Failed:"
 
 [node name="TradesCompletedLabel" type="Label" parent="StatsPanel/HBoxContainer/VBoxContainer4"]
+visible = false
 layout_mode = 2
 text = "Trades Completed:"
 
@@ -161,7 +175,8 @@ anchors_preset = 0
 offset_right = 1240.0
 offset_bottom = 777.0
 script = ExtResource("2_4s0mh")
-x_max = 1.0
+x_min = 1.0
+x_max = 2.0
 x_label = "Turns"
 show_x_ticks = false
 y_label = "Characters Fielded"
@@ -174,11 +189,11 @@ layout_mode = 2
 [node name="Graph2D" type="Control" parent="Panel/TabContainer/Total Stat Points"]
 layout_mode = 3
 anchors_preset = 0
-offset_top = 32.0
 offset_right = 1240.0
-offset_bottom = 808.0
+offset_bottom = 776.0
 script = ExtResource("2_4s0mh")
-x_max = 1.0
+x_min = 1.0
+x_max = 2.0
 x_label = "Turns"
 show_x_ticks = false
 y_label = "Total Stat Points"
@@ -191,11 +206,11 @@ layout_mode = 2
 [node name="Graph2D" type="Control" parent="Panel/TabContainer/AOE Fielded"]
 layout_mode = 3
 anchors_preset = 0
-offset_top = 32.0
 offset_right = 1240.0
-offset_bottom = 808.0
+offset_bottom = 776.0
 script = ExtResource("2_4s0mh")
-x_max = 1.0
+x_min = 1.0
+x_max = 2.0
 x_label = "Turns"
 show_x_ticks = false
 y_label = "AOE Fielded"

@@ -2,7 +2,7 @@ extends Node
 
 const filePathForSettingsData := "user://SettingsData.save"
 const filePathForInputMapData := "user://InputMapData.save"
-var gameSaveVersion: String = "0.87.2"
+var gameSaveVersion: String = "0.87.3"
 
 # 1920x1080 is L
 # 1280x720 is T
@@ -135,10 +135,10 @@ func resetSettings() -> bool:
 	SetTranslationFROMOS()
 	setScreenSize(screenSize.AUTOMATIC)
 	setWindowedMode(windowMode.FULLSCREEN)
-	setMasterVolume(1)
-	setMusicVolume(0.15)
-	setCharacterVolume(1)
-	setSFXVolume(1)
+	setMasterVolume(0.5)
+	setMusicVolume(0.25)
+	setCharacterVolume(0.8)
+	setSFXVolume(0.8)
 	SettingsDict.SettingsVersion = gameSaveVersion
 	SettingsDict.ChosenAOEMovementYet = true
 	SetIsTutorialNeeded(true)

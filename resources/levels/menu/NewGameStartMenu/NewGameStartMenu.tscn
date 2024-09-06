@@ -103,7 +103,6 @@ offset_right = 768.0
 offset_bottom = 1024.0
 
 [node name="Characters" type="TabBar" parent="Lists/TabContainer"]
-visible = false
 layout_mode = 2
 
 [node name="ChooseCharacterList" type="ItemList" parent="Lists/TabContainer/Characters"]
@@ -115,6 +114,7 @@ allow_reselect = true
 fixed_icon_size = Vector2i(50, 50)
 
 [node name="Items" type="TabBar" parent="Lists/TabContainer"]
+visible = false
 layout_mode = 2
 
 [node name="ChooseInventoryList" type="ItemList" parent="Lists/TabContainer/Items"]

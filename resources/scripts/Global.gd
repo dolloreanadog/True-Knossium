@@ -8,7 +8,7 @@ var previousScene: String
 var filePathForProgressionData := "user://ProgressionData.save"
 var filePathForNewProgressionData := "user://NewProgressionData.save"
 var filePathForLoadoutsData := "user://Loadouts.save"
-var gameProgressionVersion: String = "0.83"
+var gameProgressionVersion: String = "0.83.04"
 
 # Things to bring into the in game through new game start menu
 var newGameCharacterInfo: Array
@@ -120,6 +120,7 @@ func clearProgressionDict() -> void:
 		"BattlesWon": 0, # In a single game
 	}
 	
+	loadoutsListDict.Loudouts.clear()
 	loadoutsListDict = {
 		"Loudouts": []
 	}
@@ -136,6 +137,8 @@ func clearNewProgressionDict() -> void:
 func clearProgressThroughDeletion() -> void:
 	if checkGlobalDataFileExists():
 		DirAccess.remove_absolute("user://ProgressionData.save")
+	if checkLoadoutsDataFileExists():
+		DirAccess.remove_absolute("user://Loadouts.save")
 
 func clearNewProgressThroughDeletion() -> void:
 	if checkNewProgressionDataFileExists():
@@ -201,6 +204,7 @@ func LoadLoadoutData() -> void:
 	else:
 		print("Loadout Data Exists!")
 		loadoutsListDict = file.get_var()
+		print(loadoutsListDict)
 		for i in loadoutsListDict.Loudouts.size():
 			loadoutsListDict.Loudouts[i].Characters = loadoutsListDict.Loudouts[i].Characters.filter(func(object): return FileAccess.file_exists(object))
 			loadoutsListDict.Loudouts[i].Items = loadoutsListDict.Loudouts[i].Items.filter(func(object): return FileAccess.file_exists(object.ItemFilePath))

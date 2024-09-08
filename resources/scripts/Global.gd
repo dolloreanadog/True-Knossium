@@ -1,6 +1,8 @@
 extends Node
 ## This script will persist between scenes
 
+var appID: String = ""
+
 @onready var loadedLoadingScreen := preload("res://resources/levels/menu/LoadingMenu/LoadingMenu.tscn")
 var loadingScreen: LoadingScreen
 var previousScene: String
@@ -51,8 +53,11 @@ var loadoutItemDict: Dictionary = {
 	"ItemAmount": 0
 }
 
+func _init() -> void:
+	Steam
+
 func _ready() -> void:
-	
+	Steam.steamInit()
 	if checkGlobalDataFileExists():
 		loadAllData()
 		checkProgressionVersion()

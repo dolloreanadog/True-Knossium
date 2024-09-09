@@ -34,8 +34,8 @@ var selectorInitialInventory: InventorySystem
 var selectorInventory: InventorySystem
 
 #---[ Item Containers ]---
-@onready var chooseCharacterList: ItemList = $Lists/TabContainer/Characters/ChooseCharacterList
-@onready var chooseInventoryList: ItemList = $Lists/TabContainer/Items/ChooseInventoryList
+@onready var chooseCharacterList: ItemList = $Lists/ChooseCharacterList
+@onready var chooseInventoryList: ItemList = $Lists/ChooseInventoryList
 @onready var finalCharacterList: ItemList = $Lists/FinalCharacterList
 @onready var finalInventoryList: ItemList = $Lists/FinalInventoryList
 @onready var finalUpkeepList: ItemList = $Lists/UpkeepList

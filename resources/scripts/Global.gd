@@ -1,7 +1,7 @@
 extends Node
 ## This script will persist between scenes
 
-var appID: String = ""
+var appID: String = "480"
 
 @onready var loadedLoadingScreen := preload("res://resources/levels/menu/LoadingMenu/LoadingMenu.tscn")
 var loadingScreen: LoadingScreen
@@ -54,7 +54,8 @@ var loadoutItemDict: Dictionary = {
 }
 
 func _init() -> void:
-	Steam
+	OS.set_environment("SteamAppID", appID)
+	OS.set_environment("SteamGameID", appID)
 
 func _ready() -> void:
 	Steam.steamInit()

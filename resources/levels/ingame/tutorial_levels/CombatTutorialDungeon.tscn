@@ -1592,7 +1592,6 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_dpxn1")
 text = "Press this to continue..."
 
 [node name="Surrender" type="Control" parent="TutorialContainer"]
-visible = false
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
@@ -1622,7 +1621,7 @@ offset_bottom = 954.0
 text = "When a character's morale hits 0 they surrender.
 When an enemy character surrenders you have a choice of either picking yes or no.
 Yes: The character will defect to your side.
-No: The character will die & give experience.
+No: The character will die, give experience, & drops.
 However as it can happen to them, it can happen to you."
 autowrap_mode = 3
 

@@ -25,6 +25,7 @@ var system: TurnSystem
 #--[ Child Nodes ]--
 ## AOE sprite, not owner sprite animation
 @export var spriteAnimations: AnimatedSprite2D
+@export var audioPlayer: AudioStreamPlayer2D
 @onready var collisionVisualizer: MeshInstance2D = get_node("MeshInstance2D")
 @onready var button: Button = get_node("Button")
 
@@ -91,6 +92,8 @@ func _ready() -> void:
 	mainColor = collisionVisualizer.modulate
 	#system.connect("OnNewTurn", NewTurnSignaled)
 	
+	if is_instance_valid(audioPlayer):
+		audioPlayer.set_bus("SFX")
 	
 	self.z_index = 1
 
@@ -317,6 +320,8 @@ func attackStats(body: BaseCharacter) -> void:
 func animationActivate() -> void:
 	if is_instance_valid(spriteAnimations):
 		spriteAnimations.play("active")
+	if is_instance_valid(audioPlayer):
+		audioPlayer.play()
 
 func setVisbility(visibility: bool) -> void:
 	collisionVisualizer.set_visible(visibility)

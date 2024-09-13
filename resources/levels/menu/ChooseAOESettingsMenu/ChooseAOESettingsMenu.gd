@@ -5,6 +5,7 @@ extends Node2D
 func _ready() -> void:
 	$ConfirmButton.disabled = true
 	$ConfirmButtonWarning.hide()
+	SettingsSystem.SetTranslationFROMOS()
 
 func ConfirmButtonPressed() -> void:
 	SettingsSystem.clearSettingsThroughDeletion()

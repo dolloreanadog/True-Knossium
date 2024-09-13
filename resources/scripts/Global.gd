@@ -1,7 +1,7 @@
 extends Node
 ## This script will persist between scenes
 
-var appID: String = "480"
+var appID: String = "3224590"
 
 @onready var loadedLoadingScreen := preload("res://resources/levels/menu/LoadingMenu/LoadingMenu.tscn")
 var loadingScreen: LoadingScreen

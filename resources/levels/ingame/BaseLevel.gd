@@ -144,9 +144,9 @@ func loadConfirmation() -> bool:
 func EndTurnButtonHighlight(boolean: bool) -> void:
 	highlightEndTurn = boolean
 	while highlightEndTurn:
-		await create_tween().tween_property(endTurnButton, "modulate", Color(1, 0, 0), 1).finished
-		await create_tween().tween_property(endTurnButton, "modulate", Color(1, 1, 1), 1).finished
-		await get_tree().create_timer(2).timeout
+		await create_tween().tween_property(endTurnButton, "modulate", Color(1, 0, 0), 0.5).finished
+		await create_tween().tween_property(endTurnButton, "modulate", Color(1, 1, 1), 0.5).finished
+#		await get_tree().create_timer(1).timeout
 	await create_tween().tween_property(endTurnButton, "modulate", Color(1, 1, 1), 1).finished
 
 func AnyAOEStillLeft() -> bool:

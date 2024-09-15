@@ -86,9 +86,9 @@ func loadSaveData() -> void:
 		assert(false, "failed to update chart")
 
 func UpdateCharts() -> bool:
-	var charactersFieldedPlot: PlotItem = CharactersFieldedGraph.add_plot_item(" ", Color.WHITE, 1.5)
-	var totalStatPointsPlot: PlotItem = TotalStatPointsGraph.add_plot_item(" ", Color.WHITE, 1.5)
-	var AOEFieldedPlot: PlotItem = AOEFieldedGraph.add_plot_item(" ", Color.WHITE, 1.5)
+	var charactersFieldedPlot: PlotItem = CharactersFieldedGraph.add_plot_item(" ", Color.WHITE, 2)
+	var totalStatPointsPlot: PlotItem = TotalStatPointsGraph.add_plot_item(" ", Color.WHITE, 2)
+	var AOEFieldedPlot: PlotItem = AOEFieldedGraph.add_plot_item(" ", Color.WHITE, 2)
 	
 	for vector in SaveSystem.GameInfoDict.TotalStatPoints:
 		totalStatPointsPlot.add_point(vector)

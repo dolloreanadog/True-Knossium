@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://by4b3qkfgq1e2"]
+[gd_scene load_steps=32 format=3 uid="uid://by4b3qkfgq1e2"]
 
 [ext_resource type="Script" path="res://resources/entities/characters_items/character/BaseCharacter.gd" id="1_r68vv"]
 [ext_resource type="Resource" uid="uid://3i41wk26jwk2" path="res://resources/entities/inventory_items/dev_items/DevGold.tres" id="2_f1k35"]
@@ -6,6 +6,7 @@
 [ext_resource type="SpriteFrames" uid="uid://bcr2f7fck2lv3" path="res://assets/sprites/character/dev/DevTankSprite.tres" id="3_3l11k"]
 [ext_resource type="AudioStream" uid="uid://86y3l43bkqph" path="res://assets/audio/music/dev/character/BernisEntorevolution.mp3" id="4_nxelk"]
 [ext_resource type="Script" path="res://resources/components/other/StatComponent.gd" id="5_bcgar"]
+[ext_resource type="Shader" path="res://resources/shaders/outline_shader/Outline.gdshader" id="5_w2jq6"]
 [ext_resource type="Script" path="res://resources/components/actions/BaseAction.gd" id="6_gqvjb"]
 [ext_resource type="PackedScene" uid="uid://u172rb6a25bx" path="res://resources/entities/characters_items/aoe/melee_aoe/swing_aoe/SwingAOE.tscn" id="7_x80r1"]
 [ext_resource type="PackedScene" uid="uid://d2hgrnkks06qa" path="res://resources/entities/characters_items/aoe/tank_aoe/fortify_aoe/FortifyAOE.tscn" id="7_ytqte"]
@@ -22,6 +23,12 @@
 [ext_resource type="PackedScene" uid="uid://bcp72aooxqkle" path="res://resources/components/other/FX/defense_changed_fx/default_defense_changed/DefaultDefenseChangedFX.tscn" id="18_e5eu4"]
 [ext_resource type="PackedScene" uid="uid://butll8uw2kt72" path="res://resources/components/other/FX/attack_changed_fx/default_attack_changed/DefaultAttackChangedFX.tscn" id="19_a3vct"]
 [ext_resource type="PackedScene" uid="uid://gslyjo525r5f" path="res://resources/components/other/FX/morale_changed_fx/default_morale_changed/DefaultMoraleChangedFX.tscn" id="20_cmhjc"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_rlv5a"]
+shader = ExtResource("5_w2jq6")
+shader_parameter/outline_color = Color(1, 1, 1, 1)
+shader_parameter/progress = 1.0
+shader_parameter/width = 0.001
 
 [sub_resource type="Animation" id="Animation_7626j"]
 length = 0.001
@@ -188,6 +195,7 @@ action1 = NodePath("Action1Component")
 action2 = NodePath("Action2Component")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+material = SubResource("ShaderMaterial_rlv5a")
 scale = Vector2(0.12, 0.12)
 sprite_frames = ExtResource("3_3l11k")
 animation = &"idle1"
@@ -199,6 +207,7 @@ libraries = {
 }
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 shape = SubResource("RectangleShape2D_x2m2k")
 
 [node name="LevelLabel" type="Label" parent="."]

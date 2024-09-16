@@ -95,7 +95,7 @@ func _ready() -> void:
 	if is_instance_valid(audioPlayer):
 		audioPlayer.set_bus("SFX")
 	
-	self.z_index = 1
+	self.z_index = 100
 
 
 func _process(_delta) -> void:

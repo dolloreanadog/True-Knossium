@@ -107,7 +107,7 @@ func _ready():
 	print("is stopControl Visible: " + str(stopControl.visible))
 	print("is stopControl2 Visible: " + str(stopControl2.visible))
 	Global.StartLoadingScreen(false)
-	Global.unlockingDisabled = true
+	Global.unlockingDisabled = false
 	print("1 The hell? " + str(Global.newProgressionDict.ItemsUnlocked))
 	stopControlVisible(true, 1)
 	AudioServer.set_bus_mute(3, true)

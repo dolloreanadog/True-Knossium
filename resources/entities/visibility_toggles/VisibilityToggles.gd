@@ -183,10 +183,10 @@ func modulateDefenseView():
 #			var Bcoloration = characterStats.currentDefense / characterStats.defense
 			
 			var Rcoloration = remap(characterStats.currentDefense, 0, characterStats.defense, 1, 0)
-			var Bcoloration = remap(characterStats.currentDefense, 0, characterStats.defense, 0, 1)
+			var Gcoloration = remap(characterStats.currentDefense, 0, characterStats.defense, 0, 1)
 			
 			character.activateLevelLabel(false)
-			character.modulate = Color(clampf(Rcoloration, 0, 1), 0, clampf(Bcoloration, 0, 1))
+			character.modulate = Color(clampf(Rcoloration, 0, 1), clampf(Gcoloration, 0, 1), 0)
 		
 	getPartyContainersInfo()
 

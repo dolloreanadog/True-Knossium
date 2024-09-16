@@ -6,8 +6,11 @@ var tutorialIndex: int = -1
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	var inventoryMenuButton = inventoryMenu.get_node("ColorRect/ExitButton")
-	inventoryMenuButton.connect("pressed", TutorialIndexSwitch)
+	
+	var inventoryMenuButton1 = inventoryMenu.get_node("ColorRect/SpawnAOEButton")
+	var inventoryMenuButton2 = inventoryMenu.get_node("ColorRect/SpawnAllAOEButton")
+	inventoryMenuButton1.connect("pressed", TutorialIndexSwitch)
+	inventoryMenuButton2.connect("pressed", TutorialIndexSwitch)
 	TutorialIndexSwitch()
 
 func TutorialIndexSwitch() -> void:
@@ -20,6 +23,7 @@ func TutorialIndexSwitch() -> void:
 			$Part1.hide()
 			$Part2.show()
 		2:
+			dungeon.inventoryUI.Exit()
 			dungeon.SwitchTutorialStep(dungeon.tutorialSteps.PARTY)
 			self.queue_free()
 

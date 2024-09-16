@@ -1,10 +1,11 @@
-[gd_scene load_steps=66 format=3 uid="uid://ubqjl7xo4jo1"]
+[gd_scene load_steps=67 format=3 uid="uid://ubqjl7xo4jo1"]
 
 [ext_resource type="Script" path="res://resources/levels/ingame/tutorial_levels/CombatTutorialDungeon.gd" id="1_mmmgc"]
 [ext_resource type="Script" path="res://resources/entities/AreaAOEDenial/BaseAreaAOEDenial.gd" id="2_57bap"]
 [ext_resource type="Resource" uid="uid://3i41wk26jwk2" path="res://resources/entities/inventory_items/dev_items/DevGold.tres" id="2_sxysn"]
 [ext_resource type="Resource" uid="uid://bjlgar33m6xrh" path="res://resources/entities/inventory_items/dev_items/ExperiencePotion.tres" id="3_ue40e"]
 [ext_resource type="Script" path="res://resources/levels/ingame/dungeon/StatPoints.gd" id="3_upymc"]
+[ext_resource type="Texture2D" uid="uid://daejd6gk8oce4" path="res://assets/ui_elements/party_seperators/PartyAreaSeperator.png" id="4_ceptr"]
 [ext_resource type="PackedScene" uid="uid://bwmi2u27htu4s" path="res://resources/entities/visibility_toggles/VisibilityToggles.tscn" id="4_wo2ys"]
 [ext_resource type="PackedScene" uid="uid://dacl7cdqcmb3c" path="res://resources/entities/button_invisibility/ButtonInvisibilityToggles.tscn" id="5_sd2mv"]
 [ext_resource type="Script" path="res://resources/levels/ingame/dungeon/AOEAutoPlacementButton.gd" id="6_lpwyv"]
@@ -162,6 +163,11 @@ offset_top = -8.0
 offset_right = 1928.0
 offset_bottom = 1088.0
 color = Color(0.25098, 0.215686, 0.0156863, 1)
+
+[node name="PartyAreaSeperator" type="Sprite2D" parent="Visuals/Node2D"]
+position = Vector2(964, 511)
+scale = Vector2(1.928, 1.284)
+texture = ExtResource("4_ceptr")
 
 [node name="OutOfBoundsAOEDenial" type="Area2D" parent="."]
 script = ExtResource("2_57bap")
@@ -669,7 +675,7 @@ losingMusic = ExtResource("23_vakcf")
 
 [node name="InventoryMenu" parent="." node_paths=PackedStringArray("inventorySystem", "spawnAreaSupport", "spawnAreaOffensive") instance=ExtResource("24_f1ghq")]
 visible = false
-z_index = 1
+z_index = 101
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -685,18 +691,19 @@ spawnAreaOffensive = NodePath("../AOEContainers/AOESpawnAreaAttack")
 
 [node name="PartyMenu" parent="." node_paths=PackedStringArray("partyContainer") instance=ExtResource("25_wjsot")]
 visible = false
-z_index = 1
+z_index = 101
 partyContainer = NodePath("../PartyContainers/FriendlyPartyContainer")
 
 [node name="InGameMenu" parent="." instance=ExtResource("26_g6rwu")]
 visible = false
-z_index = 1
+z_index = 101
 offset_left = 960.0
 offset_top = 540.0
 offset_right = 960.0
 offset_bottom = 540.0
 
 [node name="SpecialWindowContainer" type="Control" parent="."]
+z_index = 101
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
@@ -706,13 +713,13 @@ offset_bottom = 40.0
 visible = false
 
 [node name="TutorialContainer" type="Control" parent="."]
+z_index = 101
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
 [node name="Intro" type="Control" parent="TutorialContainer"]
-visible = false
 anchors_preset = 0
 offset_right = 1928.0
 offset_bottom = 1088.0
@@ -878,6 +885,7 @@ offset_right = 40.0
 offset_bottom = 40.0
 
 [node name="ColorRect" type="ColorRect" parent="TutorialContainer/Inventory/Part2"]
+z_index = 101
 layout_mode = 0
 offset_top = -8.0
 offset_right = 528.0
@@ -885,6 +893,7 @@ offset_bottom = 1088.0
 color = Color(0, 0, 0, 0.737255)
 
 [node name="ColorRect2" type="ColorRect" parent="TutorialContainer/Inventory/Part2"]
+z_index = 101
 layout_mode = 0
 offset_left = 528.0
 offset_top = 840.0
@@ -893,6 +902,7 @@ offset_bottom = 1088.0
 color = Color(0, 0, 0, 0.737255)
 
 [node name="ColorRect3" type="ColorRect" parent="TutorialContainer/Inventory/Part2"]
+z_index = 101
 layout_mode = 0
 offset_left = 528.0
 offset_top = -8.0
@@ -901,6 +911,7 @@ offset_bottom = 248.0
 color = Color(0, 0, 0, 0.737255)
 
 [node name="ColorRect4" type="ColorRect" parent="TutorialContainer/Inventory/Part2"]
+z_index = 101
 layout_mode = 0
 offset_left = 1392.0
 offset_top = -8.0
@@ -909,6 +920,7 @@ offset_bottom = 1088.0
 color = Color(0, 0, 0, 0.737255)
 
 [node name="Label" type="Label" parent="TutorialContainer/Inventory/Part2"]
+z_index = 101
 layout_mode = 0
 offset_left = 8.0
 offset_top = 256.0
@@ -918,6 +930,7 @@ text = "This is a list containing all our items.
 Can click on them to see more information & possibly use them. -->"
 
 [node name="Label2" type="Label" parent="TutorialContainer/Inventory/Part2"]
+z_index = 101
 layout_mode = 0
 offset_left = 1400.0
 offset_top = 344.0
@@ -925,15 +938,26 @@ offset_right = 1752.0
 offset_bottom = 370.0
 text = "<-- Our Name, amount, & value each item."
 
-[node name="Label3" type="Label" parent="TutorialContainer/Inventory/Part2"]
+[node name="Label6" type="Label" parent="TutorialContainer/Inventory/Part2"]
+z_index = 101
 layout_mode = 0
 offset_left = 1400.0
-offset_top = 432.0
-offset_right = 1766.0
-offset_bottom = 458.0
-text = "<-- Our two button where you can use the item."
+offset_top = 264.0
+offset_right = 1752.0
+offset_bottom = 290.0
+text = "<-- This way to exit the menu."
+
+[node name="Label3" type="Label" parent="TutorialContainer/Inventory/Part2"]
+z_index = 101
+layout_mode = 0
+offset_left = 1400.0
+offset_top = 408.0
+offset_right = 1888.0
+offset_bottom = 434.0
+text = "<-- These two button where you can use the item."
 
 [node name="Label4" type="Label" parent="TutorialContainer/Inventory/Part2"]
+z_index = 101
 layout_mode = 0
 offset_left = 1400.0
 offset_top = 656.0
@@ -942,12 +966,22 @@ offset_bottom = 682.0
 text = "<-- The description of the item"
 
 [node name="Label5" type="Label" parent="TutorialContainer/Inventory/Part2"]
+z_index = 101
 layout_mode = 0
 offset_left = 1400.0
-offset_top = 264.0
-offset_right = 1766.0
-offset_bottom = 290.0
-text = "<-- Press exit button to continue."
+offset_top = 432.0
+offset_right = 1888.0
+offset_bottom = 458.0
+text = "<-- Press use button to continue."
+
+[node name="Label7" type="Label" parent="TutorialContainer/Inventory/Part2"]
+z_index = 101
+layout_mode = 0
+offset_left = 1400.0
+offset_top = 456.0
+offset_right = 1888.0
+offset_bottom = 482.0
+text = "<-- Make sure an interactable item is selected."
 
 [node name="Party" type="Control" parent="TutorialContainer"]
 visible = false

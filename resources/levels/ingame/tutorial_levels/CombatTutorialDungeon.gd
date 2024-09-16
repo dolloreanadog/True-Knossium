@@ -40,6 +40,7 @@ func _ready():
 		Global.EndLoadingScreen()
 		stopControlVisible(false, 1)
 		SwitchTutorialStep(tutorialSteps.INTRO)
+		inventoryUI.get_node("ColorRect/ExitButton").disabled = true
 
 func SwitchTutorialStep(step: tutorialSteps):
 

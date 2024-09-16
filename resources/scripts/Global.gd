@@ -96,7 +96,7 @@ func newlyUnlockedToFullyUnlocked():
 
 ## Check if filePath doesn't exist, if not then add
 func unlockCharacter(filePath: String) -> void:
-	if unlockingDisabled:
+	if !unlockingDisabled:
 		if !(getDictCharactersUnlocked().has(filePath)):
 			getDictCharactersUnlocked().push_back(filePath)
 	#		newlyUnlockedCharacters.push_back(filePath)
@@ -106,7 +106,7 @@ func unlockCharacter(filePath: String) -> void:
 
 ## Check if filePath doesn't exist, if not then add
 func unlockItem(filePath: String) -> void:
-	if unlockingDisabled:
+	if !unlockingDisabled:
 		if !(getDictItemsUnlocked().has(filePath)):
 			getDictItemsUnlocked().push_back(filePath)
 	#		newlyUnlockedItems.push_back(filePath)
@@ -153,11 +153,20 @@ func clearNewProgressThroughDeletion() -> void:
 
 
 #--[ Save & Load Dict]--
+func array_unique(array: Array) -> Array:
+	var unique: Array = []
+	
+	for item in array:
+		if not unique.has(item):
+			unique.append(item)
+	return unique
 
 func saveAllData() -> bool:
 	print("Progression Data Saved")
+	progressionDict.CharactersUnlocked = array_unique(progressionDict.CharactersUnlocked)
 	progressionDict.CharactersUnlocked = progressionDict.CharactersUnlocked.filter(func(object): return FileAccess.file_exists(object))
 	progressionDict.ItemsUnlocked = progressionDict.ItemsUnlocked.filter(func(object): return FileAccess.file_exists(object))
+	newProgressionDict.CharactersUnlocked = array_unique(newProgressionDict.CharactersUnlocked)
 	newProgressionDict.CharactersUnlocked = newProgressionDict.CharactersUnlocked.filter(func(object): return FileAccess.file_exists(object))
 	newProgressionDict.ItemsUnlocked = newProgressionDict.ItemsUnlocked.filter(func(object): return FileAccess.file_exists(object))
 	var file := FileAccess.open_encrypted_with_pass(filePathForProgressionData, FileAccess.WRITE, "Platy1ium")

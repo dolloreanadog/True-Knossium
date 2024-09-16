@@ -223,7 +223,7 @@ autowrap_mode = 3
 
 [node name="StatComponent" type="Node" parent="."]
 script = ExtResource("5_bcgar")
-maxEXP = 12.5
+maxEXP = 14.0
 worthEXP = 10.0
 role = 3
 health = 15.0
@@ -240,10 +240,10 @@ stats = NodePath("../StatComponent")
 ActionName = "Breaker"
 animationUsed = "offensive1"
 AOE = ExtResource("7_x80r1")
-health = 3.0
+health = 2.0
 defense = 1.5
-attack = 2.0
-morale = 3.0
+attack = 1.0
+morale = 2.2
 accuracy = 0.75
 description = "An attack where when swung on an enemy, devastatingly damages their defenses."
 

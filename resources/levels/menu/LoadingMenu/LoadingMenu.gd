@@ -5,7 +5,7 @@ var keepLoading: bool = false
 var nextScene: String
 
 func _ready() -> void:
-	z_index = 100
+	z_index = 500
 
 func smoothStartLoadingMenu() -> void:
 	self.modulate = Color(1, 1, 1, 0)

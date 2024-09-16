@@ -7,14 +7,14 @@ class_name InventoryMenu
 @export var spawnAreaOffensive: BaseSpawnArea
 
 @onready var dungeon: BaseLevel = get_parent()
-@onready var itemList: ItemList = get_node("ColorRect/ItemList")
-@onready var itemPFP: TextureRect = get_node("ColorRect/Panel/ItemPFPHolder")
-@onready var itemName: Label = get_node("ColorRect/Panel/ItemName")
-@onready var itemAmount: Label = get_node("ColorRect/Panel/ItemAmount")
-@onready var itemValue: Label = get_node("ColorRect/Panel/ItemValue")
-@onready var itemDescription: Label = get_node("ColorRect/Panel/Panel2/ItemDescription")
-@onready var spawnAOEButton: Button = get_node("ColorRect/SpawnAOEButton")
-@onready var spawnAllAOEButton: Button = get_node("ColorRect/SpawnAllAOEButton")
+@onready var itemList: ItemList = $ColorRect/ItemList
+@onready var itemPFP: TextureRect = $ColorRect/Panel/ItemPFPHolder
+@onready var itemName: Label = $ColorRect/Panel/ItemName
+@onready var itemAmount: Label = $ColorRect/Panel/ItemAmount
+@onready var itemValue: Label = $ColorRect/Panel/ItemValue
+@onready var itemDescription: Label = $ColorRect/Panel/Panel2/ItemDescription
+@onready var spawnAOEButton: Button = $ColorRect/SpawnAOEButton
+@onready var spawnAllAOEButton: Button = $ColorRect/SpawnAllAOEButton
 
 var targetItem: BaseInventoryItem
 

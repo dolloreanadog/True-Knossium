@@ -187,6 +187,7 @@ offset_top = 896.0
 offset_right = 200.0
 offset_bottom = 920.0
 text = "Discord"
+uri = "https://discord.gg/q89ZV6eFpB"
 
 [node name="Label" type="Label" parent="."]
 offset_right = 432.0

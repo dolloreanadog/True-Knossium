@@ -1560,6 +1560,7 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_o7ci7")
 text = "Press this to continue..."
 
 [node name="ColorRect9" type="ColorRect" parent="TutorialContainer/Dragging"]
+layout_mode = 0
 offset_left = 592.0
 offset_right = 1328.0
 offset_bottom = 416.0

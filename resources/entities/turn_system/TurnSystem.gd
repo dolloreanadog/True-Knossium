@@ -35,6 +35,8 @@ func newBattle() -> void:
 	dungeon.difficulty.onBattleNew()
 	dungeon.EndTurnButtonHighlight(true)
 	print(str(self) + ": battles = " + str(battle))
+	Steam.setRichPresence("gameinfotext", str("Battle: " + str(battle) + " Turn: " + str(turn)))
+	Steam.setRichPresence("steam_display", "#Game")
 	
 	emit_signal("OnNewBattle")
 	print("Battle Changed")

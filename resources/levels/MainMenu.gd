@@ -17,6 +17,8 @@ func _ready() -> void:
 		$TutorialBoxContainer.show()
 	$AudioStreamPlayer.play()
 	Global.EndLoadingScreen()
+	Steam.setRichPresence("gameinfotext", str(0))
+	Steam.setRichPresence("steam_display", "#MainMenu")
 
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_WM_CLOSE_REQUEST:

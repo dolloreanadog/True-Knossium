@@ -41,6 +41,7 @@ func _ready():
 		stopControlVisible(false, 1)
 		SwitchTutorialStep(tutorialSteps.INTRO)
 		inventoryUI.get_node("ColorRect/ExitButton").disabled = true
+		Steam.setRichPresence("steam_display", "#Tutorial")
 
 func SwitchTutorialStep(step: tutorialSteps):
 

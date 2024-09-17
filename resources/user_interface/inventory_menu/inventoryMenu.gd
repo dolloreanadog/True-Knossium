@@ -55,7 +55,6 @@ func _on_item_list_item_selected(index: int) -> void:
 	updateItemInformation()
 
 func updateItemInformation() -> void:
-	
 	if targetItem.isInteractable:
 		if targetItem.amount > 0:
 			spawnAOEButton.disabled = false

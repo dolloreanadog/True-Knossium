@@ -847,7 +847,6 @@ script = ExtResource("9_0ej02")
 area = NodePath("../../AOECheckSupport")
 
 [node name="AOEInfoBox" parent="." instance=ExtResource("8_fg2bo")]
-visible = false
 anchors_preset = 12
 anchor_left = 0.0
 offset_left = 0.0

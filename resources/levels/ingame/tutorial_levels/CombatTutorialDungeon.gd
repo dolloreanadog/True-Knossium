@@ -172,3 +172,5 @@ func stopControlVisible(visibility: bool, stopControlNumber: int):
 			endTurnButton.disabled = false
 			showMenuButton.disabled = false
 			autoPlaceButton.disabled = false
+
+

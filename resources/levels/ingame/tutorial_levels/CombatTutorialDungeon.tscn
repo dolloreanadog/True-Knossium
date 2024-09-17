@@ -1,4 +1,4 @@
-[gd_scene load_steps=69 format=3 uid="uid://ubqjl7xo4jo1"]
+[gd_scene load_steps=72 format=3 uid="uid://ubqjl7xo4jo1"]
 
 [ext_resource type="Script" path="res://resources/levels/ingame/tutorial_levels/CombatTutorialDungeon.gd" id="1_mmmgc"]
 [ext_resource type="Script" path="res://resources/entities/AreaAOEDenial/BaseAreaAOEDenial.gd" id="2_57bap"]
@@ -40,6 +40,7 @@
 [ext_resource type="Script" path="res://resources/levels/ingame/tutorial_levels/AOEVisibility.gd" id="33_jmpi4"]
 [ext_resource type="Script" path="res://resources/levels/ingame/tutorial_levels/scripts/CharacterStatVisibility.gd" id="34_h57n0"]
 [ext_resource type="Script" path="res://resources/levels/ingame/tutorial_levels/scripts/Surrender.gd" id="35_pj01h"]
+[ext_resource type="Script" path="res://resources/levels/ingame/tutorial_levels/TutorialPlayer.gd" id="38_3nob4"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_q1uww"]
 size = Vector2(1920, 1152)
@@ -113,8 +114,14 @@ bg_color = Color(1, 0.176471, 0, 0.537255)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_avjsi"]
 size = Vector2(424, 104)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_c87tr"]
+size = Vector2(733, 413)
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_o7ci7"]
 bg_color = Color(1, 0.176471, 0, 0.537255)
+
+[sub_resource type="VideoStreamTheora" id="VideoStreamTheora_00xqh"]
+file = "res://assets/video/TutorialDraggingVideo.ogg"
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nug06"]
 bg_color = Color(1, 0.176471, 0, 0.537255)
@@ -412,7 +419,7 @@ offset_bottom = -56.0
 [node name="MeleeSpawnArea" type="ReferenceRect" parent="EnemySpawnArea"]
 layout_mode = 0
 offset_left = 1088.0
-offset_top = 320.0
+offset_top = 512.0
 offset_right = 1216.0
 offset_bottom = 832.0
 script = ExtResource("11_5032i")
@@ -420,7 +427,7 @@ script = ExtResource("11_5032i")
 [node name="RangedSpawnArea" type="ReferenceRect" parent="EnemySpawnArea"]
 layout_mode = 0
 offset_left = 1344.0
-offset_top = 320.0
+offset_top = 448.0
 offset_right = 1472.0
 offset_bottom = 832.0
 script = ExtResource("11_5032i")
@@ -428,7 +435,7 @@ script = ExtResource("11_5032i")
 [node name="SupportSpawnArea" type="ReferenceRect" parent="EnemySpawnArea"]
 layout_mode = 0
 offset_left = 1664.0
-offset_top = 320.0
+offset_top = 448.0
 offset_right = 1792.0
 offset_bottom = 832.0
 script = ExtResource("11_5032i")
@@ -443,7 +450,7 @@ offset_bottom = -24.0
 [node name="MeleeSpawnArea" type="ReferenceRect" parent="FriendlySpawnArea"]
 layout_mode = 0
 offset_left = 704.0
-offset_top = 320.0
+offset_top = 512.0
 offset_right = 832.0
 offset_bottom = 832.0
 script = ExtResource("11_5032i")
@@ -451,7 +458,7 @@ script = ExtResource("11_5032i")
 [node name="RangedSpawnArea" type="ReferenceRect" parent="FriendlySpawnArea"]
 layout_mode = 0
 offset_left = 448.0
-offset_top = 320.0
+offset_top = 448.0
 offset_right = 576.0
 offset_bottom = 832.0
 script = ExtResource("11_5032i")
@@ -459,7 +466,7 @@ script = ExtResource("11_5032i")
 [node name="SupportSpawnArea" type="ReferenceRect" parent="FriendlySpawnArea"]
 layout_mode = 0
 offset_left = 128.0
-offset_top = 320.0
+offset_top = 448.0
 offset_right = 256.0
 offset_bottom = 832.0
 script = ExtResource("11_5032i")
@@ -732,6 +739,7 @@ offset_right = 40.0
 offset_bottom = 40.0
 
 [node name="Intro" type="Control" parent="TutorialContainer"]
+visible = false
 anchors_preset = 0
 offset_right = 1928.0
 offset_bottom = 1088.0
@@ -1475,17 +1483,17 @@ color = Color(0, 0, 0, 0.737255)
 
 [node name="ColorRect8" type="ColorRect" parent="TutorialContainer/Dragging"]
 layout_mode = 0
-offset_left = 1288.0
+offset_left = 1328.0
 offset_top = 192.0
-offset_right = 1712.0
+offset_right = 1752.0
 offset_bottom = 296.0
 color = Color(0, 0, 0, 0.737255)
 
 [node name="Label" type="Label" parent="TutorialContainer/Dragging"]
 layout_mode = 0
-offset_left = 1288.0
+offset_left = 1328.0
 offset_top = 192.0
-offset_right = 1712.0
+offset_right = 1752.0
 offset_bottom = 296.0
 text = "Your AOEs spawn in the bottom, try moving like how you set in the beginning. Alternatively can use the \"Auto-Place AOE\" button on the right, to set AOE Automatically"
 horizontal_alignment = 1
@@ -1521,12 +1529,16 @@ position = Vector2(1696, 976)
 shape = SubResource("RectangleShape2D_avjsi")
 
 [node name="CollisionShape2D3" type="CollisionShape2D" parent="TutorialContainer/Dragging/BaseAreaAOEDenial"]
-position = Vector2(1499.75, 244)
+position = Vector2(1540, 244)
 shape = SubResource("RectangleShape2D_avjsi")
 
 [node name="CollisionShape2D4" type="CollisionShape2D" parent="TutorialContainer/Dragging/BaseAreaAOEDenial"]
 position = Vector2(380, 244)
 shape = SubResource("RectangleShape2D_avjsi")
+
+[node name="CollisionShape2D5" type="CollisionShape2D" parent="TutorialContainer/Dragging/BaseAreaAOEDenial"]
+position = Vector2(961.5, 209.5)
+shape = SubResource("RectangleShape2D_c87tr")
 
 [node name="Label4" type="Label" parent="TutorialContainer/Dragging"]
 layout_mode = 0
@@ -1546,6 +1558,23 @@ offset_right = 1624.0
 offset_bottom = 183.0
 theme_override_styles/normal = SubResource("StyleBoxFlat_o7ci7")
 text = "Press this to continue..."
+
+[node name="ColorRect9" type="ColorRect" parent="TutorialContainer/Dragging"]
+offset_left = 592.0
+offset_right = 1328.0
+offset_bottom = 416.0
+color = Color(0, 0, 0, 1)
+
+[node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="TutorialContainer/Dragging"]
+layout_mode = 0
+offset_left = 600.0
+offset_right = 1320.0
+offset_bottom = 408.0
+stream = SubResource("VideoStreamTheora_00xqh")
+autoplay = true
+expand = true
+bus = &"SFX"
+script = ExtResource("38_3nob4")
 
 [node name="AOEVisibility" type="Control" parent="TutorialContainer"]
 visible = false
@@ -1704,6 +1733,7 @@ text = "Press this to continue..."
 [connection signal="pressed" from="TutorialContainer/Party/Part2/Button" to="TutorialContainer/Party" method="NextButtonPressed"]
 [connection signal="pressed" from="TutorialContainer/Upkeep/Control/Button" to="TutorialContainer/Upkeep" method="_on_button_pressed"]
 [connection signal="pressed" from="TutorialContainer/Dragging/Button" to="TutorialContainer/Dragging" method="_on_button_pressed"]
+[connection signal="finished" from="TutorialContainer/Dragging/VideoStreamPlayer" to="TutorialContainer/Dragging/VideoStreamPlayer" method="OnSelfFinished"]
 [connection signal="pressed" from="TutorialContainer/AOEVisibility/Button" to="TutorialContainer/AOEVisibility" method="_on_button_pressed"]
 [connection signal="pressed" from="TutorialContainer/CharacterStatVisibility/Button" to="TutorialContainer/CharacterStatVisibility" method="_on_button_pressed"]
 [connection signal="pressed" from="TutorialContainer/CharacterStatVisibility/Button" to="TutorialContainer/Surrender" method="_on_button_pressed"]

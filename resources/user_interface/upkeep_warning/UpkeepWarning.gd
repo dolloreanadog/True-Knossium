@@ -8,7 +8,6 @@ func _ready() -> void:
 func StartDisplay(text: String):
 	$WarningLabel.text = text
 	show()
-	
 
 func StopDisplay():
 	hide()

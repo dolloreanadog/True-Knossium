@@ -21,7 +21,7 @@ func _ready() -> void:
 
 func newTurn() -> void:
 	turn += 1
-	dungeon.warningLabel.text = ""
+	dungeon.warningLabel.StopDisplay()
 	print(str(self) + ": turns = " + str(turn))
 	emit_signal("OnNewTurn")
 #	FriendlyPartyContainer.getCharactersInfo()

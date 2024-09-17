@@ -1,0 +1,28 @@
+[gd_scene format=3 uid="uid://2mtsoboddir8"]
+
+[node name="EndTurnWarning" type="Control"]
+layout_mode = 3
+anchor_right = 0.242
+anchor_bottom = 0.037
+offset_right = -0.640015
+offset_bottom = 0.0400009
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 0
+offset_right = 464.0
+offset_bottom = 40.0
+color = Color(0.364706, 0.364706, 0.364706, 1)
+
+[node name="WarningLabel" type="Label" parent="."]
+modulate = Color(0.956863, 0, 0, 1)
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.242
+anchor_bottom = 0.037
+offset_right = 351.712
+offset_bottom = 38.52
+text = "No AOE, Press End Turn!"
+horizontal_alignment = 1
+vertical_alignment = 1

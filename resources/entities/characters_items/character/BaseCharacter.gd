@@ -263,7 +263,7 @@ func characterNewTurn():
 			inventory.removeFromInventory(ResourceNeeded, ResourceNeededNumber)
 #			dungeon.warningLabel.text = ""
 		else:
-			dungeon.warningLabel.text = "We Ran out of " + str(ResourceNeeded.itemName)
+			dungeon.warningLabel.StartDisplay("We Ran out of " + str(ResourceNeeded.itemName))
 			match randi_range(0, 1):
 				1:
 					stats.changeCurrentMorale(-999)

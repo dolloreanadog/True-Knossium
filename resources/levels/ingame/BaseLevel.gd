@@ -55,7 +55,7 @@ var isCharactersActive: bool = true
 
 #--[ Party Menu ]--
 @export_category("User Interfaces")
-@onready var partyUI: PartyMenu = get_node("PartyMenu")
+@onready var partyUI: PartyMenu = $PartyMenu
 
 @onready var ingameUI: IngameMenu = get_node("InGameMenu")
 
@@ -66,7 +66,8 @@ var totalCharactersDied: int
 var totalCharactersSurrendered: int
 
 @export_category("Warning Labels")
-@export var warningLabel: Label
+@onready var noAOEWarningLabel: Control = $Labels/EndTurnWarning
+@export var warningLabel: UpkeepWarning
 @export var SaveWarningLabel: Label
 
 #--[ Other ]--
@@ -143,6 +144,10 @@ func loadConfirmation() -> bool:
 
 func EndTurnButtonHighlight(boolean: bool) -> void:
 	highlightEndTurn = boolean
+	if boolean:
+		noAOEWarningLabel.show()
+	else:
+		noAOEWarningLabel.hide()
 	while highlightEndTurn:
 		await create_tween().tween_property(endTurnButton, "modulate", Color(1, 0, 0), 0.5).finished
 		await create_tween().tween_property(endTurnButton, "modulate", Color(1, 1, 1), 0.5).finished

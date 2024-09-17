@@ -1,0 +1,33 @@
+[gd_scene load_steps=2 format=3 uid="uid://c2ygo0eat6dnt"]
+
+[ext_resource type="Script" path="res://resources/user_interface/upkeep_warning/UpkeepWarning.gd" id="1_2wni0"]
+
+[node name="UpkeepWarning" type="Control"]
+layout_mode = 3
+anchor_right = 0.242
+anchor_bottom = 0.037
+offset_right = -0.640015
+offset_bottom = 0.0400009
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+script = ExtResource("1_2wni0")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 0
+offset_right = 464.0
+offset_bottom = 40.0
+color = Color(0.364706, 0.364706, 0.364706, 1)
+
+[node name="WarningLabel" type="Label" parent="."]
+modulate = Color(0.956863, 0, 0, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Warning"
+horizontal_alignment = 1
+vertical_alignment = 1

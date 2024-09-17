@@ -1,4 +1,4 @@
-[gd_scene load_steps=121 format=3 uid="uid://dmviuwgk6nssk"]
+[gd_scene load_steps=123 format=3 uid="uid://dmviuwgk6nssk"]
 
 [ext_resource type="Script" path="res://resources/levels/ingame/BaseLevel.gd" id="1_c7s3k"]
 [ext_resource type="PackedScene" uid="uid://2067o3jclptt" path="res://resources/user_interface/console/Console.tscn" id="2_1f5g3"]
@@ -12,8 +12,10 @@
 [ext_resource type="PackedScene" uid="uid://ci3j4o0qfk5qa" path="res://resources/user_interface/inventory_menu/inventoryMenu.tscn" id="4_fae0k"]
 [ext_resource type="Script" path="res://resources/components/other/AOEAutoPlacementButton/AutoPlacementAOEComponent.gd" id="4_jr0a1"]
 [ext_resource type="PackedScene" uid="uid://cmupnt3ig0bql" path="res://resources/user_interface/party_menu/PartyMenu.tscn" id="5_6i2q5"]
+[ext_resource type="PackedScene" uid="uid://c2ygo0eat6dnt" path="res://resources/user_interface/upkeep_warning/UpkeepWarning.tscn" id="6_f2oix"]
 [ext_resource type="Script" path="res://resources/entities/turn_system/TurnSystem.gd" id="6_y4pct"]
 [ext_resource type="Script" path="res://resources/entities/AreaAOEDenial/BaseAreaAOEDenial.gd" id="7_7xw1c"]
+[ext_resource type="PackedScene" uid="uid://2mtsoboddir8" path="res://resources/user_interface/endturn_warning/EndTurnWarning.tscn" id="7_kosmq"]
 [ext_resource type="PackedScene" uid="uid://b8kerqouxqko2" path="res://resources/entities/aoe_info_box/aoe_info_box.tscn" id="8_fg2bo"]
 [ext_resource type="Script" path="res://resources/entities/aoe_attach_button/AOEAttachButton.gd" id="9_0ej02"]
 [ext_resource type="Script" path="res://resources/entities/aoe_attach_button/AttachAOEOffenseButton.gd" id="9_f7xwf"]
@@ -571,7 +573,7 @@ friendlyAOEAttack = NodePath("AOEContainers/AOESpawnAreaAttack")
 friendlyAOESupport = NodePath("AOEContainers/AOESpawnAreaSupport")
 enemyAttackAOE = NodePath("AOEContainers/EnemyAOEContainerAttack")
 enemySupportAOE = NodePath("AOEContainers/EnemyAOEContainerSupport")
-warningLabel = NodePath("Labels/WarningLabel")
+warningLabel = NodePath("Labels/UpkeepWarning")
 SaveWarningLabel = NodePath("Labels/SaveWarningLabel")
 
 [node name="Visuals" type="Node2D" parent="."]
@@ -699,15 +701,26 @@ offset_bottom = 191.0
 script = ExtResource("4_1bug0")
 partyContainer = NodePath("../../PartyContainers/EnemyPartyContainer")
 
-[node name="WarningLabel" type="Label" parent="Labels"]
-modulate = Color(0.956863, 0, 0, 1)
-layout_mode = 0
+[node name="UpkeepWarning" parent="Labels" instance=ExtResource("6_f2oix")]
+z_index = 101
+layout_mode = 1
 offset_left = 728.0
 offset_top = 192.0
+offset_right = 1185.68
+offset_bottom = 224.96
+
+[node name="EndTurnWarning" parent="Labels" instance=ExtResource("7_kosmq")]
+visible = false
+layout_mode = 1
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 728.0
+offset_top = 840.0
 offset_right = 1192.0
-offset_bottom = 232.0
-horizontal_alignment = 1
-vertical_alignment = 1
+offset_bottom = 880.0
+grow_horizontal = 1
+grow_vertical = 1
 
 [node name="ButtonsContainer" type="Control" parent="."]
 layout_mode = 3
@@ -834,6 +847,7 @@ script = ExtResource("9_0ej02")
 area = NodePath("../../AOECheckSupport")
 
 [node name="AOEInfoBox" parent="." instance=ExtResource("8_fg2bo")]
+visible = false
 anchors_preset = 12
 anchor_left = 0.0
 offset_left = 0.0

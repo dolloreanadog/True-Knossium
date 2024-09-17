@@ -1,9 +1,11 @@
-[gd_scene load_steps=58 format=3 uid="uid://dt8n5ydm47v3d"]
+[gd_scene load_steps=60 format=3 uid="uid://dt8n5ydm47v3d"]
 
 [ext_resource type="Script" path="res://resources/levels/ingame/BaseLevel.gd" id="1_1cjpr"]
 [ext_resource type="Script" path="res://resources/entities/AreaAOEDenial/BaseAreaAOEDenial.gd" id="2_4r8rd"]
 [ext_resource type="Script" path="res://resources/levels/ingame/dungeon/StatPoints.gd" id="3_ylfwm"]
 [ext_resource type="PackedScene" uid="uid://bwmi2u27htu4s" path="res://resources/entities/visibility_toggles/VisibilityToggles.tscn" id="4_isrn3"]
+[ext_resource type="PackedScene" uid="uid://c2ygo0eat6dnt" path="res://resources/user_interface/upkeep_warning/UpkeepWarning.tscn" id="4_v4scf"]
+[ext_resource type="PackedScene" uid="uid://2mtsoboddir8" path="res://resources/user_interface/endturn_warning/EndTurnWarning.tscn" id="5_6ib7y"]
 [ext_resource type="PackedScene" uid="uid://dacl7cdqcmb3c" path="res://resources/entities/button_invisibility/ButtonInvisibilityToggles.tscn" id="5_u546t"]
 [ext_resource type="Script" path="res://resources/levels/ingame/dungeon/AOEAutoPlacementButton.gd" id="6_pvclr"]
 [ext_resource type="Script" path="res://resources/components/other/AOEAutoPlacementButton/AutoPlacementAOEComponent.gd" id="7_tpstv"]
@@ -141,7 +143,7 @@ friendlyAOEAttack = NodePath("AOEContainers/AOESpawnAreaAttack")
 friendlyAOESupport = NodePath("AOEContainers/AOESpawnAreaSupport")
 enemyAttackAOE = NodePath("AOEContainers/EnemyAOEContainerAttack")
 enemySupportAOE = NodePath("AOEContainers/EnemyAOEContainerSupport")
-warningLabel = NodePath("Labels/WarningLabel")
+warningLabel = NodePath("Labels/UpkeepWarning")
 SaveWarningLabel = NodePath("Labels/SaveWarningLabel")
 
 [node name="Visuals" type="Node2D" parent="."]
@@ -255,15 +257,25 @@ offset_bottom = 191.0
 script = ExtResource("3_ylfwm")
 partyContainer = NodePath("../../PartyContainers/EnemyPartyContainer")
 
-[node name="WarningLabel" type="Label" parent="Labels"]
-modulate = Color(0.956863, 0, 0, 1)
-layout_mode = 0
+[node name="UpkeepWarning" parent="Labels" instance=ExtResource("4_v4scf")]
+z_index = 101
+layout_mode = 1
 offset_left = 728.0
 offset_top = 192.0
+offset_right = 1185.68
+offset_bottom = 224.96
+
+[node name="EndTurnWarning" parent="Labels" instance=ExtResource("5_6ib7y")]
+visible = false
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 728.0
+offset_top = 840.0
 offset_right = 1192.0
-offset_bottom = 232.0
-horizontal_alignment = 1
-vertical_alignment = 1
+offset_bottom = 880.0
+grow_horizontal = 1
+grow_vertical = 1
 
 [node name="ButtonsContainer" type="Control" parent="."]
 layout_mode = 3

@@ -72,6 +72,8 @@ func updateItemInformation() -> void:
 func _on_spawn_aoe_button_pressed() -> void:
 	var instance: BaseAOE = targetItem.AOE.instantiate()
 	
+	dungeon.noAOEWarningLabel.hide()
+	
 	instance.health = targetItem.AOEHealthGain
 	instance.defense = targetItem.AOEDefenseGain
 	instance.attack = targetItem.AOEAttackGain
@@ -101,6 +103,8 @@ func _on_spawn_aoe_button_pressed() -> void:
 func SpawnAllAOEButtonPressed() -> void:
 	while inventorySystem.getNamedItemAmount(targetItem.itemName) != 0:
 		var instance: BaseAOE = targetItem.AOE.instantiate()
+		
+		dungeon.noAOEWarningLabel.hide()
 		
 		instance.health = targetItem.AOEHealthGain
 		instance.defense = targetItem.AOEDefenseGain

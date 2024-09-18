@@ -1,4 +1,4 @@
-[gd_scene load_steps=123 format=3 uid="uid://dmviuwgk6nssk"]
+[gd_scene load_steps=124 format=3 uid="uid://dmviuwgk6nssk"]
 
 [ext_resource type="Script" path="res://resources/levels/ingame/BaseLevel.gd" id="1_c7s3k"]
 [ext_resource type="PackedScene" uid="uid://2067o3jclptt" path="res://resources/user_interface/console/Console.tscn" id="2_1f5g3"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://doevg7xyknopt" path="res://assets/art/background/NewBackground.png" id="2_v3ggi"]
 [ext_resource type="Texture2D" uid="uid://daejd6gk8oce4" path="res://assets/ui_elements/party_seperators/PartyAreaSeperator.png" id="3_7q2b5"]
 [ext_resource type="PackedScene" uid="uid://cm1bg68as3a8x" path="res://resources/entities/party_container/friendly_party_container/FriendlyPartyContainer.tscn" id="3_ku5su"]
+[ext_resource type="Texture2D" uid="uid://bcj7udxgfukvn" path="res://assets/sprites/background/AOEBackground.png" id="3_v0bd2"]
 [ext_resource type="Script" path="res://resources/levels/ingame/dungeon/AOEAutoPlacementButton.gd" id="3_yl18b"]
 [ext_resource type="Script" path="res://resources/levels/ingame/dungeon/StatPoints.gd" id="4_1bug0"]
 [ext_resource type="PackedScene" uid="uid://ci3j4o0qfk5qa" path="res://resources/user_interface/inventory_menu/inventoryMenu.tscn" id="4_fae0k"]
@@ -596,6 +597,12 @@ sprite_frames = SubResource("SpriteFrames_nxfxe")
 animation = &"background"
 autoplay = "background"
 
+[node name="AoeBackground" type="Sprite2D" parent="Visuals/Background"]
+z_index = -100
+position = Vector2(960, 956)
+scale = Vector2(1, 0.96875)
+texture = ExtResource("3_v0bd2")
+
 [node name="PartyAreaSeperator" type="Sprite2D" parent="Visuals/Background"]
 z_index = -99
 position = Vector2(964, 512)
@@ -652,9 +659,9 @@ vertical_alignment = 1
 [node name="Label2" type="Label" parent="Labels"]
 layout_mode = 0
 offset_left = 896.0
-offset_top = 896.0
+offset_top = 872.0
 offset_right = 1024.0
-offset_bottom = 922.0
+offset_bottom = 898.0
 text = "AOE Spawn Area"
 
 [node name="SaveWarningLabel" type="Label" parent="Labels"]

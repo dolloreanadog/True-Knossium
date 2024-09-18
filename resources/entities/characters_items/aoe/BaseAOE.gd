@@ -26,7 +26,7 @@ var system: TurnSystem
 ## AOE sprite, not owner sprite animation
 @export var spriteAnimations: AnimatedSprite2D
 @export var audioPlayer: AudioStreamPlayer2D
-@onready var collisionVisualizer: MeshInstance2D = get_node("MeshInstance2D")
+@onready var collisionVisualizer: Polygon2D = $Polygon2D
 @onready var button: Button = get_node("Button")
 
 @export var isDynamicColor: bool = true
@@ -77,11 +77,11 @@ func _ready() -> void:
 #		system = get_parent().get_parent().get_node("TurnSystem")
 #		system.connect("OnNewBattle", inBattle)
 	
-	if get_parent().get_parent().get_parent() is BaseLevel:
+	if get_tree().get_current_scene() is BaseLevel:
 		dungeon = get_parent().get_parent().get_parent()
-	
-	if get_parent().get_parent().get_parent().get_node("AOEInfoBox") is AOEInfoBox:
-		dungeonAOEInfoBox = get_parent().get_parent().get_parent().get_node("AOEInfoBox")
+		
+		if dungeon.get_node("AOEInfoBox") is AOEInfoBox:
+			dungeonAOEInfoBox = get_parent().get_parent().get_parent().get_node("AOEInfoBox")
 	
 	if dungeon is BaseLevel:
 		system = dungeon.system

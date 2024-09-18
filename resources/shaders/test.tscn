@@ -1,0 +1,91 @@
+[gd_scene load_steps=10 format=3 uid="uid://dyt8iprx2o8xn"]
+
+[ext_resource type="Theme" uid="uid://b6csmgk4u4jyg" path="res://resources/theme/AOEButtonTheme.tres" id="2_d1ps7"]
+[ext_resource type="Material" uid="uid://cfsvk0guxoeuy" path="res://resources/shaders/aoe_shader/AOEShaderMaterial.tres" id="2_i0fau"]
+[ext_resource type="Script" path="res://resources/entities/characters_items/aoe/aoe_component/Polygon2DOutline.gd" id="2_yvcan"]
+[ext_resource type="SpriteFrames" uid="uid://g6nb2nux7w8y" path="res://assets/sprites/aoe_vfx/dev/ArrowShootSprite.tres" id="4_dyor7"]
+[ext_resource type="Script" path="res://resources/shaders/ArrowAOE.gd" id="4_gx3mv"]
+[ext_resource type="Script" path="res://addons/simple_shapes/shapes/CircleShape.gd" id="7_8r8ag"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hgkm5"]
+size = Vector2(256, 32)
+
+[sub_resource type="BoxMesh" id="BoxMesh_f3m1n"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_eahus"]
+
+[node name="test" type="Node2D"]
+
+[node name="ArrowAOE" type="Area2D" parent="."]
+position = Vector2(424, 32)
+script = ExtResource("4_gx3mv")
+AOEName = "Arrow Shot"
+
+[node name="Polygon2D" type="Polygon2D" parent="ArrowAOE"]
+polygon = PackedVector2Array(-128, -16, 128, -16, 128, 16, -128, 16)
+
+[node name="polygon2DOutline" type="Node2D" parent="ArrowAOE/Polygon2D"]
+script = ExtResource("2_yvcan")
+lineWidth = 10.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ArrowAOE"]
+visible = false
+shape = SubResource("RectangleShape2D_hgkm5")
+
+[node name="Button" type="Button" parent="ArrowAOE"]
+offset_left = -128.0
+offset_top = -16.0
+offset_right = 128.0
+offset_bottom = 16.0
+theme = ExtResource("2_d1ps7")
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+metadata/_edit_use_anchors_ = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="ArrowAOE"]
+texture_filter = 1
+sprite_frames = ExtResource("4_dyor7")
+animation = &"inactive"
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="."]
+material = ExtResource("2_i0fau")
+position = Vector2(381.822, 200.116)
+scale = Vector2(88.0546, 88)
+mesh = SubResource("BoxMesh_f3m1n")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+material = ExtResource("2_i0fau")
+offset_left = 680.0
+offset_top = 56.0
+offset_right = 912.0
+offset_bottom = 240.0
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+position = Vector2(488, 448)
+scale = Vector2(1.56226, 1.82654)
+texture = SubResource("CanvasTexture_eahus")
+polygon = PackedVector2Array(-0.934631, -30.6963, 39.0654, -62.6963, 135.065, 25.3037, 95.0654, 129.304, -56.9346, 121.304, -136.935, 33.3037, -72.9346, -38.6963)
+uv = PackedVector2Array(-0.934631, -30.6963, 39.0654, -62.6963, 135.065, 25.3037, 95.0654, 129.304, -56.9346, 121.304, -136.935, 33.3037, -72.9346, -38.6963)
+
+[node name="polygon2DOutline" type="Node2D" parent="Polygon2D"]
+script = ExtResource("2_yvcan")
+lineWidth = 5.0
+lineColor = Color(0.235294, 0.25098, 0.258824, 1)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="CircleShape" type="Polygon2D" parent="CanvasLayer"]
+position = Vector2(1568, 632)
+scale = Vector2(1.51227, 1.576)
+polygon = PackedVector2Array(250, 0, 241.481, 64.7048, 216.506, 125, 176.777, 176.777, 125, 216.506, 64.7048, 241.481, 1.53081e-14, 250, -64.7048, 241.481, -125, 216.506, -176.777, 176.777, -216.506, 125, -241.481, 64.7048, -250, 3.06162e-14, -241.481, -64.7048, -216.506, -125, -176.777, -176.777, -125, -216.506, -64.7048, -241.481, -4.59243e-14, -250, 64.7048, -241.481, 125, -216.506, 176.777, -176.777, 216.506, -125, 241.481, -64.7048)
+uv = PackedVector2Array(250, 0, 241.481, 64.7048, 216.506, 125, 176.777, 176.777, 125, 216.506, 64.7048, 241.481, 1.53081e-14, 250, -64.7048, 241.481, -125, 216.506, -176.777, 176.777, -216.506, 125, -241.481, 64.7048, -250, 3.06162e-14, -241.481, -64.7048, -216.506, -125, -176.777, -176.777, -125, -216.506, -64.7048, -241.481, -4.59243e-14, -250, 64.7048, -241.481, 125, -216.506, 176.777, -176.777, 216.506, -125, 241.481, -64.7048)
+script = ExtResource("7_8r8ag")
+radius = 250
+points_num = 24
+
+[node name="polygon2DOutline" type="Node2D" parent="CanvasLayer/CircleShape"]
+script = ExtResource("2_yvcan")
+lineWidth = 10.0
+
+[connection signal="button_down" from="ArrowAOE/Button" to="ArrowAOE" method="_on_button_button_down" flags=18]
+[connection signal="button_up" from="ArrowAOE/Button" to="ArrowAOE" method="_on_button_button_up" flags=18]
+[connection signal="pressed" from="ArrowAOE/Button" to="ArrowAOE" method="_on_button_pressed" flags=18]

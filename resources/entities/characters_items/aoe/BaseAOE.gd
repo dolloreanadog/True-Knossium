@@ -124,24 +124,25 @@ func _on_button_pressed() -> void:
 			else:
 				button.mouse_filter = Control.MOUSE_FILTER_STOP
 				dragging = true
-				collisionVisualizer.modulate = Color(1, 1, 1, 0.2)
+				collisionVisualizer.modulate = Color(1, 1, 1, 0.5)
 				lastPosition = self.global_position 
 				dungeon.setDisabledAllAOE(false)
 				button.visible = true
 	
-	dungeonAOEInfoBox.characterPFP = ownerCharacterPFP
-	dungeonAOEInfoBox.characterName = ownerCharacterName
-	dungeonAOEInfoBox.AOEName = AOEName
-	dungeonAOEInfoBox.description = ownerActionDescription
-	dungeonAOEInfoBox.accuracyValue = accuracy
-	dungeonAOEInfoBox.healthDamageValue = health
-	dungeonAOEInfoBox.defenseDamageValue = defense
-	dungeonAOEInfoBox.attackDamageValue = attack
-	dungeonAOEInfoBox.moraleDamageValue = morale
-	dungeonAOEInfoBox.isMeleeValue = isMelee
-	dungeonAOEInfoBox.isMovableValue = draggable
-	dungeonAOEInfoBox.turnsLeftValue = TurnsLeft
-	dungeonAOEInfoBox.insertAOEInfo()
+	if is_instance_valid(dungeonAOEInfoBox):
+		dungeonAOEInfoBox.characterPFP = ownerCharacterPFP
+		dungeonAOEInfoBox.characterName = ownerCharacterName
+		dungeonAOEInfoBox.AOEName = AOEName
+		dungeonAOEInfoBox.description = ownerActionDescription
+		dungeonAOEInfoBox.accuracyValue = accuracy
+		dungeonAOEInfoBox.healthDamageValue = health
+		dungeonAOEInfoBox.defenseDamageValue = defense
+		dungeonAOEInfoBox.attackDamageValue = attack
+		dungeonAOEInfoBox.moraleDamageValue = morale
+		dungeonAOEInfoBox.isMeleeValue = isMelee
+		dungeonAOEInfoBox.isMovableValue = draggable
+		dungeonAOEInfoBox.turnsLeftValue = TurnsLeft
+		dungeonAOEInfoBox.insertAOEInfo()
 
 
 func _on_button_button_up() -> void:
@@ -163,7 +164,7 @@ func _on_button_button_down() -> void:
 		if !SettingsSystem.getAOEMovement():
 			dragging = true
 			#if isDynamicColor:
-			collisionVisualizer.modulate = Color(1, 1, 1, 0.2)
+			collisionVisualizer.modulate = Color(1, 1, 1, 0.5)
 			lastPosition = self.global_position 
 			print(str(self) + ": Global Position:" + str(lastPosition))
 
@@ -176,7 +177,7 @@ func returnToLastPosition() -> void:
 	
 	warningLabel.modulate = Color(1, 0, 0, 1)
 	warningLabel.text = "Can't Place Here!"
-	collisionVisualizer.modulate = Color(1, 0, 0, 0.11)
+	collisionVisualizer.modulate = Color(1, 0, 0, 0.5)
 	
 	# This is here so that it doesn't become a child of AOE Containers
 	dungeon.add_child(warningLabel)
@@ -235,7 +236,7 @@ func areaOverlapCharacter(ActiveAttack: bool) -> void:
 			var target = overlappingBodiesArray.pop_front()
 			if target is BaseCharacter:
 				if isDynamicColor:
-					collisionVisualizer.modulate = Color(0, 0, 1, 0.05)
+					collisionVisualizer.modulate = Color(0, 0, 1, 0.25)
 				if ActiveAttack:
 					attackStats(target)
 				#draggable = false

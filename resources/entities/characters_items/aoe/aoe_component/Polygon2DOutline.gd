@@ -2,7 +2,7 @@ extends Node2D
 class_name polygon2DOutline
 
 @onready var polygon2D: Polygon2D = get_parent()
-@export_range(0, 10, 0.01) var lineWidth: float = 1
+@export_range(0, 10, 0.01) var lineWidth: float = 5
 @export_color_no_alpha var lineColor: Color = Color(Color.BLACK)
 
 func _draw() -> void:

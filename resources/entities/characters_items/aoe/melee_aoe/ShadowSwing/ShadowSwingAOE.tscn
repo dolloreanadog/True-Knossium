@@ -1,11 +1,11 @@
-[gd_scene load_steps=7 format=3 uid="uid://cc4ys8brcj56"]
+[gd_scene load_steps=8 format=3 uid="uid://cc4ys8brcj56"]
 
 [ext_resource type="Script" path="res://resources/entities/characters_items/aoe/BaseAOE.gd" id="1_tbm2j"]
 [ext_resource type="Theme" uid="uid://b6csmgk4u4jyg" path="res://resources/theme/AOEButtonTheme.tres" id="2_1op1e"]
+[ext_resource type="Script" path="res://addons/simple_shapes/shapes/RectangleShape.gd" id="2_ulan8"]
 [ext_resource type="SpriteFrames" uid="uid://dhjtkuc2trmc5" path="res://assets/sprites/aoe_vfx/dev/SwingSprite.tres" id="3_s6jpm"]
+[ext_resource type="Script" path="res://resources/entities/characters_items/aoe/aoe_component/Polygon2DOutline.gd" id="3_y6tsl"]
 [ext_resource type="Script" path="res://resources/entities/characters_items/aoe/aoe_component/AOETurnModifier.gd" id="4_007a2"]
-
-[sub_resource type="BoxMesh" id="BoxMesh_cqwa1"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hl61g"]
 size = Vector2(64, 144)
@@ -16,11 +16,17 @@ AOEName = "Swing"
 spriteAnimations = NodePath("AnimatedSprite2D")
 isMelee = true
 
-[node name="MeshInstance2D" type="MeshInstance2D" parent="."]
-modulate = Color(1, 1, 1, 0.11)
-position = Vector2(0, -1.90735e-06)
-scale = Vector2(64, 144)
-mesh = SubResource("BoxMesh_cqwa1")
+[node name="Polygon2D" type="Polygon2D" parent="."]
+modulate = Color(1, 1, 1, 0.109804)
+clip_children = 2
+position = Vector2(-32, -72)
+scale = Vector2(0.64, 1.44)
+polygon = PackedVector2Array(0, 0, 100, 0, 100, 100, 0, 100)
+script = ExtResource("2_ulan8")
+
+[node name="polygon2DOutline" type="Node2D" parent="Polygon2D"]
+script = ExtResource("3_y6tsl")
+lineColor = Color(1, 1, 1, 1)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_hl61g")

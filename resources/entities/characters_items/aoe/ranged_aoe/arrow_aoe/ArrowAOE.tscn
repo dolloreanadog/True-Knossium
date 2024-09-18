@@ -1,10 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://bcxatbqykyd8s"]
+[gd_scene load_steps=7 format=3 uid="uid://bcxatbqykyd8s"]
 
 [ext_resource type="Script" path="res://resources/entities/characters_items/aoe/BaseAOE.gd" id="1_r7cii"]
 [ext_resource type="Theme" uid="uid://b6csmgk4u4jyg" path="res://resources/theme/AOEButtonTheme.tres" id="2_1tj8v"]
 [ext_resource type="SpriteFrames" uid="uid://g6nb2nux7w8y" path="res://assets/sprites/aoe_vfx/dev/ArrowShootSprite.tres" id="3_w0adq"]
-
-[sub_resource type="BoxMesh" id="BoxMesh_lmp76"]
+[ext_resource type="Script" path="res://addons/simple_shapes/shapes/RectangleShape.gd" id="4_bvpg6"]
+[ext_resource type="Script" path="res://resources/entities/characters_items/aoe/aoe_component/Polygon2DOutline.gd" id="5_k1nar"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hgkm5"]
 size = Vector2(256, 32)
@@ -14,11 +14,17 @@ script = ExtResource("1_r7cii")
 AOEName = "Arrow Shot"
 spriteAnimations = NodePath("AnimatedSprite2D")
 
-[node name="MeshInstance2D" type="MeshInstance2D" parent="."]
-modulate = Color(1, 1, 1, 0.117647)
-position = Vector2(1.14441e-05, 0)
-scale = Vector2(256, 32)
-mesh = SubResource("BoxMesh_lmp76")
+[node name="Polygon2D" type="Polygon2D" parent="."]
+modulate = Color(1, 1, 1, 0.109804)
+clip_children = 2
+position = Vector2(-128, -16)
+scale = Vector2(2.56, 0.32)
+polygon = PackedVector2Array(0, 0, 100, 0, 100, 100, 0, 100)
+script = ExtResource("4_bvpg6")
+
+[node name="polygon2DOutline" type="Node2D" parent="Polygon2D"]
+script = ExtResource("5_k1nar")
+lineColor = Color(1, 1, 1, 1)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_hgkm5")

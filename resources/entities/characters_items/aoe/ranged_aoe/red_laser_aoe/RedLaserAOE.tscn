@@ -1,10 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://djvbfkurllfbc"]
+[gd_scene load_steps=7 format=3 uid="uid://djvbfkurllfbc"]
 
 [ext_resource type="Script" path="res://resources/entities/characters_items/aoe/BaseAOE.gd" id="1_dhn6p"]
 [ext_resource type="SpriteFrames" uid="uid://c3cbjw4bxueox" path="res://assets/sprites/aoe_vfx/dev/LaserSprite.tres" id="2_7als4"]
+[ext_resource type="Script" path="res://addons/simple_shapes/shapes/RectangleShape.gd" id="2_r3kdo"]
+[ext_resource type="Script" path="res://resources/entities/characters_items/aoe/aoe_component/Polygon2DOutline.gd" id="3_obusx"]
 [ext_resource type="Theme" uid="uid://b6csmgk4u4jyg" path="res://resources/theme/AOEButtonTheme.tres" id="3_vmjg5"]
-
-[sub_resource type="BoxMesh" id="BoxMesh_10gv5"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_g5eoa"]
 size = Vector2(384, 128)
@@ -14,18 +14,24 @@ script = ExtResource("1_dhn6p")
 spriteAnimations = NodePath("AnimatedSprite2D")
 TurnsLeft = 3
 
+[node name="Polygon2D" type="Polygon2D" parent="."]
+modulate = Color(1, 1, 1, 0.109804)
+clip_children = 2
+position = Vector2(-192, -64)
+scale = Vector2(3.84, 1.28)
+polygon = PackedVector2Array(0, 0, 100, 0, 100, 100, 0, 100)
+script = ExtResource("2_r3kdo")
+
+[node name="polygon2DOutline" type="Node2D" parent="Polygon2D"]
+script = ExtResource("3_obusx")
+lineColor = Color(1, 1, 1, 1)
+
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(0.512, 0.256)
 sprite_frames = ExtResource("2_7als4")
 animation = &"active"
 frame = 24
 frame_progress = 1.0
-
-[node name="MeshInstance2D" type="MeshInstance2D" parent="."]
-modulate = Color(1, 1, 1, 0.117647)
-position = Vector2(3.8147e-06, -3.8147e-06)
-scale = Vector2(384, 128)
-mesh = SubResource("BoxMesh_10gv5")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_g5eoa")

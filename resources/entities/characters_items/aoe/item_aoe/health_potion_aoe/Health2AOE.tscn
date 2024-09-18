@@ -1,11 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://tj5rpq5rew3y"]
+[gd_scene load_steps=7 format=3 uid="uid://tj5rpq5rew3y"]
 
 [ext_resource type="Script" path="res://resources/entities/characters_items/aoe/BaseAOE.gd" id="1_qi5pt"]
+[ext_resource type="Script" path="res://addons/simple_shapes/shapes/CircleShape.gd" id="2_ko78b"]
 [ext_resource type="Theme" uid="uid://b6csmgk4u4jyg" path="res://resources/theme/AOEButtonTheme.tres" id="2_pd6ee"]
+[ext_resource type="Script" path="res://resources/entities/characters_items/aoe/aoe_component/Polygon2DOutline.gd" id="3_oqg4t"]
 [ext_resource type="SpriteFrames" uid="uid://cnxewbg0i4ubo" path="res://assets/sprites/aoe_vfx/dev/VitalitySprite.tres" id="3_phfc5"]
-
-[sub_resource type="SphereMesh" id="SphereMesh_tivry"]
-rings = 11
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_0ypso"]
 radius = 56.0
@@ -16,11 +15,19 @@ AOEName = "Health Pool II"
 spriteAnimations = NodePath("AnimatedSprite2D")
 isDynamicColor = false
 
-[node name="MeshInstance2D" type="MeshInstance2D" parent="."]
+[node name="Polygon2D" type="Polygon2D" parent="."]
 modulate = Color(0, 1, 0, 0.117647)
-position = Vector2(-1.90735e-06, 1.28746e-05)
-scale = Vector2(112, 112)
-mesh = SubResource("SphereMesh_tivry")
+clip_children = 2
+position = Vector2(-2.86102e-06, 1.43051e-06)
+scale = Vector2(1.27273, 1.27273)
+polygon = PackedVector2Array(44, 0, 42.5007, 11.388, 38.1051, 22, 31.1127, 31.1127, 22, 38.1051, 11.388, 42.5007, 2.69422e-15, 44, -11.388, 42.5007, -22, 38.1051, -31.1127, 31.1127, -38.1051, 22, -42.5007, 11.388, -44, 5.38845e-15, -42.5007, -11.388, -38.1051, -22, -31.1127, -31.1127, -22, -38.1051, -11.388, -42.5007, -8.08267e-15, -44, 11.388, -42.5007, 22, -38.1051, 31.1127, -31.1127, 38.1051, -22, 42.5007, -11.388)
+script = ExtResource("2_ko78b")
+radius = 44
+points_num = 24
+
+[node name="polygon2DOutline" type="Node2D" parent="Polygon2D"]
+script = ExtResource("3_oqg4t")
+lineColor = Color(0, 1, 0, 1)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_0ypso")

@@ -409,7 +409,7 @@ func loadAOE() -> void:
 		
 		targetAOEInstance.AOEName = targetAOEInfo.AOEName
 		targetAOEInstance.mainColor = targetAOEInfo.AOEColor
-		targetAOEInstance.get_node("MeshInstance2D").modulate = targetAOEInfo.AOEColor
+		targetAOEInstance.collisionVisualizer.modulate = targetAOEInfo.AOEColor
 #		print("loaded color: " + str(targetAOEInstance.get_node("MeshInstance2D").modulate))
 #		print("(check) loaded owner character pfp: " + str(targetAOEInfo.AOEOwnerCharacterPFP))
 		targetAOEInstance.ownerCharacterPFP = load(targetAOEInfo.AOEOwnerCharacterPFP)
@@ -440,7 +440,7 @@ func loadAOE() -> void:
 		
 		targetAOEInstance.AOEName = targetAOEInfo.AOEName
 		targetAOEInstance.mainColor = targetAOEInfo.AOEColor
-		targetAOEInstance.get_node("MeshInstance2D").modulate = targetAOEInfo.AOEColor
+		targetAOEInstance.collisionVisualizer.modulate = targetAOEInfo.AOEColor
 #		print("loaded color: " + str(targetAOEInstance.get_node("MeshInstance2D").modulate))
 #		print("(check) loaded owner character pfp: " + str(targetAOEInfo.AOEOwnerCharacterPFP))
 		targetAOEInstance.ownerCharacterPFP = load(targetAOEInfo.AOEOwnerCharacterPFP)
@@ -471,7 +471,7 @@ func loadAOE() -> void:
 		
 		targetAOEInstance.AOEName = targetAOEInfo.AOEName
 		targetAOEInstance.mainColor = targetAOEInfo.AOEColor
-		targetAOEInstance.get_node("MeshInstance2D").modulate = targetAOEInfo.AOEColor
+		targetAOEInstance.collisionVisualizer.modulate = targetAOEInfo.AOEColor
 		targetAOEInstance.ownerCharacterPFP = load(targetAOEInfo.AOEOwnerCharacterPFP)
 		targetAOEInstance.ownerCharacterName = targetAOEInfo.AOEOwnerName
 		targetAOEInstance.spriteAnimations.flip_h = targetAOEInfo.AOEIsSpriteFlipped
@@ -504,7 +504,7 @@ func loadAOE() -> void:
 		
 		targetAOEInstance.AOEName = targetAOEInfo.AOEName
 		targetAOEInstance.mainColor = targetAOEInfo.AOEColor
-		targetAOEInstance.get_node("MeshInstance2D").modulate = targetAOEInfo.AOEColor
+		targetAOEInstance.collisionVisualizer.modulate = targetAOEInfo.AOEColor
 		targetAOEInstance.ownerCharacterPFP = load(targetAOEInfo.AOEOwnerCharacterPFP)
 		targetAOEInstance.ownerCharacterName = targetAOEInfo.AOEOwnerName
 		targetAOEInstance.spriteAnimations.flip_h = targetAOEInfo.AOEIsSpriteFlipped

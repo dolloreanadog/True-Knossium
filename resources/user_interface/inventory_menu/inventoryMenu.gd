@@ -90,10 +90,14 @@ func _on_spawn_aoe_button_pressed() -> void:
 	
 	if targetItem.isOffensive:
 		spawnAreaOffensive.add_child(instance, true)
+		instance.mainColor = Color(1, 1, 1, 0.4)
 		instance.set_global_position(spawnAreaOffensive.randomizeSpawn())
+		instance.collisionVisualizer.modulate = instance.mainColor
 	else:
 		spawnAreaSupport.add_child(instance, true)
+		instance.mainColor = Color(0, 1, 0, 0.4)
 		instance.set_global_position(spawnAreaSupport.randomizeSpawn())
+		instance.collisionVisualizer.modulate = instance.mainColor
 	
 	if targetItem.amount <= 0:
 		spawnAOEButton.disabled = true
@@ -122,10 +126,14 @@ func SpawnAllAOEButtonPressed() -> void:
 		
 		if targetItem.isOffensive:
 			spawnAreaOffensive.add_child(instance, true)
+			instance.mainColor = Color(1, 1, 1, 0.3)
 			instance.set_global_position(spawnAreaOffensive.randomizeSpawn())
+			instance.collisionVisualizer.modulate = instance.mainColor
 		else:
 			spawnAreaSupport.add_child(instance, true)
+			instance.mainColor = Color(0, 1, 0, 0.4)
 			instance.set_global_position(spawnAreaSupport.randomizeSpawn())
+			instance.collisionVisualizer.modulate = instance.mainColor
 		await get_tree().create_timer(0.01).timeout
 	
 	if targetItem.amount <= 0:

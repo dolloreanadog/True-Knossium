@@ -1,11 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://d2hgrnkks06qa"]
+[gd_scene load_steps=7 format=3 uid="uid://d2hgrnkks06qa"]
 
 [ext_resource type="Script" path="res://resources/entities/characters_items/aoe/BaseAOE.gd" id="1_0huvm"]
+[ext_resource type="Script" path="res://addons/simple_shapes/shapes/CircleShape.gd" id="2_jocy0"]
 [ext_resource type="Theme" uid="uid://b6csmgk4u4jyg" path="res://resources/theme/AOEButtonTheme.tres" id="2_rfvq1"]
 [ext_resource type="SpriteFrames" uid="uid://ueu1th26qkop" path="res://assets/sprites/aoe_vfx/dev/FortifySprite.tres" id="3_7gvb7"]
-
-[sub_resource type="SphereMesh" id="SphereMesh_ncp0c"]
-rings = 11
+[ext_resource type="Script" path="res://resources/entities/characters_items/aoe/aoe_component/Polygon2DOutline.gd" id="3_nridx"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_krswh"]
 radius = 44.0114
@@ -15,15 +14,21 @@ script = ExtResource("1_0huvm")
 AOEName = "Fortification"
 spriteAnimations = NodePath("AnimatedSprite2D")
 isDynamicColor = false
-animationActivateOn = 2
 TurnsLeft = 2
 activateEveryTurn = false
 activateLastTurn = true
 
-[node name="MeshInstance2D" type="MeshInstance2D" parent="."]
-modulate = Color(1, 1, 1, 0.117647)
-scale = Vector2(88.0546, 88)
-mesh = SubResource("SphereMesh_ncp0c")
+[node name="Polygon2D" type="Polygon2D" parent="."]
+modulate = Color(0, 1, 0, 0.117647)
+clip_children = 2
+polygon = PackedVector2Array(44, 0, 42.5007, 11.388, 38.1051, 22, 31.1127, 31.1127, 22, 38.1051, 11.388, 42.5007, 2.69422e-15, 44, -11.388, 42.5007, -22, 38.1051, -31.1127, 31.1127, -38.1051, 22, -42.5007, 11.388, -44, 5.38845e-15, -42.5007, -11.388, -38.1051, -22, -31.1127, -31.1127, -22, -38.1051, -11.388, -42.5007, -8.08267e-15, -44, 11.388, -42.5007, 22, -38.1051, 31.1127, -31.1127, 38.1051, -22, 42.5007, -11.388)
+script = ExtResource("2_jocy0")
+radius = 44
+points_num = 24
+
+[node name="polygon2DOutline" type="Node2D" parent="Polygon2D"]
+script = ExtResource("3_nridx")
+lineColor = Color(0.811765, 1, 0.792157, 1)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_krswh")
@@ -43,8 +48,6 @@ position = Vector2(-2.86102e-06, -2.86102e-06)
 scale = Vector2(1.5, 1.5)
 sprite_frames = ExtResource("3_7gvb7")
 animation = &"inactive"
-
-[node name="Polygon2D" type="Polygon2D" parent="."]
 
 [connection signal="button_down" from="Button" to="." method="_on_button_button_down"]
 [connection signal="button_up" from="Button" to="." method="_on_button_button_up"]

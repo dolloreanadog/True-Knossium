@@ -1,10 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://c6wqhfxma3kdu"]
+[gd_scene load_steps=7 format=3 uid="uid://c6wqhfxma3kdu"]
 
 [ext_resource type="Script" path="res://resources/entities/characters_items/aoe/BaseAOE.gd" id="1_7idww"]
 [ext_resource type="Theme" uid="uid://b6csmgk4u4jyg" path="res://resources/theme/AOEButtonTheme.tres" id="2_c56yj"]
+[ext_resource type="Script" path="res://addons/simple_shapes/shapes/CircleShape.gd" id="2_lri02"]
 [ext_resource type="SpriteFrames" uid="uid://cmope7adoshgf" path="res://assets/sprites/aoe_vfx/dev/BriberySprite.tres" id="3_3piqx"]
-
-[sub_resource type="SphereMesh" id="SphereMesh_evicj"]
+[ext_resource type="Script" path="res://resources/entities/characters_items/aoe/aoe_component/Polygon2DOutline.gd" id="3_03urb"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_xxsi1"]
 radius = 64.0
@@ -18,11 +18,19 @@ activateFirstTurn = true
 activateEveryTurn = false
 activateLastTurn = true
 
-[node name="MeshInstance2D" type="MeshInstance2D" parent="."]
-modulate = Color(1, 1, 1, 0.117647)
-position = Vector2(-7.62939e-06, 2.67029e-05)
-scale = Vector2(128.145, 128)
-mesh = SubResource("SphereMesh_evicj")
+[node name="Polygon2D" type="Polygon2D" parent="."]
+modulate = Color(1, 1, 1, 0.109804)
+clip_children = 2
+position = Vector2(4.76837e-06, 3.8147e-06)
+scale = Vector2(1.45455, 1.45455)
+polygon = PackedVector2Array(44, 0, 42.5007, 11.388, 38.1051, 22, 31.1127, 31.1127, 22, 38.1051, 11.388, 42.5007, 2.69422e-15, 44, -11.388, 42.5007, -22, 38.1051, -31.1127, 31.1127, -38.1051, 22, -42.5007, 11.388, -44, 5.38845e-15, -42.5007, -11.388, -38.1051, -22, -31.1127, -31.1127, -22, -38.1051, -11.388, -42.5007, -8.08267e-15, -44, 11.388, -42.5007, 22, -38.1051, 31.1127, -31.1127, 38.1051, -22, 42.5007, -11.388)
+script = ExtResource("2_lri02")
+radius = 44
+points_num = 24
+
+[node name="polygon2DOutline" type="Node2D" parent="Polygon2D"]
+script = ExtResource("3_03urb")
+lineColor = Color(1, 1, 1, 1)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_xxsi1")

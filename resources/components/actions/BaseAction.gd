@@ -152,28 +152,29 @@ func spawnAOE() -> void:
 		if character.isFriendly && isOffensive:
 			print(str(character) + " " + str(self) + ": (Surrender) 1")
 			spawnAreaAttack.add_child(instance, true)
+			instance.mainColor = Color(1, 1, 1, 0.4)
 			instance.set_global_position(spawnAreaAttack.randomizeSpawn())
-			instance.get_node("MeshInstance2D").modulate = Color(1, 1, 1, 0.05)
+			instance.collisionVisualizer.modulate = instance.mainColor
 		elif character.isFriendly && isOffensive == false:
 			print(str(character) + " " + str(self) + ": (Surrender) 2")
 			spawnAreaSupport.add_child(instance, true)
-			instance.mainColor = Color(0, 1, 0, 0.1)
+			instance.mainColor = Color(0, 1, 0, 0.4)
 			instance.set_global_position(spawnAreaSupport.randomizeSpawn())
-			instance.get_node("MeshInstance2D").modulate = instance.mainColor
+			instance.collisionVisualizer.modulate = instance.mainColor
 		elif character.isFriendly == false && isOffensive:
 			print(str(character) + " " + str(self) + ": (Surrender) 3")
 			EnemyAOEContainerAttack.add_child(instance, true)
 			instance.draggable = false
-			instance.mainColor = Color(0.5, 0, 0.5, 0.1)
+			instance.mainColor = Color(0.5, 0, 0.5, 0.3)
 			instance.isDynamicColor = false
-			instance.get_node("MeshInstance2D").modulate = instance.mainColor
+			instance.collisionVisualizer.modulate = instance.mainColor
 		elif character.isFriendly == false && isOffensive == false:
 			print(str(character) + " " + str(self) + ": (Surrender) 4")
 			EnemyAOEContainerSupport.add_child(instance, true)
 			instance.draggable = false
-			instance.mainColor = Color(1, 0.5, 0.5, 0.1)
+			instance.mainColor = Color(1, 0.5, 0.5, 0.3)
 			instance.isDynamicColor = false
-			instance.get_node("MeshInstance2D").modulate = instance.mainColor
+			instance.collisionVisualizer.modulate = instance.mainColor
 		else:
 			push_error("Action Broke!")
 

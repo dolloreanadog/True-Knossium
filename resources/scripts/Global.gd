@@ -89,10 +89,22 @@ func EndLoadingScreen() -> void:
 
 #--[ Unlocking ]--
 
+#- Steam
+
+func SetAchievement(achivement: String) -> void:
+	var status: Dictionary = Steam.getAchievement(achivement)
+	if status["achieved"]:
+		print("Steam Achievement Unlocked")
+		return
+	Steam.setAchievement(achivement)
+	Steam.storeStats()
+	print("Steam Achievement Unlocked: " + achivement)
+
+#- Game
+
 func newlyUnlockedToFullyUnlocked():
 	progressionDict.CharactersUnlocked += newProgressionDict.CharactersUnlocked
 	progressionDict.ItemsUnlocked += newProgressionDict.ItemsUnlocked
-
 
 ## Check if filePath doesn't exist, if not then add
 func unlockCharacter(filePath: String) -> void:

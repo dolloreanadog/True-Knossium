@@ -19,6 +19,7 @@ func _ready() -> void:
 	Global.EndLoadingScreen()
 	Steam.setRichPresence("gameinfotext", str(0))
 	Steam.setRichPresence("steam_display", "#MainMenu")
+	Global.SetAchievement("ach_test")
 
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_WM_CLOSE_REQUEST:

@@ -41,6 +41,7 @@
 [ext_resource type="Script" path="res://resources/levels/ingame/tutorial_levels/scripts/CharacterStatVisibility.gd" id="34_h57n0"]
 [ext_resource type="Script" path="res://resources/levels/ingame/tutorial_levels/scripts/Surrender.gd" id="35_pj01h"]
 [ext_resource type="Script" path="res://resources/levels/ingame/tutorial_levels/TutorialPlayer.gd" id="38_3nob4"]
+[ext_resource type="VideoStream" uid="uid://dgd55du0vs4ic" path="res://assets/video/TutorialDraggingVideo.ogv" id="38_plhrf"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_q1uww"]
 size = Vector2(1920, 1152)
@@ -119,9 +120,6 @@ size = Vector2(733, 413)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_o7ci7"]
 bg_color = Color(1, 0.176471, 0, 0.537255)
-
-[sub_resource type="VideoStreamTheora" id="VideoStreamTheora_00xqh"]
-file = "res://assets/video/TutorialDraggingVideo.ogg"
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nug06"]
 bg_color = Color(1, 0.176471, 0, 0.537255)
@@ -1571,7 +1569,7 @@ layout_mode = 0
 offset_left = 600.0
 offset_right = 1320.0
 offset_bottom = 408.0
-stream = SubResource("VideoStreamTheora_00xqh")
+stream = ExtResource("38_plhrf")
 autoplay = true
 expand = true
 bus = &"SFX"

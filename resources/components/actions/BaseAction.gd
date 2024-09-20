@@ -1,4 +1,5 @@
 extends Node
+## Action for character to spawn AOE
 class_name BaseActionComponent
 
 

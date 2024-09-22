@@ -1,4 +1,4 @@
-extends Control
+extends OptionButton
 class_name StatViewButtonGroup
 # No Worried for modulate, tint will work simply fine if we use it on the CharacterBody2D
 
@@ -11,7 +11,6 @@ var allMelee: Array
 var allRanged: Array
 var allSupport: Array
 
-@export var optionButton: OptionButton
 @onready var main: BaseLevel = get_parent().get_parent()
 @onready var system: TurnSystem = main.get_node("TurnSystem")
 
@@ -33,31 +32,31 @@ func _ready():
 #--[ Buttons ]--
 
 func OptionButtonPressed() -> void:
-#	print("(check)" + str(optionButton.shortcut.get_as_text()))
+#	print("(check)" + str(shortcut.get_as_text()))
 	if Input.is_action_pressed("ViewStatsNormal"):
-		optionButton.select(0)
+		select(0)
 		_on_view_normal_pressed()
-		optionButton.get_popup().hide()
+		get_popup().hide()
 	if Input.is_action_pressed("ViewStatsHealth"):
-		optionButton.select(1)
+		select(1)
 		_on_view_health_pressed()
-		optionButton.get_popup().hide()
+		get_popup().hide()
 	if Input.is_action_pressed("ViewStatsDefense"):
-		optionButton.select(2)
+		select(2)
 		_on_view_defense_pressed()
-		optionButton.get_popup().hide()
+		get_popup().hide()
 	if Input.is_action_pressed("ViewStatsAttack"):
-		optionButton.select(3)
+		select(3)
 		_on_view_attack_pressed()
-		optionButton.get_popup().hide()
+		get_popup().hide()
 	if Input.is_action_pressed("ViewStatsMorale"):
-		optionButton.select(4)
+		select(4)
 		_on_view_morale_pressed()
-		optionButton.get_popup().hide()
+		get_popup().hide()
 	if Input.is_action_pressed("ViewStatsLevel"):
-		optionButton.select(5)
+		select(5)
 		_on_view_level_pressed()
-		optionButton.get_popup().hide()
+		get_popup().hide()
 	
 
 

@@ -24,7 +24,7 @@ var SettingsDict: Dictionary = {
 	"SettingsScreenSize": screenSize.AUTOMATIC,
 	"SettingsScreenDisplay": 0,
 	"SettingsWindowedMode": windowMode.FULLSCREEN,
-	"SettingsMasterVolume": 0.4,
+	"SettingsMasterVolume": 0.3,
 	"SettingsMusicVolume": 0.15,
 	"SettingsCharacterVolume": 0.8,
 	"SettingsSFXVolume": 0.8,
@@ -135,8 +135,8 @@ func resetSettings() -> bool:
 	SetTranslationFROMOS()
 	setScreenSize(screenSize.AUTOMATIC)
 	setWindowedMode(windowMode.FULLSCREEN)
-	setMasterVolume(0.5)
-	setMusicVolume(0.25)
+	setMasterVolume(0.3)
+	setMusicVolume(0.15)
 	setCharacterVolume(0.8)
 	setSFXVolume(0.8)
 	SettingsDict.SettingsVersion = gameSaveVersion

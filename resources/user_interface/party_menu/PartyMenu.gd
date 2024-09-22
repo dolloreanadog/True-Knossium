@@ -149,6 +149,7 @@ func ShowCharacterLocationButton() -> void:
 		InstantiatedCircle.z_index = 49
 		print("Circle Spawned at " + str(InstantiatedCircle.global_position))
 		print("Character at " + str(targetCharacter.trueGlobalPosition))
+	Exit()
 
 func _on_character_list_item_selected(index: int) -> void:
 	$ColorRect/Panel/CharacterNameLabelEdit.editable = true

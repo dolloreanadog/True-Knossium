@@ -291,7 +291,7 @@ func _update_graph() -> void:
 		grad_px.y = _MARGIN_TOP + n * vert_grad_step_px
 		grad.append(grad_px)
 		var number: float = (float(y_max) - n * float(y_axis_range)/(vert_grad_number-1)) ## If any issues with decimals, move to snappify
-		if show_y_decimals:
+		if !show_y_decimals:
 			if step_decimals(number) == 0:
 				grad_text = str(number) 
 			else:
@@ -327,7 +327,7 @@ func _update_graph() -> void:
 		grad.append(grad_px)
 #		var grad_text: String = str((float(x_min) + n * float(x_axis_range)/(hor_grad_number-1))) ## If any issues with decimals, move to snappify
 		var number: float = (float(x_min) + n * float(x_axis_range)/(hor_grad_number-1)) ## If any issues with decimals, move to snappify
-		if show_x_decimals:
+		if !show_x_decimals:
 			if step_decimals(number) == 0:
 				grad_text = str(number) 
 			else:

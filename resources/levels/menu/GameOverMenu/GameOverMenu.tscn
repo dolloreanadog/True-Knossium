@@ -183,7 +183,6 @@ show_x_ticks = false
 show_x_decimals = false
 y_label = "Characters Fielded"
 show_y_ticks = false
-show_y_decimals = false
 
 [node name="Total Stat Points" type="TabBar" parent="Panel/TabContainer"]
 visible = false
@@ -199,6 +198,7 @@ x_min = 1.0
 x_max = 2.0
 x_label = "Turns"
 show_x_ticks = false
+show_x_decimals = false
 y_label = "Total Stat Points"
 show_y_ticks = false
 
@@ -216,7 +216,9 @@ x_min = 1.0
 x_max = 2.0
 x_label = "Turns"
 show_x_ticks = false
+show_x_decimals = false
 y_label = "AOE Fielded"
 show_y_ticks = false
+show_y_decimals = false
 
 [connection signal="pressed" from="GoToMenu" to="." method="_on_go_to_menu_pressed"]

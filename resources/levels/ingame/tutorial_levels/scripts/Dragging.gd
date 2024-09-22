@@ -7,6 +7,9 @@ func TutorialIndexSwitch() -> void:
 			$"../../ButtonsContainer/EndTurn".disabled = true
 			$"../../ButtonsContainer/ShowMenuButton".disabled = true
 		1:
+			$Part1.hide()
+			$Part2.show()
+		2:
 			dungeon.SwitchTutorialStep(dungeon.tutorialSteps.AOEVISIBILITY)
 			self.queue_free()
 

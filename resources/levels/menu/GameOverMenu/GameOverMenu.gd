@@ -89,7 +89,7 @@ func loadSaveData() -> void:
 func UpdateCharts() -> bool:
 	var charactersFieldedPlot: PlotItem = CharactersFieldedGraph.add_plot_item(" ", Color.WHITE, 2)
 	var totalStatPointsPlot: PlotItem = TotalStatPointsGraph.add_plot_item(" ", Color.WHITE, 2)
-	var AOEFieldedPlot: PlotItem = AOEFieldedGraph.add_plot_item(" ", Color.WHITE, 2)
+	var AOEFieldedPlot: PlotItem = AOEFieldedGraph.add_plot_item(" ", Color.WHITE, 2.5)
 	
 	for vector in SaveSystem.GameInfoDict.TotalStatPoints:
 		totalStatPointsPlot.add_point(vector)

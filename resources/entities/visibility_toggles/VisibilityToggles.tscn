@@ -23,18 +23,7 @@ action = &"ViewStatsLevel"
 [sub_resource type="Shortcut" id="Shortcut_c5kp0"]
 events = [SubResource("InputEventAction_jlqxd"), SubResource("InputEventAction_ykiol"), SubResource("InputEventAction_i51tw"), SubResource("InputEventAction_em5cr"), SubResource("InputEventAction_k10uc"), SubResource("InputEventAction_ags6m")]
 
-[node name="VisibilityToggles" type="Control" node_paths=PackedStringArray("optionButton")]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-script = ExtResource("1_2traf")
-optionButton = NodePath("OptionButton")
-
-[node name="OptionButton" type="OptionButton" parent="."]
-layout_mode = 0
+[node name="OptionButton" type="OptionButton"]
 offset_right = 192.0
 offset_bottom = 31.0
 shortcut = SubResource("Shortcut_c5kp0")
@@ -52,6 +41,7 @@ popup/item_4/text = "Viewing Morale"
 popup/item_4/id = 4
 popup/item_5/text = "Viewing Level"
 popup/item_5/id = 5
+script = ExtResource("1_2traf")
 
-[connection signal="item_selected" from="OptionButton" to="." method="VisibilityToggleSelectionSelected"]
-[connection signal="pressed" from="OptionButton" to="." method="OptionButtonPressed"]
+[connection signal="item_selected" from="." to="." method="VisibilityToggleSelectionSelected"]
+[connection signal="pressed" from="." to="." method="OptionButtonPressed"]

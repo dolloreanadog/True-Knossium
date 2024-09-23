@@ -429,11 +429,11 @@ func updateInventoryListVisual() -> void:
 	inventoryList.clear()
 	for i in playerInventory.storedItems.size():
 		var Litem: BaseInventoryItem = playerInventory.storedItems[i]
+		inventoryList.add_item(Litem.itemName + "  x" + str(Litem.amount) + " £" + str(snappedf(Litem.value, 0.01)), Litem.image)
 		if Litem.isInteractable:
-			inventoryList.add_item(Litem.itemName + "  x" + str(Litem.amount) + " £" + str(snappedf(Litem.value, 0.01)) + "\n" + "Item type: Consumable", Litem.image)
+			inventoryList.set_item_tooltip(i, Litem.itemDesciption + "\n" + "Item type: Consumable")
 		else:
-			inventoryList.add_item(Litem.itemName + "  x" + str(Litem.amount) + " £" + str(snappedf(Litem.value, 0.01)) + "\n" + "Item type: Upkeep", Litem.image)
-		inventoryList.set_item_tooltip(i, Litem.itemDesciption)
+			inventoryList.set_item_tooltip(i, Litem.itemDesciption + "\n" + "Item type: Upkeep")
 #---
 
 #--- Upkeep
@@ -459,11 +459,11 @@ func updateUpkeepListVisual() -> void:
 	upkeepList.clear()
 	for i in upkeepInventory.storedItems.size():
 		var Litem: BaseInventoryItem = upkeepInventory.storedItems[i]
+		upkeepList.add_item(Litem.itemName + "  x" + str(Litem.amount) + " £" + str(snappedf(Litem.value, 0.01)), Litem.image)
 		if Litem.isInteractable:
-			inventoryList.add_item(Litem.itemName + "  x" + str(Litem.amount) + " £" + str(snappedf(Litem.value, 0.01)) + "\n" + "Item type: Consumable", Litem.image)
+			upkeepList.set_item_tooltip(i, Litem.itemDesciption + "\n" + "Item type: Consumable")
 		else:
-			inventoryList.add_item(Litem.itemName + "  x" + str(Litem.amount) + " £" + str(snappedf(Litem.value, 0.01)) + "\n" + "Item type: Upkeep", Litem.image)		
-		upkeepList.set_item_tooltip(i, Litem.itemDesciption)
+			upkeepList.set_item_tooltip(i, Litem.itemDesciption + "\n" + "Item type: Upkeep")
 #---
 
 #--- Shop List
@@ -500,7 +500,10 @@ func updateShopListVisual() -> void:
 	for i in shopInventory.storedItems.size():
 		var Litem: BaseInventoryItem = shopInventory.storedItems[i]
 		shopList.add_item(Litem.itemName + "  x" + str(Litem.amount) + " £" + str(snappedf(Litem.value, 0.01)), Litem.image)
-		shopList.set_item_tooltip(i, Litem.itemDesciption)
+		if Litem.isInteractable:
+			shopList.set_item_tooltip(i, Litem.itemDesciption + "\n" + "Item type: Consumable")
+		else:
+			shopList.set_item_tooltip(i, Litem.itemDesciption + "\n" + "Item type: Upkeep")
 #
 #---
 
@@ -513,11 +516,12 @@ func updatePlayerBarterListVisual() -> void:
 	playerBarterList.clear()
 	for i in playerBarterInventory.storedItems.size():
 		var Litem: BaseInventoryItem = playerBarterInventory.storedItems[i]
+		shopBarterList.add_item(Litem.itemName + "  x" + str(Litem.amount) + " £" + str(snappedf(Litem.value, 0.01)), Litem.image)
 		if Litem.isInteractable:
-			inventoryList.add_item(Litem.itemName + "  x" + str(Litem.amount) + " £" + str(snappedf(Litem.value, 0.01)) + "\n" + "Item type: Consumable", Litem.image)
+			shopBarterList.set_item_tooltip(i, Litem.itemDesciption + "\n" + "Item type: Consumable")
 		else:
-			inventoryList.add_item(Litem.itemName + "  x" + str(Litem.amount) + " £" + str(snappedf(Litem.value, 0.01)) + "\n" + "Item type: Upkeep", Litem.image)		
-		playerBarterList.set_item_tooltip(i, Litem.itemDesciption)
+			shopBarterList.set_item_tooltip(i, Litem.itemDesciption + "\n" + "Item type: Upkeep")
+
 #
 #---
 

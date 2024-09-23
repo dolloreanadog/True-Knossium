@@ -47,9 +47,9 @@ var chooseCharacterListArray: Array
 var finalCharacterListArray: Array
 
 #---[ Character Info Container ]---
-@onready var characterNameLabel: Label = get_node("Panel/CharacterNameLabel")
-@onready var upkeepLabel: Label = get_node("Panel/UpkeepLabel")
-
+@onready var characterNameLabel: Label = $Panel/CharacterNameLabel
+@onready var upkeepLabel: Label = $Panel/UpkeepLabel
+@onready var descriptionLabel: Label = $MiddleInfo/Panel/DescriptionLabel
 
 #---[ File Loading ]---
 var filedCharactersArray: Array
@@ -60,8 +60,8 @@ var loadedItemsArray: Array
 
 #---[ Value ]---
 # Visual
-@onready var maxValueLabel: Label = get_node("MiddleInfo/MaxValueLabel")
-@onready var currentValueLabel: Label = get_node("MiddleInfo/CurrentValueLabel")
+@onready var maxValueLabel: Label = $MiddleInfo/MaxValueLabel
+@onready var currentValueLabel: Label = $MiddleInfo/CurrentValueLabel
 
 # System
 @export var maxValue: float = 0
@@ -133,7 +133,7 @@ func GetFinalInventoryValue() -> float:
 func StartGameButtonPressed() -> void:
 	Global.StartLoadingScreen(true)
 	var dungeon: PackedScene = load("res://resources/levels/ingame/dungeon/Dungeon.tscn")
-
+	
 	for i in finalCharacterListArray.size():
 		Global.newGameCharacterInfo.push_back(finalCharacterListArray[i].scene_file_path)
 	
@@ -215,7 +215,10 @@ func UpdateInventoryChooseListVisual() -> void:
 	for i in choosingInventorySystem.storedItems.size():
 		var Litem: BaseInventoryItem = choosingInventorySystem.storedItems[i]
 		chooseInventoryList.add_item(Litem.itemName, Litem.image)
-		chooseInventoryList.set_item_tooltip(i, Litem.itemDesciption + "\n" + "Value: " + str(Litem.value))
+		if Litem.isInteractable:
+			chooseInventoryList.set_item_tooltip(i, Litem.itemDesciption + "\n" + "Value: " + str(Litem.value) + "\n" + "Item type: Consumable")
+		else:
+			chooseInventoryList.set_item_tooltip(i, Litem.itemDesciption + "\n" + "Value: " + str(Litem.value) + "\n" + "Item type: Upkeep")
 
 func UpdateCharacterFinalListVisual() -> void:
 	finalCharacterList.clear()
@@ -230,8 +233,10 @@ func UpdateItemFinalListVisual() -> void:
 	for i in finalInventorySystem.storedItems.size():
 		var Litem: BaseInventoryItem = finalInventorySystem.storedItems[i]
 		finalInventoryList.add_item(Litem.itemName + "  x" + str(Litem.amount), Litem.image)
-		finalInventoryList.set_item_tooltip(i, Litem.itemDesciption + "\n" + "Value: " + str(Litem.value))
-
+		if Litem.isInteractable:
+			finalInventoryList.set_item_tooltip(i, Litem.itemDesciption + "\n" + "Value: " + str(Litem.value) + "\n" + "Item type: Consumable")
+		else:
+			finalInventoryList.set_item_tooltip(i, Litem.itemDesciption + "\n" + "Value: " + str(Litem.value) + "\n" + "Item type: Upkeep")
 func UpdateUpkeepList() -> void:
 	finalUpkeepList.clear()
 	for i in upkeepInventorySystem.storedItems.size():
@@ -329,6 +334,7 @@ func OpenCharacterAmountSelector(selectedCharacter: BaseCharacter) -> void:
 	characterAmountSelector.show()
 	
 	selectorCharacter = selectedCharacter
+	descriptionLabel.text = selectorCharacter.characterDescription
 	setMaxSelectorAmountOnMaxValue(true, selectorCharacter)
 	
 
@@ -391,6 +397,11 @@ func OpenItemAmountSelector(selectedItem: BaseInventoryItem, selectedInventory: 
 		itemAmountSpinbox.set_value_no_signal(selectorInitialItemAmount)
 	else:
 		setMaxSelectorAmountOnMaxValue(false, null, selectorItem)
+		
+	if selectorItem.isInteractable:
+		descriptionLabel.text = selectorItem.itemDesciption + "\n" + "Item type: Consumable"
+	else:
+		descriptionLabel.text = selectorItem.itemDesciption + "\n" + "Item type: Upkeep"
 
 
 func ItemAmountSliderValueChanged(value: float) -> void:

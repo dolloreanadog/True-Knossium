@@ -149,18 +149,14 @@ offset_left = 192.0
 offset_top = 112.0
 offset_right = 353.0
 offset_bottom = 144.0
-item_count = 5
+item_count = 3
 allow_reselect = true
 popup/item_0/text = "English"
 popup/item_0/id = 0
 popup/item_1/text = "Simple Chinese"
 popup/item_1/id = 1
-popup/item_2/text = "Japanese"
-popup/item_2/id = 2
-popup/item_3/text = "Spanish"
-popup/item_3/id = 3
-popup/item_4/text = "French"
-popup/item_4/id = 4
+popup/item_2/text = "Russian"
+popup/item_2/id = 5
 
 [node name="Control4" type="Control" parent="ColorRect/DisplayPanel"]
 anchors_preset = 0

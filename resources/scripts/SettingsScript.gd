@@ -11,7 +11,7 @@ var gameSaveVersion: String = "0.87.3"
 # 3840 x 2160 is XX
 enum screenSize {T, S, L, X, XX, AUTOMATIC }
 enum windowMode {FULLSCREEN, WINDOWED, BORDERLESSWINDOW}
-enum language {ENGLISH, SIMPLECHINESE, JAPANESE, ESPANOL, FRENCH}
+enum language {ENGLISH, SIMPLECHINESE, JAPANESE, ESPANOL, FRENCH, RUSSIAN}
 
 var inputsLoaded: bool = false
 #SettingsAOEMovement
@@ -72,6 +72,8 @@ func SetTranslationFROMOS() -> void:
 			setTranslation(language.JAPANESE)
 		"zh":
 			setTranslation(language.SIMPLECHINESE)
+		"ru":
+			setTranslation(language.RUSSIAN)
 		_:
 			setTranslation(language.ENGLISH)
 
@@ -223,7 +225,10 @@ func applySettings() -> void:
 			TranslationServer.set_locale("ja")
 		language.FRENCH:
 			TranslationServer.set_locale("fr")
+		language.RUSSIAN:
+			TranslationServer.set_locale("ru")
 		_:
+			TranslationServer.set_locale("en")
 			push_error("This is not a existing language.")
 	
 	#-- Volume

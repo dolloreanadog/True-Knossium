@@ -1,6 +1,12 @@
 extends Control
 class_name SettingsMenu
 
+#--[ NOTES ]--
+# Japanese ID: 2
+# Spanish ID: 3
+# French ID: 4
+# These are removed, until I'm able to support them
+
 #--[ General Buttons ]--
 
 @onready var AOEMovementButton: CheckButton = get_node("ColorRect/GameplayPanel/HBoxContainer/AOEMovementButton")
@@ -50,7 +56,7 @@ func setSettings() -> void:
 	AOEMovementButton.button_pressed = SettingsSystem.getAOEMovement()
 	resolutionOptions.selected = SettingsSystem.getScreenSize()
 	windowModeOptions.selected = SettingsSystem.getWindowedMode()
-	languageOptions.selected = SettingsSystem.getTranslation()
+	languageOptions.selected = languageOptions.get_item_index(SettingsSystem.getTranslation())
 	for i in DisplayServer.get_screen_count():
 		monitorDisplayOptions.add_item(str(i), i)
 	monitorDisplayOptions.selected = DisplayServer.window_get_current_screen(0)

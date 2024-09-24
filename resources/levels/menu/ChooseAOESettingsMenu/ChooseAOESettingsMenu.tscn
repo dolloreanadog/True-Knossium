@@ -35,7 +35,7 @@ offset_bottom = 136.0
 theme_override_font_sizes/normal_font_size = 50
 theme_override_font_sizes/bold_font_size = 50
 bbcode_enabled = true
-text = "Drag What AOE Movement You Want Onto the Character!"
+text = "LABEL_AOEQUESTION"
 
 [node name="Label2" type="Label" parent="Control"]
 layout_mode = 0
@@ -44,7 +44,7 @@ offset_top = 136.0
 offset_right = 454.0
 offset_bottom = 174.0
 theme_override_font_sizes/font_size = 25
-text = "Can be changed later in settings"
+text = "LABEL_AOEEXTRAINFO"
 
 [node name="AOE" type="Node2D" parent="."]
 

@@ -20,11 +20,11 @@ func AOEOnCharacter() -> void:
 	print("(check) Array Size" + str(overlappingAOEs.size()))
 	if overlappingAOEs.size() == 2:
 		$ConfirmButton.disabled = true
-		$ConfirmButtonWarning.text = "Can only have one AOE movement type, please put only one AOE on the dummy."
+		$ConfirmButtonWarning.text = "LABEL_AOEWARNING1"
 		$ConfirmButtonWarning.show()
 	elif overlappingAOEs.size() == 0:
 		$ConfirmButton.disabled = true
-		$ConfirmButtonWarning.text = "Place An AOE on the character."
+		$ConfirmButtonWarning.text = "LABEL_AOEWARNING2"
 		$ConfirmButtonWarning.show()
 	else:
 		$ConfirmButton.disabled = false

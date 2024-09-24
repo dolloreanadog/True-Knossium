@@ -75,7 +75,7 @@ layout_mode = 0
 offset_left = 8.0
 offset_right = 360.0
 offset_bottom = 26.0
-text = "Are you sure you want to start a new game?"
+text = "LABEL_STARTNEWGAMECONFIRM"
 horizontal_alignment = 1
 
 [node name="NewGameYes" type="Button" parent="Control/NewGameWarning"]
@@ -84,7 +84,7 @@ offset_left = 32.0
 offset_top = 60.0
 offset_right = 144.0
 offset_bottom = 92.0
-text = "Yes"
+text = "BUTTON_YES"
 
 [node name="NewGameNo" type="Button" parent="Control/NewGameWarning"]
 layout_mode = 2
@@ -92,7 +92,7 @@ offset_left = 224.0
 offset_top = 60.0
 offset_right = 336.0
 offset_bottom = 91.0
-text = "No"
+text = "BUTTON_YES"
 
 [node name="Control2" type="Control" parent="."]
 visible = false
@@ -120,7 +120,7 @@ color = Color(0.219608, 0.219608, 0.219608, 1)
 layout_mode = 0
 offset_right = 368.0
 offset_bottom = 26.0
-text = "Do you want to clear your progression?"
+text = "LABEL_CLEARPROGRESSIONCONFIRM"
 horizontal_alignment = 1
 
 [node name="ClearProgressionYes" type="Button" parent="Control2/ClearGlobalProgressionWarning"]
@@ -129,7 +129,7 @@ offset_left = 32.0
 offset_top = 60.0
 offset_right = 144.0
 offset_bottom = 92.0
-text = "Yes"
+text = "BUTTON_YES"
 
 [node name="ClearProgressionNo" type="Button" parent="Control2/ClearGlobalProgressionWarning"]
 layout_mode = 2
@@ -137,7 +137,7 @@ offset_left = 224.0
 offset_top = 60.0
 offset_right = 336.0
 offset_bottom = 91.0
-text = "No"
+text = "BUTTON_NO"
 
 [node name="TutorialBoxContainer" type="Control" parent="."]
 visible = false
@@ -179,7 +179,7 @@ offset_left = 1368.0
 offset_top = 152.0
 offset_right = 1568.0
 offset_bottom = 184.0
-text = "No"
+text = "BUTTON_NO"
 
 [node name="LinkButton" type="LinkButton" parent="."]
 offset_left = 64.0

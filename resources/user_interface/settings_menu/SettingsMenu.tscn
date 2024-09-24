@@ -34,20 +34,20 @@ alignment = 1
 
 [node name="Label2" type="Label" parent="ColorRect/GameplayPanel/HBoxContainer"]
 layout_mode = 2
-text = "Click & Drag"
+text = "LABEL_CLICKANDDRAGSETTING"
 
 [node name="AOEMovementButton" type="CheckButton" parent="ColorRect/GameplayPanel/HBoxContainer"]
 layout_mode = 2
 
 [node name="Label3" type="Label" parent="ColorRect/GameplayPanel/HBoxContainer"]
 layout_mode = 2
-text = "Click & Click"
+text = "LABEL_CLICKANDCLICKSETTING"
 
 [node name="Label" type="Label" parent="ColorRect/GameplayPanel"]
 layout_mode = 0
 offset_right = 352.0
 offset_bottom = 23.0
-text = "General"
+text = "LABEL_GENERAL"
 horizontal_alignment = 1
 
 [node name="DisplayPanel" type="Panel" parent="ColorRect"]
@@ -61,7 +61,7 @@ offset_bottom = 896.0
 layout_mode = 0
 offset_right = 384.0
 offset_bottom = 23.0
-text = "Display
+text = "LABEL_DISPLAY
 "
 horizontal_alignment = 1
 
@@ -76,7 +76,7 @@ offset_left = 8.0
 offset_top = 32.0
 offset_right = 136.0
 offset_bottom = 64.0
-text = "Resolution"
+text = "LABEL_RESOLUTION"
 vertical_alignment = 1
 
 [node name="ResolutionOptions" type="OptionButton" parent="ColorRect/DisplayPanel/Control"]
@@ -111,22 +111,23 @@ offset_left = 8.0
 offset_top = 72.0
 offset_right = 136.0
 offset_bottom = 104.0
-text = "Window Mode"
+text = "LABEL_WINDOWMODE"
 vertical_alignment = 1
 
 [node name="WindowModeOptions" type="OptionButton" parent="ColorRect/DisplayPanel/Control2"]
 layout_mode = 0
-offset_left = 144.0
+offset_left = 184.0
 offset_top = 72.0
 offset_right = 353.0
 offset_bottom = 104.0
 item_count = 3
+fit_to_longest_item = false
 allow_reselect = true
-popup/item_0/text = "Fullscreen"
+popup/item_0/text = "OPTION_FULLSCREEN"
 popup/item_0/id = 0
-popup/item_1/text = "Windowed"
+popup/item_1/text = "OPTION_WINDOWED"
 popup/item_1/id = 1
-popup/item_2/text = "Borderless Window"
+popup/item_2/text = "OPTION_BORDERLESSWINDOW"
 popup/item_2/id = 2
 
 [node name="Control3" type="Control" parent="ColorRect/DisplayPanel"]
@@ -140,7 +141,7 @@ offset_left = 8.0
 offset_top = 112.0
 offset_right = 136.0
 offset_bottom = 144.0
-text = "Language"
+text = "LABEL_LANGUAGE"
 vertical_alignment = 1
 
 [node name="LanguageOptions" type="OptionButton" parent="ColorRect/DisplayPanel/Control3"]
@@ -169,7 +170,7 @@ offset_left = 8.0
 offset_top = 152.0
 offset_right = 136.0
 offset_bottom = 184.0
-text = "Monitor Display"
+text = "LABEL_MONITORDISPLAY"
 vertical_alignment = 1
 
 [node name="MonitorDisplayOptions" type="OptionButton" parent="ColorRect/DisplayPanel/Control4"]
@@ -192,7 +193,7 @@ offset_bottom = 896.0
 layout_mode = 0
 offset_right = 384.0
 offset_bottom = 23.0
-text = "Audio"
+text = "LABEL_AUDIO"
 horizontal_alignment = 1
 
 [node name="Control" type="Control" parent="ColorRect/AudioPanel"]
@@ -206,7 +207,7 @@ offset_left = 8.0
 offset_top = 32.0
 offset_right = 136.0
 offset_bottom = 96.0
-text = "Master Volume"
+text = "LABEL_MASTERVOLUME"
 vertical_alignment = 1
 
 [node name="MasterVolSlider" type="HSlider" parent="ColorRect/AudioPanel/Control"]
@@ -237,7 +238,7 @@ offset_left = 8.0
 offset_top = 112.0
 offset_right = 136.0
 offset_bottom = 176.0
-text = "Music Volume"
+text = "LABEL_MUSICVOLUME"
 vertical_alignment = 1
 
 [node name="MusicVolSlider" type="HSlider" parent="ColorRect/AudioPanel/Control2"]
@@ -268,7 +269,7 @@ offset_left = 8.0
 offset_top = 200.0
 offset_right = 148.0
 offset_bottom = 264.0
-text = "Character Volume"
+text = "LABEL_CHARACTERVOLUME"
 vertical_alignment = 1
 
 [node name="CharacterVolSlider" type="HSlider" parent="ColorRect/AudioPanel/Control3"]
@@ -299,7 +300,7 @@ offset_left = 8.0
 offset_top = 280.0
 offset_right = 136.0
 offset_bottom = 344.0
-text = "SFX Volume"
+text = "LABEL_SFXVOLUME"
 vertical_alignment = 1
 
 [node name="SFXVolSlider" type="HSlider" parent="ColorRect/AudioPanel/Control4"]
@@ -330,7 +331,7 @@ offset_bottom = 896.0
 layout_mode = 0
 offset_right = 480.0
 offset_bottom = 26.0
-text = "Keybinds"
+text = "LABEL_KEYBINDS"
 horizontal_alignment = 1
 
 [node name="KeybindInstructionLabel" type="Label" parent="ColorRect/KeybindsPanel"]
@@ -369,7 +370,7 @@ text = "  "
 
 [node name="KeybindLabel" type="Label" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer1/KeybindLabelContainer"]
 layout_mode = 2
-text = "Toggle Enemy AOE Visibility"
+text = "LABEL_TOGGLEENEMYAOE"
 horizontal_alignment = 1
 
 [node name="KeybindButtonContainer" type="HBoxContainer" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer1"]
@@ -403,7 +404,7 @@ text = "  "
 
 [node name="KeybindLabel" type="Label" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer2/KeybindLabelContainer"]
 layout_mode = 2
-text = "Toggle Friendly AOE Visibility"
+text = "LABEL_TOGGLEFRIENDLYAOE"
 horizontal_alignment = 1
 
 [node name="KeybindButtonContainer" type="HBoxContainer" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer2"]
@@ -437,7 +438,7 @@ text = "  "
 
 [node name="KeybindLabel" type="Label" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer3/KeybindLabelContainer"]
 layout_mode = 2
-text = "Toggle Support AOE Visibility"
+text = "LABEL_TOGGLESUPPORTAOE"
 horizontal_alignment = 1
 
 [node name="KeybindButtonContainer" type="HBoxContainer" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer3"]
@@ -471,7 +472,7 @@ text = "  "
 
 [node name="KeybindLabel" type="Label" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer4/KeybindLabelContainer"]
 layout_mode = 2
-text = "Toggle Offensive AOE Visibility"
+text = "LABEL_TOGGLEOFFESNIVEAOE"
 horizontal_alignment = 1
 
 [node name="KeybindButtonContainer" type="HBoxContainer" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer4"]
@@ -505,7 +506,7 @@ text = "  "
 
 [node name="KeybindLabel" type="Label" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer5/KeybindLabelContainer"]
 layout_mode = 2
-text = "Toggle Draggable AOE Visibility"
+text = "LABEL_TOGGLEDRAGGABLEAOE"
 horizontal_alignment = 1
 
 [node name="KeybindButtonContainer" type="HBoxContainer" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer5"]
@@ -539,7 +540,7 @@ text = "  "
 
 [node name="KeybindLabel" type="Label" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer16/KeybindLabelContainer"]
 layout_mode = 2
-text = "End Turn"
+text = "LABEL_ENDTURN"
 horizontal_alignment = 1
 
 [node name="KeybindButtonContainer" type="HBoxContainer" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer16"]
@@ -573,7 +574,7 @@ text = "  "
 
 [node name="KeybindLabel" type="Label" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer6/KeybindLabelContainer"]
 layout_mode = 2
-text = "Show Party"
+text = "LABEL_SHOWPARTY"
 horizontal_alignment = 1
 
 [node name="KeybindButtonContainer" type="HBoxContainer" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer6"]
@@ -607,7 +608,7 @@ text = "  "
 
 [node name="KeybindLabel" type="Label" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer7/KeybindLabelContainer"]
 layout_mode = 2
-text = "Show Inventory"
+text = "LABEL_SHOWINVENTORY"
 horizontal_alignment = 1
 
 [node name="KeybindButtonContainer" type="HBoxContainer" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer7"]
@@ -641,7 +642,7 @@ text = "  "
 
 [node name="KeybindLabel" type="Label" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer8/KeybindLabelContainer"]
 layout_mode = 2
-text = "Show Ingame Menu"
+text = "LABEL_SHOWINGAMEMENU"
 horizontal_alignment = 1
 
 [node name="KeybindButtonContainer" type="HBoxContainer" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer8"]
@@ -675,7 +676,7 @@ text = "  "
 
 [node name="KeybindLabel" type="Label" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer9/KeybindLabelContainer"]
 layout_mode = 2
-text = "Auto-place AOE"
+text = "LABEL_AUTOPLACEAOE"
 horizontal_alignment = 1
 
 [node name="KeybindButtonContainer" type="HBoxContainer" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer9"]
@@ -709,7 +710,7 @@ text = "  "
 
 [node name="KeybindLabel" type="Label" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer10/KeybindLabelContainer"]
 layout_mode = 2
-text = "View Normal Stats"
+text = "LABEL_VIEWNORMALSTATS"
 horizontal_alignment = 1
 
 [node name="KeybindButtonContainer" type="HBoxContainer" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer10"]
@@ -743,7 +744,7 @@ text = "  "
 
 [node name="KeybindLabel" type="Label" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer11/KeybindLabelContainer"]
 layout_mode = 2
-text = "View Health Stats"
+text = "LABEL_VIEWHEALTHSTATS"
 horizontal_alignment = 1
 
 [node name="KeybindButtonContainer" type="HBoxContainer" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer11"]
@@ -777,7 +778,7 @@ text = "  "
 
 [node name="KeybindLabel" type="Label" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer12/KeybindLabelContainer"]
 layout_mode = 2
-text = "View Defense Stats"
+text = "LABEL_VIEWDEFENSESTATS"
 horizontal_alignment = 1
 
 [node name="KeybindButtonContainer" type="HBoxContainer" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer12"]
@@ -811,7 +812,7 @@ text = "  "
 
 [node name="KeybindLabel" type="Label" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer13/KeybindLabelContainer"]
 layout_mode = 2
-text = "View Attack Stats"
+text = "LABEL_VIEWATTACKSTATS"
 horizontal_alignment = 1
 
 [node name="KeybindButtonContainer" type="HBoxContainer" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer13"]
@@ -845,7 +846,7 @@ text = "  "
 
 [node name="KeybindLabel" type="Label" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer14/KeybindLabelContainer"]
 layout_mode = 2
-text = "View Morale Stats"
+text = "LABEL_VIEWMORALESTATS"
 horizontal_alignment = 1
 
 [node name="KeybindButtonContainer" type="HBoxContainer" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer14"]
@@ -879,7 +880,7 @@ text = "  "
 
 [node name="KeybindLabel" type="Label" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer15/KeybindLabelContainer"]
 layout_mode = 2
-text = "View Level Stats"
+text = "LABEL_VIEWLEVELSTATS"
 horizontal_alignment = 1
 
 [node name="KeybindButtonContainer" type="HBoxContainer" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer15"]
@@ -913,7 +914,7 @@ text = "  "
 
 [node name="KeybindLabel" type="Label" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer17/KeybindLabelContainer"]
 layout_mode = 2
-text = "Attach Melee Attack AOE to Cursor"
+text = "LABEL_ATTACHMELEEAOE"
 horizontal_alignment = 1
 
 [node name="KeybindButtonContainer" type="HBoxContainer" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer17"]
@@ -947,7 +948,7 @@ text = "  "
 
 [node name="KeybindLabel" type="Label" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer18/KeybindLabelContainer"]
 layout_mode = 2
-text = "Attach Ranged Attack AOE to Cursor"
+text = "LABEL_ATTACHRANGEDAOE"
 horizontal_alignment = 1
 
 [node name="KeybindButtonContainer" type="HBoxContainer" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer18"]
@@ -981,7 +982,7 @@ text = "  "
 
 [node name="KeybindLabel" type="Label" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer19/KeybindLabelContainer"]
 layout_mode = 2
-text = "Attach Support AOE to Cursor"
+text = "LABEL_ATTACHSUPPORTAOE"
 horizontal_alignment = 1
 
 [node name="KeybindButtonContainer" type="HBoxContainer" parent="ColorRect/KeybindsPanel/ScrollContainer/VBoxContainer/KeybindContainer19"]
@@ -1006,7 +1007,7 @@ offset_left = 1576.0
 offset_top = 16.0
 offset_right = 1776.0
 offset_bottom = 48.0
-text = "Exit"
+text = "BUTTON_EXIT"
 
 [node name="Save" type="Button" parent="ColorRect"]
 layout_mode = 0
@@ -1014,7 +1015,7 @@ offset_left = 1408.0
 offset_top = 16.0
 offset_right = 1568.0
 offset_bottom = 47.0
-text = "Save"
+text = "BUTTON_SAVE"
 
 [node name="UnsavedWarning" type="ColorRect" parent="."]
 visible = false

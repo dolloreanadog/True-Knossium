@@ -40,13 +40,13 @@ var difficultyEXP: float = 0
 var characterThatDied
 
 #--[ Get the Characters ]--
-var characters: Array
+var characters: Array = Array([], TYPE_OBJECT, "BaseCharacter", BaseCharacter)
 var charactersAmount: int = 0
-var characterIsActive: Array
-var characterIsHealer: Array
-var characterIsTank: Array
-var characterIsDPSMelee: Array
-var characterIsDPSRanged: Array
+var characterIsActive: Array = Array([], TYPE_OBJECT, "BaseCharacter", BaseCharacter)
+var characterIsHealer: Array = Array([], TYPE_OBJECT, "BaseCharacter", BaseCharacter)
+var characterIsTank: Array = Array([], TYPE_OBJECT, "BaseCharacter", BaseCharacter)
+var characterIsDPSMelee: Array = Array([], TYPE_OBJECT, "BaseCharacter", BaseCharacter)
+var characterIsDPSRanged: Array = Array([], TYPE_OBJECT, "BaseCharacter", BaseCharacter)
 
 var isSpawningCharacter: bool = false
 var characterDied: bool = false

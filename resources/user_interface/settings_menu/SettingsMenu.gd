@@ -31,6 +31,10 @@ class_name SettingsMenu
 @onready var SFXVolSlider: HSlider = get_node("ColorRect/AudioPanel/Control4/SFXVolSlider")
 @onready var SFXVolSpinbox: SpinBox = get_node("ColorRect/AudioPanel/Control4/SFXSpinboxSpinbox")
 
+#--[ Keybinds ]--
+
+@export var KeybindButtons: Array
+
 #-- Button Values
 var AOEMovementValue: bool
 var resolutionIndex: int

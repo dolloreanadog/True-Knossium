@@ -1097,21 +1097,21 @@ charityDifficultyEXPModifier = 0.6
 [node name="SpawnSpecial" type="Node" parent="difficultySystem" node_paths=PackedStringArray("spawner")]
 script = ExtResource("19_hbix6")
 spawner = NodePath("..")
-dirPaths = ["res://resources/entities/characters_items/character/new_dev_game_characters", "res://resources/entities/characters_items/character/special_game_characters"]
+dirPaths = Array[String](["res://resources/entities/characters_items/character/new_dev_game_characters", "res://resources/entities/characters_items/character/special_game_characters"])
 difficultyTotalModifier = 0.25
 charityDifficultyEXPModifier = 13.775
 
 [node name="SpawnLegendary" type="Node" parent="difficultySystem" node_paths=PackedStringArray("spawner")]
 script = ExtResource("19_hbix6")
 spawner = NodePath("..")
-dirPaths = ["res://resources/entities/characters_items/character/legendary_dev_characters"]
+dirPaths = Array[String](["res://resources/entities/characters_items/character/legendary_dev_characters"])
 difficultyTotalModifier = 0.2
 charityDifficultyEXPModifier = 16.5
 
 [node name="SpawnMythical" type="Node" parent="difficultySystem" node_paths=PackedStringArray("spawner")]
 script = ExtResource("19_hbix6")
 spawner = NodePath("..")
-dirPaths = ["res://resources/entities/characters_items/character/mythical_dev_characters", "res://resources/entities/characters_items/character/legendary_dev_characters"]
+dirPaths = Array[String](["res://resources/entities/characters_items/character/mythical_dev_characters", "res://resources/entities/characters_items/character/legendary_dev_characters"])
 difficultyTotalModifier = 0.15
 charityDifficultyEXPModifier = 20.0
 

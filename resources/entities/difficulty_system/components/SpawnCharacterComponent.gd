@@ -5,8 +5,8 @@ class_name SpawnCharacterComponent
 
 @export var spawner: difficultySystem
 # Opens folder containing all characters in the folder here
-@export var dirPaths: Array = ["res://resources/entities/characters_items/character/new_dev_game_characters"]
-var loadedCharactersArray: Array
+@export var dirPaths: Array[String] = ["res://resources/entities/characters_items/character/new_dev_game_characters"]
+var loadedCharactersArray: Array[String]
 @export_category("Experience Modifier")
 ## Multiplier, will decide the cap for characters. Keep to 1 for no change.
 @export var difficultyTotalModifier: float = 1

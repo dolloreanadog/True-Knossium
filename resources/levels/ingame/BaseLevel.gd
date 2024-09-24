@@ -123,6 +123,7 @@ func _ready():
 		addNewGameItems()
 		confirmed = true
 		EndTurnButtonHighlight(true)
+		
 	
 #	await loadConfirmation()
 	if confirmed:

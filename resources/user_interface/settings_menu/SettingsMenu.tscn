@@ -54,13 +54,13 @@ horizontal_alignment = 1
 layout_mode = 2
 offset_left = 480.0
 offset_top = 64.0
-offset_right = 864.0
+offset_right = 896.0
 offset_bottom = 896.0
 
 [node name="Label" type="Label" parent="ColorRect/DisplayPanel"]
 layout_mode = 0
-offset_right = 384.0
-offset_bottom = 23.0
+offset_right = 416.0
+offset_bottom = 26.0
 text = "LABEL_DISPLAY
 "
 horizontal_alignment = 1
@@ -83,7 +83,7 @@ vertical_alignment = 1
 layout_mode = 2
 offset_left = 200.0
 offset_top = 32.0
-offset_right = 352.0
+offset_right = 408.0
 offset_bottom = 64.0
 item_count = 6
 allow_reselect = true
@@ -97,7 +97,7 @@ popup/item_3/text = "2560x1440"
 popup/item_3/id = 3
 popup/item_4/text = "3840x2160"
 popup/item_4/id = 4
-popup/item_5/text = "Automatic"
+popup/item_5/text = "LABEL_AUTOMATIC"
 popup/item_5/id = 5
 
 [node name="Control2" type="Control" parent="ColorRect/DisplayPanel"]
@@ -116,9 +116,9 @@ vertical_alignment = 1
 
 [node name="WindowModeOptions" type="OptionButton" parent="ColorRect/DisplayPanel/Control2"]
 layout_mode = 0
-offset_left = 184.0
+offset_left = 200.0
 offset_top = 72.0
-offset_right = 353.0
+offset_right = 409.0
 offset_bottom = 104.0
 item_count = 3
 fit_to_longest_item = false
@@ -146,9 +146,9 @@ vertical_alignment = 1
 
 [node name="LanguageOptions" type="OptionButton" parent="ColorRect/DisplayPanel/Control3"]
 layout_mode = 0
-offset_left = 192.0
+offset_left = 200.0
 offset_top = 112.0
-offset_right = 353.0
+offset_right = 409.0
 offset_bottom = 144.0
 item_count = 3
 allow_reselect = true
@@ -175,16 +175,16 @@ vertical_alignment = 1
 
 [node name="MonitorDisplayOptions" type="OptionButton" parent="ColorRect/DisplayPanel/Control4"]
 layout_mode = 0
-offset_left = 192.0
+offset_left = 200.0
 offset_top = 152.0
-offset_right = 353.0
+offset_right = 409.0
 offset_bottom = 184.0
 fit_to_longest_item = false
 allow_reselect = true
 
 [node name="AudioPanel" type="Panel" parent="ColorRect"]
 layout_mode = 2
-offset_left = 928.0
+offset_left = 960.0
 offset_top = 64.0
 offset_right = 1312.0
 offset_bottom = 896.0
@@ -212,18 +212,18 @@ vertical_alignment = 1
 
 [node name="MasterVolSlider" type="HSlider" parent="ColorRect/AudioPanel/Control"]
 layout_mode = 0
-offset_left = 248.0
+offset_left = 216.0
 offset_top = 32.0
-offset_right = 376.0
+offset_right = 344.0
 offset_bottom = 64.0
 max_value = 1.0
 step = 0.01
 
 [node name="MasterVolSpinbox" type="SpinBox" parent="ColorRect/AudioPanel/Control"]
 layout_mode = 0
-offset_left = 272.0
+offset_left = 240.0
 offset_top = 64.0
-offset_right = 360.0
+offset_right = 328.0
 offset_bottom = 95.0
 suffix = "%"
 
@@ -243,18 +243,18 @@ vertical_alignment = 1
 
 [node name="MusicVolSlider" type="HSlider" parent="ColorRect/AudioPanel/Control2"]
 layout_mode = 0
-offset_left = 248.0
+offset_left = 216.0
 offset_top = 112.0
-offset_right = 376.0
+offset_right = 344.0
 offset_bottom = 144.0
 max_value = 1.0
 step = 0.01
 
 [node name="MusicVolSpinbox" type="SpinBox" parent="ColorRect/AudioPanel/Control2"]
 layout_mode = 0
-offset_left = 272.0
+offset_left = 240.0
 offset_top = 144.0
-offset_right = 360.0
+offset_right = 328.0
 offset_bottom = 175.0
 suffix = "%"
 
@@ -274,18 +274,18 @@ vertical_alignment = 1
 
 [node name="CharacterVolSlider" type="HSlider" parent="ColorRect/AudioPanel/Control3"]
 layout_mode = 0
-offset_left = 248.0
+offset_left = 216.0
 offset_top = 200.0
-offset_right = 376.0
+offset_right = 344.0
 offset_bottom = 232.0
 max_value = 1.0
 step = 0.01
 
 [node name="CharacterVolSpinbox" type="SpinBox" parent="ColorRect/AudioPanel/Control3"]
 layout_mode = 0
-offset_left = 272.0
+offset_left = 240.0
 offset_top = 232.0
-offset_right = 360.0
+offset_right = 328.0
 offset_bottom = 263.0
 suffix = "%"
 
@@ -305,18 +305,18 @@ vertical_alignment = 1
 
 [node name="SFXVolSlider" type="HSlider" parent="ColorRect/AudioPanel/Control4"]
 layout_mode = 0
-offset_left = 248.0
+offset_left = 216.0
 offset_top = 280.0
-offset_right = 376.0
+offset_right = 344.0
 offset_bottom = 312.0
 max_value = 1.0
 step = 0.01
 
 [node name="SFXSpinboxSpinbox" type="SpinBox" parent="ColorRect/AudioPanel/Control4"]
 layout_mode = 0
-offset_left = 272.0
+offset_left = 240.0
 offset_top = 312.0
-offset_right = 360.0
+offset_right = 328.0
 offset_bottom = 343.0
 suffix = "%"
 

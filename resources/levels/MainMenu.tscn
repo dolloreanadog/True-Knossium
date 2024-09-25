@@ -92,7 +92,7 @@ offset_left = 224.0
 offset_top = 60.0
 offset_right = 336.0
 offset_bottom = 91.0
-text = "BUTTON_YES"
+text = "BUTTON_NO"
 
 [node name="Control2" type="Control" parent="."]
 visible = false

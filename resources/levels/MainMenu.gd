@@ -5,6 +5,7 @@ func _ready() -> void:
 	if !(SaveSystem.checkSaveFileExists()):
 		print("Save File Doesn't Exist!")
 		$VBoxContainer/ContinueButton.disabled = true
+		($Node2D/ColorRect as ColorRect).color = Color("575723")
 	else:
 		SaveSystem.loadAllData()
 		print("checking the save version")
@@ -12,6 +13,12 @@ func _ready() -> void:
 			$VBoxContainer/ContinueButton.disabled = false
 		else:
 			$VBoxContainer/ContinueButton.disabled = true
+		match SaveSystem.GameInfoDict["DungeonLevel"]:
+			"res://resources/levels/ingame/dungeon/Dungeon.tscn":
+				($Node2D/ColorRect as ColorRect).color = Color("575723")
+			"res://resources/levels/ingame/forest/Forest.tscn":
+				($Node2D/ColorRect as ColorRect).color = Color("375f36")
+		
 	
 	if SettingsSystem.GetIsTutorialNeeded():
 		$TutorialBoxContainer.show()

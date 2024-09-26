@@ -30,7 +30,6 @@ extends Node2D
 
 @onready var CharactersFieldedGraph: Graph2D = $"Panel/TabContainer/Characters Fielded/Graph2D"
 @onready var TotalStatPointsGraph: Graph2D = $"Panel/TabContainer/Total Stat Points/Graph2D"
-@onready var AOEFieldedGraph: Graph2D = $"Panel/TabContainer/AOE Fielded/Graph2D"
 
 @onready var UnlockedList: ItemList = $UnlockedPanel/UnlockedList
 var unlockedListArray: Array
@@ -89,7 +88,6 @@ func loadSaveData() -> void:
 func UpdateCharts() -> bool:
 	var charactersFieldedPlot: PlotItem = CharactersFieldedGraph.add_plot_item(" ", Color.WHITE, 2)
 	var totalStatPointsPlot: PlotItem = TotalStatPointsGraph.add_plot_item(" ", Color.WHITE, 2)
-	var AOEFieldedPlot: PlotItem = AOEFieldedGraph.add_plot_item(" ", Color.WHITE, 2.5)
 	
 	for vector in SaveSystem.GameInfoDict.TotalStatPoints:
 		totalStatPointsPlot.add_point(vector)
@@ -105,13 +103,7 @@ func UpdateCharts() -> bool:
 		if CharactersFieldedGraph.y_max < vector.y:
 			CharactersFieldedGraph.y_max = vector.y
 		await get_tree().create_timer(0.001).timeout
-	for vector in SaveSystem.GameInfoDict.AOEFielded:
-		AOEFieldedPlot.add_point(vector)
-		if AOEFieldedGraph.x_max < vector.x:
-			AOEFieldedGraph.x_max = vector.x
-		if AOEFieldedGraph.y_max < vector.y:
-			AOEFieldedGraph.y_max = vector.y
-		await get_tree().create_timer(0.001).timeout
+	
 	return true
 
 

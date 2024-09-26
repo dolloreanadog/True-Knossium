@@ -202,23 +202,4 @@ show_x_decimals = false
 y_label = "Total Stat Points"
 show_y_ticks = false
 
-[node name="AOE Fielded" type="TabBar" parent="Panel/TabContainer"]
-visible = false
-layout_mode = 2
-
-[node name="Graph2D" type="Control" parent="Panel/TabContainer/AOE Fielded"]
-layout_mode = 3
-anchors_preset = 0
-offset_right = 1240.0
-offset_bottom = 776.0
-script = ExtResource("2_4s0mh")
-x_min = 1.0
-x_max = 2.0
-x_label = "Turns"
-show_x_ticks = false
-show_x_decimals = false
-y_label = "AOE Fielded"
-show_y_ticks = false
-show_y_decimals = false
-
 [connection signal="pressed" from="GoToMenu" to="." method="_on_go_to_menu_pressed"]

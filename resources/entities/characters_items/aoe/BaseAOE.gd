@@ -27,6 +27,7 @@ var system: TurnSystem
 @export var spriteAnimations: AnimatedSprite2D
 @export var audioPlayer: AudioStreamPlayer2D
 @onready var collisionVisualizer: Polygon2D = $Polygon2D
+@onready var collision: Node2D = $CollisionShape2D
 @onready var button: Button = get_node("Button")
 
 @export var isDynamicColor: bool = true
@@ -323,6 +324,12 @@ func animationActivate() -> void:
 		spriteAnimations.play("active")
 	if is_instance_valid(audioPlayer):
 		audioPlayer.play()
+
+func SetAnimationSpriteFlip(value: bool) -> void:
+	spriteAnimations.flip_h = value
+	if (value):
+		collision.scale *= Vector2(-1, 1)
+		collisionVisualizer.scale *= Vector2(-1, 1)
 
 func setVisbility(visibility: bool) -> void:
 	collisionVisualizer.set_visible(visibility)

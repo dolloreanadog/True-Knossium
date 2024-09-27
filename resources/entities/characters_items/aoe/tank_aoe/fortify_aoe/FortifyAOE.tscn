@@ -6,8 +6,8 @@
 [ext_resource type="SpriteFrames" uid="uid://ueu1th26qkop" path="res://assets/sprites/aoe_vfx/dev/FortifySprite.tres" id="3_7gvb7"]
 [ext_resource type="Script" path="res://resources/entities/characters_items/aoe/aoe_component/Polygon2DOutline.gd" id="3_nridx"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_krswh"]
-radius = 44.0114
+[sub_resource type="CircleShape2D" id="CircleShape2D_omi1i"]
+radius = 44.0
 
 [node name="FortifyAOE" type="Area2D" node_paths=PackedStringArray("spriteAnimations")]
 script = ExtResource("1_0huvm")
@@ -31,7 +31,7 @@ script = ExtResource("3_nridx")
 lineColor = Color(0.811765, 1, 0.792157, 1)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("CircleShape2D_krswh")
+shape = SubResource("CircleShape2D_omi1i")
 debug_color = Color(0, 0.6, 0.701961, 0.419608)
 
 [node name="Button" type="Button" parent="."]

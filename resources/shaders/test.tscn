@@ -56,8 +56,7 @@ offset_right = 912.0
 offset_bottom = 240.0
 
 [node name="Polygon2D" type="Polygon2D" parent="."]
-position = Vector2(488, 448)
-scale = Vector2(1.56226, 1.82654)
+position = Vector2(446.211, 448)
 texture = SubResource("CanvasTexture_eahus")
 polygon = PackedVector2Array(-0.934631, -30.6963, 39.0654, -62.6963, 135.065, 25.3037, 95.0654, 129.304, -56.9346, 121.304, -136.935, 33.3037, -72.9346, -38.6963)
 uv = PackedVector2Array(-0.934631, -30.6963, 39.0654, -62.6963, 135.065, 25.3037, 95.0654, 129.304, -56.9346, 121.304, -136.935, 33.3037, -72.9346, -38.6963)

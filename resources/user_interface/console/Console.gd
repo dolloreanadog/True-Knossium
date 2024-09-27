@@ -125,10 +125,13 @@ func SpawnCharacterConfirmButtonPressed() -> void:
 		var targetCharacterInstance = loadCharacter.instantiate()
 		if spawnCharacterPartyOption.selected == 0:
 			dungeon.friendlyPartyContainer.addCharacter(targetCharacterInstance, spawnCharacterInputExperienceLine.value, spawnCharacterUseDifficultyEXP.toggle_mode, Vector2(0, 0))
+			dungeon.friendlyPartyContainer.MoveAllCharactersToTruePosition()
 		elif spawnCharacterPartyOption.selected == 1:
 			dungeon.enemyPartyContainer.addCharacter(targetCharacterInstance, spawnCharacterInputExperienceLine.value, spawnCharacterUseDifficultyEXP.toggle_mode, Vector2(0, 0))
+			dungeon.enemyPartyContainer.MoveAllCharactersToTruePosition()
 		else:
 			printConsoleText("Did Not Select a Party!")
+		
 	else:
 		printConsoleText("That Character does not exist!")
 

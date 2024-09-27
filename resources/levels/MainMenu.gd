@@ -13,11 +13,15 @@ func _ready() -> void:
 			$VBoxContainer/ContinueButton.disabled = false
 		else:
 			$VBoxContainer/ContinueButton.disabled = true
+		
+		## Whenever new area make sure to update this as well
 		match SaveSystem.GameInfoDict["DungeonLevel"]:
 			"res://resources/levels/ingame/dungeon/Dungeon.tscn":
 				($Node2D/ColorRect as ColorRect).color = Color("575723")
 			"res://resources/levels/ingame/forest/Forest.tscn":
 				($Node2D/ColorRect as ColorRect).color = Color("375f36")
+			_:
+				($Node2D/ColorRect as ColorRect).color = Color("575723")
 		
 	
 	if SettingsSystem.GetIsTutorialNeeded():

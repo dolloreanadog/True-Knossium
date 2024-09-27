@@ -415,7 +415,8 @@ func loadAOE() -> void:
 		targetAOEInstance.ownerCharacterPFP = load(targetAOEInfo.AOEOwnerCharacterPFP)
 #		print("(check) owner character pfp: " + str(targetAOEInstance.ownerCharacterPFP))
 		targetAOEInstance.ownerCharacterName = targetAOEInfo.AOEOwnerName
-		targetAOEInstance.spriteAnimations.flip_h = targetAOEInfo.AOEIsSpriteFlipped
+		targetAOEInstance.SetAnimationSpriteFlip(targetAOEInfo.AOEIsSpriteFlipped)
+#		targetAOEInstance.spriteAnimations.flip_h = targetAOEInfo.AOEIsSpriteFlipped
 		targetAOEInstance.ownerActionDescription = targetAOEInfo.AOEDescription
 		targetAOEInstance.global_position = targetAOEInfo.AOEPosition
 		targetAOEInstance.isDynamicColor = targetAOEInfo.AOEIsDynamicColor
@@ -446,7 +447,8 @@ func loadAOE() -> void:
 		targetAOEInstance.ownerCharacterPFP = load(targetAOEInfo.AOEOwnerCharacterPFP)
 #		print("(check) owner character pfp: " + str(targetAOEInstance.ownerCharacterPFP))
 		targetAOEInstance.ownerCharacterName = targetAOEInfo.AOEOwnerName
-		targetAOEInstance.spriteAnimations.flip_h = targetAOEInfo.AOEIsSpriteFlipped
+		targetAOEInstance.SetAnimationSpriteFlip(targetAOEInfo.AOEIsSpriteFlipped)
+#		targetAOEInstance.spriteAnimations.flip_h = targetAOEInfo.AOEIsSpriteFlipped
 		targetAOEInstance.ownerActionDescription = targetAOEInfo.AOEDescription
 		targetAOEInstance.global_position = targetAOEInfo.AOEPosition
 		targetAOEInstance.isDynamicColor = targetAOEInfo.AOEIsDynamicColor
@@ -474,7 +476,8 @@ func loadAOE() -> void:
 		targetAOEInstance.collisionVisualizer.modulate = targetAOEInfo.AOEColor
 		targetAOEInstance.ownerCharacterPFP = load(targetAOEInfo.AOEOwnerCharacterPFP)
 		targetAOEInstance.ownerCharacterName = targetAOEInfo.AOEOwnerName
-		targetAOEInstance.spriteAnimations.flip_h = targetAOEInfo.AOEIsSpriteFlipped
+		targetAOEInstance.SetAnimationSpriteFlip(targetAOEInfo.AOEIsSpriteFlipped)
+#		targetAOEInstance.spriteAnimations.flip_h = targetAOEInfo.AOEIsSpriteFlipped
 		targetAOEInstance.ownerActionDescription = targetAOEInfo.AOEDescription
 		targetAOEInstance.global_position = targetAOEInfo.AOEPosition
 		targetAOEInstance.isDynamicColor = targetAOEInfo.AOEIsDynamicColor
@@ -507,7 +510,8 @@ func loadAOE() -> void:
 		targetAOEInstance.collisionVisualizer.modulate = targetAOEInfo.AOEColor
 		targetAOEInstance.ownerCharacterPFP = load(targetAOEInfo.AOEOwnerCharacterPFP)
 		targetAOEInstance.ownerCharacterName = targetAOEInfo.AOEOwnerName
-		targetAOEInstance.spriteAnimations.flip_h = targetAOEInfo.AOEIsSpriteFlipped
+		targetAOEInstance.SetAnimationSpriteFlip(targetAOEInfo.AOEIsSpriteFlipped)
+#		targetAOEInstance.spriteAnimations.flip_h = targetAOEInfo.AOEIsSpriteFlipped
 		targetAOEInstance.ownerActionDescription = targetAOEInfo.AOEDescription
 		targetAOEInstance.global_position = targetAOEInfo.AOEPosition
 		targetAOEInstance.isDynamicColor = targetAOEInfo.AOEIsDynamicColor

@@ -30,6 +30,7 @@ var system: TurnSystem
 @onready var collision: Node2D = $CollisionShape2D
 @onready var button: Button = get_node("Button")
 
+@export var isSymmetrical: bool = true
 @export var isDynamicColor: bool = true
 var mainColor: Color
 #--[ Other Nodes]--

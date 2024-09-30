@@ -415,7 +415,8 @@ func loadAOE() -> void:
 		targetAOEInstance.ownerCharacterPFP = load(targetAOEInfo.AOEOwnerCharacterPFP)
 #		print("(check) owner character pfp: " + str(targetAOEInstance.ownerCharacterPFP))
 		targetAOEInstance.ownerCharacterName = targetAOEInfo.AOEOwnerName
-		targetAOEInstance.SetAnimationSpriteFlip(targetAOEInfo.AOEIsSpriteFlipped)
+		if !(targetAOEInstance.isSymmetrical):
+			targetAOEInstance.SetAnimationSpriteFlip(targetAOEInfo.AOEIsSpriteFlipped)
 #		targetAOEInstance.spriteAnimations.flip_h = targetAOEInfo.AOEIsSpriteFlipped
 		targetAOEInstance.ownerActionDescription = targetAOEInfo.AOEDescription
 		targetAOEInstance.global_position = targetAOEInfo.AOEPosition
@@ -447,7 +448,8 @@ func loadAOE() -> void:
 		targetAOEInstance.ownerCharacterPFP = load(targetAOEInfo.AOEOwnerCharacterPFP)
 #		print("(check) owner character pfp: " + str(targetAOEInstance.ownerCharacterPFP))
 		targetAOEInstance.ownerCharacterName = targetAOEInfo.AOEOwnerName
-		targetAOEInstance.SetAnimationSpriteFlip(targetAOEInfo.AOEIsSpriteFlipped)
+		if !(targetAOEInstance.isSymmetrical):
+			targetAOEInstance.SetAnimationSpriteFlip(targetAOEInfo.AOEIsSpriteFlipped)
 #		targetAOEInstance.spriteAnimations.flip_h = targetAOEInfo.AOEIsSpriteFlipped
 		targetAOEInstance.ownerActionDescription = targetAOEInfo.AOEDescription
 		targetAOEInstance.global_position = targetAOEInfo.AOEPosition

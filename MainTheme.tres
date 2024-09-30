@@ -1,6 +1,9 @@
-[gd_resource type="Theme" load_steps=2 format=3 uid="uid://d2f4kfyd7wqnk"]
+[gd_resource type="Theme" load_steps=3 format=3 uid="uid://d2f4kfyd7wqnk"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_lu762"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ff63y"]
 
 [resource]
+Button/styles/focus = SubResource("StyleBoxEmpty_lu762")
 TooltipPanel/styles/panel = SubResource("StyleBoxFlat_ff63y")

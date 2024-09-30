@@ -177,8 +177,7 @@ func MoveAllCharactersToTruePosition() -> void:
 	dungeon.stopControlVisible(false, 1)
 
 func CharacterInCorrectPosition() -> void:
-	for i in charactersAmount:
-		var character: BaseCharacter = characters[i]
+	for character in get_children():
 		if character.global_position != character.trueGlobalPosition:
 			character.set_global_position(character.trueGlobalPosition)
 

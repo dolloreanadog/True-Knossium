@@ -9,7 +9,7 @@
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3brux"]
 
 [resource]
-Button/colors/font_color = Color(0.87451, 0.87451, 0.87451, 1)
+Button/colors/font_color = Color(1, 1, 1, 1)
 Button/styles/focus = SubResource("StyleBoxEmpty_vlbbv")
 Button/styles/hover = SubResource("StyleBoxEmpty_r3kxp")
 Button/styles/normal = SubResource("StyleBoxEmpty_a1wf1")

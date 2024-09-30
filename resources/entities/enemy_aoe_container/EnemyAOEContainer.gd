@@ -277,7 +277,8 @@ func findTarget(priority: highAttackIn, targetAOE: BaseAOE):
 func positionAOE(targetAOE: BaseAOE, targetCharacter: BaseCharacter):
 	if targetCharacter != null:
 		targetAOE.set_global_position(targetCharacter.global_position + Vector2(randf_range(-25, 25), randf_range(-25, 25)))
-		targetAOE.SetAnimationSpriteFlip(true)
+		if !(targetAOE.isSymmetrical):
+			targetAOE.SetAnimationSpriteFlip(true)
 #		targetAOE.spriteAnimations.set_flip_h(true) # AOE looks a bit weird when enemy attacks us
 		print(str(self) + ": (positionAOE) targetAOE: " + str(targetAOE))
 		print(str(self) + ": (positionAOE) targetAOE position: " + str(targetAOE.global_position))

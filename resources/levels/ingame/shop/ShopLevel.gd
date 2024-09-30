@@ -453,7 +453,7 @@ func loadPartyCharacters() -> void:
 		
 		targetCharacterInstance = loadedCharacter.instantiate()
 		
-		upkeepInventory.addToInventory(targetCharacterInstance.ResourceNeeded, targetCharacterInstance.ResourceNeededNumber)
+		upkeepInventory.addToInventory(targetCharacterInstance.ResourceNeeded.duplicate(true), targetCharacterInstance.ResourceNeededNumber)
 	
 func updateUpkeepListVisual() -> void:
 	upkeepList.clear()
@@ -516,11 +516,11 @@ func updatePlayerBarterListVisual() -> void:
 	playerBarterList.clear()
 	for i in playerBarterInventory.storedItems.size():
 		var Litem: BaseInventoryItem = playerBarterInventory.storedItems[i]
-		shopBarterList.add_item(Litem.itemName + "  x" + str(Litem.amount) + " £" + str(snappedf(Litem.value, 0.01)), Litem.image)
+		playerBarterList.add_item(Litem.itemName + "  x" + str(Litem.amount) + " £" + str(snappedf(Litem.value, 0.01)), Litem.image)
 		if Litem.isInteractable:
-			shopBarterList.set_item_tooltip(i, Litem.itemDesciption + "\n" + "Item type: Consumable")
+			playerBarterList.set_item_tooltip(i, Litem.itemDesciption + "\n" + "Item type: Consumable")
 		else:
-			shopBarterList.set_item_tooltip(i, Litem.itemDesciption + "\n" + "Item type: Upkeep")
+			playerBarterList.set_item_tooltip(i, Litem.itemDesciption + "\n" + "Item type: Upkeep")
 
 #
 #---
@@ -534,11 +534,11 @@ func updateShopBarterListVisual() -> void:
 	for i in shopBarterInventory.storedItems.size():
 		var Litem: BaseInventoryItem = shopBarterInventory.storedItems[i]
 		print(str(Litem.itemName) + str(Litem.amount))
+		shopBarterList.add_item(Litem.itemName + "  x" + str(Litem.amount) + " £" + str(snappedf(Litem.value, 0.01)), Litem.image)
 		if Litem.isInteractable:
-			inventoryList.add_item(Litem.itemName + "  x" + str(Litem.amount) + " £" + str(snappedf(Litem.value, 0.01)) + "\n" + "Item type: Consumable", Litem.image)
+			shopBarterList.set_item_tooltip(i, Litem.itemDesciption + "\n" + "Item type: Consumable")
 		else:
-			inventoryList.add_item(Litem.itemName + "  x" + str(Litem.amount) + " £" + str(snappedf(Litem.value, 0.01)) + "\n" + "Item type: Upkeep", Litem.image)		
-		shopBarterList.set_item_tooltip(i, Litem.itemDesciption)
+			shopBarterList.set_item_tooltip(i, Litem.itemDesciption + "\n" + "Item type: Upkeep")
 
 #
 #---

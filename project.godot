@@ -52,6 +52,10 @@ export/convert_text_resources_to_binary=false
 
 enabled=PackedStringArray("res://addons/graph_2d/plugin.cfg", "res://addons/simple_shapes/plugin.cfg")
 
+[gui]
+
+theme/custom="res://MainTheme.tres"
+
 [input]
 
 ToggleVisibilityAOEEnemy={

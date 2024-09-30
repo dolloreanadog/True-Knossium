@@ -1,7 +1,9 @@
-[gd_scene load_steps=60 format=3 uid="uid://dt8n5ydm47v3d"]
+[gd_scene load_steps=62 format=3 uid="uid://dt8n5ydm47v3d"]
 
 [ext_resource type="Script" path="res://resources/levels/ingame/BaseLevel.gd" id="1_1cjpr"]
 [ext_resource type="Script" path="res://resources/entities/AreaAOEDenial/BaseAreaAOEDenial.gd" id="2_4r8rd"]
+[ext_resource type="Texture2D" uid="uid://dxqf4v2pp2r60" path="res://assets/ui_elements/ui_background/UIBackground.png" id="2_emm8o"]
+[ext_resource type="Texture2D" uid="uid://daejd6gk8oce4" path="res://assets/ui_elements/party_seperators/PartyAreaSeperator.png" id="3_67enp"]
 [ext_resource type="Script" path="res://resources/levels/ingame/dungeon/StatPoints.gd" id="3_ylfwm"]
 [ext_resource type="PackedScene" uid="uid://bwmi2u27htu4s" path="res://resources/entities/visibility_toggles/VisibilityToggles.tscn" id="4_isrn3"]
 [ext_resource type="PackedScene" uid="uid://c2ygo0eat6dnt" path="res://resources/user_interface/upkeep_warning/UpkeepWarning.tscn" id="4_v4scf"]
@@ -157,6 +159,32 @@ offset_top = -8.0
 offset_right = 1928.0
 offset_bottom = 1088.0
 color = Color(0.25098, 0.215686, 0.0156863, 1)
+
+[node name="UiBackground" type="Sprite2D" parent="Visuals/Node2D"]
+position = Vector2(960, 97)
+scale = Vector2(1.00833, 0.936364)
+texture = ExtResource("2_emm8o")
+
+[node name="UiBackground2" type="Sprite2D" parent="Visuals/Node2D"]
+position = Vector2(960.607, 954.571)
+rotation = -3.14159
+scale = Vector2(1.00775, 1.21098)
+texture = ExtResource("2_emm8o")
+
+[node name="PartyAreaSeperator" type="Sprite2D" parent="Visuals/Node2D"]
+z_index = -99
+position = Vector2(968, 512)
+scale = Vector2(1.936, 1.28)
+texture = ExtResource("3_67enp")
+
+[node name="Panel" type="Panel" parent="Visuals/Node2D"]
+offset_top = 832.0
+offset_right = 1920.0
+offset_bottom = 1080.0
+
+[node name="Panel2" type="Panel" parent="Visuals/Node2D"]
+offset_right = 1920.0
+offset_bottom = 192.0
 
 [node name="OutOfBoundsAOEDenial" type="Area2D" parent="."]
 script = ExtResource("2_4r8rd")

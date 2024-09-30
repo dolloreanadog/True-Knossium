@@ -9,6 +9,7 @@
 [node name="BriberyAOE" type="Area2D" node_paths=PackedStringArray("spriteAnimations")]
 script = ExtResource("1_7idww")
 spriteAnimations = NodePath("AnimatedSprite2D")
+isSymmetrical = false
 isAnimationEveryTurn = false
 TurnsLeft = 3
 activateFirstTurn = true
@@ -19,10 +20,9 @@ activateLastTurn = true
 modulate = Color(1, 1, 1, 0.109804)
 clip_children = 2
 position = Vector2(4.76837e-06, 3.8147e-06)
-scale = Vector2(1.45455, 1.45455)
-polygon = PackedVector2Array(44, 0, -22, 38.1051, -22, -38.1051)
+polygon = PackedVector2Array(64, 0, -32, 55.4256, -32, -55.4256)
 script = ExtResource("2_lri02")
-radius = 44
+radius = 64
 points_num = 3
 
 [node name="polygon2DOutline" type="Node2D" parent="Polygon2D"]

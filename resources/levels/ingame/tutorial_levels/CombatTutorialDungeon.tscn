@@ -1,4 +1,4 @@
-[gd_scene load_steps=71 format=3 uid="uid://ubqjl7xo4jo1"]
+[gd_scene load_steps=72 format=3 uid="uid://ubqjl7xo4jo1"]
 
 [ext_resource type="Script" path="res://resources/levels/ingame/tutorial_levels/CombatTutorialDungeon.gd" id="1_mmmgc"]
 [ext_resource type="Script" path="res://resources/entities/AreaAOEDenial/BaseAreaAOEDenial.gd" id="2_57bap"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" path="res://resources/levels/ingame/dungeon/StatPoints.gd" id="3_upymc"]
 [ext_resource type="Texture2D" uid="uid://daejd6gk8oce4" path="res://assets/ui_elements/party_seperators/PartyAreaSeperator.png" id="4_ceptr"]
 [ext_resource type="PackedScene" uid="uid://bwmi2u27htu4s" path="res://resources/entities/visibility_toggles/VisibilityToggles.tscn" id="4_wo2ys"]
+[ext_resource type="Texture2D" uid="uid://dxqf4v2pp2r60" path="res://assets/ui_elements/ui_background/UIBackground.png" id="5_a5e2p"]
 [ext_resource type="PackedScene" uid="uid://dacl7cdqcmb3c" path="res://resources/entities/button_invisibility/ButtonInvisibilityToggles.tscn" id="5_sd2mv"]
 [ext_resource type="Script" path="res://resources/levels/ingame/dungeon/AOEAutoPlacementButton.gd" id="6_lpwyv"]
 [ext_resource type="Script" path="res://resources/components/other/AOEAutoPlacementButton/AutoPlacementAOEComponent.gd" id="7_mgrp3"]
@@ -162,6 +163,7 @@ SaveWarningLabel = NodePath("Labels/SaveWarningLabel")
 [node name="Node2D" type="Node2D" parent="Visuals"]
 
 [node name="ColorRect" type="ColorRect" parent="Visuals/Node2D"]
+z_index = -100
 offset_left = -8.0
 offset_top = -8.0
 offset_right = 1928.0
@@ -169,9 +171,30 @@ offset_bottom = 1088.0
 color = Color(0.25098, 0.215686, 0.0156863, 1)
 
 [node name="PartyAreaSeperator" type="Sprite2D" parent="Visuals/Node2D"]
-position = Vector2(964, 511)
-scale = Vector2(1.928, 1.284)
+z_index = -99
+position = Vector2(968, 512)
+scale = Vector2(1.936, 1.28)
 texture = ExtResource("4_ceptr")
+
+[node name="UiBackground" type="Sprite2D" parent="Visuals/Node2D"]
+position = Vector2(960, 97)
+scale = Vector2(1.00833, 0.936364)
+texture = ExtResource("5_a5e2p")
+
+[node name="UiBackground2" type="Sprite2D" parent="Visuals/Node2D"]
+position = Vector2(960.607, 954.571)
+rotation = -3.14159
+scale = Vector2(1.00775, 1.21098)
+texture = ExtResource("5_a5e2p")
+
+[node name="Panel" type="Panel" parent="Visuals/Node2D"]
+offset_top = 832.0
+offset_right = 1920.0
+offset_bottom = 1080.0
+
+[node name="Panel2" type="Panel" parent="Visuals/Node2D"]
+offset_right = 1920.0
+offset_bottom = 192.0
 
 [node name="OutOfBoundsAOEDenial" type="Area2D" parent="."]
 script = ExtResource("2_57bap")
@@ -1289,12 +1312,14 @@ offset_right = 40.0
 offset_bottom = 40.0
 
 [node name="ColorRect" type="ColorRect" parent="TutorialContainer/Party/Part3"]
+layout_mode = 0
 offset_top = -8.0
 offset_right = 56.0
 offset_bottom = 1088.0
 color = Color(0, 0, 0, 0.737255)
 
 [node name="ColorRect2" type="ColorRect" parent="TutorialContainer/Party/Part3"]
+layout_mode = 0
 offset_left = 56.0
 offset_top = 1032.0
 offset_right = 1864.0
@@ -1302,6 +1327,7 @@ offset_bottom = 1088.0
 color = Color(0, 0, 0, 0.737255)
 
 [node name="ColorRect3" type="ColorRect" parent="TutorialContainer/Party/Part3"]
+layout_mode = 0
 offset_left = 56.0
 offset_top = -8.0
 offset_right = 1864.0
@@ -1309,6 +1335,7 @@ offset_bottom = 56.0
 color = Color(0, 0, 0, 0.737255)
 
 [node name="ColorRect4" type="ColorRect" parent="TutorialContainer/Party/Part3"]
+layout_mode = 0
 offset_left = 1864.0
 offset_top = -8.0
 offset_right = 1928.0
@@ -1317,6 +1344,7 @@ color = Color(0, 0, 0, 0.737255)
 
 [node name="TextBackground7" type="ColorRect" parent="TutorialContainer/Party/Part3"]
 z_index = 2
+layout_mode = 0
 offset_left = 1472.0
 offset_top = 336.0
 offset_right = 1832.0
@@ -1325,6 +1353,7 @@ color = Color(0, 0, 0, 0.737255)
 
 [node name="TextBackground6" type="ColorRect" parent="TutorialContainer/Party/Part3"]
 z_index = 2
+layout_mode = 0
 offset_left = 1472.0
 offset_top = 384.0
 offset_right = 1832.0
@@ -1333,6 +1362,7 @@ color = Color(0, 0, 0, 0.737255)
 
 [node name="Label6" type="Label" parent="TutorialContainer/Party/Part3"]
 z_index = 2
+layout_mode = 0
 offset_left = 1480.0
 offset_top = 384.0
 offset_right = 1824.0
@@ -1346,6 +1376,7 @@ autowrap_mode = 3
 
 [node name="Button" type="Button" parent="TutorialContainer/Party/Part3"]
 z_index = 2
+layout_mode = 0
 offset_left = 1528.0
 offset_top = 344.0
 offset_right = 1784.0

@@ -3,11 +3,11 @@
 [ext_resource type="Script" path="res://resources/levels/ingame/BaseLevel.gd" id="1_c7s3k"]
 [ext_resource type="PackedScene" uid="uid://2067o3jclptt" path="res://resources/user_interface/console/Console.tscn" id="2_1f5g3"]
 [ext_resource type="PackedScene" uid="uid://j6e4b1w1e5u4" path="res://resources/entities/party_container/enemy_party_container/EnemyPartyContainer.tscn" id="2_4hbul"]
+[ext_resource type="Texture2D" uid="uid://dxqf4v2pp2r60" path="res://assets/ui_elements/ui_background/UIBackground.png" id="2_lp7cp"]
 [ext_resource type="Script" path="res://resources/entities/spawn_area/BaseSpawnArea.gd" id="2_uqu12"]
 [ext_resource type="Texture2D" uid="uid://doevg7xyknopt" path="res://assets/art/background/NewBackground.png" id="2_v3ggi"]
 [ext_resource type="Texture2D" uid="uid://daejd6gk8oce4" path="res://assets/ui_elements/party_seperators/PartyAreaSeperator.png" id="3_7q2b5"]
 [ext_resource type="PackedScene" uid="uid://cm1bg68as3a8x" path="res://resources/entities/party_container/friendly_party_container/FriendlyPartyContainer.tscn" id="3_ku5su"]
-[ext_resource type="Texture2D" uid="uid://bcj7udxgfukvn" path="res://assets/sprites/background/AOEBackground.png" id="3_v0bd2"]
 [ext_resource type="Script" path="res://resources/levels/ingame/dungeon/AOEAutoPlacementButton.gd" id="3_yl18b"]
 [ext_resource type="Script" path="res://resources/levels/ingame/dungeon/StatPoints.gd" id="4_1bug0"]
 [ext_resource type="PackedScene" uid="uid://ci3j4o0qfk5qa" path="res://resources/user_interface/inventory_menu/inventoryMenu.tscn" id="4_fae0k"]
@@ -589,6 +589,17 @@ offset_right = 1928.0
 offset_bottom = 1088.0
 color = Color(0.403922, 0.254902, 0.0509804, 1)
 
+[node name="UiBackground" type="Sprite2D" parent="Visuals/Background"]
+position = Vector2(960, 97)
+scale = Vector2(1.00833, 0.936364)
+texture = ExtResource("2_lp7cp")
+
+[node name="UiBackground2" type="Sprite2D" parent="Visuals/Background"]
+position = Vector2(960.607, 954.571)
+rotation = -3.14159
+scale = Vector2(1.00775, 1.21098)
+texture = ExtResource("2_lp7cp")
+
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Visuals/Background"]
 z_index = -100
 position = Vector2(960, 512)
@@ -597,17 +608,20 @@ sprite_frames = SubResource("SpriteFrames_nxfxe")
 animation = &"background"
 autoplay = "background"
 
-[node name="AoeBackground" type="Sprite2D" parent="Visuals/Background"]
-z_index = -100
-position = Vector2(960, 956)
-scale = Vector2(1, 0.96875)
-texture = ExtResource("3_v0bd2")
-
 [node name="PartyAreaSeperator" type="Sprite2D" parent="Visuals/Background"]
 z_index = -99
-position = Vector2(964, 512)
-scale = Vector2(1.928, 1.28)
+position = Vector2(968, 512)
+scale = Vector2(1.936, 1.28)
 texture = ExtResource("3_7q2b5")
+
+[node name="Panel" type="Panel" parent="Visuals/Background"]
+offset_top = 832.0
+offset_right = 1920.0
+offset_bottom = 1080.0
+
+[node name="Panel2" type="Panel" parent="Visuals/Background"]
+offset_right = 1920.0
+offset_bottom = 192.0
 
 [node name="OutOfBoundsAOEDenial" type="Area2D" parent="."]
 script = ExtResource("7_7xw1c")

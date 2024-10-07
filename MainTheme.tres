@@ -1,8 +1,23 @@
-[gd_resource type="Theme" load_steps=3 format=3 uid="uid://d2f4kfyd7wqnk"]
+[gd_resource type="Theme" load_steps=5 format=3 uid="uid://d2f4kfyd7wqnk"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_lu762"]
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_sojn5"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ohfer"]
+content_margin_left = 5.0
+content_margin_top = 5.0
+content_margin_right = 5.0
+content_margin_bottom = 5.0
+bg_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ff63y"]
+content_margin_left = 10.0
+content_margin_right = 10.0
 bg_color = Color(0.109804, 0.109804, 0.109804, 0.976471)
 border_width_left = 5
 border_width_top = 5
@@ -14,4 +29,6 @@ corner_detail = 12
 
 [resource]
 Button/styles/focus = SubResource("StyleBoxEmpty_lu762")
+ItemList/styles/focus = SubResource("StyleBoxEmpty_sojn5")
+ItemList/styles/panel = SubResource("StyleBoxFlat_ohfer")
 TooltipPanel/styles/panel = SubResource("StyleBoxFlat_ff63y")

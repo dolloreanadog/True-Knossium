@@ -293,3 +293,4 @@ func unlockItem():
 	print("Unlocked Item")
 	var itemFilePath := ResourceNeeded.resource_path
 	Global.unlockItem(itemFilePath)
+	

@@ -200,6 +200,22 @@ func GetCharactersFilePaths() -> void:
 	filedItemsArray = Global.getDictItemsUnlocked()
 	filedCharactersArray = Global.getDictCharactersUnlocked()
 
+func CreateCharacterTooltipText(character: BaseCharacter) -> String:
+	var tooltipText: String
+	tooltipText = str(character.id) + "\n"
+	tooltipText += str(character.characterDescription) + "\n"
+	tooltipText += "\n" + "Actions: " + "\n"
+	if is_instance_valid(character.action1):
+		tooltipText += str(character.action1.ActionName) + ": " + str(character.action1.description) + "\n"
+	if is_instance_valid(character.action2):
+		tooltipText += str(character.action2.ActionName) + ": " + str(character.action2.description) + "\n"
+	if is_instance_valid(character.action3):
+		tooltipText += str(character.action3.ActionName) + ": " + str(character.action3.description) + "\n"
+	if is_instance_valid(character.action4):
+		tooltipText += str(character.action4.ActionName) + ": " + str(character.action4.description) + "\n"
+	tooltipText += "\n" + "Upkeep: " + str(character.ResourceNeeded.itemName) + " x" + str(character.ResourceNeededNumber) + "\n" + "Value: " + str(character.stats.totalStatPoints + character.stats.fillerStatPoint)
+	return tooltipText
+
 #---[ Update List Visuals ]---
 func UpdateCharacterChooseListVisual() -> void:
 	chooseCharacterList.clear()
@@ -207,7 +223,7 @@ func UpdateCharacterChooseListVisual() -> void:
 		var Lcharacter: BaseCharacter = chooseCharacterListArray[i]
 		Lcharacter.stats.getTotalStatPoints()
 		chooseCharacterList.add_item(Lcharacter.id, Lcharacter.profilePicture)
-		chooseCharacterList.set_item_tooltip(i, Lcharacter.characterDescription + "\n" + "Upkeep: " + str(Lcharacter.ResourceNeeded.itemName) + " x" + str(Lcharacter.ResourceNeededNumber) + "\n" + "Value: " + str(Lcharacter.stats.totalStatPoints + Lcharacter.stats.fillerStatPoint))
+		chooseCharacterList.set_item_tooltip(i, CreateCharacterTooltipText(Lcharacter))
 		await get_tree().create_timer(0.01).timeout
 
 func UpdateInventoryChooseListVisual() -> void:
@@ -225,7 +241,7 @@ func UpdateCharacterFinalListVisual() -> void:
 	for i in finalCharacterListArray.size():
 		var Lcharacter: BaseCharacter = finalCharacterListArray[i]
 		finalCharacterList.add_item(Lcharacter.id, Lcharacter.profilePicture)
-		finalCharacterList.set_item_tooltip(i, Lcharacter.characterDescription + "\n" + "Value: " + str(Lcharacter.stats.totalStatPoints))
+		finalCharacterList.set_item_tooltip(i, CreateCharacterTooltipText(Lcharacter))
 	print(finalCharacterListArray)
 
 func UpdateItemFinalListVisual() -> void:

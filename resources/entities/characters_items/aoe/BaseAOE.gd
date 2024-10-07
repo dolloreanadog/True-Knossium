@@ -72,7 +72,6 @@ var lastPosition: Vector2
 
 signal gotItems
 signal aoeHasAttack(character: BaseCharacter)
-#Test Webhook
 
 #--[ Base Functions ]--
 func _ready() -> void:

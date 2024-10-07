@@ -3,6 +3,14 @@
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_lu762"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ff63y"]
+bg_color = Color(0.109804, 0.109804, 0.109804, 0.976471)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.32549, 0.32549, 0.32549, 1)
+border_blend = true
+corner_detail = 12
 
 [resource]
 Button/styles/focus = SubResource("StyleBoxEmpty_lu762")

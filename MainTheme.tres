@@ -1,6 +1,12 @@
-[gd_resource type="Theme" load_steps=5 format=3 uid="uid://d2f4kfyd7wqnk"]
+[gd_resource type="Theme" load_steps=11 format=3 uid="uid://d2f4kfyd7wqnk"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_lu762"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_h5xho"]
+bg_color = Color(0.309804, 0.309804, 0.309804, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2d7u6"]
+bg_color = Color(0, 0, 0, 1)
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_sojn5"]
 
@@ -14,6 +20,20 @@ corner_radius_top_left = 5
 corner_radius_top_right = 5
 corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bi8xo"]
+content_margin_left = 10.0
+bg_color = Color(0.309804, 0.309804, 0.309804, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jx8sj"]
+content_margin_left = 10.0
+bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ydsdm"]
+bg_color = Color(0.699653, 0.699654, 0.699653, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_42133"]
+bg_color = Color(0, 0, 0, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ff63y"]
 content_margin_left = 10.0
@@ -29,6 +49,12 @@ corner_detail = 12
 
 [resource]
 Button/styles/focus = SubResource("StyleBoxEmpty_lu762")
+Button/styles/hover = SubResource("StyleBoxFlat_h5xho")
+Button/styles/normal = SubResource("StyleBoxFlat_2d7u6")
 ItemList/styles/focus = SubResource("StyleBoxEmpty_sojn5")
 ItemList/styles/panel = SubResource("StyleBoxFlat_ohfer")
+OptionButton/styles/hover = SubResource("StyleBoxFlat_bi8xo")
+OptionButton/styles/normal = SubResource("StyleBoxFlat_jx8sj")
+OptionButton/styles/pressed = SubResource("StyleBoxFlat_ydsdm")
+PopupMenu/styles/panel = SubResource("StyleBoxFlat_42133")
 TooltipPanel/styles/panel = SubResource("StyleBoxFlat_ff63y")

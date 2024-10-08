@@ -1,4 +1,4 @@
-[gd_scene load_steps=129 format=3 uid="uid://y244ci3gm7os"]
+[gd_scene load_steps=130 format=3 uid="uid://y244ci3gm7os"]
 
 [ext_resource type="Script" path="res://resources/levels/menu/NewGameStartMenu/NewStartMenu.gd" id="1_bba4k"]
 [ext_resource type="Texture2D" uid="uid://drgw1meeuuo0y" path="res://assets/art/background/BrickSide.png" id="2_68j4a"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" path="res://resources/entities/inventory_system/InventorySystem.gd" id="2_l8k1b"]
 [ext_resource type="Script" path="res://resources/levels/menu/NewGameStartMenu/PartySetupButtonsContainer.gd" id="3_ba87b"]
 [ext_resource type="PackedScene" uid="uid://b6kaaccyl21i3" path="res://resources/user_interface/confimation_box/confirmationBox.tscn" id="4_ehh7x"]
+[ext_resource type="Script" path="res://addons/simple_shapes/shapes/CircleShape.gd" id="7_yasdc"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_x88g3"]
 atlas = ExtResource("2_f0nt6")
@@ -999,7 +1000,7 @@ layout_mode = 2
 [node name="Label" type="Label" parent="Lists"]
 layout_mode = 0
 offset_left = 64.0
-offset_top = 105.0
+offset_top = 96.0
 offset_right = 384.0
 offset_bottom = 128.0
 text = "Characters"
@@ -1008,9 +1009,9 @@ horizontal_alignment = 1
 [node name="Label2" type="Label" parent="Lists"]
 layout_mode = 0
 offset_left = 448.0
-offset_top = 104.0
+offset_top = 96.0
 offset_right = 768.0
-offset_bottom = 130.0
+offset_bottom = 128.0
 text = "Items"
 horizontal_alignment = 1
 
@@ -1289,14 +1290,17 @@ script = ExtResource("3_ba87b")
 
 [node name="SetupOptionButton" type="OptionButton" parent="PartySetupButtons"]
 layout_mode = 2
-offset_right = 88.0
-offset_bottom = 40.0
+offset_left = 24.0
+offset_top = -8.0
+offset_right = 112.0
+offset_bottom = 32.0
 
 [node name="HBoxContainer" type="HBoxContainer" parent="PartySetupButtons"]
 layout_mode = 0
-offset_left = 96.0
-offset_right = 396.0
-offset_bottom = 40.0
+offset_left = 112.0
+offset_top = -8.0
+offset_right = 468.0
+offset_bottom = 32.0
 alignment = 2
 
 [node name="NewSetupButton" type="Button" parent="PartySetupButtons/HBoxContainer"]
@@ -1317,6 +1321,158 @@ offset_left = 0.0
 offset_top = 0.0
 offset_right = 1920.0
 offset_bottom = 1080.0
+
+[node name="HelperContainer" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Helper" type="Polygon2D" parent="HelperContainer"]
+position = Vector2(368, 104)
+color = Color(0.0235294, 0.0235294, 0.0235294, 0.858824)
+polygon = PackedVector2Array(15, 0, 14.2658, 4.63525, 12.1353, 8.81678, 8.81678, 12.1353, 4.63525, 14.2658, 9.18485e-16, 15, -4.63525, 14.2658, -8.81678, 12.1353, -12.1353, 8.81678, -14.2658, 4.63525, -15, 1.83697e-15, -14.2658, -4.63525, -12.1353, -8.81678, -8.81678, -12.1353, -4.63525, -14.2658, -2.75546e-15, -15, 4.63525, -14.2658, 8.81678, -12.1353, 12.1353, -8.81678, 14.2658, -4.63525)
+script = ExtResource("7_yasdc")
+radius = 15
+points_num = 20
+
+[node name="Label" type="Label" parent="HelperContainer/Helper"]
+offset_left = -16.0
+offset_top = -16.0
+offset_right = 16.0
+offset_bottom = 16.0
+tooltip_text = "This lists the characters available to put into the party."
+mouse_filter = 0
+text = "?"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Helper2" type="Polygon2D" parent="HelperContainer"]
+position = Vector2(752, 104)
+color = Color(0.0235294, 0.0235294, 0.0235294, 0.858824)
+polygon = PackedVector2Array(15, 0, 14.2658, 4.63525, 12.1353, 8.81678, 8.81678, 12.1353, 4.63525, 14.2658, 9.18485e-16, 15, -4.63525, 14.2658, -8.81678, 12.1353, -12.1353, 8.81678, -14.2658, 4.63525, -15, 1.83697e-15, -14.2658, -4.63525, -12.1353, -8.81678, -8.81678, -12.1353, -4.63525, -14.2658, -2.75546e-15, -15, 4.63525, -14.2658, 8.81678, -12.1353, 12.1353, -8.81678, 14.2658, -4.63525)
+script = ExtResource("7_yasdc")
+radius = 15
+points_num = 20
+
+[node name="Label" type="Label" parent="HelperContainer/Helper2"]
+offset_left = -16.0
+offset_top = -16.0
+offset_right = 16.0
+offset_bottom = 16.0
+tooltip_text = "This lists the items available to put into the party."
+mouse_filter = 0
+text = "?"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Helper3" type="Polygon2D" parent="HelperContainer"]
+position = Vector2(1456, 104)
+color = Color(0.0235294, 0.0235294, 0.0235294, 0.858824)
+polygon = PackedVector2Array(15, 0, 14.2658, 4.63525, 12.1353, 8.81678, 8.81678, 12.1353, 4.63525, 14.2658, 9.18485e-16, 15, -4.63525, 14.2658, -8.81678, 12.1353, -12.1353, 8.81678, -14.2658, 4.63525, -15, 1.83697e-15, -14.2658, -4.63525, -12.1353, -8.81678, -8.81678, -12.1353, -4.63525, -14.2658, -2.75546e-15, -15, 4.63525, -14.2658, 8.81678, -12.1353, 12.1353, -8.81678, 14.2658, -4.63525)
+script = ExtResource("7_yasdc")
+radius = 15
+points_num = 20
+
+[node name="Label" type="Label" parent="HelperContainer/Helper3"]
+offset_left = -16.0
+offset_top = -16.0
+offset_right = 16.0
+offset_bottom = 16.0
+tooltip_text = "This lists the current items that you're bringing into the game."
+mouse_filter = 0
+text = "?"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Helper4" type="Polygon2D" parent="HelperContainer"]
+position = Vector2(1832, 104)
+color = Color(0.0235294, 0.0235294, 0.0235294, 0.858824)
+polygon = PackedVector2Array(15, 0, 14.2658, 4.63525, 12.1353, 8.81678, 8.81678, 12.1353, 4.63525, 14.2658, 9.18485e-16, 15, -4.63525, 14.2658, -8.81678, 12.1353, -12.1353, 8.81678, -14.2658, 4.63525, -15, 1.83697e-15, -14.2658, -4.63525, -12.1353, -8.81678, -8.81678, -12.1353, -4.63525, -14.2658, -2.75546e-15, -15, 4.63525, -14.2658, 8.81678, -12.1353, 12.1353, -8.81678, 14.2658, -4.63525)
+script = ExtResource("7_yasdc")
+radius = 15
+points_num = 20
+
+[node name="Label" type="Label" parent="HelperContainer/Helper4"]
+offset_left = -16.0
+offset_top = -16.0
+offset_right = 16.0
+offset_bottom = 16.0
+tooltip_text = "This lists the current characters that you're bringing into the game."
+mouse_filter = 0
+text = "?"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Helper5" type="Polygon2D" parent="HelperContainer"]
+position = Vector2(1456, 784)
+color = Color(0.0235294, 0.0235294, 0.0235294, 0.858824)
+polygon = PackedVector2Array(15, 0, 14.2658, 4.63525, 12.1353, 8.81678, 8.81678, 12.1353, 4.63525, 14.2658, 9.18485e-16, 15, -4.63525, 14.2658, -8.81678, 12.1353, -12.1353, 8.81678, -14.2658, 4.63525, -15, 1.83697e-15, -14.2658, -4.63525, -12.1353, -8.81678, -8.81678, -12.1353, -4.63525, -14.2658, -2.75546e-15, -15, 4.63525, -14.2658, 8.81678, -12.1353, 12.1353, -8.81678, 14.2658, -4.63525)
+script = ExtResource("7_yasdc")
+radius = 15
+points_num = 20
+
+[node name="Label" type="Label" parent="HelperContainer/Helper5"]
+offset_left = -16.0
+offset_top = -16.0
+offset_right = 16.0
+offset_bottom = 16.0
+tooltip_text = "Upkeep is how much items will be taken from your inventory per turn. Potentially causing you to lose.
+
+This list shows how much items you will lose per turn."
+mouse_filter = 0
+text = "?"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Helper6" type="Polygon2D" parent="HelperContainer"]
+position = Vector2(1664, 29)
+color = Color(0.0235294, 0.0235294, 0.0235294, 0.858824)
+polygon = PackedVector2Array(15, 0, 14.2658, 4.63525, 12.1353, 8.81678, 8.81678, 12.1353, 4.63525, 14.2658, 9.18485e-16, 15, -4.63525, 14.2658, -8.81678, 12.1353, -12.1353, 8.81678, -14.2658, 4.63525, -15, 1.83697e-15, -14.2658, -4.63525, -12.1353, -8.81678, -8.81678, -12.1353, -4.63525, -14.2658, -2.75546e-15, -15, 4.63525, -14.2658, 8.81678, -12.1353, 12.1353, -8.81678, 14.2658, -4.63525)
+script = ExtResource("7_yasdc")
+radius = 15
+points_num = 20
+
+[node name="Label" type="Label" parent="HelperContainer/Helper6"]
+offset_left = -16.0
+offset_top = -16.0
+offset_right = 16.0
+offset_bottom = 16.0
+tooltip_text = "Setup is a saved preset of your characters and items, useful if you will keep running that same characters and items.
+
+New Setup - This button allows you to create a new preset with what you have already chosen.
+Save Setup - This button overwrites the current setup.
+Delete Setup - This button removes the currently selected setup."
+mouse_filter = 0
+text = "?"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Helper7" type="Polygon2D" parent="HelperContainer"]
+position = Vector2(960, 960)
+color = Color(0.0235294, 0.0235294, 0.0235294, 0.858824)
+polygon = PackedVector2Array(15, 0, 14.2658, 4.63525, 12.1353, 8.81678, 8.81678, 12.1353, 4.63525, 14.2658, 9.18485e-16, 15, -4.63525, 14.2658, -8.81678, 12.1353, -12.1353, 8.81678, -14.2658, 4.63525, -15, 1.83697e-15, -14.2658, -4.63525, -12.1353, -8.81678, -8.81678, -12.1353, -4.63525, -14.2658, -2.75546e-15, -15, 4.63525, -14.2658, 8.81678, -12.1353, 12.1353, -8.81678, 14.2658, -4.63525)
+script = ExtResource("7_yasdc")
+radius = 15
+points_num = 20
+
+[node name="Label" type="Label" parent="HelperContainer/Helper7"]
+offset_left = -16.0
+offset_top = -16.0
+offset_right = 16.0
+offset_bottom = 16.0
+tooltip_text = "Every time you add an item or character, it raises the current value. The current value cannot exceed the max value."
+mouse_filter = 0
+text = "?"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [connection signal="item_selected" from="Lists/ChooseCharacterList" to="." method="OnChooseCharacterListItemSelected"]
 [connection signal="item_selected" from="Lists/ChooseInventoryList" to="." method="OnChooseInventoryListItemSelected"]

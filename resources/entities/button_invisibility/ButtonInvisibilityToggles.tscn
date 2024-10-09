@@ -45,7 +45,7 @@ script = ExtResource("1_lfe4p")
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
-theme_override_constants/separation = -3
+theme_override_constants/separation = 3
 
 [node name="EnemyAOEInvisible" type="CheckBox" parent="VBoxContainer"]
 layout_mode = 2

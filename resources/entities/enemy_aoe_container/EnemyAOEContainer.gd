@@ -279,7 +279,8 @@ func positionAOE(targetAOE: BaseAOE, targetCharacter: BaseCharacter):
 		targetAOE.set_global_position(targetCharacter.global_position + Vector2(randf_range(-25, 25), randf_range(-25, 25)))
 		if !(targetAOE.isSymmetrical):
 			targetAOE.SetAnimationSpriteFlip(true)
-#		targetAOE.spriteAnimations.set_flip_h(true) # AOE looks a bit weird when enemy attacks us
+		else:
+			targetAOE.spriteAnimations.set_flip_h(true) # AOE looks a bit weird when enemy attacks us
 		print(str(self) + ": (positionAOE) targetAOE: " + str(targetAOE))
 		print(str(self) + ": (positionAOE) targetAOE position: " + str(targetAOE.global_position))
 		print(str(self) + ": (positionAOE) targetCharacter: " + str(targetCharacter))

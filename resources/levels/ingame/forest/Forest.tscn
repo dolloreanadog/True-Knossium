@@ -1,4 +1,4 @@
-[gd_scene load_steps=62 format=3 uid="uid://dt8n5ydm47v3d"]
+[gd_scene load_steps=64 format=3 uid="uid://dt8n5ydm47v3d"]
 
 [ext_resource type="Script" path="res://resources/levels/ingame/BaseLevel.gd" id="1_1cjpr"]
 [ext_resource type="Script" path="res://resources/entities/AreaAOEDenial/BaseAreaAOEDenial.gd" id="2_4r8rd"]
@@ -105,6 +105,12 @@ action = &"AttachSupportAOEToCursor"
 
 [sub_resource type="Shortcut" id="Shortcut_btl0h"]
 events = [SubResource("InputEventAction_qfjpf")]
+
+[sub_resource type="InputEventAction" id="InputEventAction_21vmd"]
+action = &"ShowIngameMenu"
+
+[sub_resource type="Shortcut" id="Shortcut_yiiy0"]
+events = [SubResource("InputEventAction_21vmd")]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ohrkm"]
 size = Vector2(320, 640)
@@ -428,6 +434,15 @@ text = "Attach Support AOE To Cursor
 "
 script = ExtResource("10_p20d4")
 area = NodePath("../../AOECheckSupport")
+
+[node name="SpeedButton" type="Button" parent="ButtonsContainer"]
+offset_left = 1792.0
+offset_top = 152.0
+offset_right = 1920.0
+offset_bottom = 183.0
+toggle_mode = true
+shortcut = SubResource("Shortcut_yiiy0")
+text = "x1 Speed"
 
 [node name="AOEInfoBox" parent="." instance=ExtResource("11_kwu8s")]
 anchors_preset = 12
@@ -802,6 +817,7 @@ grow_vertical = 0
 [connection signal="pressed" from="ButtonsContainer/AOEAutoPlacementButton" to="ButtonsContainer/AOEAutoPlacementButton" method="onPressed"]
 [connection signal="pressed" from="ButtonsContainer/EndTurn" to="ButtonsContainer/EndTurn" method="_on_pressed"]
 [connection signal="pressed" from="ButtonsContainer/OpenConsoleButton" to="." method="OpenConsoleButtonPressed"]
+[connection signal="toggled" from="ButtonsContainer/SpeedButton" to="." method="SpeedButtonToggled"]
 [connection signal="OnNewTurn" from="TurnSystem" to="." method="_on_turn_system_on_new_turn"]
 [connection signal="OnNewTurn" from="TurnSystem" to="ButtonsContainer/ButtonInvisibilityToggles" method="inTurn"]
 [connection signal="SpawnHorde" from="difficultySystem" to="difficultySystem/SpawnHorde" method="Activate"]

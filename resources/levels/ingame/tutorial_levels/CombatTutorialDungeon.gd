@@ -175,3 +175,4 @@ func stopControlVisible(visibility: bool, stopControlNumber: int):
 			autoPlaceButton.disabled = false
 
 
+

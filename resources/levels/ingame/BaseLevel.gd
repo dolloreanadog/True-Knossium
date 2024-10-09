@@ -878,6 +878,16 @@ func setDisabledAllAOE(boolean: bool) -> void:
 		print("Button is " + str(grabAllAOE()[i].button))
 		grabAllAOE()[i].button.visible = boolean
 
+func SpeedButtonToggled(button_pressed: bool) -> void:
+	if (button_pressed):
+		for aoe in grabAllAOE():
+			$ButtonsContainer/SpeedButton.text = "x2 Speed"
+			(aoe as BaseAOE).spriteAnimations.set_speed_scale(2)
+	else:
+		for aoe in grabAllAOE():
+			$ButtonsContainer/SpeedButton.text = "x1 Speed"
+			(aoe as BaseAOE).spriteAnimations.set_speed_scale(1)
+
 func goThroughQueuedAOEArray() -> void:
 	var currentBattle: int = system.battle
 	

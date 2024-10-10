@@ -25,6 +25,7 @@ func _on_pressed():
 func newTurn():
 		turnSystem.newTurn()
 		dungeon.EndTurnButtonHighlight(false)
+		$"../SpeedButton".button_pressed = false
 		if is_instance_valid(confirmationBox):
 			confirmationBox.queue_free()
 

@@ -30,6 +30,7 @@ content_margin_left = 10.0
 bg_color = Color(0, 0, 0, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ydsdm"]
+content_margin_left = 10.0
 bg_color = Color(0.699653, 0.699654, 0.699653, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_42133"]

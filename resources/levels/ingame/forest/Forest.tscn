@@ -1,8 +1,9 @@
-[gd_scene load_steps=64 format=3 uid="uid://dt8n5ydm47v3d"]
+[gd_scene load_steps=65 format=3 uid="uid://dt8n5ydm47v3d"]
 
 [ext_resource type="Script" path="res://resources/levels/ingame/BaseLevel.gd" id="1_1cjpr"]
 [ext_resource type="Script" path="res://resources/entities/AreaAOEDenial/BaseAreaAOEDenial.gd" id="2_4r8rd"]
 [ext_resource type="Texture2D" uid="uid://dxqf4v2pp2r60" path="res://assets/ui_elements/ui_background/UIBackground.png" id="2_emm8o"]
+[ext_resource type="Texture2D" uid="uid://c71no1m2h4yfk" path="res://assets/art/background/ForestBackground.png" id="2_ox1on"]
 [ext_resource type="Texture2D" uid="uid://daejd6gk8oce4" path="res://assets/ui_elements/party_seperators/PartyAreaSeperator.png" id="3_67enp"]
 [ext_resource type="Script" path="res://resources/levels/ingame/dungeon/StatPoints.gd" id="3_ylfwm"]
 [ext_resource type="PackedScene" uid="uid://bwmi2u27htu4s" path="res://resources/entities/visibility_toggles/VisibilityToggles.tscn" id="4_isrn3"]
@@ -165,6 +166,12 @@ offset_top = -8.0
 offset_right = 1928.0
 offset_bottom = 1088.0
 color = Color(0.25098, 0.215686, 0.0156863, 1)
+
+[node name="ForestBackground" type="Sprite2D" parent="Visuals/Node2D"]
+z_index = -100
+position = Vector2(960, 512)
+scale = Vector2(1.875, 1.25)
+texture = ExtResource("2_ox1on")
 
 [node name="UiBackground" type="Sprite2D" parent="Visuals/Node2D"]
 position = Vector2(960, 97)
@@ -436,6 +443,7 @@ script = ExtResource("10_p20d4")
 area = NodePath("../../AOECheckSupport")
 
 [node name="SpeedButton" type="Button" parent="ButtonsContainer"]
+layout_mode = 0
 offset_left = 1792.0
 offset_top = 152.0
 offset_right = 1920.0
@@ -480,7 +488,7 @@ offset_bottom = -56.0
 [node name="MeleeSpawnArea" type="ReferenceRect" parent="EnemySpawnArea"]
 layout_mode = 0
 offset_left = 1088.0
-offset_top = 320.0
+offset_top = 400.0
 offset_right = 1216.0
 offset_bottom = 832.0
 script = ExtResource("13_cd8bg")
@@ -488,7 +496,7 @@ script = ExtResource("13_cd8bg")
 [node name="RangedSpawnArea" type="ReferenceRect" parent="EnemySpawnArea"]
 layout_mode = 0
 offset_left = 1344.0
-offset_top = 320.0
+offset_top = 400.0
 offset_right = 1472.0
 offset_bottom = 832.0
 script = ExtResource("13_cd8bg")
@@ -496,7 +504,7 @@ script = ExtResource("13_cd8bg")
 [node name="SupportSpawnArea" type="ReferenceRect" parent="EnemySpawnArea"]
 layout_mode = 0
 offset_left = 1664.0
-offset_top = 320.0
+offset_top = 400.0
 offset_right = 1792.0
 offset_bottom = 832.0
 script = ExtResource("13_cd8bg")
@@ -511,7 +519,7 @@ offset_bottom = -24.0
 [node name="MeleeSpawnArea" type="ReferenceRect" parent="FriendlySpawnArea"]
 layout_mode = 0
 offset_left = 704.0
-offset_top = 320.0
+offset_top = 400.0
 offset_right = 832.0
 offset_bottom = 832.0
 script = ExtResource("13_cd8bg")
@@ -519,7 +527,7 @@ script = ExtResource("13_cd8bg")
 [node name="RangedSpawnArea" type="ReferenceRect" parent="FriendlySpawnArea"]
 layout_mode = 0
 offset_left = 448.0
-offset_top = 320.0
+offset_top = 400.0
 offset_right = 576.0
 offset_bottom = 832.0
 script = ExtResource("13_cd8bg")
@@ -527,7 +535,7 @@ script = ExtResource("13_cd8bg")
 [node name="SupportSpawnArea" type="ReferenceRect" parent="FriendlySpawnArea"]
 layout_mode = 0
 offset_left = 128.0
-offset_top = 320.0
+offset_top = 400.0
 offset_right = 256.0
 offset_bottom = 832.0
 script = ExtResource("13_cd8bg")

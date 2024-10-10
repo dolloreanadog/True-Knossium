@@ -1,4 +1,4 @@
-[gd_scene load_steps=72 format=3 uid="uid://ubqjl7xo4jo1"]
+[gd_scene load_steps=73 format=3 uid="uid://ubqjl7xo4jo1"]
 
 [ext_resource type="Script" path="res://resources/levels/ingame/tutorial_levels/CombatTutorialDungeon.gd" id="1_mmmgc"]
 [ext_resource type="Script" path="res://resources/entities/AreaAOEDenial/BaseAreaAOEDenial.gd" id="2_57bap"]
@@ -6,6 +6,7 @@
 [ext_resource type="Resource" uid="uid://bjlgar33m6xrh" path="res://resources/entities/inventory_items/dev_items/ExperiencePotion.tres" id="3_ue40e"]
 [ext_resource type="Script" path="res://resources/levels/ingame/dungeon/StatPoints.gd" id="3_upymc"]
 [ext_resource type="Texture2D" uid="uid://daejd6gk8oce4" path="res://assets/ui_elements/party_seperators/PartyAreaSeperator.png" id="4_ceptr"]
+[ext_resource type="Texture2D" uid="uid://fugao0mte6k1" path="res://assets/art/background/TemplateBackground.png" id="4_o7vxs"]
 [ext_resource type="PackedScene" uid="uid://bwmi2u27htu4s" path="res://resources/entities/visibility_toggles/VisibilityToggles.tscn" id="4_wo2ys"]
 [ext_resource type="Texture2D" uid="uid://dxqf4v2pp2r60" path="res://assets/ui_elements/ui_background/UIBackground.png" id="5_a5e2p"]
 [ext_resource type="PackedScene" uid="uid://dacl7cdqcmb3c" path="res://resources/entities/button_invisibility/ButtonInvisibilityToggles.tscn" id="5_sd2mv"]
@@ -169,6 +170,12 @@ offset_top = -8.0
 offset_right = 1928.0
 offset_bottom = 1088.0
 color = Color(0.25098, 0.215686, 0.0156863, 1)
+
+[node name="TemplateBackground" type="Sprite2D" parent="Visuals/Node2D"]
+z_index = -100
+position = Vector2(960, 508)
+scale = Vector2(1.875, 1.23438)
+texture = ExtResource("4_o7vxs")
 
 [node name="PartyAreaSeperator" type="Sprite2D" parent="Visuals/Node2D"]
 z_index = -99

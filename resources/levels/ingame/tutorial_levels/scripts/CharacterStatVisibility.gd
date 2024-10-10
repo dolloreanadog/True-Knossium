@@ -12,7 +12,7 @@ func TutorialIndexSwitch() -> void:
 func _on_button_pressed() -> void:
 	TutorialIndexSwitch()
 
-func VisibilityStatItemSelected(index: int) -> void:
+func VisibilityStatItemSelected(_index: int) -> void:
 	amount += 1
 	print("amount: " + str(amount))
 	if amount >= 2:

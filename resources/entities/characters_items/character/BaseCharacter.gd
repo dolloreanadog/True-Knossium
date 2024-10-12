@@ -116,8 +116,8 @@ func damageStats(health, defense, attack, morale): # Print out the stats of gett
 #	print(str(self) + ": Attack stat being damaged for " + str(attack))
 #	print(str(self) + ": Morale stat being damaged for " + str(morale))
 	#stats.isDamaged()
+	stats.changeCurrentDefense(defense) # This is out of order so that defense is applied first before health attack
 	stats.changeCurrentHealth(health)
-	stats.changeCurrentDefense(defense)
 	stats.changeCurrentAttack(attack)
 	stats.changeCurrentMorale(morale)
 

@@ -62,3 +62,11 @@ text = "SaltShiro - Play Tester"
 [node name="tester4" type="Label" parent="VBoxContainer"]
 layout_mode = 2
 text = "Jareth26 - Play Tester"
+
+[node name="tester10" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Devir - Play Tester"
+
+[node name="tester11" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Heniken171 - Play Tester"

@@ -450,6 +450,8 @@ func loadAOE() -> void:
 		targetAOEInstance.ownerCharacterName = targetAOEInfo.AOEOwnerName
 		if !(targetAOEInstance.isSymmetrical):
 			targetAOEInstance.SetAnimationSpriteFlip(targetAOEInfo.AOEIsSpriteFlipped)
+		else:
+			targetAOEInstance.spriteAnimations.set_flip_h(true) # AOE looks a bit weird when enemy attacks us
 #		targetAOEInstance.spriteAnimations.flip_h = targetAOEInfo.AOEIsSpriteFlipped
 		targetAOEInstance.ownerActionDescription = targetAOEInfo.AOEDescription
 		targetAOEInstance.global_position = targetAOEInfo.AOEPosition
@@ -478,7 +480,8 @@ func loadAOE() -> void:
 		targetAOEInstance.collisionVisualizer.modulate = targetAOEInfo.AOEColor
 		targetAOEInstance.ownerCharacterPFP = load(targetAOEInfo.AOEOwnerCharacterPFP)
 		targetAOEInstance.ownerCharacterName = targetAOEInfo.AOEOwnerName
-		targetAOEInstance.SetAnimationSpriteFlip(targetAOEInfo.AOEIsSpriteFlipped)
+		if !(targetAOEInstance.isSymmetrical):
+			targetAOEInstance.SetAnimationSpriteFlip(targetAOEInfo.AOEIsSpriteFlipped)
 #		targetAOEInstance.spriteAnimations.flip_h = targetAOEInfo.AOEIsSpriteFlipped
 		targetAOEInstance.ownerActionDescription = targetAOEInfo.AOEDescription
 		targetAOEInstance.global_position = targetAOEInfo.AOEPosition
@@ -512,7 +515,10 @@ func loadAOE() -> void:
 		targetAOEInstance.collisionVisualizer.modulate = targetAOEInfo.AOEColor
 		targetAOEInstance.ownerCharacterPFP = load(targetAOEInfo.AOEOwnerCharacterPFP)
 		targetAOEInstance.ownerCharacterName = targetAOEInfo.AOEOwnerName
-		targetAOEInstance.SetAnimationSpriteFlip(targetAOEInfo.AOEIsSpriteFlipped)
+		if !(targetAOEInstance.isSymmetrical):
+			targetAOEInstance.SetAnimationSpriteFlip(targetAOEInfo.AOEIsSpriteFlipped)
+		else:
+			targetAOEInstance.spriteAnimations.set_flip_h(true) # AOE looks a bit weird when enemy attacks us
 #		targetAOEInstance.spriteAnimations.flip_h = targetAOEInfo.AOEIsSpriteFlipped
 		targetAOEInstance.ownerActionDescription = targetAOEInfo.AOEDescription
 		targetAOEInstance.global_position = targetAOEInfo.AOEPosition

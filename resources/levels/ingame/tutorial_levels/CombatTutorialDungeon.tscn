@@ -27,12 +27,12 @@
 [ext_resource type="PackedScene" uid="uid://2067o3jclptt" path="res://resources/user_interface/console/Console.tscn" id="18_wi3a0"]
 [ext_resource type="Script" path="res://resources/entities/difficulty_system/components/SpawnCharacterComponent.gd" id="19_5fsuh"]
 [ext_resource type="Script" path="res://resources/entities/music_player/DungeonMusicPlayer.gd" id="20_17go4"]
-[ext_resource type="AudioStream" uid="uid://dxufjrff8jslf" path="res://assets/audio/music/dev/LifillFeryquitous.mp3" id="21_u6g5i"]
 [ext_resource type="AudioStream" uid="uid://5vawwlwftcwx" path="res://assets/audio/music/dev/TheLastWorldISaw.mp3" id="22_cg253"]
 [ext_resource type="AudioStream" uid="uid://btiylovgh3asi" path="res://assets/audio/music/dev/DeemoRecollections.mp3" id="23_vakcf"]
 [ext_resource type="PackedScene" uid="uid://ci3j4o0qfk5qa" path="res://resources/user_interface/inventory_menu/inventoryMenu.tscn" id="24_f1ghq"]
 [ext_resource type="PackedScene" uid="uid://cmupnt3ig0bql" path="res://resources/user_interface/party_menu/PartyMenu.tscn" id="25_wjsot"]
 [ext_resource type="PackedScene" uid="uid://b8c08cwk8od7q" path="res://resources/user_interface/ingame_menu/InGameMenu.tscn" id="26_g6rwu"]
+[ext_resource type="AudioStream" uid="uid://rcls6gn3yqj6" path="res://assets/audio/music/dev/sakusen kaigi.mp3" id="27_4h7wa"]
 [ext_resource type="Script" path="res://resources/levels/ingame/tutorial_levels/scripts/Intro.gd" id="27_ix8v6"]
 [ext_resource type="Script" path="res://resources/levels/ingame/tutorial_levels/scripts/Inventory.gd" id="28_82f8d"]
 [ext_resource type="Script" path="res://resources/levels/ingame/tutorial_levels/scripts/Party.gd" id="29_yrv01"]
@@ -724,7 +724,7 @@ offset_right = 1920.0
 bus = &"Music"
 script = ExtResource("20_17go4")
 dungeon = NodePath("..")
-DefaultMusic = ExtResource("21_u6g5i")
+DefaultMusic = ExtResource("27_4h7wa")
 winningMusic = ExtResource("22_cg253")
 losingMusic = ExtResource("23_vakcf")
 

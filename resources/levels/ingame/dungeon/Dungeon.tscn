@@ -29,7 +29,7 @@
 [ext_resource type="PackedScene" uid="uid://dacl7cdqcmb3c" path="res://resources/entities/button_invisibility/ButtonInvisibilityToggles.tscn" id="19_vyova"]
 [ext_resource type="PackedScene" uid="uid://b8c08cwk8od7q" path="res://resources/user_interface/ingame_menu/InGameMenu.tscn" id="21_7nwil"]
 [ext_resource type="Script" path="res://resources/entities/music_player/DungeonMusicPlayer.gd" id="26_1r80j"]
-[ext_resource type="AudioStream" uid="uid://dxufjrff8jslf" path="res://assets/audio/music/dev/LifillFeryquitous.mp3" id="27_cokja"]
+[ext_resource type="AudioStream" uid="uid://rcls6gn3yqj6" path="res://assets/audio/music/dev/sakusen kaigi.mp3" id="27_wjx24"]
 [ext_resource type="AudioStream" uid="uid://5vawwlwftcwx" path="res://assets/audio/music/dev/TheLastWorldISaw.mp3" id="28_4f54h"]
 [ext_resource type="PackedScene" uid="uid://d2t61dttpmn8x" path="res://resources/user_interface/fps_counter/FPSCounter.tscn" id="29_0x462"]
 [ext_resource type="AudioStream" uid="uid://btiylovgh3asi" path="res://assets/audio/music/dev/DeemoRecollections.mp3" id="29_erg55"]
@@ -1190,7 +1190,7 @@ offset_right = 1920.0
 bus = &"Music"
 script = ExtResource("26_1r80j")
 dungeon = NodePath("..")
-DefaultMusic = ExtResource("27_cokja")
+DefaultMusic = ExtResource("27_wjx24")
 winningMusic = ExtResource("28_4f54h")
 losingMusic = ExtResource("29_erg55")
 

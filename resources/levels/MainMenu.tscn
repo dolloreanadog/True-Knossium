@@ -3,8 +3,8 @@
 [ext_resource type="Script" path="res://resources/levels/MainMenu.gd" id="1_4owyw"]
 [ext_resource type="Texture2D" uid="uid://b0a07fi0ek34p" path="res://assets/sprites/background/MainMenuBackgroundDungeon.png" id="2_te26c"]
 [ext_resource type="Texture2D" uid="uid://45p5xf1undgj" path="res://assets/sprites/background/KnossiumPillar.png" id="3_bkati"]
-[ext_resource type="AudioStream" uid="uid://bi4omexge72c7" path="res://assets/audio/music/dev/SyureliaAndesine.mp3" id="3_ro8dp"]
 [ext_resource type="Theme" uid="uid://d2f4kfyd7wqnk" path="res://MainTheme.tres" id="4_onufc"]
+[ext_resource type="AudioStream" uid="uid://rcls6gn3yqj6" path="res://assets/audio/music/dev/sakusen kaigi.mp3" id="5_uu311"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_x88g3"]
 atlas = ExtResource("2_te26c")
@@ -1074,7 +1074,7 @@ Character Balance is not final
 Characters are not final"
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("3_ro8dp")
+stream = ExtResource("5_uu311")
 bus = &"Music"
 
 [node name="Camera2D" type="Camera2D" parent="."]

@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="BaseInventoryItem" load_steps=4 format=3 uid="uid://c20cg66qo7jsj"]
+
+[ext_resource type="PackedScene" uid="uid://di1fjj23u7hy3" path="res://resources/entities/characters_items/aoe/item_aoe/bomb_aoe/BombAOE.tscn" id="1_3mk7n"]
+[ext_resource type="Script" path="res://resources/entities/inventory_items/BaseInventoryItem.gd" id="1_jdrxa"]
+[ext_resource type="Texture2D" uid="uid://bggpy6gm5qr70" path="res://assets/art/item_icon/Bomb.png" id="1_o48mw"]
+
+[resource]
+script = ExtResource("1_jdrxa")
+globalFilePath = "res://resources/entities/inventory_items/dev_items/Bomb.tres"
+image = ExtResource("1_o48mw")
+itemName = "Bomb I"
+itemDesciption = "Very Explosive, deals 10 health damage and 5 defense damage."
+value = 40.0
+doesValueChange = false
+isInteractable = true
+isOffensive = true
+AOE = ExtResource("1_3mk7n")
+AOEHealthGain = 10.0
+AOEDefenseGain = 5.0
+AOEAttackGain = 0.0
+AOEMoraleGain = 0.0
+AOEExpGain = 0.0
+AOEAccuracy = 1.0

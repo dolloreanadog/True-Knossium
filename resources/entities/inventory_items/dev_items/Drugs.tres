@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="BaseInventoryItem" load_steps=4 format=3 uid="uid://cd868i4672ecg"]
+
+[ext_resource type="Texture2D" uid="uid://4lkw8tyc8b2p" path="res://assets/art/item_icon/drugs.png" id="1_mpucy"]
+[ext_resource type="PackedScene" uid="uid://dwnlqyv6pay84" path="res://resources/entities/characters_items/aoe/item_aoe/drugs_aoe/DrugsAOE.tscn" id="1_ov5i8"]
+[ext_resource type="Script" path="res://resources/entities/inventory_items/BaseInventoryItem.gd" id="1_tlxix"]
+
+[resource]
+script = ExtResource("1_tlxix")
+globalFilePath = "res://resources/entities/inventory_items/dev_items/Drugs.tres"
+image = ExtResource("1_mpucy")
+itemName = "Drugs I"
+itemDesciption = "These give the character 5 morale and 10 attack, but at the cost of health.
+
+Health is proportionally affected by how much it gives."
+value = 10.0
+doesValueChange = false
+isInteractable = true
+isOffensive = false
+AOE = ExtResource("1_ov5i8")
+AOEHealthGain = -2.0
+AOEDefenseGain = 0.0
+AOEAttackGain = 5.0
+AOEMoraleGain = 2.5
+AOEExpGain = 0.0
+AOEAccuracy = 1.0

@@ -1,0 +1,42 @@
+[gd_scene load_steps=5 format=3 uid="uid://dwnlqyv6pay84"]
+
+[ext_resource type="Script" path="res://resources/entities/characters_items/aoe/BaseAOE.gd" id="1_n1xq4"]
+[ext_resource type="Script" path="res://resources/entities/characters_items/aoe/aoe_component/Polygon2DOutline.gd" id="3_uydxy"]
+[ext_resource type="Theme" uid="uid://b6csmgk4u4jyg" path="res://resources/theme/AOEButtonTheme.tres" id="4_3m4u6"]
+[ext_resource type="SpriteFrames" uid="uid://cnxewbg0i4ubo" path="res://assets/sprites/aoe_vfx/dev/VitalitySprite.tres" id="5_spmwu"]
+
+[node name="DrugsAOE" type="Area2D" node_paths=PackedStringArray("spriteAnimations")]
+script = ExtResource("1_n1xq4")
+AOEName = "The Offering"
+spriteAnimations = NodePath("AnimatedSprite2D")
+isSymmetrical = false
+isDynamicColor = false
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+color = Color(0, 1, 0, 0.117647)
+polygon = PackedVector2Array(-32, -64, 24, 64, 32, 64, -24, -64)
+
+[node name="polygon2DOutline" type="Node2D" parent="Polygon2D"]
+script = ExtResource("3_uydxy")
+lineWidth = 1.0
+lineColor = Color(0.811765, 1, 0.792157, 1)
+
+[node name="CollisionShape2D" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(-32, -64, 24, 64, 32, 64, -24, -64)
+
+[node name="Button" type="Button" parent="."]
+offset_left = -32.0
+offset_top = -64.0
+offset_right = 32.0
+offset_bottom = 64.0
+theme = ExtResource("4_3m4u6")
+theme_override_colors/font_color = Color(0, 1, 0, 1)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+sprite_frames = ExtResource("5_spmwu")
+animation = &"inactive"
+
+[connection signal="button_down" from="Button" to="." method="_on_button_button_down"]
+[connection signal="button_up" from="Button" to="." method="_on_button_button_up"]
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

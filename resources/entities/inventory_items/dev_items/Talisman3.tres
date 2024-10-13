@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="BaseInventoryItem" load_steps=4 format=3 uid="uid://lck3rj8n08ga"]
+
+[ext_resource type="PackedScene" uid="uid://d2hgrnkks06qa" path="res://resources/entities/characters_items/aoe/tank_aoe/fortify_aoe/FortifyAOE.tscn" id="1_0t03g"]
+[ext_resource type="Texture2D" uid="uid://dh2kbyqhpgs06" path="res://assets/art/item_icon/barriertalisman.png" id="2_s0dgc"]
+[ext_resource type="Script" path="res://resources/entities/inventory_items/BaseInventoryItem.gd" id="3_kfh8i"]
+
+[resource]
+script = ExtResource("3_kfh8i")
+globalFilePath = "res://resources/entities/inventory_items/dev_items/Talisman3.tres"
+image = ExtResource("2_s0dgc")
+itemName = "Talisman III"
+itemDesciption = "This item give 10 defense. A decent measure to keep things away."
+value = 55.0
+doesValueChange = false
+isInteractable = true
+isOffensive = false
+AOE = ExtResource("1_0t03g")
+AOEHealthGain = 0.0
+AOEDefenseGain = 2.0
+AOEAttackGain = 0.0
+AOEMoraleGain = 0.0
+AOEExpGain = 0.0
+AOEAccuracy = 1.0

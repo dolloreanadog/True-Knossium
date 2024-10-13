@@ -28,8 +28,8 @@ func _ready() -> void:
 		$TutorialBoxContainer.show()
 	$AudioStreamPlayer.play()
 	Global.EndLoadingScreen()
-	Steam.setRichPresence("gameinfotext", str(0))
-	Steam.setRichPresence("steam_display", "#MainMenu")
+#	Steam.setRichPresence("gameinfotext", str(0))
+#	Steam.setRichPresence("steam_display", "#MainMenu")
 	Global.SetAchievement("ach_test")
 
 func _notification(what: int) -> void:

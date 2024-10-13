@@ -92,7 +92,7 @@ func _ready() -> void:
 	
 	await get_tree().create_timer(0.5).timeout
 	Global.EndLoadingScreen()
-	Steam.setRichPresence("steam_display", "#Start")
+#	Steam.setRichPresence("steam_display", "#Start")
 
 func clear() -> void:
 	finalInventorySystem.storedItems.clear()

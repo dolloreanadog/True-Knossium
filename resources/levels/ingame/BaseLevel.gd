@@ -300,8 +300,8 @@ func loadSave() -> void:
 	turnsLabel.set_text("Turns: " + str(system.turn))
 	getBattle()
 
-	Steam.setRichPresence("gameinfotext", str("Battle: " + str(system.battle) + " Turn: " + str(system.turn)))
-	Steam.setRichPresence("steam_display", "#Game")
+#	Steam.setRichPresence("gameinfotext", str("Battle: " + str(system.battle) + " Turn: " + str(system.turn)))
+#	Steam.setRichPresence("steam_display", "#Game")
 	emit_signal("LoadFinished")
 
 func loadCharacters() -> void:

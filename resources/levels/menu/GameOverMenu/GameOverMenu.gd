@@ -45,7 +45,7 @@ func _ready() -> void:
 	visualizeUnlockedList()
 	
 	Global.EndLoadingScreen()
-	Steam.setRichPresence("steam_display", "#Over")
+#	Steam.setRichPresence("steam_display", "#Over")
 
 func _on_go_to_menu_pressed() -> void:
 	Global.StartLoadingScreen(true)

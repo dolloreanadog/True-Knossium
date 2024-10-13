@@ -93,10 +93,10 @@ func EndLoadingScreen() -> void:
 #- Steam
 
 func SetAchievement(achivement: String) -> void:
-	var status: Dictionary = Steam.getAchievement(achivement)
-	if status["achieved"]:
-		print("Steam Achievement Unlocked")
-		return
+#	var status: Dictionary = Steam.getAchievement(achivement)
+#	if status["achieved"]:
+#		print("Steam Achievement Unlocked")
+#		return
 #	Steam.setAchievement(achivement)
 #	Steam.storeStats()
 	print("Steam Achievement Unlocked: " + achivement)

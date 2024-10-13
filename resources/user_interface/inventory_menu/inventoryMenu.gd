@@ -74,10 +74,16 @@ func _on_spawn_aoe_button_pressed() -> void:
 	
 	dungeon.noAOEWarningLabel.hide()
 	
-	instance.health = targetItem.AOEHealthGain
-	instance.defense = targetItem.AOEDefenseGain
-	instance.attack = targetItem.AOEAttackGain
-	instance.morale = targetItem.AOEMoraleGain
+	if (targetItem.isOffensive):
+		instance.health = TurnIntoOffensiveAction(targetItem.AOEHealthGain)
+		instance.defense = TurnIntoOffensiveAction(targetItem.AOEDefenseGain)
+		instance.attack = TurnIntoOffensiveAction(targetItem.AOEAttackGain)
+		instance.morale = TurnIntoOffensiveAction(targetItem.AOEMoraleGain)
+	else:
+		instance.health = targetItem.AOEHealthGain
+		instance.defense = targetItem.AOEDefenseGain
+		instance.attack = targetItem.AOEAttackGain
+		instance.morale = targetItem.AOEMoraleGain
 	instance.experience = targetItem.AOEExpGain
 	
 	instance.ownerCharacterName = targetItem.itemName
@@ -103,6 +109,9 @@ func _on_spawn_aoe_button_pressed() -> void:
 		spawnAOEButton.disabled = true
 		spawnAllAOEButton.disabled = true
 
+func TurnIntoOffensiveAction(inputNumber: float) -> float:
+	inputNumber *= -1
+	return inputNumber
 
 func SpawnAllAOEButtonPressed() -> void:
 	while inventorySystem.getNamedItemAmount(targetItem.itemName) != 0:

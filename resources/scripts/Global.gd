@@ -54,11 +54,12 @@ var loadoutItemDict: Dictionary = {
 }
 
 func _init() -> void:
-	OS.set_environment("SteamAppID", appID)
-	OS.set_environment("SteamGameID", appID)
+	pass
+#	OS.set_environment("SteamAppID", appID)
+#	OS.set_environment("SteamGameID", appID)
 
 func _ready() -> void:
-	Steam.steamInit()
+#	Steam.steamInit()
 	if checkGlobalDataFileExists():
 		loadAllData()
 		checkProgressionVersion()
@@ -96,8 +97,8 @@ func SetAchievement(achivement: String) -> void:
 	if status["achieved"]:
 		print("Steam Achievement Unlocked")
 		return
-	Steam.setAchievement(achivement)
-	Steam.storeStats()
+#	Steam.setAchievement(achivement)
+#	Steam.storeStats()
 	print("Steam Achievement Unlocked: " + achivement)
 
 #- Game

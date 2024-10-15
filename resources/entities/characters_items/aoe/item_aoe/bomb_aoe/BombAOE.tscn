@@ -10,7 +10,6 @@ script = ExtResource("1_q34qj")
 AOEName = "Bomb Explosion"
 spriteAnimations = NodePath("AnimatedSprite2D")
 isSymmetrical = false
-isAnimationEveryTurn = false
 
 [node name="Polygon2D" type="Polygon2D" parent="."]
 modulate = Color(1, 1, 1, 0.109804)

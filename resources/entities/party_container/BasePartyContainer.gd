@@ -168,10 +168,11 @@ func MoveAllCharactersToTruePosition() -> void:
 	getCharactersInfo()
 	isSpawningCharacter = true
 	for i in charactersAmount:
-		var character: BaseCharacter = characters[i]
-		var tween: Tween = get_tree().create_tween().bind_node(character)
-		tween.tween_property(character, "global_position", character.trueGlobalPosition, 1)
-		await get_tree().create_timer(randf_range(0, 0.15)).timeout
+		if (is_instance_valid(characters[i])):
+			var character: BaseCharacter = characters[i]
+			var tween: Tween = get_tree().create_tween().bind_node(character)
+			tween.tween_property(character, "global_position", character.trueGlobalPosition, 1)
+			await get_tree().create_timer(randf_range(0, 0.15)).timeout
 	isSpawningCharacter = false
 	CharacterInCorrectPosition()
 	dungeon.stopControlVisible(false, 1)

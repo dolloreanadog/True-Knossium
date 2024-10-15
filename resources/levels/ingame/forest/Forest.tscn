@@ -807,6 +807,7 @@ offset_bottom = 40.0
 
 [node name="Console" parent="." instance=ExtResource("28_p236b")]
 visible = false
+z_index = 101
 
 [node name="FPSCounter" parent="." instance=ExtResource("29_18kmm")]
 anchors_preset = 2

@@ -65,6 +65,8 @@ func ConsoleInputLineSubmitted(new_text: String) -> void:
 			dungeon.GoToNextArea()
 		if new_text.begins_with("shopvalue"):
 			printConsoleText("ShopWeight: " + str(dungeon.shopWeight))
+		if new_text.begins_with("disableaoedenial"):
+			DisableAOEDenial()
 	else:
 		if new_text.contains("IO"):
 			printConsoleText("Console is now unlocked!")
@@ -76,8 +78,17 @@ func ConsoleInputLineSubmitted(new_text: String) -> void:
 		consoleTextLabel.clear()
 
 func printConsoleText(text: String) -> void:
-	consoleTextLabel.text += "\n " + text
+	consoleTextLabel.text += "\n" + text
 	consoleInputLine.text = ""
+
+#--[ Misc. Commands ]--
+func DisableAOEDenial() -> void:
+	printConsoleText("Warning! To reset, must rejoin the game.")
+	$"../AOEContainers/EnemyAOEDenialRanged/ColorRect".hide()
+	$"../AOEContainers/EnemyAOEDenialSupport/ColorRect".hide()
+	$"../AOEContainers/FriendlyAOEDenialRanged/ColorRect".hide()
+	$"../AOEContainers/FriendlyAOEDenialSupport/ColorRect".hide()
+
 
 #--[ Spawn Behavior Functions ]--
 

@@ -104,8 +104,10 @@ func _ready() -> void:
 	updateInventoryListVisual()
 	updateShopListVisual()
 	randomizeShopPersonality()
+	
 	Global.EndLoadingScreen()
 	StartShopTimeLeftTimer()
+	Steam.setRichPresence("steam_display", "#Shop")
 
 func EndShoppingPressed() -> void:
 	ExitShop()
